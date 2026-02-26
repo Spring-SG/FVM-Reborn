@@ -38,6 +38,7 @@ if target_id != ""{
 			{
 				add_material_amount(craft_rule_info.crystal_require,-craft_rule_info.crystal_amount)
 				edit_gem_max_level(target_id,current_level+1)
+				edit_gem_level(target_id,get_gem_max_level(target_id))
 				global.save_data.player.gold -= craft_rule_info.gold_amount
 				show_notice("宝石已强化",60)
 			}

@@ -38,6 +38,11 @@ if (keyboard_check_pressed(vk_space)) {
 							}
 							if global.level_file.rewards[1].skill_level >= global.save_data.unlocked_items.max_skill_level{
 								global.save_data.unlocked_items.max_skill_level = global.level_file.rewards[1].skill_level
+								var length = array_length(global.save_data.unlocked_cards)
+								for (var i = 0;i < length;i++){		
+									global.save_data.unlocked_cards[i].skill = global.save_data.unlocked_items.max_skill_level
+								}
+								
 							}
 							global.save_data.player.gold += global.level_file.rewards[1].gold
 							var item_list = global.level_file.rewards[1].items

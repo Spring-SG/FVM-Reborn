@@ -10,7 +10,9 @@ if not disabled{
 			global.save_data.player.gold += reward_list[i].amount
 		}
 	}
-	unlock_task(task_info.task_unlock)
+	if !is_task_unlocked(task_info.task_unlock){
+		unlock_task(task_info.task_unlock)
+	}
 	edit_task_state(task_id,"claimed")
 	with obj_task_bg{
 		refresh_task_list()

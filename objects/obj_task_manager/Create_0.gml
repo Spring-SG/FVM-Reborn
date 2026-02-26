@@ -5,7 +5,7 @@ not_equip_weapon = false
 not_use_designated_card = false
 
 card_group = {
-	"bomb":["coke_bomb","kettle_bomb","flour_sack","steel_wool","mouse_clip","wine_bottle_bomb","ice_bucket_bomb"]
+	"bomb":["coke_bomb","kettle_bomb","flour_sack","steel_wool","mouse_clip","wine_bottle_bomb","ice_bucket_bomb","chocolate_cannon"]
 }
 
 function reset_task_state(){
@@ -19,8 +19,8 @@ function refresh_task_progress(){
 	flame_left = global.flame
 	//检查未携带武器任务
 	if global.save_data.equipped_items.main_weapon.id == ""
-	&& global.save_data.equipped_items.main_weapon.id == ""
-	&& global.save_data.equipped_items.main_weapon.id == ""{
+	&& global.save_data.equipped_items.secondary_weapon.id == ""
+	&& global.save_data.equipped_items.super_weapon.id == ""{
 		not_equip_weapon = true
 	}
 	//检查猫损失量
@@ -102,7 +102,7 @@ function refresh_task_progress(){
 						add_task_progress(task_id,j,1)
 					}
 					//如果进度满足要求，则增加完成计数
-					if get_task_progress(task_id,j) <= task_data.requirements[j].require{
+					if get_task_progress(task_id,j) >= task_data.requirements[j].require{
 						complete_count++
 					}
 				}
@@ -110,6 +110,10 @@ function refresh_task_progress(){
 			//如果所有任务要求均达成，则完成任务
 			if complete_count >= complete_require{
 				edit_task_state(task_id,"completed")
+				//解锁下一个任务
+				if !is_task_unlocked(task_data.task_unlock){
+					unlock_task(task_data.task_unlock)
+				}
 			}
 			//如果是单局完成的任务，未完成则重置进度
 			else if task_data.single_game{

@@ -104,7 +104,7 @@ switch state{
 			}
 		}
 		
-		if timer == 4*5 || timer == 9 *5 || timer == 14*5{
+		if timer == 4*5 /*|| timer == 9 *5 || timer == 14*5*/{
 			if ds_list_size(avaliable_pos) > 0{
 				var i = irandom_range(0,ds_list_size(avaliable_pos)-1)
 				var target_p = ds_list_find_value(avaliable_pos,i)

@@ -34,7 +34,12 @@ if state == ENEMY_STATE.ACTING{
 			image_index = floor(timer/flash_speed) mod 10 + 9
 		}
 		if timer >= flash_speed * 4{
-			x -= 2.25
+			if is_slowdown{
+				x -= 1.1
+			}
+			else{
+				x -= 2.25
+			}
 		}
 		if timer >= flash_speed * 10 or hp <= 0{
 			audio_play_sound(snd_enter_water,0,0)

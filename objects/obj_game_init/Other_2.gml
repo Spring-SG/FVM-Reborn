@@ -128,7 +128,7 @@ global.total_time = global.save_data.player.total_time
 
 //debug相关
 if global.debug{
-//	global.save_data.player.gold = 9999999999
+	global.save_data.player.gold = 9999999999
 	global.save_data.player.level = 80
 //	global.save_data.unlocked_items.max_card_level = 16
 //	global.save_data.unlocked_items.max_skill_level = 8

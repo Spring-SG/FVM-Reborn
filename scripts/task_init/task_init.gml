@@ -814,16 +814,16 @@ function task_init(){
 					{
 						"type":"item",
 						"item_id":"natural_spices",
-						"amount":30
+						"amount":60
 					},
 					{
 						"type":"gold",
-						"amount":2000
+						"amount":5000
 					},
 					{
 						"type":"item",
 						"item_id":"less_crystal",
-						"amount":10
+						"amount":20
 					},
 					{
 						"type":"item",
@@ -863,21 +863,21 @@ function task_init(){
 					{
 						"type":"item",
 						"item_id":"natural_spices",
-						"amount":65
+						"amount":130
 					},
 					{
 						"type":"item",
 						"item_id":"less_crystal",
-						"amount":10
+						"amount":20
 					},
 					{
 						"type":"gold",
-						"amount":5000
+						"amount":10000
 					},
 					{
 						"type":"item",
 						"item_id":"clover_1",
-						"amount":1
+						"amount":5
 					},
 				]
 			}
@@ -962,7 +962,7 @@ function task_init(){
 					{
 						"type":"item",
 						"item_id":"natural_spices",
-						"amount":30
+						"amount":50
 					},
 					{
 						"type":"item",
@@ -1007,7 +1007,7 @@ function task_init(){
 					{
 						"type":"item",
 						"item_id":"natural_spices",
-						"amount":65
+						"amount":80
 					},
 					{
 						"type":"item",
