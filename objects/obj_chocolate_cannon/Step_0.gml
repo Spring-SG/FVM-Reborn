@@ -7,7 +7,9 @@ if is_slowdown{
 }
 
 event_inherited(); 
-
+if is_frozen{
+	exit
+}
 
 
 

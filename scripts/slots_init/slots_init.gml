@@ -206,4 +206,7 @@ function slots_init(){
 	register_card("skewer_bomb",obj_skewer_bomb,[
 	    {"shape":0, "sprite":spr_skewer_bomb_icon, "cost":50, "cooldown":30*60, "description":"麻辣串炸弹：炸死单格范围空军","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_skewer_bomb}
 	])
+	register_card("gatlin_ice_long_bao",obj_gatlin_ice_long_bao,[
+	    {"shape":0, "sprite":spr_gatlin_ice_long_bao, "cost":300, "cooldown":50*60, "description":"机枪冰冻小笼包：发射四发冰包子","plant_type":"normal","feature_type":"upgrade","target_card":"double_ice_long_bao"}
+	])
 }

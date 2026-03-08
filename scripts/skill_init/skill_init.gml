@@ -45,4 +45,5 @@ function skill_init(){
 	register_card_skill("double_ice_long_bao","cycle",[1.3*60,1.25*60,1.2*60,1.15*60,1.1*60,1.05*60,1*60,0.95*60,0.9*60])
 	register_card_skill("cat_chest","cooldown",[30*60,28*60,26*60,24*60,22*60,20*60,18*60,15*60,12*60])
 	register_card_skill("skewer_bomb","atk",[900,950,1000,1050,1100,1150,1200,1250,1300])
+	register_card_skill("gatlin_ice_long_bao","cooldown",[50*60,45*60,41*60,37*60,32*60,27*60,22*60,17*60,12*60])
 }

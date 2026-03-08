@@ -84,10 +84,10 @@ if state = ENEMY_STATE.ACTING{
 	}
 	else{
 		if reversed{
-			image_index = 8 - (floor(timer/flash_speed) mod 8) + 7
+			image_index = 8 - (floor(timer/flash_speed) mod 8) + 8
 		}
 		else{
-			image_index = (floor(timer/flash_speed) mod 8) + 7
+			image_index = (floor(timer/flash_speed) mod 8) + 8
 		}
 	}
 	if timer >= flash_speed * 8 or hp <= 0{

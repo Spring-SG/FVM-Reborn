@@ -2,6 +2,7 @@ if global.is_paused{
 	exit
 }
 event_inherited(); 
+
 if is_frozen{
 	exit
 }

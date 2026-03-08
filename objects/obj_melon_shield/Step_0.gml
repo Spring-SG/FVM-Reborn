@@ -15,7 +15,9 @@ else{
 }
 event_inherited();
 
-
+if is_frozen{
+	exit
+}
 
 if current_hp > hp && shape >= 1{
 	bleed_damage = current_hp - hp

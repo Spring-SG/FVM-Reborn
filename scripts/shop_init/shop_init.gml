@@ -7,6 +7,7 @@ function shop_init(){
 	register_goods("ice_egg_boiler_pult",{"type":"card","cost":"30000","unlock_item_id":"ice_egg_boiler_pult","description":"冰煮蛋器：投掷减速冰鸡蛋","display_name":"冰煮蛋器"})
 	register_goods("chocolate_cannon",{"type":"card","cost":"80000","unlock_item_id":"chocolate_cannon","description":"巧克力大炮：发射3*3范围爆炸的巧克力球","display_name":"巧克力大炮"})
 	register_goods("firework_dragon",{"type":"card","cost":"80000","unlock_item_id":"firework_dragon","description":"花火龙：立即生产6朵火苗","display_name":"花火龙"})
+	register_goods("gatlin_ice_long_bao",{"type":"card","cost":"20000","unlock_item_id":"gatlin_ice_long_bao","description":"机枪冰冻小笼包：发射四发冰包子","display_name":"机枪冰冻小笼包"})
 	
 	register_goods("card_slot_plus",{"type":"item","cost":"20000","unlock_item_id":"card_slot","description":"增加一格卡槽，仅可在卡槽数小于18时使用","display_name":"卡槽+1","spr":spr_slot_plus})
 	register_goods("card_slot_19",{"type":"item","cost":"50000","unlock_item_id":"card_slot_19","description":"解锁第19格卡槽","display_name":"卡槽第19格","spr":spr_slot_19})

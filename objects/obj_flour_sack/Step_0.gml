@@ -4,7 +4,8 @@ if global.is_paused{
 	alarm[1] = alarm_get(1) + 1
 	exit
 }
-
+ice_timer = 0
+frozen_timer = 0
 event_inherited();
 
 if origin_row == -1{
