@@ -78,6 +78,7 @@ if global.debug{
 			new_plant.depth = depth_value
 			new_plant.atk = 90
 			new_plant.ice_timer = 600
+			new_plant.frozen_timer = 240
 			instance_create_depth(grid_pos.x,grid_pos.y,-2,obj_place_effect)        
 			audio_play_sound(snd_place1,0,0)
 		}

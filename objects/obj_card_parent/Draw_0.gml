@@ -19,5 +19,8 @@ else{
 if instance_exists(banding_star_obj){
 	banding_star_obj.depth = depth -1
 }
+if is_frozen{
+	draw_sprite_ext(spr_mouse_frozen,0,x,y+95,1.8,1.8,0,c_white,1)
+}
 
 

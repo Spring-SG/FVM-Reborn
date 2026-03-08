@@ -23,7 +23,7 @@ function skill_init(){
 	register_card_skill("brazier","hp",[50,55,60,65,70,75,80,85,90])
 	register_card_skill("large_fire","flame_produce",[25,27,29,31,34,37,40,44,48])
 	register_card_skill("iron_fishbone","cycle",[1.3*60,1.25*60,1.2*60,1.15*60,1.1*60,1.05*60,1*60,0.95*60,0.9*60])
-	register_card_skill("gatlin_long_bao","cooldown",[50*60,47*60,44*60,41*60,37*60,33*60,29*60,24*60,19*60])
+	register_card_skill("gatlin_long_bao","cooldown",[50*60,45*60,41*60,37*60,32*60,27*60,22*60,17*60,12*60])
 	register_card_skill("rotating_coffee_pot","cooldown",[50*60,47*60,44*60,41*60,37*60,33*60,29*60,24*60,19*60])
 	register_card_skill("takoyaki","cooldown",[50*60,47*60,44*60,41*60,37*60,33*60,29*60,24*60,19*60])
 	register_card_skill("wine_bottle_bomb","atk",[900,950,1000,1050,1100,1150,1200,1250,1300])
@@ -41,4 +41,7 @@ function skill_init(){
 	register_card_skill("chocolate_pult","cycle",[3*60,2.9*60,2.8*60,2.7*60,2.6*60,2.4*60,2.2*60,2*60,1.8*60])
 	register_card_skill("chocolate_cannon","cooldown",[50*60,47*60,44*60,41*60,38*60,35*60,32*60,29*60,26*60])
 	register_card_skill("firework_dragon","flame_produce",[25,27,29,31,34,37,40,44,48])
+	register_card_skill("cherry_pudding","cooldown",[7*60,6.5*60,6*60,5.5*60,5*60,4.5*60,4*60,3.5*60,3*60])
+	register_card_skill("double_ice_long_bao","cycle",[1.3*60,1.25*60,1.2*60,1.15*60,1.1*60,1.05*60,1*60,0.95*60,0.9*60])
+	register_card_skill("cat_chest","cooldown",[30*60,28*60,26*60,24*60,22*60,20*60,18*60,15*60,12*60])
 }

@@ -8,6 +8,7 @@ target_row = -1
 start_y = 0
 target_y_calculated = false
 burnt = 0
+bounced = false
 brazier_list = ds_list_create()
 image_xscale = 1.6
 image_yscale = 1.6
