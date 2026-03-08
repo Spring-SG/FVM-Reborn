@@ -15,9 +15,9 @@ btn2.map_id = "tower_cake"
 btn2.room_target = room_menu
 btn2.level_require = 8
 
-//var btn3 = instance_create_depth(x+310,y+240,depth-1,obj_world_map_choose_btn)
-//btn3.sprite_index = spr_world_map_volcanic_island
-//btn3.map_name = "火山岛"
-//btn3.map_id = "volcanic_island"
-//btn3.room_target = room_map
-//btn3.level_require = 21
+var btn3 = instance_create_depth(x+310,y+240,depth-1,obj_world_map_choose_btn)
+btn3.sprite_index = spr_world_map_volcanic_island
+btn3.map_name = "火山岛"
+btn3.map_id = "volcanic_island"
+btn3.room_target = room_map
+btn3.level_require = 21

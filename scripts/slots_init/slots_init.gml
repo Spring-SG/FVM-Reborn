@@ -203,4 +203,7 @@ function slots_init(){
 	register_card("cat_chest",obj_cat_chest,[
 	    {"shape":0, "sprite":spr_cat_chest_1, "cost":200, "cooldown":30*60, "description":"猫猫箱：将老鼠惊吓至相邻行并使其丢弃防具","plant_type":"normal","feature_type":"normal","target_card":"none"}
 	])
+	register_card("skewer_bomb",obj_skewer_bomb,[
+	    {"shape":0, "sprite":spr_skewer_bomb_icon, "cost":50, "cooldown":30*60, "description":"麻辣串炸弹：炸死单格范围空军","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_skewer_bomb}
+	])
 }
