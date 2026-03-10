@@ -27,6 +27,7 @@ attack_anim = 12;
 idle_anim = 11
 flash_speed = 5
 plant_type = "normal"
+target_type = "pierce"
 is_slowdown = false
 
 awake_anim = 5

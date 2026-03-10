@@ -1,8 +1,8 @@
 function enemy_info_island_init(){
 	enemy_info_island_register_init()
 	register_enemy_info_island("normal_mouse","很普通的老鼠，没有特殊能力。遇到可攻击的卡片就会啃食。")
-	register_enemy_info_island("football_fan_mouse","足球帽使他的脑门更硬了。")
-	register_enemy_info_island("iron_pan_mouse","头顶的铁锅使他能够承受大量伤害。")
+	register_enemy_info_island("football_fan_mouse","足球帽使它的脑门更硬了。")
+	register_enemy_info_island("iron_pan_mouse","头顶的铁锅使它能够承受大量伤害。")
 	register_enemy_info_island("skateboard_mouse","入场时以0.9的速度移动，遇到第一个卡片后，会使用滑板翻越该卡片，并\n落至该卡片的后面一格，落地后移动速度降低至0.3。无法越过重型防御。\nTip：可以将低耗火的卡放在它面前，使其提前使用滑板。")
 	register_enemy_info_island("zombie_with_flower_pot","入场时以0.36的速度移动，花盆被击落后，会进入发怒状态，速度提高至\n0.6，攻击间隔减半。")
 	register_enemy_info_island("landlady_mouse","盾牌可以抵挡直射伤害，并免疫其带来的负面效果，但是无法抵挡投掷和穿\n透伤害。")
@@ -41,4 +41,12 @@ function enemy_info_island_init(){
 	register_enemy_info_island("submarine_mouse","生命值极高，且速度很快，会对你的防线造成很大威胁。")
 	register_enemy_info_island("rowboat_mouse","会从第八列入场，并且秒杀卡片。每前进两格，就会后退一格。")
 	register_enemy_info_island("water_penguin_mouse","入场后，如果碰到卡片，则会向本行最左侧的一张卡片投掷冰炸弹，冰炸弹\n会将3*3范围内的卡片冰冻4秒并减速10秒。如果没有碰到卡片，则会在7秒\n后投掷冰炸弹。")
+	register_enemy_info_island("pink_paul","粉红保罗会在水池中出场，并使用下列技能的随机一个，随后消失。\n技能1：粉红保罗连续发射四个海星，摧毁随机4格的卡片。\n技能2：粉红保罗在2-4列的随机行钻出水面，随后使用触手拍打，摧毁十字\n范围上的四张卡片。\n粉红保罗每次钻出水面都会摧毁本格卡片。")
+	register_enemy_info_island("cucumber_normal_mouse","很普通的老鼠，没有特殊能力。遇到可攻击的卡片就会啃食。")
+	register_enemy_info_island("apple_football_fan_mouse","足球帽使它的脑门更硬了。")
+	register_enemy_info_island("egg_iron_pan_mouse","头顶的铁锅使它能够承受大量伤害。")
+	register_enemy_info_island("penguin_mouse","入场后，如果碰到卡片，则会向本行最左侧的一张卡片投掷冰炸弹，冰炸弹\n会将3*3范围内的卡片冰冻4秒并减速10秒。如果没有碰到卡片，则会在7秒\n后投掷冰炸弹。")
+	register_enemy_info_island("arson_mouse","入场后，如果碰到卡片，则会向本行最左侧的一张卡片投掷炸弹，炸弹会摧\n毁3*3范围内的卡片。如果没有碰到卡片，则会在7秒后投掷炸弹。投掷后速\n度降低至0.3。")
+	register_enemy_info_island("non_mainstream_mouse","使用华丽的舞步躲避子弹，但是无法躲避咖啡喷雾、鱼刺、炸弹等非实体伤\n害。")
+	register_enemy_info_island("flute_mouse","入场5秒后会奏响笛子，为场上所有敌人恢复200点生命值，如果该敌人的生\n命上限不足200则会补足200。首次吹奏后，每10秒都会再次吹奏笛子。")
 }

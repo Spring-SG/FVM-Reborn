@@ -126,7 +126,7 @@ if state == ENEMY_STATE.APPEAR{
 			target_col = 0
 		}
 	
-		var bullet = instance_create_depth(x-10,y-90,-200,obj_penguin_bullet)
+		var bullet = instance_create_depth(x-10,y-90,-800,obj_penguin_bullet)
 		bullet.row = grid_row
 		bullet.target_col = target_col
 		bullet.damage = 10

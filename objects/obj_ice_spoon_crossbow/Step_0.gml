@@ -35,7 +35,7 @@ var target_enemy = noone
 var min_distance = 10000 // 设置一个足够大的初始值
 
 with(obj_enemy_parent){
-    if (grid_row == other.grid_row && grid_col >= other.grid_col && grid_col <= (global.grid_cols + 1)){
+    if (grid_row == other.grid_row && grid_col >= other.grid_col && grid_col <= (global.grid_cols + 1)) && can_target_on("throw",target_type){
         var distance = grid_col - other.grid_col
         if (distance < min_distance) {
             min_distance = distance
