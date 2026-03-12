@@ -32,6 +32,7 @@ wake_timer = 0
 idle_anim = 8
 flash_speed = 5
 plant_type = "normal"
+can_mouse_list = ["can_mouse"]
 if shape >= 2{
 	invincible = true
 }

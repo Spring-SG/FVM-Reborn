@@ -20,17 +20,12 @@ y -= cvspeed
 if x >= target_x - 10 && x <= target_x + 10{
 	var erase_col = target_col
 	var erase_row = row
-	with obj_card_parent{
-		if(grid_col == erase_col && grid_row == erase_row && plant_id != "player" && plant_type != "lilypad" && plant_type != "coffee"){
-			if hp >= max_hp{
-				obj_task_manager.card_loss++
-			}
-			instance_destroy()
-		}
-	}
+	
 	
 	var inst_y = get_world_position_from_grid(target_col,row).y
-	instance_create_depth(target_x+30,inst_y-30,-800,obj_paul_bullet_effect)
+	var inst = instance_create_depth(target_x+30,inst_y-30,-800,obj_paul_bullet_effect)
+	inst.row = erase_row
+	inst.col = erase_col
 	
 	instance_destroy()
 }

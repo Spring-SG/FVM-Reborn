@@ -34,7 +34,7 @@ if state == ENEMY_STATE.ACTING{
 		//y += 1.00
 	}
 	if timer >= flash_speed * 16 or hp <= 0{
-		y = ystart
+		//y = ystart
 		state = ENEMY_STATE.NORMAL
 	}
 }

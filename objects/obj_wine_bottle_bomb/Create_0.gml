@@ -16,6 +16,8 @@ else if shape == 2{
 
 attack_anim = 7;
 
+can_mouse_list = ["can_mouse"]
+
 idle_anim = 9
 flash_speed = 5
 plant_type = "normal"

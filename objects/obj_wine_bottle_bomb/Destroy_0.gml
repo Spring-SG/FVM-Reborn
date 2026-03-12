@@ -6,6 +6,7 @@
 	var _y = y;
 
 	with (obj_enemy_parent) {
+		
 			if mouse_id == "ice_residue"{
 				if shape == "ice" && state == BOSS_STATE.SKILL2{
 					timer = 0
@@ -19,6 +20,10 @@
 			}
 		
 			if (grid_row == other.grid_row||(abs(x - other.x) <= 65 && other.shape >= 2)) {
+				if array_get_index(other.can_mouse_list,mouse_id) != -1 && !can_dropped{
+					into_act()
+				}
+				else{
 		        if (immune_to_ash && hp>other.atk) {
 		            // 对免疫灰烬的敌人只造成伤害
 		            hp -= other.atk;
@@ -41,7 +46,7 @@
 		            //effect_create_above(ef_explosion, x, y, 1, c_yellow);
 		        }
 		    }
-		
+		}
 	}
 
 	// 播放倭瓜攻击效果

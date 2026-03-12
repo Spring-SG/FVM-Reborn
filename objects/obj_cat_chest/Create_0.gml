@@ -19,3 +19,5 @@ target_type = "normal"
 is_slowdown = false
 scared_enemy = []
 current_hp = hp
+
+special_drop_list = ["can_mouse"]

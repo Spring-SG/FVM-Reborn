@@ -28,17 +28,19 @@ if state = ENEMY_STATE.ACTING{
 	image_index = floor(timer/flash_speed) mod 31
 	if timer == flash_speed * 31 - 1{
 		with obj_enemy_parent{
-			if maxhp < 200{
-				maxhp = 200
+			if hp > 0{
+				if maxhp < 200{
+					maxhp = 200
+				}
+				if hp <= maxhp - 200{
+					hp += 200
+				}
+				else{
+					hp = maxhp
+				}
+				var inst = instance_create_depth(x,y-45,depth-1,obj_card_heal_effect)
+				inst.sprite_index = spr_mouse_heal_effect
 			}
-			if hp <= maxhp - 200{
-				hp += 200
-			}
-			else{
-				hp = maxhp
-			}
-			var inst = instance_create_depth(x,y-45,depth-1,obj_card_heal_effect)
-			inst.sprite_index = spr_mouse_heal_effect
 		}
 		state = ENEMY_STATE.NORMAL
 		sprite_index = spr_flute_mouse

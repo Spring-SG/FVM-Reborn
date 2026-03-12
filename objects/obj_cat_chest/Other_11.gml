@@ -6,6 +6,9 @@ for(var i = 0; i < array_length(scared_enemy);i++){
 			shield_hp -= shield_max_hp
 			hp -= other.atk
 			event_user(0)
+			if array_get_index(other.special_drop_list,mouse_id)!= -1{
+				armor_drop()
+			}
 			if grid_row == 0 {
 				if global.row_feature[1] == global.row_feature[0]{
 					y_move = global.grid_cell_size_y/left_move_flashs

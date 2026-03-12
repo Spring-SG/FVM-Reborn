@@ -24,7 +24,14 @@
 
 	with (obj_enemy_parent) {
 		
-			if (health > 0 && point_distance(x, y, _x, _y) < _range && grid_row >= other.grid_row-1&&grid_row <= other.grid_row+1) {
+		
+		if (point_distance(x, y, _x, _y) < _range && grid_row >= other.grid_row-1&&grid_row <= other.grid_row+1) {
+			if array_get_index(other.can_mouse_list,mouse_id) != -1 && ! can_dropped{
+			
+		into_act()
+			
+		}
+		else{
 		        if (immune_to_ash && hp>other.atk) {
 		            // 对免疫灰烬的敌人只造成伤害
 		            hp -= other.atk;
@@ -47,6 +54,7 @@
 		            //effect_create_above(ef_explosion, x, y, 1, c_yellow);
 		        }
 		    }
+		}
 		
 	}
 
