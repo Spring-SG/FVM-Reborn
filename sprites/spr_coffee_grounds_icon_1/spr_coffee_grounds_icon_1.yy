@@ -81,8 +81,8 @@
   "swatchColours":null,
   "swfPrecision":0.5,
   "textureGroupId":{
-    "name":"Environment",
-    "path":"texturegroups/Environment",
+    "name":"Food",
+    "path":"texturegroups/Food",
   },
   "type":0,
   "VTile":false,
