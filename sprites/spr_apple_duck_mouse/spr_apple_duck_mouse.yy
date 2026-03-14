@@ -207,8 +207,8 @@
   "swatchColours":null,
   "swfPrecision":0.5,
   "textureGroupId":{
-    "name":"Default",
-    "path":"texturegroups/Default",
+    "name":"Mouse",
+    "path":"texturegroups/Mouse",
   },
   "type":0,
   "VTile":false,

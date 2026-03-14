@@ -57,3 +57,5 @@ Temporary Items
 # GameMaker temporary files
 *.resource_order
 *.old
+
+tmp/
