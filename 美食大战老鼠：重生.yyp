@@ -288,6 +288,7 @@
   "name":"美食大战老鼠：重生",
   "resources":[
     {"id":{"name":"font_hei","path":"fonts/font_hei/font_hei.yy",},},
+    {"id":{"name":"font_number","path":"fonts/font_number/font_number.yy",},},
     {"id":{"name":"font_pixel","path":"fonts/font_pixel/font_pixel.yy",},},
     {"id":{"name":"font_song","path":"fonts/font_song/font_song.yy",},},
     {"id":{"name":"font_song2","path":"fonts/font_song2/font_song2.yy",},},

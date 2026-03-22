@@ -85,7 +85,7 @@ function craft_rule_init(){
 		"7",
 		{
 		"spices_require":"secret_spices",
-		"spices_amount":75,
+		"spices_amount":55,
 		"clover_require":"clover_1",
 		"clover_amount":1,
 		"gold_amount":400
@@ -105,7 +105,7 @@ function craft_rule_init(){
 		"9",
 		{
 		"spices_require":"secret_spices",
-		"spices_amount":130,
+		"spices_amount":150,
 		"clover_require":"none",
 		"clover_amount":0,
 		"gold_amount":700
@@ -115,7 +115,7 @@ function craft_rule_init(){
 		"10",
 		{
 		"spices_require":"secret_spices",
-		"spices_amount":160,
+		"spices_amount":150,
 		"clover_require":"clover_2",
 		"clover_amount":2,
 		"gold_amount":1300

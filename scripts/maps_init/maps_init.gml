@@ -119,7 +119,8 @@ function maps_init(){
 					"boss_music":mus_delicious_tower_boss,
 					"pre_level":"tower_cake_3_2",
 					"rewards":[
-						{"card_id":"takoyaki","target_shape":1}
+						{"card_id":"takoyaki","target_shape":1},
+						{"card_id":"chocolate_bread","target_shape":1}
 					]
 				},
 				{

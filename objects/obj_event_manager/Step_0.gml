@@ -77,6 +77,31 @@ if global.level_id == "cheese_castle" && event_timer == 1{
 	var inst2 = instance_create_depth(obs_pos2.x,obs_pos2.y-35,-1200,obj_obstacle)
 	inst2.row = 5
 }
+if global.level_id == "mint_beach_daytime" && event_timer == 1{
+	var obs_pos = get_world_position_from_grid(5,0)
+	var inst = instance_create_depth(obs_pos.x,obs_pos.y-35,-1200,obj_obstacle)
+	inst.row = 0
+	var obs_pos2 = get_world_position_from_grid(7,3)
+	var inst2 = instance_create_depth(obs_pos2.x,obs_pos2.y-35,-1200,obj_obstacle)
+	inst2.row = 3
+	var obs_pos3 = get_world_position_from_grid(3,5)
+	var inst3 = instance_create_depth(obs_pos3.x,obs_pos3.y-35,-1200,obj_obstacle)
+	inst3.row = 5
+}
+if global.level_id == "mint_beach_night" && event_timer == 1{
+	var obs_pos = get_world_position_from_grid(2,0)
+	var inst = instance_create_depth(obs_pos.x,obs_pos.y-35,-1200,obj_obstacle)
+	inst.row = 0
+	var obs_pos2 = get_world_position_from_grid(1,3)
+	var inst2 = instance_create_depth(obs_pos2.x,obs_pos2.y-35,-1200,obj_obstacle)
+	inst2.row = 3
+	var obs_pos3 = get_world_position_from_grid(8,3)
+	var inst3 = instance_create_depth(obs_pos3.x,obs_pos3.y-35,-1200,obj_obstacle)
+	inst3.row = 3
+	var obs_pos4 = get_world_position_from_grid(5,6)
+	var inst4 = instance_create_depth(obs_pos4.x,obs_pos4.y-35,-1200,obj_obstacle)
+	inst4.row = 6
+}
 
 if (global.level_id == "mustard_cottage_daytime" || global.level_id == "mustard_cottage_night") && obj_battle.current_wave >= global.level_file.elite_wave && obj_battle.level_stage != "boss"{
 	if event_timer mod 1800 == 5{
