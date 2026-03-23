@@ -77,6 +77,7 @@ function refresh_reward_button(){
 		var inst = instance_create_depth(x+472+136*i,y-280,depth-i-1,obj_tower_cake_card_reward)
 		inst.target_card_id = c_level_data.rewards[i].card_id
 		inst.target_shape = c_level_data.rewards[i].target_shape
+		inst.btn_index = i + 1
 		
 		if (array_get_index(global.save_data.completed_levels,c_level_data.id) != -1){
 			inst.unlocked = true

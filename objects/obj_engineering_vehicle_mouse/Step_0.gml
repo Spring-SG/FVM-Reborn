@@ -6,6 +6,10 @@ if global.is_paused{
 
 event_inherited();
 
+if is_frozen || is_stun{
+	exit
+}
+
 if (hp <= 0) {
 	sprite_index = spr_engineering_vehicle_mouse
 	if state != ENEMY_STATE.DEAD{

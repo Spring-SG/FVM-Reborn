@@ -1,4 +1,4 @@
-draw_sprite(global.level_data.level_sprite,0,0,0)
+draw_sprite(global.level_data.level_sprite,map_spr_index,0,0)
 draw_set_valign(fa_top)
 draw_set_halign(fa_left)
 draw_set_color(c_white)

@@ -6,5 +6,7 @@ state = "start"
 target_col = -1
 target_row = -1
 
+can_mouse_list = ["can_mouse"]
+
 damage = 900
 timer = 0

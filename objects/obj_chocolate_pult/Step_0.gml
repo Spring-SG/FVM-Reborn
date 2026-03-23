@@ -17,6 +17,10 @@ if timer == 0{
 	}
 }
 
+if is_frozen || state == CARD_STATE.SLEEP{
+	exit
+}
+
 // 检测自身右方是否有敌人，并获取最近的敌人
 var has_enemy = false
 var target_enemy = noone

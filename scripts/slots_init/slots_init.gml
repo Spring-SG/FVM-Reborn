@@ -121,7 +121,7 @@ function slots_init(){
 	]);
 	register_card("takoyaki", obj_takoyaki, [
 	    {"shape":0, "sprite":spr_takoyaki, "cost":225, "cooldown":50*60, "description":"章鱼烧：甩出两发追踪飞镖","plant_type":"normal","feature_type":"normal","target_card":"wooden_plate"},
-	    {"shape":1, "sprite":spr_takoyaki_1, "cost":225, "cooldown":50*60, "description":"两栖章鱼烧：甩出两发追踪飞镖","plant_type":"normal","feature_type":"amphi","target_card":"none"},
+	    {"shape":1, "sprite":spr_takoyaki_icon_1, "cost":225, "cooldown":50*60, "description":"两栖章鱼烧：甩出两发追踪飞镖","plant_type":"normal","feature_type":"amphi","target_card":"none","place_preview":spr_takoyaki_1},
 		{"shape":2, "sprite":spr_takoyaki_2, "cost":225, "cooldown":50*60, "description":"火影章鱼烧：甩出四发追踪飞镖","plant_type":"normal","feature_type":"amphi","target_card":"none"}
 	]);
 	register_card("wooden_cork",obj_wooden_cork,[
@@ -192,15 +192,21 @@ function slots_init(){
 	    {"shape":1, "sprite":spr_firework_dragon_1, "cost":0, "cooldown":75*60, "description":"灼灼花火龙：立即生产6朵火苗","plant_type":"normal","feature_type":"normal","target_card":"none"},
 		{"shape":2, "sprite":spr_firework_dragon_icon_2, "cost":0, "cooldown":75*60, "description":"炽焰花火龙：立即生产12朵火苗","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_firework_dragon_2}
 	]);
-	register_card("cherry_pudding",obj_cherry_pudding,[
-	    {"shape":0, "sprite":spr_cherry_pudding, "cost":100, "cooldown":7*60, "description":"樱桃反弹布丁：反弹子弹并附加伤害","plant_type":"normal","feature_type":"normal","target_card":"none"},
-	    {"shape":1, "sprite":spr_cherry_pudding_1, "cost":75, "cooldown":7*60, "description":"节能反弹布丁：反弹子弹并附加伤害","plant_type":"normal","feature_type":"normal","target_card":"none"},
-		{"shape":2, "sprite":spr_cherry_pudding_2, "cost":75, "cooldown":7*60, "description":"热量反弹布丁：反弹子弹并附加伤害","plant_type":"normal","feature_type":"normal","target_card":"none"}
-	])
 	register_card("double_ice_long_bao",obj_double_ice_long_bao,[
 	    {"shape":0, "sprite":spr_double_ice_long_bao, "cost":225, "cooldown":7*60, "description":"双层冰冻小笼包：发射两发冰包子","plant_type":"normal","feature_type":"normal","target_card":"none"}
 	])
 	register_card("cat_chest",obj_cat_chest,[
 	    {"shape":0, "sprite":spr_cat_chest_1, "cost":200, "cooldown":30*60, "description":"猫猫箱：将老鼠惊吓至相邻行并使其丢弃防具","plant_type":"normal","feature_type":"normal","target_card":"none"}
+	])
+	register_card("cherry_pudding",obj_cherry_pudding,[
+	    {"shape":0, "sprite":spr_cherry_pudding, "cost":100, "cooldown":7*60, "description":"樱桃反弹布丁：反弹子弹并附加伤害","plant_type":"normal","feature_type":"normal","target_card":"none"},
+	    {"shape":1, "sprite":spr_cherry_pudding_1, "cost":75, "cooldown":7*60, "description":"节能反弹布丁：反弹子弹并附加伤害","plant_type":"normal","feature_type":"normal","target_card":"none"},
+		{"shape":2, "sprite":spr_cherry_pudding_2, "cost":75, "cooldown":7*60, "description":"热量反弹布丁：反弹子弹并附加伤害","plant_type":"normal","feature_type":"normal","target_card":"none"}
+	])
+	register_card("skewer_bomb",obj_skewer_bomb,[
+	    {"shape":0, "sprite":spr_skewer_bomb_icon, "cost":50, "cooldown":30*60, "description":"麻辣串炸弹：炸死单格范围空军","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_skewer_bomb}
+	])
+	register_card("gatlin_ice_long_bao",obj_gatlin_ice_long_bao,[
+	    {"shape":0, "sprite":spr_gatlin_ice_long_bao, "cost":300, "cooldown":50*60, "description":"机枪冰冻小笼包：发射四发冰包子","plant_type":"normal","feature_type":"upgrade","target_card":"double_ice_long_bao"}
 	])
 }

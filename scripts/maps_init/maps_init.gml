@@ -108,6 +108,93 @@ function maps_init(){
 						{"card_id":"rotating_coffee_pot","target_shape":1}
 					]
 				},
+				{
+					"id":"tower_cake_4_1",
+					"name":"魔塔4层-先锋",
+					"level_file":"tower/tower-4-1.json",
+					"hard_level_file":"tower/tower-4-1_hard.json",
+					"level_sprite":spr_cocoa_island_daytime,
+					"pre_music":mus_delicious_tower_pre,
+					"elite_music":mus_delicious_tower_elite,
+					"boss_music":mus_delicious_tower_boss,
+					"pre_level":"tower_cake_3_2",
+					"rewards":[
+						{"card_id":"takoyaki","target_shape":1},
+						{"card_id":"chocolate_bread","target_shape":1}
+					]
+				},
+				{
+					"id":"tower_cake_4_2",
+					"name":"魔塔4层-精英",
+					"level_file":"tower/tower-4-2.json",
+					"hard_level_file":"tower/tower-4-2_hard.json",
+					"level_sprite":spr_cocoa_island_daytime,
+					"pre_music":mus_delicious_tower_pre,
+					"elite_music":mus_delicious_tower_elite,
+					"boss_music":mus_delicious_tower_boss,
+					"pre_level":"tower_cake_4_1",
+					"rewards":[
+						{"card_id":"large_fire","target_shape":1}
+					]
+				},
+				{
+					"id":"tower_cake_5_1",
+					"name":"魔塔5层-先锋",
+					"level_file":"tower/tower-5-1.json",
+					"hard_level_file":"tower/tower-5-1_hard.json",
+					"level_sprite":spr_cocoa_island_night,
+					"pre_music":mus_delicious_tower_pre,
+					"elite_music":mus_delicious_tower_elite,
+					"boss_music":mus_delicious_tower_boss,
+					"pre_level":"tower_cake_4_2",
+					"rewards":[
+						{"card_id":"small_fire","target_shape":1}
+					]
+				},
+				{
+					"id":"tower_cake_5_2",
+					"name":"魔塔5层-精英",
+					"level_file":"tower/tower-5-2.json",
+					"hard_level_file":"tower/tower-5-2_hard.json",
+					"level_sprite":spr_cocoa_island_night,
+					"pre_music":mus_delicious_tower_pre,
+					"elite_music":mus_delicious_tower_elite,
+					"boss_music":mus_delicious_tower_boss,
+					"pre_level":"tower_cake_5_1",
+					"rewards":[
+						{"card_id":"ice_egg_boiler_pult","target_shape":1},
+						{"card_id":"coffee_pot","target_shape":1}
+					]
+				},
+				{
+					"id":"tower_cake_6_1",
+					"name":"魔塔6层-先锋",
+					"level_file":"tower/tower-6-1.json",
+					"hard_level_file":"tower/tower-6-1_hard.json",
+					"level_sprite":spr_abyss,
+					"pre_music":mus_delicious_tower_pre,
+					"elite_music":mus_delicious_tower_elite,
+					"boss_music":mus_delicious_tower_boss,
+					"pre_level":"tower_cake_5_2",
+					"rewards":[
+						{"card_id":"cherry_pudding","target_shape":1}
+					]
+				},
+				{
+					"id":"tower_cake_6_2",
+					"name":"魔塔6层-精英",
+					"level_file":"tower/tower-6-2.json",
+					"hard_level_file":"tower/tower-6-2_hard.json",
+					"level_sprite":spr_abyss,
+					"pre_music":mus_delicious_tower_pre,
+					"elite_music":mus_delicious_tower_elite,
+					"boss_music":mus_delicious_tower_boss,
+					"pre_level":"tower_cake_6_1",
+					"rewards":[
+						{"card_id":"melon_shield","target_shape":1},
+						{"card_id":"double_water_pipe","target_shape":1}
+					]
+				},
 			]
 		}
 	)
@@ -123,7 +210,7 @@ function maps_init(){
 					"name":"芥末小屋（日）",
 					"button_spr":spr_levelselect_button_volcanic,
 					"button_index":0,
-					"button_x":1365,
+					"button_x":1415,
 					"button_y":455,
 					"level_file":"volcanic/mustard_cottage_daytime.json",
 					"hard_level_file":"volcanic/mustard_cottage_daytime_hard.json",
@@ -132,6 +219,70 @@ function maps_init(){
 					"elite_music":mus_volcanic_island_daytime_elite,
 					"boss_music":mus_volcanic_island_daytime_boss,
 					"player_level_require":21,
+					"pre_level_require":[]
+				},
+				{
+					"id":"mustard_cottage_night",
+					"name":"芥末小屋（夜）",
+					"button_spr":spr_levelselect_button_volcanic,
+					"button_index":1,
+					"button_x":1290,
+					"button_y":540,
+					"level_file":"volcanic/mustard_cottage_night.json",
+					"hard_level_file":"volcanic/mustard_cottage_night_hard.json",
+					"level_sprite":spr_mustard_cottage_night,
+					"pre_music":mus_volcanic_island_night_pre,
+					"elite_music":mus_volcanic_island_night_elite,
+					"boss_music":mus_volcanic_island_night_boss,
+					"player_level_require":22,
+					"pre_level_require":[]
+				},
+				{
+					"id":"mint_beach_daytime",
+					"name":"薄荷海滩（日）",
+					"button_spr":spr_levelselect_button_volcanic,
+					"button_index":2,
+					"button_x":1390,
+					"button_y":650,
+					"level_file":"volcanic/mint_beach_daytime.json",
+					"hard_level_file":"volcanic/mint_beach_daytime_hard.json",
+					"level_sprite":spr_mint_beach_daytime,
+					"pre_music":mus_volcanic_island_daytime_pre,
+					"elite_music":mus_volcanic_island_daytime_elite,
+					"boss_music":mus_volcanic_island_daytime_boss,
+					"player_level_require":23,
+					"pre_level_require":[]
+				},
+				{
+					"id":"mint_beach_night",
+					"name":"薄荷海滩（夜）",
+					"button_spr":spr_levelselect_button_volcanic,
+					"button_index":3,
+					"button_x":1260,
+					"button_y":743,
+					"level_file":"volcanic/mint_beach_night.json",
+					"hard_level_file":"volcanic/mint_beach_night_hard.json",
+					"level_sprite":spr_mint_beach_night,
+					"pre_music":mus_volcanic_island_night_pre,
+					"elite_music":mus_volcanic_island_night_elite,
+					"boss_music":mus_volcanic_island_night_boss,
+					"player_level_require":24,
+					"pre_level_require":[]
+				},
+				{
+					"id":"cheese_castle",
+					"name":"芝士城堡",
+					"button_spr":spr_levelselect_button_volcanic,
+					"button_index":4,
+					"button_x":1070,
+					"button_y":755,
+					"level_file":"volcanic/cheese_castle.json",
+					"hard_level_file":"volcanic/cheese_castle_hard.json",
+					"level_sprite":spr_cheese_castle,
+					"pre_music":mus_volcanic_island_crown_pre,
+					"elite_music":mus_volcanic_island_crown_elite,
+					"boss_music":mus_volcanic_island_night_boss,
+					"player_level_require":25,
 					"pre_level_require":[]
 				},
 																										

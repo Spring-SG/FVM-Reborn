@@ -11,7 +11,7 @@ event_inherited();
 if grid_col <0 {
 	sprite_index = spr_frog_prince_mouse_land
 }
-if global.is_paused or is_frozen{
+if global.is_paused or is_frozen or is_stun{
 	exit
 }
 if state == ENEMY_STATE.ATTACK && sprite_index == spr_frog_prince_mouse_frog{

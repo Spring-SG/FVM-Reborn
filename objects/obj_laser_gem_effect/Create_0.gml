@@ -6,3 +6,5 @@ hitted_enemy = ds_list_create()
 
 row = 0
 timer = 0
+
+can_mouse_list = ["can_mouse"]

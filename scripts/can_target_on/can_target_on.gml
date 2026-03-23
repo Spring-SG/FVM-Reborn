@@ -14,6 +14,11 @@ function can_target_on(card_target_type,enemy_target_type){
 			return true
 		}
 	}
+	if enemy_target_type == "dance"{
+		if card_target_type == "pierce"{
+			return true
+		}
+	}
 	return false
 }
 

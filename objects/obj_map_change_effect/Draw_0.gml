@@ -1,0 +1,1 @@
+draw_sprite_ext(map_spr,map_spr_index,0,0,1,1,0,c_white,life/30)

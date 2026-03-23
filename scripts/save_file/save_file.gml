@@ -9,6 +9,7 @@ function save_file(file_slot) {
     // 打开文件进行写入
     var file = file_text_open_write(file_path);
     if (file == -1) {
+		show_notice("存档保存失败，请重试",60)
         show_debug_message("无法创建存档文件!");
         return false;
     }

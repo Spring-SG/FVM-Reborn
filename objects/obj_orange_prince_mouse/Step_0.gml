@@ -11,7 +11,7 @@ event_inherited();
 if grid_col <0 {
 	sprite_index = spr_orange_prince_mouse_land
 }
-if global.is_paused or is_frozen{
+if global.is_paused or is_frozen or is_stun{
 	exit
 }
 if state == ENEMY_STATE.ATTACK && sprite_index == spr_orange_prince_mouse_frog{
@@ -31,7 +31,7 @@ if state == ENEMY_STATE.ACTING{
 			image_index = floor(timer/flash_speed) mod 10
 		}
 		else{
-			image_index = floor(timer/flash_speed) mod 10 + 9
+			image_index = floor(timer/flash_speed) mod 10 + 10
 		}
 		if timer >= flash_speed * 4{
 			if is_slowdown{
@@ -83,7 +83,7 @@ if state == ENEMY_STATE.ACTING{
 			image_index = floor(timer/flash_speed) mod attack_anim + attack_anim + move_anim * 2 - 1
 		}
 		
-		if timer >= flash_speed * 10 or hp <= 0{
+		if timer >= flash_speed * 10 - 1 or hp <= 0{
 			audio_play_sound(snd_enter_water,0,0)
 			state = ENEMY_STATE.NORMAL
 			sprite_index = spr_orange_prince_mouse

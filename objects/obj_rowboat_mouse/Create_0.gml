@@ -22,3 +22,4 @@ image_alpha = 0
 atk_cycle = 1
 atk = 2000
 
+back_timer = 0

@@ -12,6 +12,9 @@ else{
 	sprite_index = spr_cat_box_1
 }
 event_inherited(); 
+if is_frozen{
+	exit
+}
 var current_flash_speed = flash_speed
 if is_slowdown{
 	current_flash_speed *= 2

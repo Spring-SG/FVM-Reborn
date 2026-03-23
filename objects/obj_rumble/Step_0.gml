@@ -32,7 +32,7 @@ switch state{
 		if timer >= wait_time{
 			timer = 0
 			state = BOSS_STATE.LAUNCH
-			wait_time = 180
+			wait_time = 300
 		}
 		break
 		

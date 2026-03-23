@@ -87,6 +87,15 @@ function refresh_task_progress(){
 						complete_count++
 					}
 				}
+				//限时类任务
+				if task_data.requirements[j].type == "time_limit"{
+					//增加通关用时
+					add_task_progress(task_id,j,obj_battle.battle_time/60)
+					//如果进度满足要求，则增加完成计数
+					if get_task_progress(task_id,j) <= task_data.requirements[j].require{
+						complete_count++
+					}
+				}
 				//不携带特定种类卡片类任务
 				if task_data.requirements[j].type == "card_type_limit"{
 					var limit_card_list = struct_get(card_group,task_data.requirements[j].limit_card_type)

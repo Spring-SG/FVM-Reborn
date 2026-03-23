@@ -20,12 +20,12 @@ if not hp_modified{
 			shield_max_hp *= 1.2
 		}
 		else{
-			maxhp *= 1.0
-			hp *= 1.0
-			helmet_hp *= 1.0
-			helmet_max_hp *= 1.0
-			shield_hp *= 1.0
-			shield_max_hp *= 1.0
+			maxhp *= 1.2
+			hp *= 1.2
+			helmet_hp *= 1.2
+			helmet_max_hp *= 1.2
+			shield_hp *= 1.2
+			shield_max_hp *= 1.2
 		}
 	}
 	if is_real(global.level_file.version) && !is_boss{

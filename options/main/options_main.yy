@@ -22,7 +22,7 @@
   "option_steam_app_id":"0",
   "option_template_description":null,
   "option_template_icon":"${base_options_dir}/main/template_icon.png",
-  "option_template_image":"${base_options_dir}/main/template_image.png",
+  "option_template_image":"${options_dir}/main/template_image.png",
   "option_window_colour":255,
   "resourceType":"GMMainOptions",
   "resourceVersion":"2.0",

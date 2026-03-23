@@ -39,6 +39,27 @@ else if grow_timer == 90*60+8*current_flash_speed{
 	flash_offset = 36
 	grow_timer++
 }
+// 计算深度值
+//var depth_value = -((y + depth_offset) * 10 + x);
+//depth = depth_value - depth_group * 100;
+
+if hp <= 0{
+	instance_destroy()
+}
+
+if flash_value >0{
+	
+	flash_value -= 10
+	
+}
+depth = calculate_plant_depth(grid_col, grid_row, plant_type)
+if instance_exists(banding_star_obj){
+banding_star_obj.depth = depth - 1
+}
+
+if is_frozen{
+	exit
+}
 
 if timer < current_flash_speed - 1 {
     timer++;
@@ -62,25 +83,6 @@ if timer < current_flash_speed - 1 {
     timer = 0;
 }
 
-
-
-// 计算深度值
-//var depth_value = -((y + depth_offset) * 10 + x);
-//depth = depth_value - depth_group * 100;
-
-if hp <= 0{
-	instance_destroy()
-}
-
-if flash_value >0{
-	
-	flash_value -= 10
-	
-}
-depth = calculate_plant_depth(grid_col, grid_row, plant_type)
-if instance_exists(banding_star_obj){
-banding_star_obj.depth = depth - 1
-}
 // 生产逻辑
 current_flash_speed = flash_speed
 if is_slowdown{

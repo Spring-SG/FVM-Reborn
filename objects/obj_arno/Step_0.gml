@@ -74,7 +74,7 @@ switch state{
 			}
 		}
 		
-		if timer == 1*60 || timer == 2.5*60 || timer == 4*60{
+		if timer == 1*60 /*|| timer == 2.5*60 || timer == 4*60*/{
 			var bullet = instance_create_depth(x-60,y-180,-200,obj_arno_bullet)
 			bullet.row = grid_row
 			bullet.target_col = target_col

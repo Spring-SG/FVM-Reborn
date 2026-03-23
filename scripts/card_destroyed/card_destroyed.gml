@@ -20,5 +20,5 @@ function card_destroyed(plant_inst) {
     }
     
     // 更新剩余植物的深度偏移
-    update_card_depths(col, row);
+    //update_card_depths(col, row);
 }

@@ -22,6 +22,7 @@ slot_rows = 11
 slot_cols = 10
 slot_surface = -1
 map_surface = -1
+y_offset = 0
 
 is_submenu_open = false
 

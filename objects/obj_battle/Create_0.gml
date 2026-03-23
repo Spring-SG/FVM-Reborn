@@ -3,7 +3,7 @@ surface_set_target(application_surface);
 draw_clear_alpha(c_black, 0); // 用透明黑色清除surface，alpha值0表示完全透明
 surface_reset_target();
 
-depth = 5
+depth = 50
 
 instance_create_depth(0,0,-900,obj_flame_manager)
 instance_create_depth(0,0,0,obj_event_manager)
@@ -34,6 +34,7 @@ global.grid_rows = global.level_file.map_rows
 chomp_sound_list = ds_list_create()
 battle_time = 0
 boss_count = 0
+map_spr_index = 0
 
 speed_up = false
 time_limit = -1

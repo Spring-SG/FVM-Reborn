@@ -9,7 +9,7 @@ draw_text(565,53,global.level_data.name)
 	surface_set_target(slot_surface)
 for(var i = 0 ; i < slot_rows ; i++){
         for(var j = 0 ; j < slot_cols ; j++){
-            draw_sprite_ext(spr_package_slot_bg,0,x+803+i*84,y + 375 + 96 * j,1.8,1.8,0,c_white,1)
+            draw_sprite_ext(spr_package_slot_bg,0,x+42+i*84,y + 48 + 96 * j- y_offset,1.8,1.8,0,c_white,1)
         }
     }
     
@@ -30,8 +30,8 @@ for(var i = 0 ; i < slot_rows ; i++){
         var col = card_index mod slot_rows;
         
         if (row < slot_rows) {
-            var card_x = x + 803 + col * 84;
-            var card_y = y + 375 + row * 96;
+            var card_x = x + 42 + col * 84
+            var card_y = y + 48 + row * 96 - y_offset;
             
             // 检查卡片是否已解锁
             var is_unlocked = false;
@@ -78,10 +78,14 @@ for(var i = 0 ; i < slot_rows ; i++){
                 // 检查鼠标是否悬停在卡片上
                 var spr_width = 84;
                 var spr_height = 96;
+				
+				var hover_x = x + 803 + col * 84
+				var hover_y = y + 375 + row * 96 - y_offset
                 
                 if (point_in_rectangle(mouse_x, mouse_y, 
-                                      card_x - spr_width/2, card_y - spr_height/2,
-                                      card_x + spr_width/2, card_y + spr_height/2)) {
+                                      hover_x - spr_width/2, hover_y - spr_height/2,
+                                      hover_x + spr_width/2, hover_y + spr_height/2)) 
+				&& mouse_y > y+315 && mouse_y < y+755{
                     hover_card_index = card_index;
                 }
             } else if (is_selected){
@@ -113,7 +117,7 @@ for(var i = 0 ; i < slot_rows ; i++){
     }
 	surface_reset_target()
 }
-draw_surface(slot_surface,x-25,y)
+draw_surface(slot_surface,x-25+803-42,y+ 375-48)
 {// 绘制悬停提示
     if (hover_card_index != -1 && !is_submenu_open) {
 		var card_id = global.player_deck[| hover_card_index*2];
