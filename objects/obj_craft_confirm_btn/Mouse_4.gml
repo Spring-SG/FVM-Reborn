@@ -26,6 +26,8 @@ if target_id != ""{
 			}
 			else{
 				display_spices_amount = get_material_amount(craft_rule_info.spices_require)
+				var sp_index = array_get_index(spices_use_order,craft_rule_info.spices_require)
+				spices_list[sp_index] =  craft_rule_info.spices_amount
 			}
 			if craft_rule_info.clover_require != "none"{
 				
@@ -43,6 +45,8 @@ if target_id != ""{
 				}
 				else{
 					display_clover_amount = get_material_amount(craft_rule_info.clover_require)
+					var cl_index = array_get_index(clover_use_order,craft_rule_info.clover_require)
+					clover_list[cl_index] =  craft_rule_info.clover_amount
 				}
 			}
 			if display_spices_amount >= craft_rule_info.spices_amount &&
@@ -91,6 +95,8 @@ if target_id != ""{
 			}
 			else{
 				display_crystal_amount = get_material_amount(craft_rule_info.crystal_require)
+				var cr_index = array_get_index(crystal_use_order,craft_rule_info.crystal_require)
+				crystal_list[cr_index] =  craft_rule_info.crystal_amount
 			}
 			if display_crystal_amount >= craft_rule_info.crystal_amount &&
 			global.save_data.player.gold >= craft_rule_info.gold_amount

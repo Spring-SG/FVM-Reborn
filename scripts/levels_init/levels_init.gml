@@ -14,4 +14,9 @@ function level_info_island_init(){
 	register_level_info_island("curry_island_daytime",{"name":"咖喱岛（日）","icon":spr_levelselect_button,"spr":spr_curry_island_daytime,"description":"迷雾中难以获取信息，需要保护好油灯。垃圾车不会受到减速影响，还会碾\n压卡片，需要使用高伤害卡或鱼刺处理。"})
 	register_level_info_island("curry_island_night",{"name":"咖喱岛（夜）","icon":spr_levelselect_button,"spr":spr_curry_island_night,"description":"换气扇可以吹走滑翔鼠和迷雾，能够极大减轻防守压力。"})
 	register_level_info_island("abyss",{"name":"深渊岛","icon":spr_levelselect_button,"spr":spr_abyss,"description":"欢迎来到深渊！这里是美味岛最后一个关卡，所有强敌均会出现于此，而法\n老鼠的频繁破阵也会让难度大增。\n你，准备好了吗？"})
+	register_level_info_island("mustard_cottage_daytime",{"name":"芥末小屋（日）","icon":spr_levelselect_button_volcanic,"spr":spr_mustard_cottage_daytime,"description":"欢迎来到火山岛的首个关卡！\n全图水域，番茄障碍会阻挡直射子弹，因此那一路需要放置投手。"})
+	register_level_info_island("mustard_cottage_night",{"name":"芥末小屋（夜）","icon":spr_levelselect_button_volcanic,"spr":spr_mustard_cottage_night,"description":"粉红保罗的破坏性较低，一定要抓住吐海星的机会输出。\nTip：钢丝球能对BOSS和防爆敌人造成伤害哦。"})
+	register_level_info_island("mint_beach_daytime",{"name":"薄荷海滩（日）","icon":spr_levelselect_button_volcanic,"spr":spr_mint_beach_daytime,"description":"障碍物更多了！\n在大量放置投手的同时，也不要忘记使用猫猫箱对付罐头鼠。"})
+	register_level_info_island("mint_beach_night",{"name":"薄荷海滩（日）","icon":spr_levelselect_button_volcanic,"spr":spr_mint_beach_night,"description":"金发玛丽的破坏能力较强，需要快速补阵。\n催眠时可以使用冰桶来控住鼠军，防止崩盘。"})
+	register_level_info_island("cheese_castle",{"name":"芝士城堡","icon":spr_levelselect_button_volcanic,"spr":spr_cheese_castle,"description":"前半段为全水图，后半段为陆地。\n钢爪皮特的破坏能力很强，需要前期攒火。"})
 }
