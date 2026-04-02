@@ -59,7 +59,7 @@ load_file(global.save_slot)
 	//unlock_card("iron_fishbone",8,0,6)
 	//unlock_card("gatlin_long_bao",8,0,6)
 	//unlock_card("rotating_coffee_pot",8,0,6)
-	//unlock_card("takoyaki",12,2,7)
+	//unlock_card("takoyaki",8,0,6)
 	unlock_card("wine_bottle_bomb",8,0,6)
 	unlock_card("egg_boiler_pult",8,0,6)
 	unlock_card("double_water_pipe",8,1,6)
@@ -79,14 +79,14 @@ load_file(global.save_slot)
 	unlock_card("chocolate_pult",8,0,6)
 	//unlock_card("chocolate_cannon",8,0,6)
 	unlock_card("skewer_bomb",8,0,6)
-	unlock_card("aquarius_elve",12,2,7)
-	unlock_card("tar_sprayer",12,2,7)
-	unlock_card("hotdog_cannon",12,2,7)
-	unlock_card("triple_long_bao",12,0,7)
-	unlock_card("triple_ice_long_bao",12,0,7)
-	unlock_card("whisky_bomb",12,2,7)
-	unlock_card("oden_pot",12,2,7)
-	unlock_card("cotton_candy",12,2,7)
+	unlock_card("aquarius_elve",8,0,6)
+	unlock_card("tar_sprayer",8,0,6)
+	unlock_card("hotdog_cannon",8,0,6)
+	unlock_card("triple_long_bao",8,0,6)
+	unlock_card("triple_ice_long_bao",8,0,6)
+	unlock_card("whisky_bomb",8,0,6)
+	unlock_card("oden_pot",8,0,6)
+	unlock_card("cotton_candy",8,0,6)
 	
 	global.save_data.player.gold = 20000000
 	global.save_data.player.level = 30
@@ -147,9 +147,5 @@ if global.debug{
 //	global.save_data.unlocked_items.max_slot = 21
 //	global.save_data.unlocked_items.shovel = "gold"
 }
-
-texture_prefetch("UI")
-texture_prefetch("player")
-texture_prefetch("maps")
 
 room_goto(room_menu)

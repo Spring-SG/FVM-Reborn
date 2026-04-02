@@ -541,6 +541,7 @@
     {"id":{"name":"obj_little_magician_mouse","path":"objects/obj_little_magician_mouse/obj_little_magician_mouse.yy",},},
     {"id":{"name":"obj_little_panda_mouse","path":"objects/obj_little_panda_mouse/obj_little_panda_mouse.yy",},},
     {"id":{"name":"obj_little_wrestler_mouse","path":"objects/obj_little_wrestler_mouse/obj_little_wrestler_mouse.yy",},},
+    {"id":{"name":"obj_load_bar","path":"objects/obj_load_bar/obj_load_bar.yy",},},
     {"id":{"name":"obj_long_bao_gun","path":"objects/obj_long_bao_gun/obj_long_bao_gun.yy",},},
     {"id":{"name":"obj_machine_mouse","path":"objects/obj_machine_mouse/obj_machine_mouse.yy",},},
     {"id":{"name":"obj_magician_mouse","path":"objects/obj_magician_mouse/obj_magician_mouse.yy",},},
