@@ -1,7 +1,7 @@
  // Inherit the parent event
 event_inherited();
-hp = 2700
-maxhp = 2700
+hp = 3600
+maxhp = 3600
 atk = 900
 atk_cycle = 108
 attack_range = 120

@@ -2119,6 +2119,7 @@
     ],
     "rewards": [
         {
+            "gold":4500,
             "items": [
                 {
                     "id": "secret_spices",

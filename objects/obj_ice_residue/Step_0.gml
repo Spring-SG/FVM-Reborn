@@ -144,7 +144,7 @@ switch state{
 				inst.sprite_index = spr_fire_residue_ball
 			}
 		}
-		if timer == 8 * 5 * 3 + 16 * 5 - 1{
+		if timer == 8 * 10 * 3 + 16 * 5 - 1{
 			timer = 0
 			state = BOSS_STATE.DISAPPEAR
 		}

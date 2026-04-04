@@ -46,7 +46,7 @@ if state == "appear"{
 else if state == "anim"{
 	clear_timer ++
 	image_index = 0
-	if clear_timer >= 40*60{
+	if clear_timer >= 90*60{
 		hp = 0 
 	}
 }

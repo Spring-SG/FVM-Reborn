@@ -12,4 +12,5 @@ function boss_init(){
 	register_boss("hells_messenger",{"name":"地狱屎者","hp":30000,"icon":spr_hells_messenger_icon})
 	register_boss("needle_baron",{"name":"针头男爵","hp":30000,"icon":spr_needle_baron_icon})
 	register_boss("fog_julie",{"name":"迷雾朱莉","hp":50000,"icon":spr_fog_julie_icon})
+	register_boss("lieutenant_buzz",{"name":"嗡嗡中尉","hp":50000,"icon":spr_lieutenant_buzz_icon})
 }

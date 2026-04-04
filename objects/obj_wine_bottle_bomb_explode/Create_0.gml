@@ -9,3 +9,4 @@ type = 0
 is_parent = false
 interval = 9
 dir = 0
+max_time = 35
