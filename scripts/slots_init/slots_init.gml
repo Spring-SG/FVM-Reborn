@@ -219,16 +219,16 @@ function slots_init(){
 	    {"shape":1, "sprite":spr_tar_sprayer_1, "cost":150, "cooldown":7*60, "description":"强力焦油喷壶：穿透攻击六格内敌人","plant_type":"normal","feature_type":"normal","target_card":"none"},
 		{"shape":2, "sprite":spr_tar_sprayer_2, "cost":150, "cooldown":7*60, "description":"祝融喷壶：穿透攻击六格内敌人","plant_type":"normal","feature_type":"normal","target_card":"none"}
 	]);
-	register_card("hotdog_cannon", obj_hotdog_cannon, [
-	    {"shape":0, "sprite":spr_hotdog_cannon, "cost":225, "cooldown":7*60, "description":"热狗大炮：发射冰弹攻击空中和地面敌人","plant_type":"normal","feature_type":"normal","target_card":"none"},
-		{"shape":1, "sprite":spr_hotdog_cannon_1, "cost":225, "cooldown":7*60, "description":"热狗高射炮：发射冰弹攻击空中和地面敌人","plant_type":"normal","feature_type":"normal","target_card":"none"},
-		{"shape":2, "sprite":spr_hotdog_cannon_2, "cost":225, "cooldown":7*60, "description":"热狗榴弹炮：发射冰弹攻击空中和地面敌人","plant_type":"normal","feature_type":"normal","target_card":"none"}
-	]);
 	register_card("triple_long_bao", obj_triple_long_bao, [
 	    {"shape":0, "sprite":spr_triple_long_bao, "cost":125, "cooldown":7*60, "description":"三向小笼包：向三个方向发射包子","plant_type":"normal","feature_type":"normal","target_card":"none"}
 	]);
 	register_card("triple_ice_long_bao", obj_triple_ice_long_bao, [
 	    {"shape":0, "sprite":spr_triple_ice_long_bao, "cost":225, "cooldown":7*60, "description":"三向冰冻小笼包：向三个方向发射冰包子","plant_type":"normal","feature_type":"normal","target_card":"none"}
+	]);
+	register_card("hotdog_cannon", obj_hotdog_cannon, [
+	    {"shape":0, "sprite":spr_hotdog_cannon, "cost":225, "cooldown":7*60, "description":"热狗大炮：发射冰弹攻击空中和地面敌人","plant_type":"normal","feature_type":"normal","target_card":"none"},
+		{"shape":1, "sprite":spr_hotdog_cannon_1, "cost":225, "cooldown":7*60, "description":"热狗高射炮：发射冰弹攻击空中和地面敌人","plant_type":"normal","feature_type":"normal","target_card":"none"},
+		{"shape":2, "sprite":spr_hotdog_cannon_2, "cost":225, "cooldown":7*60, "description":"热狗榴弹炮：发射冰弹攻击空中和地面敌人","plant_type":"normal","feature_type":"normal","target_card":"none"}
 	]);
 	register_card("oden_pot", obj_oden_pot, [
 	    {"shape":0, "sprite":spr_oden_pot, "cost":150, "cooldown":7*60, "description":"关东煮喷锅：穿透攻击前方和上下各四格敌人，白天睡觉","plant_type":"normal","feature_type":"normal","target_card":"none"},

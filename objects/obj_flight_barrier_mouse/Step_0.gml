@@ -45,7 +45,7 @@ if hp > 0 && state != ENEMY_STATE.DEAD{
 			y -= 0.5
 		}
 		if anim_timer == 1{
-			if hp > 10{
+			if hp > (maxhp-helmet_hp){
 				instance_create_depth(target_pos.x+8,target_pos.y,depth-1,obj_barrier)
 			}
 		}

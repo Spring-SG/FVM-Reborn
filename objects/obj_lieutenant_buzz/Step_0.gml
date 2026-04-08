@@ -196,7 +196,7 @@ switch state{
 			y -= 8
 		}
 		else{
-			x = t_pos.x
+			x = t_pos.x - 90
 			y += y_move_speed
 		}
 		if timer >= 360{

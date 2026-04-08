@@ -207,7 +207,8 @@ function maps_init(){
 					"boss_music":mus_volcanic_tower_boss,
 					"pre_level":"tower_cake_6_2",
 					"rewards":[
-						{"card_id":"chocolate_pult","target_shape":1}
+						{"card_id":"chocolate_pult","target_shape":1},
+						{"card_id":"mouse_clip","target_shape":1}
 					]
 				},
 				{
@@ -249,7 +250,8 @@ function maps_init(){
 					"boss_music":mus_volcanic_tower_boss,
 					"pre_level":"tower_cake_8_1",
 					"rewards":[
-						{"card_id":"brazier","target_shape":1}
+						{"card_id":"brazier","target_shape":1},
+						{"card_id":"coffee_grounds","target_shape":1}
 					]
 				},
 				{
@@ -457,7 +459,7 @@ function maps_init(){
 					"button_index":9,
 					"button_x":957,
 					"button_y":330,
-					"level_file":"volcanic/macchiato_post.json",
+					"level_file":"volcanic/macchiato_port.json",
 					"hard_level_file":"volcanic/macchiato_port_hard.json",
 					"level_sprite":spr_macchiato_port,
 					"pre_music":mus_volcanic_island_crown_pre,
