@@ -974,6 +974,7 @@
     {"id":{"name":"spr_chocolate_cannon","path":"sprites/spr_chocolate_cannon/spr_chocolate_cannon.yy",},},
     {"id":{"name":"spr_chocolate_pult_1","path":"sprites/spr_chocolate_pult_1/spr_chocolate_pult_1.yy",},},
     {"id":{"name":"spr_chocolate_pult_2","path":"sprites/spr_chocolate_pult_2/spr_chocolate_pult_2.yy",},},
+    {"id":{"name":"spr_chocolate_pult_icon_1","path":"sprites/spr_chocolate_pult_icon_1/spr_chocolate_pult_icon_1.yy",},},
     {"id":{"name":"spr_chocolate_pult_icon","path":"sprites/spr_chocolate_pult_icon/spr_chocolate_pult_icon.yy",},},
     {"id":{"name":"spr_chocolate_pult","path":"sprites/spr_chocolate_pult/spr_chocolate_pult.yy",},},
     {"id":{"name":"spr_chocolatecannon_bullet_effect","path":"sprites/spr_chocolatecannon_bullet_effect/spr_chocolatecannon_bullet_effect.yy",},},

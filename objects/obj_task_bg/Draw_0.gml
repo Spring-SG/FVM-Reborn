@@ -36,3 +36,13 @@ if target_task_index != -1{
 		draw_text(x+60,y-70,"!任务过程中如果中途退出或游戏失败则重置进度")
 	}
 }
+else{
+	draw_set_font(font_yuan)
+	draw_set_colour(c_black)
+	draw_set_halign(fa_center)
+	draw_set_valign(fa_middle)
+	draw_text(x+300,y-350,"请选择一个任务")
+	draw_set_halign(fa_left)
+	draw_set_valign(fa_top)
+	draw_text(x-50,y-310,"点击左侧选项卡以查看任务。")
+}

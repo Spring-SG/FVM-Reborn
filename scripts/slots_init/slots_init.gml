@@ -179,7 +179,7 @@ function slots_init(){
 	]);
 	register_card("chocolate_pult", obj_chocolate_pult, [
 	    {"shape":0, "sprite":spr_chocolate_pult_icon, "cost":125, "cooldown":7*60, "description":"巧克力投手：投掷能定住敌人的巧克力","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_chocolate_pult},
-	    {"shape":1, "sprite":spr_chocolate_pult_1, "cost":125, "cooldown":7*60, "description":"浓情巧克力投手：投掷能定住敌人的巧克力","plant_type":"normal","feature_type":"normal","target_card":"none"},
+	    {"shape":1, "sprite":spr_chocolate_pult_icon_1, "cost":125, "cooldown":7*60, "description":"浓情巧克力投手：投掷能定住敌人的巧克力","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_chocolate_pult_1},
 		{"shape":2, "sprite":spr_chocolate_pult_2, "cost":125, "cooldown":7*60, "description":"脆心巧克力投手：投掷两块能定住敌人的巧克力","plant_type":"normal","feature_type":"normal","target_card":"none"}
 	]);
 	register_card("chocolate_cannon", obj_chocolate_cannon, [

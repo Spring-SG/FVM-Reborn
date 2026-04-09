@@ -52,7 +52,7 @@ var has_enemy = false
 
 	with (obj_enemy_parent) {
 		
-			if (health > 0 && point_distance(x, y, _x, _y) < _range && grid_row >= other.grid_row-other.range&&grid_row <= other.grid_row+other.range) {
+			if (can_target_on(other.target_type,target_type) && point_distance(x, y, _x, _y) < _range && grid_row >= other.grid_row-other.range&&grid_row <= other.grid_row+other.range) {
 		        has_enemy = true
 		    }
 		

@@ -36,7 +36,7 @@ if shape == 0{
 flash_speed = 5
 plant_type = "normal"
 is_slowdown = false
-target_type = "pierce"
+target_type = "rotate"
 
 anim_timer = 0
 awake_anim = 6

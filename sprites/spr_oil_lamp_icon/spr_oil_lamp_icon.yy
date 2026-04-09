@@ -25,8 +25,8 @@
   "nineSlice":null,
   "origin":7,
   "parent":{
-    "name":"icon",
-    "path":"folders/精灵/Player/Weapons/icon.yy",
+    "name":"Icon",
+    "path":"folders/精灵/UI/Icon.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",
