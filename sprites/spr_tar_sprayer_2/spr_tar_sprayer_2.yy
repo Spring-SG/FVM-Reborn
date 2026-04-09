@@ -161,8 +161,8 @@
   "swatchColours":null,
   "swfPrecision":0.5,
   "textureGroupId":{
-    "name":"Default",
-    "path":"texturegroups/Default",
+    "name":"cards",
+    "path":"texturegroups/cards",
   },
   "type":0,
   "VTile":false,

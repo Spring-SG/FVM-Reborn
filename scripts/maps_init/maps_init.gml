@@ -196,6 +196,92 @@ function maps_init(){
 						{"card_id":"double_water_pipe","target_shape":1}
 					]
 				},
+				{
+					"id":"tower_cake_7_1",
+					"name":"魔塔7层-先锋",
+					"level_file":"tower/tower-7-1.json",
+					"hard_level_file":"tower/tower-7-1_hard.json",
+					"level_sprite":spr_mustard_cottage_daytime,
+					"pre_music":mus_volcanic_tower_pre,
+					"elite_music":mus_volcanic_tower_elite,
+					"boss_music":mus_volcanic_tower_boss,
+					"pre_level":"tower_cake_6_2",
+					"rewards":[
+						{"card_id":"chocolate_pult","target_shape":1},
+						{"card_id":"mouse_clip","target_shape":1}
+					]
+				},
+				{
+					"id":"tower_cake_7_2",
+					"name":"魔塔7层-精英",
+					"level_file":"tower/tower-7-2.json",
+					"hard_level_file":"tower/tower-7-2_hard.json",
+					"level_sprite":spr_mustard_cottage_daytime,
+					"pre_music":mus_volcanic_tower_pre,
+					"elite_music":mus_volcanic_tower_elite,
+					"boss_music":mus_volcanic_tower_boss,
+					"pre_level":"tower_cake_7_1",
+					"rewards":[
+						{"card_id":"triple_wine_rack","target_shape":1}
+					]
+				},
+				{
+					"id":"tower_cake_8_1",
+					"name":"魔塔8层-先锋",
+					"level_file":"tower/tower-8-1.json",
+					"hard_level_file":"tower/tower-8-1_hard.json",
+					"level_sprite":spr_mint_beach_tower,
+					"pre_music":mus_volcanic_tower_pre,
+					"elite_music":mus_volcanic_tower_elite,
+					"boss_music":mus_volcanic_tower_boss,
+					"pre_level":"tower_cake_7_2",
+					"rewards":[
+						{"card_id":"salad_pult","target_shape":1}
+					]
+				},
+				{
+					"id":"tower_cake_8_2",
+					"name":"魔塔8层-精英",
+					"level_file":"tower/tower-8-2.json",
+					"hard_level_file":"tower/tower-8-2_hard.json",
+					"level_sprite":spr_mint_beach_tower,
+					"pre_music":mus_volcanic_tower_pre,
+					"elite_music":mus_volcanic_tower_elite,
+					"boss_music":mus_volcanic_tower_boss,
+					"pre_level":"tower_cake_8_1",
+					"rewards":[
+						{"card_id":"brazier","target_shape":1},
+						{"card_id":"coffee_grounds","target_shape":1}
+					]
+				},
+				{
+					"id":"tower_cake_9_1",
+					"name":"魔塔9层-先锋",
+					"level_file":"tower/tower-9-1.json",
+					"hard_level_file":"tower/tower-9-1_hard.json",
+					"level_sprite":spr_cheese_castle,
+					"pre_music":mus_volcanic_tower_pre,
+					"elite_music":mus_volcanic_tower_elite,
+					"boss_music":mus_volcanic_tower_boss,
+					"pre_level":"tower_cake_8_2",
+					"rewards":[
+						{"card_id":"stinky_tofu_pult","target_shape":1}
+					]
+				},
+				{
+					"id":"tower_cake_9_2",
+					"name":"魔塔9层-精英",
+					"level_file":"tower/tower-9-2.json",
+					"hard_level_file":"tower/tower-9-2_hard.json",
+					"level_sprite":spr_cheese_castle,
+					"pre_music":mus_volcanic_tower_pre,
+					"elite_music":mus_volcanic_tower_elite,
+					"boss_music":mus_volcanic_tower_boss,
+					"pre_level":"tower_cake_9_1",
+					"rewards":[
+						{"card_id":"egg_boiler_pult","target_shape":1}
+					]
+				},
 			]
 		}
 	)
@@ -288,7 +374,7 @@ function maps_init(){
 				},
 				{
 					"id":"tower_cake",
-					"name":"芝士城堡",
+					"name":"魔塔蛋糕",
 					"button_spr":spr_levelselect_button,
 					"button_index":14,
 					"button_x":1120,
@@ -300,6 +386,86 @@ function maps_init(){
 					"elite_music":mus_volcanic_island_crown_elite,
 					"boss_music":mus_volcanic_island_night_boss,
 					"player_level_require":8,
+					"pre_level_require":[]
+				},
+				{
+					"id":"charcoal_jungle_daytime",
+					"name":"炭烧雨林（日）",
+					"button_spr":spr_levelselect_button_volcanic,
+					"button_index":5,
+					"button_x":758,
+					"button_y":730,
+					"level_file":"volcanic/charcoal_jungle_daytime.json",
+					"hard_level_file":"volcanic/charcoal_jungle_daytime_hard.json",
+					"level_sprite":spr_charcoal_jungle_daytime,
+					"pre_music":mus_volcanic_island_daytime_pre,
+					"elite_music":mus_volcanic_island_daytime_elite,
+					"boss_music":mus_volcanic_island_daytime_boss,
+					"player_level_require":26,
+					"pre_level_require":[]
+				},
+				{
+					"id":"charcoal_jungle_night",
+					"name":"炭烧雨林（夜）",
+					"button_spr":spr_levelselect_button_volcanic,
+					"button_index":6,
+					"button_x":628,
+					"button_y":680,
+					"level_file":"volcanic/charcoal_jungle_night.json",
+					"hard_level_file":"volcanic/charcoal_jungle_night_hard.json",
+					"level_sprite":spr_charcoal_jungle_night,
+					"pre_music":mus_volcanic_island_night_pre,
+					"elite_music":mus_volcanic_island_night_elite,
+					"boss_music":mus_volcanic_island_night_boss,
+					"player_level_require":27,
+					"pre_level_require":[]
+				},
+				{
+					"id":"matcha_manor_daytime",
+					"name":"抹茶庄园（日）",
+					"button_spr":spr_levelselect_button_volcanic,
+					"button_index":7,
+					"button_x":518,
+					"button_y":475,
+					"level_file":"volcanic/matcha_manor_daytime.json",
+					"hard_level_file":"volcanic/matcha_manor_daytime_hard.json",
+					"level_sprite":spr_matcha_manor_daytime,
+					"pre_music":mus_volcanic_island_daytime_pre,
+					"elite_music":mus_volcanic_island_daytime_elite,
+					"boss_music":mus_volcanic_island_daytime_boss,
+					"player_level_require":28,
+					"pre_level_require":[]
+				},
+				{
+					"id":"matcha_manor_night",
+					"name":"抹茶庄园（夜）",
+					"button_spr":spr_levelselect_button_volcanic,
+					"button_index":8,
+					"button_x":640,
+					"button_y":440,
+					"level_file":"volcanic/matcha_manor_night.json",
+					"hard_level_file":"volcanic/matcha_manor_night_hard.json",
+					"level_sprite":spr_matcha_manor_night,
+					"pre_music":mus_volcanic_island_night_pre,
+					"elite_music":mus_volcanic_island_night_elite,
+					"boss_music":mus_volcanic_island_night_boss,
+					"player_level_require":29,
+					"pre_level_require":[]
+				},
+				{
+					"id":"macchiato_port",
+					"name":"玛奇朵港",
+					"button_spr":spr_levelselect_button_volcanic,
+					"button_index":9,
+					"button_x":957,
+					"button_y":330,
+					"level_file":"volcanic/macchiato_port.json",
+					"hard_level_file":"volcanic/macchiato_port_hard.json",
+					"level_sprite":spr_macchiato_port,
+					"pre_music":mus_volcanic_island_crown_pre,
+					"elite_music":mus_volcanic_island_crown_elite,
+					"boss_music":mus_volcanic_island_daytime_boss,
+					"player_level_require":30,
 					"pre_level_require":[]
 				},
 																										

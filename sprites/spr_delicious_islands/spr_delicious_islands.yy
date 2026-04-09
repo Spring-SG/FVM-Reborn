@@ -83,8 +83,8 @@
   "swatchColours":null,
   "swfPrecision":0.5,
   "textureGroupId":{
-    "name":"UI",
-    "path":"texturegroups/UI",
+    "name":"maps",
+    "path":"texturegroups/maps",
   },
   "type":0,
   "VTile":false,

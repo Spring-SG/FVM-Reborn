@@ -104,6 +104,11 @@ if (global.is_paused)
 							draw_set_colour(c_yellow)
 							draw_text(1200,435,"你的铲子已升级为铜铲")
 						}
+						if global.level_data.id == "macchiato_port"{
+							draw_set_colour(c_yellow)
+							draw_text(1200,435,"你的铲子已升级为银铲")
+						}
+						
 					}
 					else{
 						draw_text(1200,225, "关卡奖励");

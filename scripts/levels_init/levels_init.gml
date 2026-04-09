@@ -19,4 +19,9 @@ function level_info_island_init(){
 	register_level_info_island("mint_beach_daytime",{"name":"薄荷海滩（日）","icon":spr_levelselect_button_volcanic,"spr":spr_mint_beach_daytime,"description":"障碍物更多了！\n在大量放置投手的同时，也不要忘记使用猫猫箱对付罐头鼠。","spr_index":2})
 	register_level_info_island("mint_beach_night",{"name":"薄荷海滩（日）","icon":spr_levelselect_button_volcanic,"spr":spr_mint_beach_night,"description":"金发玛丽的破坏能力较强，需要快速补阵。\n催眠时可以使用冰桶来控住鼠军，防止崩盘。","spr_index":3})
 	register_level_info_island("cheese_castle",{"name":"芝士城堡","icon":spr_levelselect_button_volcanic,"spr":spr_cheese_castle,"description":"前半段为全水图，后半段为陆地。\n钢爪皮特的破坏能力很强，需要前期攒火。","spr_index":4})
+	register_level_info_island("charcoal_jungle_daytime",{"name":"炭烧雨林（日）","icon":spr_levelselect_button_volcanic,"spr":spr_charcoal_jungle_daytime,"description":"炭烧雨林障碍物较多，适合使用投手。\n使用油灯照亮幽灵鼠，留意魔术师鼠的偷袭。","spr_index":5})
+	register_level_info_island("charcoal_jungle_night",{"name":"炭烧雨林（夜）","icon":spr_levelselect_button_volcanic,"spr":spr_charcoal_jungle_night,"description":"地狱屎者的权杖会持续吸收火苗，需要及时处理，便便可以使用炸弹快速处\n理。","spr_index":6})
+	register_level_info_island("matcha_manor_daytime",{"name":"抹茶庄园（日）","icon":spr_levelselect_button_volcanic,"spr":spr_matcha_manor_daytime,"description":"地图格子很少，使用三向卡或三线卡或许会有奇效。\n飞行路障鼠会留下阻挡直射子弹的障碍物，一定要在它落地前就消灭掉。","spr_index":7})
+	register_level_info_island("matcha_manor_night",{"name":"抹茶庄园（夜）","icon":spr_levelselect_button_volcanic,"spr":spr_matcha_manor_night,"description":"针头男爵的技能较为简单，及时铲卡，处理蝙蝠群即可。","spr_index":8})
+	register_level_info_island("macchiato_port",{"name":"玛奇朵港","icon":spr_levelselect_button_volcanic,"spr":spr_macchiato_port,"description":"地图右侧的风洞每8秒就会开启一次，将老鼠向前推进3格，记得给第三格的\n卡片套上瓜皮。\n迷雾朱莉会生成迷雾和召唤嗡嗡中尉，记得准备好应对措施。","spr_index":9})
 }

@@ -101,8 +101,8 @@
   "swatchColours":null,
   "swfPrecision":0.5,
   "textureGroupId":{
-    "name":"Food",
-    "path":"texturegroups/Food",
+    "name":"bullet",
+    "path":"texturegroups/bullet",
   },
   "type":0,
   "VTile":false,

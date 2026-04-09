@@ -7,7 +7,7 @@ var _x = x;
 
 	with (obj_enemy_parent) {
 		
-			if (hp > 0 && point_distance(x, y, _x, _y) < _range && grid_row >= other.grid_row-other.range&&grid_row <= other.grid_row+other.range) {
+			if (hp > 0 && point_distance(x, y, _x, _y) < _range && grid_row >= other.grid_row-other.range&&grid_row <= other.grid_row+other.range&&can_hit(other.target_type,target_type)) {
 		        
 		            hp -= other.atk;
 					event_user(0)

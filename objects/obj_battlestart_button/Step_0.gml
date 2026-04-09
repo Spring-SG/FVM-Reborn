@@ -6,5 +6,7 @@ if button_pushed{
 	else{
 		audio_pause_sound(mus_readyroom)
 		room_goto(room_battle)
+		texture_prefetch("bullet")
+		texture_prefetch("effects")
 	}
 }

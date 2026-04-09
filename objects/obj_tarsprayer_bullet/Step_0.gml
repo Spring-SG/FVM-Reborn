@@ -15,7 +15,7 @@ else{
 	}
 }
 col = get_grid_position_from_world(x,y).col
-if ((col >= start_col + 5)&& shape == 1 )||(col >= start_col + 7){
+if ((col >= start_col + 5)&& shape == 0 )||(col >= start_col + 7){
 	disabled = true
 }
 if disabled{

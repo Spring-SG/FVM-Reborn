@@ -8,6 +8,7 @@ lifespan = 600;
 fade_duration = 30;
 
 is_collected = false;
+is_capture = false
 collect_timer = 0;
 collect_duration = 30;
 start_x = x;

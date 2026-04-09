@@ -2,6 +2,10 @@ image_xscale = 0.9
 image_yscale = 0.9
 image_speed = 0
 
+texture_prefetch("enemy_tower")
+texture_prefetch("enemy_delicious")
+texture_prefetch("enemy_volcanic")
+
 instance_create_depth(x+810,y-472,depth-1,obj_closetowercake_btn)
 
 is_submenu_opened = false

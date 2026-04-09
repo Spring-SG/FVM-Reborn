@@ -126,8 +126,8 @@
   "swatchColours":null,
   "swfPrecision":0.5,
   "textureGroupId":{
-    "name":"Default",
-    "path":"texturegroups/Default",
+    "name":"enemy_delicious",
+    "path":"texturegroups/enemy_delicious",
   },
   "type":0,
   "VTile":false,

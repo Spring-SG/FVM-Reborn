@@ -93,8 +93,8 @@
   "swatchColours":null,
   "swfPrecision":0.5,
   "textureGroupId":{
-    "name":"Environment",
-    "path":"texturegroups/Environment",
+    "name":"maps",
+    "path":"texturegroups/maps",
   },
   "type":0,
   "VTile":false,

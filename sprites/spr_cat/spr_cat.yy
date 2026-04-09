@@ -167,8 +167,8 @@
   "swatchColours":null,
   "swfPrecision":0.5,
   "textureGroupId":{
-    "name":"Food",
-    "path":"texturegroups/Food",
+    "name":"effects",
+    "path":"texturegroups/effects",
   },
   "type":0,
   "VTile":false,

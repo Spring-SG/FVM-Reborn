@@ -24,6 +24,12 @@ flash_speed = 5
 plant_type = "normal"
 is_slowdown = false
 target_instance = noone
-stinky_tofu_cooldown = 480
-stinky_tofu_timer = 480
+if shape < 2{
+	stinky_tofu_cooldown = 480
+	stinky_tofu_timer = 480
+}
+else{
+	stinky_tofu_cooldown = 300
+	stinky_tofu_timer = 300
+}
 target_type = "throw"

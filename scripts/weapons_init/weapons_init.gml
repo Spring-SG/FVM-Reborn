@@ -225,7 +225,7 @@ function weapons_init(){
 									"description":"转化宝石：子弹落地产生火苗",
 									"icon":spr_transform_gem_icon,
 									"slot":"super_weapon",
-									"value":[5,10,15,20,25,30,40,50,60,80,100,105,110,115,125,140],
+									"value":[3,5,8,10,13,15,20,25,30,40,50,53,55,58,63,70],
 									"obj":noone
 		})
 		

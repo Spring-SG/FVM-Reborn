@@ -1,7 +1,7 @@
  // Inherit the parent event
 event_inherited();
-hp = 170
-maxhp = 170
+hp = 150
+maxhp = 150
 helmet_hp = 10
 move_anim = 8
 attack_anim = 4

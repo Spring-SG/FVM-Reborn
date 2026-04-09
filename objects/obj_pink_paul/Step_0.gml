@@ -7,7 +7,13 @@ if flash_value > 0 {
 }
 
 if !appear{
-	skill_choose = irandom_range(1,100)
+	if skill_count mod 2 == 0{
+		skill_choose = 25
+	}
+	else{
+		skill_choose = 75
+	}
+	skill_count++
 	var enemy_row = irandom_range(0,global.grid_rows-1)
 	var enemy_pos = {}
 	if skill_choose <= 50{
@@ -166,14 +172,22 @@ switch state{
 			image_alpha = 0
 		}
 		if timer == 210{
-			skill_choose = irandom_range(1,100)
+			if skill_count mod 2 == 0{
+				skill_choose = 25
+			}
+			else{
+				skill_choose = 75
+			}
+			skill_count++
 			var enemy_row = irandom_range(0,global.grid_rows-1)
 			var enemy_pos = {}
 			if skill_choose <= 50{
 				enemy_pos = get_world_position_from_grid(8,enemy_row)
+				wait_time = 300
 			}
 			else{
 				enemy_pos = get_world_position_from_grid(irandom_range(2,6),enemy_row)
+				wait_time = 180
 			}
 			x = enemy_pos.x - 80
 			y = enemy_pos.y + 30

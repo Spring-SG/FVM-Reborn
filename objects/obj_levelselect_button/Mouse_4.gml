@@ -1,6 +1,7 @@
 if on_click && obj_player_info_ui.menu_type == 0 && unlock{
 	pressed = true
     audio_play_sound(snd_button, 0, 0);
+	texture_prefetch("cards")
 	if target_level_id != "tower_cake"{
 	    room_goto(room_ready);
 	

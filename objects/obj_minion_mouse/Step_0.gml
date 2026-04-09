@@ -24,7 +24,7 @@ if state == ENEMY_STATE.ACTING{
 	
 	if timer >= flash_speed * 10 or hp <= 0{
 		state = ENEMY_STATE.NORMAL
-		sprite_index = spr_ninja_mouse
+		sprite_index = spr_minion_mouse
 		summon = true
 	}
 }

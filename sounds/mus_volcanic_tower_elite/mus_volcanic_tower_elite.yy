@@ -1,0 +1,26 @@
+{
+  "$GMSound":"v2",
+  "%Name":"mus_volcanic_tower_elite",
+  "audioGroupId":{
+    "name":"music",
+    "path":"audiogroups/music",
+  },
+  "bitDepth":1,
+  "channelFormat":0,
+  "compression":0,
+  "compressionQuality":4,
+  "conversionMode":0,
+  "duration":68.75429,
+  "exportDir":"",
+  "name":"mus_volcanic_tower_elite",
+  "parent":{
+    "name":"Battle BGM",
+    "path":"folders/声音/Battle BGM.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"mus_volcanic_tower_elite.mp3",
+  "volume":1.0,
+}

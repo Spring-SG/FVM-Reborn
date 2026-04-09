@@ -665,7 +665,7 @@ function task_init(){
 				"requirements":[
 					{
 						"type":"level_complete",
-						"target_level":"charcoal_jungle",
+						"target_level":"charcoal_jungle_daytime",
 						"desc":"通关一次炭烧雨林（日）",
 						"require":1,
 					}
@@ -687,6 +687,180 @@ function task_init(){
 					}
 				]
 			}
+		)
+		register_task("main_level_20",
+			{
+				"type":"main_task",
+				"title":"有味道的“使”者",
+				"desc":"禁止随地大小便！",
+				"single_game":false,//非单局完成
+				"oneshot":false,//非一命完成
+				"task_unlock":"main_level_21",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"charcoal_jungle_night",
+						"desc":"通关一次炭烧雨林（夜）",
+						"require":1,
+					}
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"secret_spices",
+						"amount":50
+					},
+					{
+						"type":"item",
+						"item_id":"middle_crystal",
+						"amount":40
+					},
+					{
+						"type":"gold",
+						"amount":4500
+					}
+				]
+			}
+		)
+		register_task("main_level_21",
+			{
+				"type":"main_task",
+				"title":"庄园探秘",
+				"desc":"说好的抹茶呢，怎么给我放到吸血鬼庄园里了",
+				"single_game":false,//非单局完成
+				"oneshot":false,//非一命完成
+				"task_unlock":"main_level_22",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"matcha_manor_daytime",
+						"desc":"通关一次抹茶庄园（日）",
+						"require":1,
+					}
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"secret_spices",
+						"amount":60
+					},
+					{
+						"type":"item",
+						"item_id":"middle_crystal",
+						"amount":50
+					},
+					{
+						"type":"gold",
+						"amount":5000
+					}
+				]
+			}
+			
+		)
+		register_task("main_level_22",
+			{
+				"type":"main_task",
+				"title":"吸血男爵",
+				"desc":"男爵会召唤蝙蝠？都是啮齿目动物，好像也挺合理的……",
+				"single_game":false,//非单局完成
+				"oneshot":false,//非一命完成
+				"task_unlock":"main_level_23",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"matcha_manor_night",
+						"desc":"通关一次抹茶庄园（夜）",
+						"require":1,
+					}
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"secret_spices",
+						"amount":60
+					},
+					{
+						"type":"item",
+						"item_id":"middle_crystal",
+						"amount":50
+					},
+					{
+						"type":"gold",
+						"amount":5000
+					}
+				]
+			}
+			
+		)
+		register_task("main_level_23",
+			{
+				"type":"main_task",
+				"title":"港口突袭",
+				"desc":"迷雾怎么又来了？也许我得随身带点火柴……",
+				"single_game":false,//非单局完成
+				"oneshot":false,//非一命完成
+				"task_unlock":"main_level_24",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"macchiato_port",
+						"desc":"通关一次玛奇朵港",
+						"require":1,
+					}
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"secret_spices",
+						"amount":75
+					},
+					{
+						"type":"item",
+						"item_id":"middle_crystal",
+						"amount":75
+					},
+					{
+						"type":"gold",
+						"amount":6000
+					}
+				]
+			}
+			
+		)
+		register_task("main_level_24",
+			{
+				"type":"main_task",
+				"title":"棉花高地",
+				"desc":"这里的云真的能吃吗？",
+				"single_game":false,//非单局完成
+				"oneshot":false,//非一命完成
+				"task_unlock":"main_level_25",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"cotton_candy_sky_daytime",
+						"desc":"通关一次棉花糖天空（日）",
+						"require":1,
+					}
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"secret_spices",
+						"amount":75
+					},
+					{
+						"type":"item",
+						"item_id":"middle_crystal",
+						"amount":50
+					},
+					{
+						"type":"gold",
+						"amount":5000
+					}
+				]
+			}
+			
 		)
 	}
 	{//注册所有支线任务
@@ -1095,16 +1269,55 @@ function task_init(){
 					{
 						"type":"item",
 						"item_id":"secret_spices",
-						"amount":75
+						"amount":90
 					},
 					{
 						"type":"item",
 						"item_id":"middle_crystal",
-						"amount":10
+						"amount":30
 					},
 					{
 						"type":"gold",
-						"amount":7500
+						"amount":9000
+					}
+				]
+			}
+		)
+		register_task("flame_save_5",
+			{
+				"type":"challenge_task",
+				"title":"雪顶火山节约之旅",
+				"desc":"冒险途中突发状况很多，需要积攒火苗才能及时应对。",
+				"single_game":true,//仅限单局游戏内完成
+				"oneshot":false,//非一命任务
+				"task_unlock":"flame_save_6",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"snowcap_volcano",
+						"desc":"通关一次雪顶火山",
+						"require":1,
+					},
+					{
+						"type":"flame_left",
+						"desc":"关卡结算时，剩余6000以上的火苗",
+						"require":6000,
+					},
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"secret_spices",
+						"amount":900
+					},
+					{
+						"type":"item",
+						"item_id":"middle_crystal",
+						"amount":300
+					},
+					{
+						"type":"gold",
+						"amount":20000
 					}
 				]
 			}
@@ -1278,29 +1491,78 @@ function task_init(){
 					},
 					{
 						"type":"time_limit",
-						"desc":"通关时间不超过540秒",
-						"require":540,
+						"desc":"通关时间不超过480秒",
+						"require":480,
 					},
 				],
 				"rewards":[
 					{
 						"type":"item",
 						"item_id":"secret_spices",
-						"amount":80
+						"amount":180
 					},
 					{
 						"type":"item",
 						"item_id":"middle_crystal",
-						"amount":20
+						"amount":80
 					},
 					{
 						"type":"gold",
-						"amount":10000
+						"amount":15000
 					},
 					{
 						"type":"item",
 						"item_id":"clover_1",
-						"amount":2
+						"amount":3
+					},
+				]
+			}
+		)
+		register_task("perfect_challenge_5",
+			{
+				"type":"challenge_task",
+				"title":"完美挑战-5",
+				"desc":"在限定条件下通关指定关卡，证明你的实力。",
+				"single_game":true,//仅限单局游戏内完成
+				"oneshot":false,//非一命任务
+				"task_unlock":"perfect_challenge_6",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"snowcap_volcano",
+						"desc":"通关一次雪顶火山",
+						"require":1,
+					},
+					{
+						"type":"cat_loss",
+						"desc":"不得失去任何猫",
+						"require":0,
+					},
+					{
+						"type":"time_limit",
+						"desc":"通关时间不超过600秒",
+						"require":600,
+					},
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"secret_spices",
+						"amount":1500
+					},
+					{
+						"type":"item",
+						"item_id":"middle_crystal",
+						"amount":1500
+					},
+					{
+						"type":"gold",
+						"amount":50000
+					},
+					{
+						"type":"item",
+						"item_id":"clover_2",
+						"amount":20
 					},
 				]
 			}
@@ -1476,21 +1738,71 @@ function task_init(){
 					{
 						"type":"item",
 						"item_id":"secret_spices",
-						"amount":80
+						"amount":150
 					},
 					{
 						"type":"gold",
-						"amount":10000
+						"amount":12000
 					},
 					{
 						"type":"item",
 						"item_id":"middle_crystal",
-						"amount":10
+						"amount":80
 					},
 					{
 						"type":"item",
 						"item_id":"clover_1",
-						"amount":1
+						"amount":2
+					},
+				]
+			}
+		)
+		register_task("hardcore_challenge_5",
+			{
+				"type":"challenge_task",
+				"title":"极限挑战-5",
+				"desc":"你能在缺少输出的情况下完成关卡吗？",
+				"single_game":true,//仅限单局游戏内完成
+				"oneshot":false,//非一命任务
+				"task_unlock":"hardcore_challenge_6",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"snowcap_volcano",
+						"desc":"通关一次雪顶火山",
+						"require":1,
+					},
+					{
+						"type":"weapon_limit",
+						"desc":"不能装备任何武器和宝石",
+						"require":1,
+					},
+					{
+						"type":"card_type_limit",
+						"desc":"不能携带任何一次性的伤害类卡片",
+						"limit_card_type":"bomb",
+						"require":1,
+					},
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"secret_spices",
+						"amount":1350
+					},
+					{
+						"type":"gold",
+						"amount":25000
+					},
+					{
+						"type":"item",
+						"item_id":"middle_crystal",
+						"amount":1200
+					},
+					{
+						"type":"item",
+						"item_id":"clover_2",
+						"amount":10
 					},
 				]
 			}

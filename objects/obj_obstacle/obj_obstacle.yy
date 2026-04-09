@@ -9,8 +9,8 @@
   "name":"obj_obstacle",
   "overriddenProperties":[],
   "parent":{
-    "name":"Effects",
-    "path":"folders/物体/Effects.yy",
+    "name":"Map Object",
+    "path":"folders/物体/Map Object.yy",
   },
   "parentObjectId":null,
   "persistent":false,

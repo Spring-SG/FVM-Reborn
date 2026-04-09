@@ -86,9 +86,6 @@ function slots_init(){
 	    {"shape":1, "sprite":spr_kettle_bomb_1, "cost":300, "cooldown":50*60, "description":"汽油壶炸弹：5*5范围爆炸，白天睡觉","plant_type":"normal","feature_type":"normal","target_card":"none"},
 		{"shape":2, "sprite":spr_kettle_bomb_2, "cost":350, "cooldown":50*60, "description":"汽油干冰弹：5*5范围爆炸和减速","plant_type":"normal","feature_type":"normal","target_card":"none"}
 	])
-	register_card("fishbone",obj_fishbone,[
-	    {"shape":0, "sprite":spr_fishbone, "cost":100, "cooldown":7*60, "description":"鱼刺：攻击踩上它的老鼠，卡坏车辆","plant_type":"normal","feature_type":"dwarf","target_card":"none"}
-	])
 	register_card("triple_wine_rack",obj_triple_wine_rack,[
 	    {"shape":0, "sprite":spr_triple_wine_rack, "cost":325, "cooldown":7*60, "description":"三线酒架：向前方三行发射3发葡萄酒弹","plant_type":"normal","feature_type":"normal","target_card":"none"},
 	    {"shape":1, "sprite":spr_triple_wine_rack_1, "cost":325, "cooldown":7*60, "description":"强力三线酒架：向前方三行发射4发葡萄酒弹","plant_type":"normal","feature_type":"normal","target_card":"none"},
@@ -153,6 +150,9 @@ function slots_init(){
 	register_card("sausage", obj_sausage, [
 	    {"shape":0, "sprite":spr_sausage_land, "cost":125, "cooldown":7*60, "description":"香肠：发射香肠攻击空中和地面敌人","plant_type":"normal","feature_type":"normal","target_card":"none"}
 	]);
+	register_card("fishbone",obj_fishbone,[
+	    {"shape":0, "sprite":spr_fishbone, "cost":100, "cooldown":7*60, "description":"鱼刺：攻击踩上它的老鼠，卡坏车辆","plant_type":"normal","feature_type":"dwarf","target_card":"none"}
+	])
 	register_card("hamburger",obj_hamburger,[
 	    {"shape":0, "sprite":spr_hamburger, "cost":150, "cooldown":7*60, "description":"汉堡包：吃掉老鼠","plant_type":"normal","feature_type":"normal","target_card":"none"},
 	    {"shape":1, "sprite":spr_hamburger_1, "cost":150, "cooldown":7*60, "description":"天椒双层堡：吃掉前方三格老鼠","plant_type":"normal","feature_type":"normal","target_card":"none"},
@@ -179,7 +179,7 @@ function slots_init(){
 	]);
 	register_card("chocolate_pult", obj_chocolate_pult, [
 	    {"shape":0, "sprite":spr_chocolate_pult_icon, "cost":125, "cooldown":7*60, "description":"巧克力投手：投掷能定住敌人的巧克力","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_chocolate_pult},
-	    {"shape":1, "sprite":spr_chocolate_pult_1, "cost":125, "cooldown":7*60, "description":"浓情巧克力投手：投掷能定住敌人的巧克力","plant_type":"normal","feature_type":"normal","target_card":"none"},
+	    {"shape":1, "sprite":spr_chocolate_pult_icon_1, "cost":125, "cooldown":7*60, "description":"浓情巧克力投手：投掷能定住敌人的巧克力","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_chocolate_pult_1},
 		{"shape":2, "sprite":spr_chocolate_pult_2, "cost":125, "cooldown":7*60, "description":"脆心巧克力投手：投掷两块能定住敌人的巧克力","plant_type":"normal","feature_type":"normal","target_card":"none"}
 	]);
 	register_card("chocolate_cannon", obj_chocolate_cannon, [
@@ -219,4 +219,30 @@ function slots_init(){
 	    {"shape":1, "sprite":spr_tar_sprayer_1, "cost":150, "cooldown":7*60, "description":"强力焦油喷壶：穿透攻击六格内敌人","plant_type":"normal","feature_type":"normal","target_card":"none"},
 		{"shape":2, "sprite":spr_tar_sprayer_2, "cost":150, "cooldown":7*60, "description":"祝融喷壶：穿透攻击六格内敌人","plant_type":"normal","feature_type":"normal","target_card":"none"}
 	]);
+	register_card("triple_long_bao", obj_triple_long_bao, [
+	    {"shape":0, "sprite":spr_triple_long_bao, "cost":125, "cooldown":7*60, "description":"三向小笼包：向三个方向发射包子","plant_type":"normal","feature_type":"normal","target_card":"none"}
+	]);
+	register_card("triple_ice_long_bao", obj_triple_ice_long_bao, [
+	    {"shape":0, "sprite":spr_triple_ice_long_bao, "cost":225, "cooldown":7*60, "description":"三向冰冻小笼包：向三个方向发射冰包子","plant_type":"normal","feature_type":"normal","target_card":"none"}
+	]);
+	register_card("hotdog_cannon", obj_hotdog_cannon, [
+	    {"shape":0, "sprite":spr_hotdog_cannon, "cost":225, "cooldown":7*60, "description":"热狗大炮：发射冰弹攻击空中和地面敌人","plant_type":"normal","feature_type":"normal","target_card":"none"},
+		{"shape":1, "sprite":spr_hotdog_cannon_1, "cost":225, "cooldown":7*60, "description":"热狗高射炮：发射冰弹攻击空中和地面敌人","plant_type":"normal","feature_type":"normal","target_card":"none"},
+		{"shape":2, "sprite":spr_hotdog_cannon_2, "cost":225, "cooldown":7*60, "description":"热狗榴弹炮：发射冰弹攻击空中和地面敌人","plant_type":"normal","feature_type":"normal","target_card":"none"}
+	]);
+	register_card("oden_pot", obj_oden_pot, [
+	    {"shape":0, "sprite":spr_oden_pot, "cost":150, "cooldown":7*60, "description":"关东煮喷锅：穿透攻击前方和上下各四格敌人，白天睡觉","plant_type":"normal","feature_type":"normal","target_card":"none"},
+	    {"shape":1, "sprite":spr_oden_pot_1, "cost":150, "cooldown":7*60, "description":"福袋关东煮喷锅：穿透攻击前方和上下各四格敌人","plant_type":"normal","feature_type":"normal","target_card":"none"},
+		{"shape":2, "sprite":spr_oden_pot_2, "cost":150, "cooldown":7*60, "description":"海鲜关东煮喷锅：穿透攻击一行和一列敌人","plant_type":"normal","feature_type":"normal","target_card":"none"}
+	]);
+	register_card("whisky_bomb",obj_whisky_bomb,[
+	    {"shape":0, "sprite":spr_whisky_bomb, "cost":150, "cooldown":50*60, "description":"威士忌炸弹：一列范围爆炸","plant_type":"normal","feature_type":"normal","target_card":"none"},
+	    {"shape":1, "sprite":spr_whisky_bomb_1, "cost":175, "cooldown":50*60, "description":"水晶威士忌炸弹：一列范围爆炸","plant_type":"normal","feature_type":"normal","target_card":"none"},
+		{"shape":2, "sprite":spr_whisky_bomb_2, "cost":225, "cooldown":50*60, "description":"钻石威士忌炸弹：三列范围爆炸","plant_type":"normal","feature_type":"normal","target_card":"none"}
+	])
+	register_card("cotton_candy",obj_cotton_candy,[
+	    {"shape":0, "sprite":spr_cotton_candy_0_0, "cost":25, "cooldown":10*60, "description":"棉花糖：在空中和岩浆上承载卡片","plant_type":"coffee","feature_type":"normal","target_card":"none"},
+	    {"shape":1, "sprite":spr_cotton_candy_1_0, "cost":0, "cooldown":10*60, "description":"草莓棉花糖：在空中和岩浆上承载卡片","plant_type":"coffee","feature_type":"normal","target_card":"none"},
+		{"shape":2, "sprite":spr_cotton_candy_2_0, "cost":0, "cooldown":10*60, "description":"彩虹棉花糖：在空中和岩浆上承载卡片","plant_type":"coffee","feature_type":"normal","target_card":"none"}
+	])
 }

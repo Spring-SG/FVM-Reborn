@@ -276,11 +276,11 @@ else if button_select == 1{
             
 			// 获取提示文本
             
-            var tooltip_text = ""
+            var tooltip_text = weapon_data.name
             var is_equipped = is_weapon_equipped(weapon_id);
             
             var slot = get_weapon_slot(weapon_id);
-            tooltip_text = "点击将宝石放入强化槽"
+            tooltip_text += "\n点击将宝石放入强化槽"
             
 			
             // 绘制提示背景

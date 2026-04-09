@@ -2,7 +2,7 @@ if global.is_paused{
 	exit
 }
 timer++
-if timer < 7*5{
+if timer < max_time{
 	image_index = floor(timer/5)
 }
 else{

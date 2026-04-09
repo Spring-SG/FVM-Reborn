@@ -1,6 +1,7 @@
 
 if obj_player_info_ui.menu_type == 0{
 	audio_play_sound(snd_button,0,0)
+	texture_prefetch("cards")
 	if target_screen == "quit"{//退出按钮
 		if room == room_map{
 			room_goto(room_menu)

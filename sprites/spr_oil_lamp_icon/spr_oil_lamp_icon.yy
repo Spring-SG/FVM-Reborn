@@ -25,8 +25,8 @@
   "nineSlice":null,
   "origin":7,
   "parent":{
-    "name":"icon",
-    "path":"folders/精灵/Player/Weapons/icon.yy",
+    "name":"Icon",
+    "path":"folders/精灵/UI/Icon.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",
@@ -81,8 +81,8 @@
   "swatchColours":null,
   "swfPrecision":0.5,
   "textureGroupId":{
-    "name":"Food",
-    "path":"texturegroups/Food",
+    "name":"player",
+    "path":"texturegroups/player",
   },
   "type":0,
   "VTile":false,

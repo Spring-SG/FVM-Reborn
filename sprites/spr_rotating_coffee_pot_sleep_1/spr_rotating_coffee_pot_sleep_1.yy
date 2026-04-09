@@ -147,8 +147,8 @@
   "swatchColours":null,
   "swfPrecision":0.5,
   "textureGroupId":{
-    "name":"Food",
-    "path":"texturegroups/Food",
+    "name":"cards",
+    "path":"texturegroups/cards",
   },
   "type":0,
   "VTile":false,

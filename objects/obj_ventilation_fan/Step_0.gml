@@ -40,7 +40,7 @@ if effect_timer == 4 * current_flash_speed{
 			if target_type == "air" && array_get_index(other.ignore_list,mouse_id) == -1{
 				hp -= other.atk
 			}
-			else{
+			else if grid_row == other.grid_row{
 				hp -= other.atk * 0.5
 				event_user(0)
 			}
@@ -57,7 +57,7 @@ if effect_timer >= 4 * current_flash_speed && effect_timer <= 12 * current_flash
 				}
 			}
 		}
-		if other.shape >= 1 && target_type != "air" && array_get_index(other.ignore_list,mouse_id) == -1{
+		if other.shape >= 1 && target_type != "air" && grid_row == other.grid_row && array_get_index(other.ignore_list,mouse_id) == -1{
 			if x < get_world_position_from_grid(9,0).x{
 				x += 4
 			}

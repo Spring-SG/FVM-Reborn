@@ -137,8 +137,8 @@
   "swatchColours":null,
   "swfPrecision":0.5,
   "textureGroupId":{
-    "name":"Item",
-    "path":"texturegroups/Item",
+    "name":"player",
+    "path":"texturegroups/player",
   },
   "type":0,
   "VTile":false,

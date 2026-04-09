@@ -114,7 +114,7 @@ switch state{
 		break
 		
 	case BOSS_STATE.SKILL1:
-		if timer <= 8 * 5 * 3 - 1{
+		if timer <= 8 * 10 * 3 - 1{
 			sprite_index = spr_list[1]
 			if hp > maxhp * hurt_rate{
 				image_index = floor(timer/5) mod 8
@@ -133,7 +133,7 @@ switch state{
 			}
 		}
 		
-		if timer == 8 * 5 * 3 + 6 * 5{
+		if timer == 8 * 10 * 3 + 6 * 5{
 			var inst = instance_create_depth(x-80,y-5,-500,obj_ice_residue_ball)
 			if shape == "ice"{
 				inst.shape = "ice"
@@ -144,7 +144,7 @@ switch state{
 				inst.sprite_index = spr_fire_residue_ball
 			}
 		}
-		if timer == 8 * 5 * 3 + 16 * 5 - 1{
+		if timer == 8 * 10 * 3 + 16 * 5 - 1{
 			timer = 0
 			state = BOSS_STATE.DISAPPEAR
 		}

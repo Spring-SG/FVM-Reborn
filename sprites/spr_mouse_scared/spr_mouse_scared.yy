@@ -83,8 +83,8 @@
   "swatchColours":null,
   "swfPrecision":0.5,
   "textureGroupId":{
-    "name":"Mouse",
-    "path":"texturegroups/Mouse",
+    "name":"effects",
+    "path":"texturegroups/effects",
   },
   "type":0,
   "VTile":false,

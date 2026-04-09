@@ -6,7 +6,7 @@ battle_time ++
 if global.debug{
 	if keyboard_check_pressed(ord("M")){
 		var grid_pos = get_grid_position_from_world(mouse_x,mouse_y)
-		var inst = instance_create_depth(grid_pos.x,grid_pos.y+38,0,obj_flute_mouse)
+		var inst = instance_create_depth(grid_pos.x,grid_pos.y+38,0,obj_roller_skating_mouse)
 		inst.grid_row = grid_pos.row
 		inst.grid_col = grid_pos.col
 		inst.frozen_timer = 0000
@@ -14,7 +14,7 @@ if global.debug{
 	if keyboard_check_pressed(ord("N")){
 		var enemy_row = irandom_range(0,global.grid_rows-1)
 		var enemy_pos = get_world_position_from_grid(8,enemy_row)
-		instance_create_depth(enemy_pos.x-80,enemy_pos.y+33,-200,obj_pete)
+		instance_create_depth(enemy_pos.x-80,enemy_pos.y+33,-200,obj_fog_julie)
 		boss_count++
 		//var grid_pos = get_grid_position_from_world(mouse_x,mouse_y)
 		//var inst = instance_create_depth(grid_pos.x,grid_pos.y+38,0,obj_mario_mouse)
@@ -24,21 +24,21 @@ if global.debug{
 	}
 	if keyboard_check_pressed(ord("L")){
 		var grid_pos = get_grid_position_from_world(mouse_x,mouse_y)
-		var inst = instance_create_depth(grid_pos.x,grid_pos.y+38,0,obj_arson_mouse)
+		var inst = instance_create_depth(grid_pos.x,grid_pos.y+38,0,obj_ghost_mouse)
 		inst.grid_row = grid_pos.row
 		inst.grid_col = grid_pos.col
 		inst.frozen_timer = 0000
 	}
 	if keyboard_check_pressed(ord("K")){
 		var grid_pos = get_grid_position_from_world(mouse_x,mouse_y)
-		var inst = instance_create_depth(grid_pos.x,grid_pos.y+38,0,obj_pink_paul_tentacle)
+		var inst = instance_create_depth(grid_pos.x,grid_pos.y+38,0,obj_garbage_track_mouse)
 		inst.grid_row = grid_pos.row
 		inst.grid_col = grid_pos.col
 		inst.frozen_timer = 0000
 	}
 	if keyboard_check_pressed(ord("B")){
 		var grid_pos = get_grid_position_from_world(mouse_x,mouse_y)
-		var inst = instance_create_depth(grid_pos.x,grid_pos.y+38,0,obj_repairman_mouse)
+		var inst = instance_create_depth(grid_pos.x,grid_pos.y+38,0,obj_flight_barrier_mouse)
 		inst.grid_row = grid_pos.row
 		inst.grid_col = grid_pos.col
 		inst.frozen_timer = 0000

@@ -13,6 +13,7 @@ sprite_index = spr_pink_paul_appear
 is_boss = true
 
 skill_choose = 0
+skill_count = 0
 image_alpha = 0
 appear = false
 avaliable_pos = ds_list_create()

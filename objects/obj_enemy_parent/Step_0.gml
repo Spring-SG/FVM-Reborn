@@ -350,8 +350,8 @@ if (image_alpha <= 0 && state == ENEMY_STATE.DEAD) {
 
 // 更新僵尸的网格位置和深度
 
-var base_depth = -10 - (zombie_grid.row * 45) - (zombie_grid.col * 5);
-depth = base_depth - 4.5; // 僵尸比植物稍微靠后一点（在护罩外侧和咖啡豆之间）
+var base_depth = -10 - (zombie_grid.row * 45) - (9 * 5);
+depth = base_depth; // 僵尸比植物稍微靠后一点（在护罩外侧和咖啡豆之间）
 
 // 保持网格位置更新
 grid_col = zombie_grid.col;

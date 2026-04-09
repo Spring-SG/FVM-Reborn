@@ -211,8 +211,8 @@
   "swatchColours":null,
   "swfPrecision":0.5,
   "textureGroupId":{
-    "name":"Mouse",
-    "path":"texturegroups/Mouse",
+    "name":"enemy_volcanic",
+    "path":"texturegroups/enemy_volcanic",
   },
   "type":0,
   "VTile":false,

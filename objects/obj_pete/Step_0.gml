@@ -160,9 +160,6 @@ switch state{
 			}
 		}
 		if timer >= 110 + 60 * 8 - 1{
-			with obj_card_parent{
-				state = CARD_STATE.IDLE
-			}
 			jump_times = 0
 			timer = 0
 			state = BOSS_STATE.IDLE

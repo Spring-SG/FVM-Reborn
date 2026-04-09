@@ -59,6 +59,9 @@ if x >= target_x - 10 && x <= target_x + 10{
 	if sprite_index == spr_ice_residue_bullet{
 		inst.sprite_index = spr_ice_residue_bullet_effect
 	}
+	else if sprite_index == spr_landmine_bullet{
+		inst.sprite_index = spr_landmine_bullet_effect
+	}
 	
 	instance_destroy()
 }

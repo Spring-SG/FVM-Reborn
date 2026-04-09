@@ -59,7 +59,7 @@ if global.level_data.name == "深渊岛" || global.level_data.name == "可可岛
 	}
 }
 
-if global.level_id == "mustard_cottage_daytime" && event_timer == 1{
+if (global.level_id == "mustard_cottage_daytime" || global.level_id == "tower_cake_7_1" || global.level_id == "tower_cake_7_2" || global.level_id == "tower_cake_8_1" || global.level_id == "tower_cake_8_2") && event_timer == 1{
 	var obs_pos = get_world_position_from_grid(6,5)
 	var inst = instance_create_depth(obs_pos.x,obs_pos.y-35,-1200,obj_obstacle)
 	inst.row = 5
@@ -69,7 +69,7 @@ if global.level_id == "mustard_cottage_night" && event_timer == 1{
 	var inst = instance_create_depth(obs_pos.x,obs_pos.y-35,-1200,obj_obstacle)
 	inst.row = 1
 }
-if global.level_id == "cheese_castle" && event_timer == 1{
+if (global.level_id == "cheese_castle" || global.level_id == "tower_cake_9_1" || global.level_id == "tower_cake_9_2") && event_timer == 1{
 	var obs_pos = get_world_position_from_grid(6,1)
 	var inst = instance_create_depth(obs_pos.x,obs_pos.y-35,-1200,obj_obstacle)
 	inst.row = 1
@@ -102,6 +102,54 @@ if global.level_id == "mint_beach_night" && event_timer == 1{
 	var inst4 = instance_create_depth(obs_pos4.x,obs_pos4.y-35,-1200,obj_obstacle)
 	inst4.row = 6
 }
+if global.level_id == "charcoal_jungle_daytime" && event_timer == 1{
+	var obs_pos = get_world_position_from_grid(7,0)
+	var inst = instance_create_depth(obs_pos.x,obs_pos.y-35,-1200,obj_obstacle)
+	inst.row = 0
+	var obs_pos2 = get_world_position_from_grid(3,1)
+	var inst2 = instance_create_depth(obs_pos2.x,obs_pos2.y-35,-1200,obj_obstacle)
+	inst2.row = 1
+	var obs_pos3 = get_world_position_from_grid(5,5)
+	var inst3 = instance_create_depth(obs_pos3.x,obs_pos3.y-35,-1200,obj_obstacle)
+	inst3.row = 5
+	var obs_pos4 = get_world_position_from_grid(6,6)
+	var inst4 = instance_create_depth(obs_pos4.x,obs_pos4.y-35,-1200,obj_obstacle)
+	inst4.row = 6
+}
+if global.level_id == "charcoal_jungle_night" && event_timer == 1{
+	var obs_pos = get_world_position_from_grid(6,0)
+	var inst = instance_create_depth(obs_pos.x,obs_pos.y-35,-1200,obj_obstacle)
+	inst.row = 0
+	var obs_pos2 = get_world_position_from_grid(6,1)
+	var inst2 = instance_create_depth(obs_pos2.x,obs_pos2.y-35,-1200,obj_obstacle)
+	inst2.row = 1
+	var obs_pos3 = get_world_position_from_grid(4,4)
+	var inst3 = instance_create_depth(obs_pos3.x,obs_pos3.y-35,-1200,obj_obstacle)
+	inst3.row = 4
+	var obs_pos4 = get_world_position_from_grid(4,5)
+	var inst4 = instance_create_depth(obs_pos4.x,obs_pos4.y-35,-1200,obj_obstacle)
+	inst4.row = 5
+	var obs_pos5 = get_world_position_from_grid(1,6)
+	var inst5 = instance_create_depth(obs_pos5.x,obs_pos5.y-35,-1200,obj_obstacle)
+	inst5.row = 6
+}
+if global.level_id == "macchiato_port" && event_timer == 1{
+	var obs_pos = get_world_position_from_grid(8,1)
+	var inst = instance_create_depth(obs_pos.x+5,obs_pos.y-35,-1200,obj_wind_tunnel)
+	inst.row = 1
+	var obs_pos2 = get_world_position_from_grid(8,3)
+	var inst2 = instance_create_depth(obs_pos2.x,obs_pos2.y-35,-1200,obj_wind_tunnel)
+	inst2.row = 3
+	var obs_pos3 = get_world_position_from_grid(8,5)
+	var inst3 = instance_create_depth(obs_pos3.x,obs_pos3.y-35,-1200,obj_wind_tunnel)
+	inst3.row = 5
+	var obs_pos4 = get_world_position_from_grid(6,2)
+	var inst4 = instance_create_depth(obs_pos4.x,obs_pos4.y-35,-1200,obj_wind_tunnel)
+	inst4.row = 2
+	var obs_pos5 = get_world_position_from_grid(6,4)
+	var inst5 = instance_create_depth(obs_pos5.x,obs_pos5.y-35,-1200,obj_wind_tunnel)
+	inst5.row = 4
+}
 
 if (global.level_id == "mustard_cottage_daytime" || global.level_id == "mustard_cottage_night") && obj_battle.current_wave >= global.level_file.elite_wave && obj_battle.level_stage != "boss"{
 	if event_timer mod 1800 == 5{
@@ -121,7 +169,8 @@ if global.level_id == "cheese_castle" && obj_battle.current_wave >= 2 && obj_bat
 	}
 }
 
-if global.level_id == "cheese_castle" && obj_battle.current_wave == 6 && obj_battle.current_subwave == 0{
+if (global.level_id == "cheese_castle" && obj_battle.current_wave == 6 && obj_battle.current_subwave == 0)
+|| ((global.level_id == "tower_cake_9_1" || global.level_id == "tower_cake_9_2") && obj_battle.current_wave == 2 && obj_battle.current_subwave == 1){
 	cheese_castle_anim_timer++
 	if cheese_castle_anim_timer == 1{
 		var inst = instance_create_depth(0,0,49,obj_map_change_effect)
@@ -159,7 +208,8 @@ if global.level_id == "cheese_castle" && obj_battle.current_wave == 6 && obj_bat
 	}
 }
 
-if global.level_id == "cheese_castle" && obj_battle.current_wave == 5 && obj_battle.current_subwave == 9 && obj_battle.wave_timer == 1{
+if (global.level_id == "cheese_castle" && obj_battle.current_wave == 5 && obj_battle.current_subwave == 9 && obj_battle.wave_timer == 1)
+||((global.level_id == "tower_cake_9_1" || global.level_id == "tower_cake_9_2") && obj_battle.current_wave == 2 && obj_battle.current_subwave == 0 && obj_battle.wave_timer == 1){
 	for(var i = 0 ; i < 7 ; i ++){
 		global.row_feature[i] = "land"
 	}

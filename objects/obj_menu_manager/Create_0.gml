@@ -1,3 +1,5 @@
+depth = -1200
+
 // 强制清除application_surface，避免上一房间图像残留
 if surface_exists(application_surface){
 	surface_set_target(application_surface);
@@ -15,3 +17,4 @@ if not instance_exists(obj_world_map_button){
 	instance_create_depth(1670,80,0,obj_world_map_button)
 }
 instance_create_depth(room_width-210,room_height,-1,obj_player_menu_bg)
+timer = 0

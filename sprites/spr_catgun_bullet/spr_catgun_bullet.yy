@@ -93,8 +93,8 @@
   "swatchColours":null,
   "swfPrecision":0.5,
   "textureGroupId":{
-    "name":"Item",
-    "path":"texturegroups/Item",
+    "name":"bullet",
+    "path":"texturegroups/bullet",
   },
   "type":0,
   "VTile":false,

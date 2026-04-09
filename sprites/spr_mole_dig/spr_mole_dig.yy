@@ -101,8 +101,8 @@
   "swatchColours":null,
   "swfPrecision":0.5,
   "textureGroupId":{
-    "name":"Mouse",
-    "path":"texturegroups/Mouse",
+    "name":"enemy_delicious",
+    "path":"texturegroups/enemy_delicious",
   },
   "type":0,
   "VTile":false,

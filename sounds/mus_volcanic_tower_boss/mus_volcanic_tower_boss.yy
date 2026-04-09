@@ -1,0 +1,26 @@
+{
+  "$GMSound":"v2",
+  "%Name":"mus_volcanic_tower_boss",
+  "audioGroupId":{
+    "name":"music",
+    "path":"audiogroups/music",
+  },
+  "bitDepth":1,
+  "channelFormat":0,
+  "compression":0,
+  "compressionQuality":4,
+  "conversionMode":0,
+  "duration":61.753468,
+  "exportDir":"",
+  "name":"mus_volcanic_tower_boss",
+  "parent":{
+    "name":"Battle BGM",
+    "path":"folders/声音/Battle BGM.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"mus_volcanic_tower_boss.mp3",
+  "volume":1.0,
+}

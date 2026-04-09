@@ -197,8 +197,8 @@
   "swatchColours":null,
   "swfPrecision":0.5,
   "textureGroupId":{
-    "name":"Default",
-    "path":"texturegroups/Default",
+    "name":"enemy_volcanic",
+    "path":"texturegroups/enemy_volcanic",
   },
   "type":0,
   "VTile":false,

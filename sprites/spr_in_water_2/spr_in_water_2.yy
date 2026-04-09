@@ -95,8 +95,8 @@
   "swatchColours":null,
   "swfPrecision":0.5,
   "textureGroupId":{
-    "name":"UI",
-    "path":"texturegroups/UI",
+    "name":"effects",
+    "path":"texturegroups/effects",
   },
   "type":0,
   "VTile":false,
