@@ -50,21 +50,5 @@ if keyboard_check_pressed(vk_escape){
 		instance_create_depth(room_width /2,room_height/2,-20,obj_quit_confirm)
 	}
 }
-if !global.preload && timer == 2{
-	instance_create_depth(0,0,-1200,obj_load_bar)
-}
-if !global.preload && timer == 3{
-	texture_prefetch("UI")
-	texture_prefetch("player")
-	texture_prefetch("maps")
-	texture_prefetch("cards")
-	texture_prefetch("enemy_delicious")
-	texture_prefetch("enemy_volcanic")
-	texture_prefetch("bullet")
-	texture_prefetch("effects")
-	texture_prefetch("enemy_tower")
 
-    global.preload = true
-	draw_set_alpha(1)
-	instance_destroy(obj_load_bar)
-}
+pre_load_texture()
