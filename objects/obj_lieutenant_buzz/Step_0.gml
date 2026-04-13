@@ -187,7 +187,7 @@ switch state{
 		if timer > 1 && timer <= 120{
 			if timer mod 39 == 0{
 				var se_pos = get_grid_position_from_world(x,y)
-				instance_create_depth(se_pos.x,se_pos.y+33,-800,obj_glider_mouse)
+				instance_create_depth(se_pos.x,se_pos.y+33,-800,obj_paratrooper_mouse)
 			}
 			x += x_move
 			y += y_move_speed

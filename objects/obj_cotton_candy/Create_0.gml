@@ -5,6 +5,7 @@ obj_type = object_index;
 
 
 is_derivative = false
+on_lava = false
 
 
 event_user(0)

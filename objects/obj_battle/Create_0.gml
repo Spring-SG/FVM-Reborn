@@ -146,9 +146,19 @@ if is_real(global.level_file.version){
 
 function enemy_subwave_summon(){
 	current_total_hp = 0
+	
     wave_timer = wave_max_time
+	
 	if level_stage == "boss"{
 		wave_timer = 10 * 60
+	}
+	
+	if is_real(global.level_file.version){
+		if global.level_file.version >= 1.3{
+			if global.level_file.waves[current_wave].subwaves[current_subwave].local_max_wave_time >0{
+				wave_timer = global.level_file.waves[current_wave].subwaves[current_subwave].local_max_wave_time
+			}
+		}
 	}
     
     var subwave_enemy = global.level_file.waves[current_wave].subwaves

@@ -66,7 +66,7 @@ if target_id != ""{
 				show_notice("卡片已强化",60)
 			}
 			else{
-				show_notice("不够好运，升级失败！",60)
+				show_notice("金币或强化材料不足，升级失败！",60)
 			}
 		}
 	
@@ -110,7 +110,7 @@ if target_id != ""{
 				show_notice("宝石已强化",60)
 			}
 			else{
-				show_notice("不够好运，升级失败！",60)
+				show_notice("金币或强化水晶不足，升级失败！",60)
 			}
 		}
 	

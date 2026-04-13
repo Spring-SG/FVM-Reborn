@@ -16,4 +16,4 @@ ignore_list = ["mario_mouse","mario_pipeline","arno","pharaoh_coffin","temple_ph
 				"needle_baron","fog_julie","lieutenant_buzz"
 ]
 
-target_ignore = ["mole","bat_mouse","sawblade_mouse","dentist_mouse","baron_bats"]
+target_ignore = ["mole","bat_mouse","sawblade_mouse","dentist_mouse","baron_bats","paratrooper_mouse_shield"]

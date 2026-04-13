@@ -81,5 +81,6 @@ function enemy_init(){
 	register_enemy("hells_messenger",{"name":"地狱屎者","_obj":obj_hells_messenger,"hp":30000,"shield":0,"description":"地狱屎者：火山岛BOSS","speed":0.3,"atk":10,"cycle":36,"range":90,"ash_proof":true,"spr":spr_hells_messenger_idle,"feature":"land"})
 	register_enemy("needle_baron",{"name":"针头男爵","_obj":obj_needle_baron,"hp":30000,"shield":0,"description":"针头男爵：火山岛BOSS","speed":0.3,"atk":10,"cycle":36,"range":90,"ash_proof":true,"spr":spr_needle_baron_idle,"feature":"land"})
 	register_enemy("fog_julie",{"name":"迷雾朱莉","_obj":obj_fog_julie,"hp":50000,"shield":0,"description":"迷雾朱莉：玛奇朵港BOSS","speed":0.3,"atk":10,"cycle":36,"range":90,"ash_proof":true,"spr":spr_fog_julie_idle,"feature":"land"})
-	register_enemy("lieutenant_buzz",{"name":"嗡嗡中尉","_obj":obj_lieutenant_buzz,"hp":50000,"shield":0,"description":"针头男爵：火山岛BOSS","speed":0.3,"atk":10,"cycle":36,"range":90,"ash_proof":true,"spr":spr_lieutenant_buzz_idle,"feature":"land"})
+	register_enemy("lieutenant_buzz",{"name":"嗡嗡中尉","_obj":obj_lieutenant_buzz,"hp":50000,"shield":0,"description":"嗡嗡中尉：火山岛BOSS","speed":0.3,"atk":10,"cycle":36,"range":90,"ash_proof":true,"spr":spr_lieutenant_buzz_idle,"feature":"land"})
+	register_enemy("paratrooper_mouse",{"name":"伞兵鼠","_obj":obj_paratrooper_mouse,"hp":280,"shield":0,"description":"伞兵鼠：空降并使用瓜皮罩住卡片","speed":0.30,"atk":10,"cycle":36,"range":90,"ash_proof":false,"spr":spr_paratrooper_mouse_air,"feature":"land"})
 }
