@@ -64,8 +64,8 @@ if button_select == 0{
 		var card_slot_data = deck_get_card_data(card_id,card_data.shape)
 		var card_x = 42 + card_col*84
 		var card_y = 48+96 * card_row - y_offset
-		
-		draw_sprite_ext(spr_slot,0,card_x,card_y-3,0.25,0.25,0,c_white,1)
+		var slot_bg_spr = variable_struct_exists(global.night_plants, card_id) ? spr_slot_night : spr_slot;
+		draw_sprite_ext(slot_bg_spr,0,card_x,card_y-3,0.25,0.25,0,c_white,1)
 		draw_sprite_ext(card_slot_data[? "sprite"],0,card_x,card_y+15,0.7,0.7,0,c_white,1)
 		draw_set_color(c_black);
 		draw_set_halign(fa_center);
@@ -130,8 +130,8 @@ if button_select == 0{
 		var card_slot_data = deck_get_card_data(current_uprade_target_id,card_data.shape)
 		var card_x = x - 307
 		var card_y = y + 103
-		
-		draw_sprite_ext(spr_slot,0,card_x,card_y-3,0.25,0.25,0,c_white,1)
+		var slot_bg_spr = variable_struct_exists(global.night_plants, card_id) ? spr_slot_night : spr_slot;
+		draw_sprite_ext(slot_bg_spr,0,card_x,card_y-3,0.25,0.25,0,c_white,1)
 		draw_sprite_ext(card_slot_data[? "sprite"],0,card_x,card_y+15,0.7,0.7,0,c_white,1)
 		draw_set_color(c_black);
 		draw_set_halign(fa_center);

@@ -53,9 +53,10 @@ if info_button_select == 1 {
         if (row < info_rows) {
             var card_x = x - 1154 + col * 128*1.5;
             var card_y = y - 435 + row * 142*1.5-y_offset;
+			var slot_bg_spr = variable_struct_exists(global.night_plants, card_id) ? spr_slot_night : spr_slot;
             
             // 绘制卡片
-				draw_sprite_ext(spr_slot, 0, card_x, card_y-3, 0.30, 0.30, 0, c_white, 1);
+				draw_sprite_ext(slot_bg_spr, 0, card_x, card_y-3, 0.30, 0.30, 0, c_white, 1);
                 draw_sprite_ext(card_data[? "sprite"], 0, card_x, card_y+15, 0.8, 0.8, 0, c_white, 1);
 				draw_set_color(c_white);
 				draw_set_halign(fa_center);

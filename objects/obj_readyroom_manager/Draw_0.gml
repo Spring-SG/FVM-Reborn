@@ -32,7 +32,8 @@ for(var i = 0 ; i < slot_rows ; i++){
         if (row < slot_rows) {
             var card_x = x + 42 + col * 84
             var card_y = y + 48 + row * 96 - y_offset;
-            
+            var slot_bg_spr = variable_struct_exists(global.night_plants, card_id) ? spr_slot_night : spr_slot;
+			
             // 检查卡片是否已解锁
             var is_unlocked = false;
 			var is_selected = false
@@ -55,7 +56,7 @@ for(var i = 0 ; i < slot_rows ; i++){
             // 绘制卡片
             if (is_unlocked) {
                 // 已解锁的卡片正常绘制
-				draw_sprite_ext(spr_slot, 0, card_x, card_y-3, 0.25, 0.25, 0, c_white, 1);
+				draw_sprite_ext(slot_bg_spr, 0, card_x, card_y-3, 0.25, 0.25, 0, c_white, 1);
                 draw_sprite_ext(card_data[? "sprite"], 0, card_x, card_y+15, 0.7, 0.7, 0, c_white, 1);
 				draw_set_color(c_black);
 				draw_set_halign(fa_center);
@@ -94,7 +95,7 @@ for(var i = 0 ; i < slot_rows ; i++){
 				draw_set_halign(fa_center);
 				draw_set_valign(fa_bottom);
 				draw_set_font(font_pixel)
-				draw_sprite_ext(spr_slot, 0, card_x, card_y-3, 0.25, 0.25, 0, c_gray, 1);
+				draw_sprite_ext(slot_bg_spr, 0, card_x, card_y-3, 0.25, 0.25, 0, c_gray, 1);
 				card_data = card_data_shapes[| card_shape]
                 draw_sprite_ext(card_data[? "sprite"], 0, card_x, card_y+15, 0.7, 0.7, 0, c_gray, 1);
 				var info_index = 0
@@ -182,8 +183,13 @@ for(var i = deck_first_slot_index; i < deck_first_slot_index+11;i++){
 	var card_x = x + 805 + (i - deck_first_slot_index) * 86;
     var card_y = y + 132
 	
+	if (variable_struct_exists(global.night_plants, card_id)) {
+		slot_bg_spr = spr_slot_night; 
+	} else {
+		slot_bg_spr = spr_slot;
+	}
 	// 已解锁的卡片正常绘制
-				draw_sprite_ext(spr_slot, 0, card_x, card_y-3, 0.25, 0.25, 0, c_white, 1);
+				draw_sprite_ext(slot_bg_spr, 0, card_x, card_y-3, 0.25, 0.25, 0, c_white, 1);
                 draw_sprite_ext(card_data[? "sprite"], 0, card_x, card_y+15, 0.7, 0.7, 0, c_white, 1);
 				draw_set_color(c_black);
 				draw_set_halign(fa_center);

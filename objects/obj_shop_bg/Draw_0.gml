@@ -33,9 +33,13 @@ for(var i = 0 ; i< 4; i++){
 		//绘制卡片类型商品
 		if shop_button_select == 1{
 			if ds_list_find_value(goods_list,i*4+j+(current_page-1)*16) != undefined{
+				//获取当前商品的 card_id
+				var card_id = global.goods_map[? ds_list_find_value(goods_list,i*4+j+(current_page-1)*16)].unlock_item_id;
 				//根据商品id获取卡片信息
-				var card_data = deck_get_card_data(global.goods_map[? ds_list_find_value(goods_list,i*4+j+(current_page-1)*16)].unlock_item_id,0)
-				draw_sprite_ext(spr_slot, 0, x-618+411*j-122,y-190+165*i, 0.33, 0.33, 0, c_white, 1);
+				var card_data = deck_get_card_data(card_id,0)
+				var slot_bg_spr = variable_struct_exists(global.night_plants, card_id) ? spr_slot_night : spr_slot;
+				
+				draw_sprite_ext(slot_bg_spr, 0, x-618+411*j-122,y-190+165*i, 0.33, 0.33, 0, c_white, 1);
 				draw_sprite_ext(card_data[? "sprite"],0,x-618+411*j-122,y-190+165*i+25,1,1,0,c_white,1)
 				draw_set_halign(fa_left);
 				draw_set_valign(fa_middle);

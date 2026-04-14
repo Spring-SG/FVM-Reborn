@@ -1,6 +1,14 @@
 
 // 游戏初始化脚本
 function cards_init(){
+    global.night_plants = {
+        "coffee_cup": true,
+        "coffee_pot": true,
+        "ice_bucket_bomb": true,
+        "kettle_bomb": true,
+        "rotating_coffee_pot": true,
+        "oden_pot": true,
+    };
 	// 注册small_fire
 	register_plant_lite(
 	    "small_fire",
