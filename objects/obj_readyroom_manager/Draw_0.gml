@@ -182,12 +182,7 @@ for(var i = deck_first_slot_index; i < deck_first_slot_index+11;i++){
 	
 	var card_x = x + 805 + (i - deck_first_slot_index) * 86;
     var card_y = y + 132
-	
-	if (variable_struct_exists(global.night_plants, card_id)) {
-		slot_bg_spr = spr_slot_night; 
-	} else {
-		slot_bg_spr = spr_slot;
-	}
+	var slot_bg_spr = variable_struct_exists(global.night_plants, card_id) ? spr_slot_night : spr_slot;
 	// 已解锁的卡片正常绘制
 				draw_sprite_ext(slot_bg_spr, 0, card_x, card_y-3, 0.25, 0.25, 0, c_white, 1);
                 draw_sprite_ext(card_data[? "sprite"], 0, card_x, card_y+15, 0.7, 0.7, 0, c_white, 1);
