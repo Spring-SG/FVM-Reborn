@@ -2,9 +2,20 @@
 function LaboratoryManager() constructor {
 
     self.stages = {}
-    self.file_util = new FileUtil()
-    static init = function() {
+    /// @type {Array<String>} 
+    self.stage_ids = []
+    /// @type {Struct.FileUtil} 
+    self.file_util = undefined
 
+    /// @returns {Struct.Result} 
+    static init = function() {
+        self.file_util = new FileUtil()
+        return new Result().success()
+    }
+
+    /// @type {Array<String>} 
+    static get_stage_ids = function() {
+        return self.stage_ids
     }
 
     /// @param {String} _stage_id 
@@ -30,7 +41,7 @@ function LaboratoryManager() constructor {
         var _json = _result.data
         var _stage = create_custom_stage(_json, _json_path)
         self._add_stage(_stage.id, _stage)
-
+        array_push(self.stage_ids, _stage.id)
         return new Result().success()
     }
 
@@ -46,6 +57,10 @@ function LaboratoryManager() constructor {
             }
         }
         return new Result().success()
+    }
+
+    static reset = function() {
+        self.stages = {}
     }
 
     static dispose = function() {

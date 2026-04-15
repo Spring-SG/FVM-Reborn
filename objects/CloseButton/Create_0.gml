@@ -76,6 +76,12 @@ function on_step() {
             self.state.on_click()
         }
     }
+    // HACK: for debug
+    if (mouse_check_button_released(mb_left)) {
+        var _mx = device_mouse_x_to_gui(0);
+        var _my = device_mouse_y_to_gui(0);
+        show_debug_message("Released at position: " + string(_mx) + ", " + string(_my))
+    }
 }
 
 function on_draw() {

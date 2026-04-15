@@ -8,5 +8,5 @@ function laboratory_test() {
     }
     show_debug_message("[TEST] load all stages succeed")
     
-    _laboratory_manager.dispose()
+    _laboratory_manager.reset()
 }

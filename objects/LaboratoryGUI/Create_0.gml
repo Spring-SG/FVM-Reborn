@@ -4,6 +4,10 @@ self.state = {
     bg_scale: 0,
     offset_x: 0,
     offset_y: 0,
+    /// @type {Struct.LaboratoryManager} 
+    laboratory_manager: undefined,
+    /// @type {Array<String>} 
+    stage_ids : [],
 }
 
 function init_bg_size_and_offset() {
@@ -20,7 +24,6 @@ function init_bg_size_and_offset() {
 }
 
 function create_ui_elements() {
-    
     /// @type {Asset.GMObject.CloseButton} 
     var _close_button = instance_create_layer(0, 0, "Assets", CloseButton)
     _close_button.set_position(room_width - 200, 30)
@@ -28,10 +31,44 @@ function create_ui_elements() {
             global.menu_screen = true
             room_goto(room_menu)
         })
-    instance_create_layer(room_width / 2, room_height / 2, "Assets", StageItem)
+    
+    /// @type {Array<Asset.GMObject.StageItem>} 
+    var _items = []
+    for (var _i = 0; _i < array_length(self.state.stage_ids); _i++) {
+        var _stage_id = self.state.stage_ids[_i]
+        var _stage = self.state.laboratory_manager.get_stage(_stage_id)
+        if (is_undefined(_stage)) {
+            return
+        }
+
+        /// @type {Asset.GMObject.StageItem} 
+        var _item = instance_create_layer(0, 0, "Assets", StageItem)
+        _item.init(_stage)
+        array_push(_items, _item)
+    }
+
+    /// @type {Asset.GMObject.GridList} 
+    var _grid_list = instance_create_layer(room_width / 2, room_height / 2, "Assets", GridList)
+    _grid_list.set_viewport(159, 175, 1550, 600)
+    .set_items(_items)
 }
 
 function on_create() {
+    if (!variable_global_exists("laboratory_manager") || is_undefined(global.laboratory_manager)) {
+        throw("global.laboratory_manager is not defined")
+    }
+
+    self.state.laboratory_manager = global.laboratory_manager
+    var _stage_ids = self.state.laboratory_manager.get_stage_ids()
+    if (array_length(_stage_ids) == 0) {
+        var _result = self.state.laboratory_manager.load_all_stages()
+        if (_result.is_failed()) {
+            throw(_result.message)
+        }
+        _stage_ids = self.state.laboratory_manager.get_stage_ids()
+    }
+    self.state.stage_ids = _stage_ids
+
     global.menu_screen = false
     window_set_cursor(cr_default)
 

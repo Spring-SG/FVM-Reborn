@@ -749,7 +749,6 @@
     {"id":{"name":"obj_xiaolongbao_bullet","path":"objects/obj_xiaolongbao_bullet/obj_xiaolongbao_bullet.yy",},},
     {"id":{"name":"obj_zombie_with_flower_pot","path":"objects/obj_zombie_with_flower_pot/obj_zombie_with_flower_pot.yy",},},
     {"id":{"name":"obj_zombie_with_wallnut","path":"objects/obj_zombie_with_wallnut/obj_zombie_with_wallnut.yy",},},
-    {"id":{"name":"Scrollable","path":"objects/Scrollable/Scrollable.yy",},},
     {"id":{"name":"StageItem","path":"objects/StageItem/StageItem.yy",},},
     {"id":{"name":"room_battle","path":"rooms/room_battle/room_battle.yy",},},
     {"id":{"name":"room_init","path":"rooms/room_init/room_init.yy",},},

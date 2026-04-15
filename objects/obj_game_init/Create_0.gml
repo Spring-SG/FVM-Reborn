@@ -85,6 +85,10 @@ for (var i = 0; i < array_length(global.keybind_config); i++) {
 	    var key_val = ini_read_real("keybinds", kb.name, kb.default1);
 	    global.keybind_map[? kb.name] = key_val;
 }
+
+global.laboratory_manager = new LaboratoryManager()
+global.laboratory_manager.init()
+
 ini_close();
 audio_group_set_gain(music,global.music_volume,0)
 audio_group_set_gain(sound,global.sound_volume,0)
