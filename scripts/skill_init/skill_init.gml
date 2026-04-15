@@ -59,4 +59,5 @@ function skill_init(){
 	register_card_skill("pineapple_explosive_bread","cooldown",[50*60,48*60,45*60,42*60,38*60,34*60,30*60,25*60,20*60])
 	register_card_skill("ice_cream","hp",[50,50,50,50,50,50,50,50,50])
 	register_card_skill("lightning_baguette","cooldown",[60*60,57*60,54*60,51*60,47*60,43*60,38*60,33*60,28*60])
+	register_card_skill("beef_hot_pot","cycle",[7*60,6.7*60,6.4*60,6.1*60,5.8*60,5.5*60,5.2*60,4.9*60,4.6*60])
 }

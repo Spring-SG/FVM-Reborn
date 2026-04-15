@@ -270,5 +270,9 @@ function slots_init(){
 	    {"shape":1, "sprite":spr_lightning_baguette_1_icon, "cost":175, "cooldown":60*60, "description":"节能面包：同列的两根面包间会产生电流","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_lightning_baguette_1},
 		{"shape":2, "sprite":spr_lightning_baguette_2_icon, "cost":175, "cooldown":60*60, "description":"负离子面包：同列的两根面包间会产生两次电流","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_lightning_baguette_2}
 	])
-	
+	register_card("beef_hot_pot", obj_beef_hot_pot, [
+	    {"shape":0, "sprite":spr_beef_hot_pot_icon, "cost":175, "cooldown":7*60, "description":"肥牛火锅：向前方4格持续喷出火焰","plant_type":"normal","feature_type":"normal","target_card":"none"},
+	    {"shape":1, "sprite":spr_beef_hot_pot_icon_1, "cost":175, "cooldown":7*60, "description":"酸汤肥牛锅：向前方4格持续喷出火焰","plant_type":"normal","feature_type":"normal","target_card":"none"},
+		{"shape":2, "sprite":spr_beef_hot_pot_icon_2, "cost":175, "cooldown":7*60, "description":"海鲜肥牛锅：向前方5格持续喷出火焰","plant_type":"normal","feature_type":"normal","target_card":"none"}
+	]);
 }
