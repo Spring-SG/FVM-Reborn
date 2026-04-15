@@ -8,6 +8,10 @@ self.state = {
     laboratory_manager: undefined,
     /// @type {Array<String>} 
     stage_ids : [],
+    current_stage_id: "",
+    /// @type {Asset.GMObject.StageDetail} 
+    stage_detail_widget: undefined
+
 }
 
 function init_bg_size_and_offset() {
@@ -44,16 +48,21 @@ function create_ui_elements() {
         /// @type {Asset.GMObject.StageItem} 
         var _item = instance_create_layer(0, 0, "Assets", StageItem)
         _item.init(_stage)
+             .set_on_click(method({stage_id: _stage_id, gui_state: self.state}, function() {
+                 gui_state.current_stage_id = stage_id
+             }))
         array_push(_items, _item)
     }
 
     /// @type {Asset.GMObject.GridList} 
     var _grid_list = instance_create_layer(room_width / 2, room_height / 2, "Assets", GridList)
     _grid_list.set_viewport(159, 175, 1550, 600)
-    .set_items(_items)
+              .set_items(_items)
 }
 
 function on_create() {
+    init_bg_size_and_offset()
+
     if (!variable_global_exists("laboratory_manager") || is_undefined(global.laboratory_manager)) {
         throw("global.laboratory_manager is not defined")
     }
@@ -70,11 +79,27 @@ function on_create() {
     self.state.stage_ids = _stage_ids
 
     global.menu_screen = false
-    window_set_cursor(cr_default)
-
-    init_bg_size_and_offset()
+    window_set_cursor(cr_arrow)
 
     create_ui_elements()
+}
+
+function on_step() {
+    if (!is_undefined(self.state.stage_detail_widget)) exit
+    if (self.state.current_stage_id == "") exit
+
+    /// @type {Asset.GMObject.StageDetail} 
+    var _detail_widget = instance_create_layer(0, 0, "Float", StageDetail)
+    if (_detail_widget == -1) {
+        throw("Failed to create stage detail widget")
+    }
+    _detail_widget.init(self.state.laboratory_manager.get_stage(self.state.current_stage_id))
+                  .set_position((room_width - _detail_widget.get_width()) / 2, (room_height - _detail_widget.get_height()) / 2)
+                  .set_on_close_clicked(method({gui_state: self.state}, function() {
+                      gui_state.current_stage_id = ""
+                      gui_state.stage_detail_widget = undefined
+                  }))
+    self.state.stage_detail_widget = _detail_widget
 }
 
 function on_draw() {

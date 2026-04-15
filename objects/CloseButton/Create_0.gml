@@ -16,9 +16,13 @@ self.state = {
     current_frame: 0,
     /// @type {Enum.MouseStatus} 
     mouse_status: MouseStatus.NONE,
+    auto_draw: true,
 }
 
 
+/// @param {Real} _left 
+/// @param {Real} _top 
+/// @returns {Asset.GMObject.CloseButton} 
 function set_position(_left, _top) {
     self.state.offset_x = _left
     self.state.offset_y = _top
@@ -30,7 +34,14 @@ function set_position(_left, _top) {
     return self
 }
 
+/// @returns {Asset.GMObject.CloseButton} 
+function set_auto_draw(_auto_draw) {
+    self.state.auto_draw = _auto_draw
+    return self
+}
+
 /// @param {function} _on_click 
+/// @returns {Asset.GMObject.CloseButton} 
 function set_on_click(_on_click) {
     self.state.on_click = _on_click
     return self
@@ -41,13 +52,16 @@ function update_mouse() {
     var _mx = device_mouse_x_to_gui(0);
     var _my = device_mouse_y_to_gui(0);
     if (point_in_rectangle(_mx, _my, self.state.corresponding_area_l, self.state.corresponding_area_t, self.state.corresponding_area_r, self.state.corresponding_area_b)) {
-        show_debug_message("HOVER")
+        if (self.state.mouse_status != MouseStatus.HOVER) {
+            window_set_cursor(cr_drag)
+        }
         self.state.mouse_status = MouseStatus.HOVER
-        window_set_cursor(cr_drag)
         self.state.current_frame = 1
     } else {
+        if (self.state.mouse_status != MouseStatus.NONE) {
+            window_set_cursor(cr_arrow)
+        }
         self.state.mouse_status = MouseStatus.NONE
-        window_set_cursor(cr_arrow)
         self.state.current_frame = 0
     }
 }
@@ -84,7 +98,7 @@ function on_step() {
     }
 }
 
-function on_draw() {
+function on_draw_gui() {
     draw_sprite_ext(spr_closemenu_btn, self.state.current_frame,
         self.state.offset_x + self.state.sprite_offset_x * self.state.scale, self.state.offset_y + self.state.sprite_offset_y * self.state.scale,
         self.state.scale, self.state.scale, 0, c_white, 1)
