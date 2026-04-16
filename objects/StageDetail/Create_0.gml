@@ -1,7 +1,7 @@
 /// 
 
 self.state = {
-    scale: 2,
+    scale: 1.9,
     left: 0,
     top: 0,
     /// @type {Struct.CustomStage} 
@@ -10,8 +10,10 @@ self.state = {
     width: 0,
     /// @type {function} 
     on_close_clicked: undefined,
-    /// @type {Asset.GMObject.CloseButton} 
+    /// @type {Asset.GMObject.Button} 
     close_button: undefined,
+    /// @type {Asset.GMObject.Button} 
+    start_button: undefined,
 
 }
 
@@ -27,7 +29,11 @@ function set_position(_left, _top) {
     self.state.top = _top
 
     if (!is_undefined(self.state.close_button)) {
-        self.state.close_button.set_position(_left + self.state.width - 80, _top + 15)
+        self.state.close_button.set_position(_left + self.state.width - 50, _top + 35)
+    }
+    if (!is_undefined(self.state.start_button)) {
+        self.state.start_button.set_position(self.state.left + self.state.width - 240, self.state.top + self.state.height - 110)
+
     }
 
     return self
@@ -58,12 +64,24 @@ function set_on_close_clicked(_on_close_clicked) {
 }
 
 function create_widgets() {
-     /// @type {Asset.GMObject.CloseButton} 
-    var _close_button = instance_create_layer(0, 0, "Float", CloseButton)
-    _close_button.set_on_click(method(self, on_close))
-                 .set_auto_draw(false)
-                 .set_correspond_gui_enums([GuiEnum.STAGE_DETAIL])
+    /// @type {Asset.GMObject.Button} 
+    var _close_button = instance_create_layer(0, 0, "Float", Button)
+    _close_button.set_correspond_gui_enums([GuiEnum.STAGE_DETAIL])
+        .set_auto_draw(false)
+        .set_sprite(spr_closemenu_btn)
+        .set_scale(1.9)
+        .set_frames(0, 1, 2)
+        .set_on_click(method(self, on_close))
     self.state.close_button = _close_button
+
+    /// @type {Asset.GMObject.Button} 
+    var start_button = instance_create_layer(0, 0, "Float", Button)
+    start_button.set_correspond_gui_enums([GuiEnum.STAGE_DETAIL])
+                .set_auto_draw(false)
+                .set_sprite(spr_create_room)
+                .set_scale(2)
+                .set_on_click(method(self, on_close))
+    self.state.start_button = start_button
 }
 
 /// @description Events
@@ -85,10 +103,22 @@ function on_draw_gui() {
         self.state.scale, self.state.scale, 
         0, c_white, 1)
 
-    if (!is_undefined(self.state.close_button)) {
+    if( !is_undefined(self.state.close_button)) {
         self.state.close_button.on_draw_gui()
+    }
+    if( !is_undefined(self.state.start_button)) {
+        self.state.start_button.on_draw_gui()
+    }
+    if (!is_undefined(self.state.custom_stage)) {
+        draw_text(self.state.left + 160, self.state.top + 175, self.state.custom_stage.id)
+        draw_text(self.state.left + 500, self.state.top + 175, self.state.custom_stage.name)
+        draw_text(self.state.left + 130, self.state.top + 213, self.state.custom_stage.author)
+        // TODO: Support multi line render
+        draw_text(self.state.left + 55, self.state.top + 340, self.state.custom_stage.description)
+      
     }
 }
 
 ///
 on_create()
+

@@ -118,7 +118,7 @@ function CustomStage() constructor {
 /// @returns {Struct.CustomStage} 
 function create_custom_stage(_json, _json_path) {
     var _stage = new CustomStage()
-    _stage.name = variable_struct_get(_json,"level_name")
+    _stage.name = variable_struct_get(_json,"display_name")
     _stage.author = variable_struct_get(_json,"author")
     _stage.version = variable_struct_get(_json,"version")
     _stage.id = _json_path

@@ -34,14 +34,18 @@ function init_asset_size_and_offset() {
 }
 
 function create_ui_elements() {
-    /// @type {Asset.GMObject.CloseButton} 
-    var _close_button = instance_create_layer(0, 0, "Assets", CloseButton)
-    _close_button.set_position(room_width - 200, 30)
+    /// @type {Asset.GMObject.Button} 
+    var _close_button = instance_create_layer(0, 0, "Assets", Button)
+    _close_button.set_position(room_width - 170, 55)
         .set_correspond_gui_enums([GuiEnum.LABORATORY])
+        .set_sprite(spr_closemenu_btn)
+        .set_scale(1.9)
+        .set_frames(0, 1, 2)
         .set_on_click(function() {
             global.menu_screen = true
             room_goto(room_menu)
         })
+        
     
     /// @type {Array<Asset.GMObject.StageItem>} 
     var _items = []
