@@ -45,6 +45,7 @@ function create_ui_elements() {
         .set_on_click(function() {
             global.menu_screen = true
             global.gui_stack.pop()
+            window_set_cursor(cr_arrow)
         })
         .set_should_correspond(method({gui_state: self.state}, function() {
             return gui_state.current_stage_id == ""
@@ -80,6 +81,8 @@ function create_ui_elements() {
 }
 
 function on_create() {
+	draw_set_halign(fa_left);
+	draw_set_valign(fa_top);
     init_asset_size_and_offset()
 
     if (!variable_global_exists("laboratory_manager") || is_undefined(global.laboratory_manager)) {
@@ -151,3 +154,4 @@ function on_draw() {
 }
 
 on_create()
+show_debug_message("laboratory gui created")

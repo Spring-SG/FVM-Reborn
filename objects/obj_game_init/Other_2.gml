@@ -150,4 +150,5 @@ if global.debug{
 //	global.save_data.unlocked_items.shovel = "gold"
 }
 
-room_goto(room_menu)
+// room_goto(room_menu)
+global.gui_stack.to(room_menu)

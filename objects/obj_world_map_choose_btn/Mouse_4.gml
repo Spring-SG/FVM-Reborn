@@ -11,7 +11,8 @@ if unlocked{
 			global.map_id = map_id
 		}
 		if room != room_target{
-			room_goto(room_target)
+			// room_goto(room_target)
+			global.gui_stack.to(room_target)
 		}
 	}
 	else{

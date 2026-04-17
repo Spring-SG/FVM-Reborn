@@ -33,7 +33,6 @@ function set_position(_left, _top) {
     }
     if (!is_undefined(self.state.start_button)) {
         self.state.start_button.set_position(self.state.left + self.state.width - 240, self.state.top + self.state.height - 110)
-
     }
 
     return self
@@ -69,6 +68,7 @@ function on_create_room() {
     global.level_id = self.state.custom_stage.id
     global.level_file = _parse_result.data
     global.gui_stack.to(room_ready)
+    window_set_cursor(cr_arrow)
 }
 
 /// @type {function} _on_close_clicked

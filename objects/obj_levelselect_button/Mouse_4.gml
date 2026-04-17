@@ -3,7 +3,8 @@ if on_click && obj_player_info_ui.menu_type == 0 && unlock{
     audio_play_sound(snd_button, 0, 0);
 	texture_prefetch("cards")
 	if target_level_id != "tower_cake"{
-	    room_goto(room_ready);
+	    // room_goto(room_ready);
+	    global.gui_stack.to(room_ready)
 	
 		// 这是文件在 datafiles 目录下的相对路径
 		global.level_id = target_level_id;

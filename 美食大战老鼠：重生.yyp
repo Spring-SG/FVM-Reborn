@@ -373,7 +373,6 @@
     {"id":{"name":"font_song2","path":"fonts/font_song2/font_song2.yy",},},
     {"id":{"name":"font_yuan","path":"fonts/font_yuan/font_yuan.yy",},},
     {"id":{"name":"Button","path":"objects/Button/Button.yy",},},
-    {"id":{"name":"CloseButton","path":"objects/CloseButton/CloseButton.yy",},},
     {"id":{"name":"GridList","path":"objects/GridList/GridList.yy",},},
     {"id":{"name":"LaboratoryGUI","path":"objects/LaboratoryGUI/LaboratoryGUI.yy",},},
     {"id":{"name":"obj_abyss_pharaoh","path":"objects/obj_abyss_pharaoh/obj_abyss_pharaoh.yy",},},

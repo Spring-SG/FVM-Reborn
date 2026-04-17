@@ -43,7 +43,8 @@ if keyboard_check_pressed(vk_escape){
 		obj_world_map_button.world_map = 0
 	}
 	else{
-		room_goto(room_menu)
+		// room_goto(room_menu)
+		global.gui_stack.to(room_menu)
 	}
 }
 
