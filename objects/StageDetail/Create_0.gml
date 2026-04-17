@@ -107,7 +107,7 @@ function on_step() {
 
 }
 
-function on_draw_gui() {
+function on_draw() {
     draw_sprite_ext(
         spr_stage_detail, 0, 
         self.state.left, self.state.top, 
@@ -115,10 +115,10 @@ function on_draw_gui() {
         0, c_white, 1)
 
     if( !is_undefined(self.state.close_button)) {
-        self.state.close_button.on_draw_gui()
+        self.state.close_button.on_draw()
     }
     if( !is_undefined(self.state.start_button)) {
-        self.state.start_button.on_draw_gui()
+        self.state.start_button.on_draw()
     }
     if (!is_undefined(self.state.custom_stage)) {
         draw_text(self.state.left + 160, self.state.top + 175, self.state.custom_stage.id)

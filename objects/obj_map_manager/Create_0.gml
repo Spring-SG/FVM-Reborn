@@ -3,6 +3,12 @@ surface_set_target(application_surface);
 draw_clear_alpha(c_black, 0); // 用透明黑色清除surface，alpha值0表示完全透明
 surface_reset_target();
 instance_create_depth(100,0,-2,obj_player_info_ui)
+
+/// @type {Asset.GMObject.EventEntranceList} 
+var _entrance_list = instance_create_depth(0, 0, -2, EventEntranceList)
+_entrance_list.set_position(600,20)
+              .set_size(900, 300)
+
 current_map_id = global.map_id
 var map_button_array = struct_get(ds_map_find_value(global.maps_map,current_map_id),"levels_data")
 var button_array_length = array_length(map_button_array)

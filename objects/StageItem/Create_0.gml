@@ -75,8 +75,8 @@ function set_on_click(_on_click) {
 }
 
 function update_mouse() {
-    var _mx = device_mouse_x_to_gui(0);
-    var _my = device_mouse_y_to_gui(0);
+    var _mx = device_mouse_x(0);
+    var _my = device_mouse_y(0);
     if (point_in_rectangle(_mx, _my, self.state.left, self.state.top, self.state.left + self.state.width, self.state.top + self.state.height)) {
         if (self.state.mouse_status != MouseStatus.HOVER) {
             window_set_cursor(cr_drag)
@@ -115,7 +115,7 @@ function on_step() {
     }
 }
 
-function on_draw_gui() {
+function on_draw() {
     if (!self.state.initialized) exit
     if (is_undefined(self.state.custom_stage)) exit
     

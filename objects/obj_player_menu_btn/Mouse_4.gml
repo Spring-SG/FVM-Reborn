@@ -39,10 +39,5 @@ if obj_player_info_ui.menu_type == 0{
 		instance_create_depth(room_width/2,room_height/2,-5,obj_task_bg)
 		obj_player_info_ui.menu_type = 4
 		obj_world_map_button.world_map = 2
-	} else if target_screen = "cookbook"{
-		var _gui_result = global.gui_stack.to(room_laboratory)
-		if (_gui_result.is_failed()) {
-			show_message_async(_gui_result.message)
-		}
-	}
+	} 
 }

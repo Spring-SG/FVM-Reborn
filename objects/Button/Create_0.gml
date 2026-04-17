@@ -1,13 +1,16 @@
 /// 
 self.state = {
     /// @type {Asset.GMSprite} 
-    sprite: -1,
-    /// offset 为精灵原点（origin）在 GUI 上的坐标，与 draw_sprite_ext 一致；热区按整图外接矩形并抵消 sprite 锚点。
+    sprite: spr_laboratory_icon,
+    /// offset 为精灵原点（origin）在房间坐标中的位置，与 draw_sprite_ext 一致；热区按整图外接矩形并抵消 sprite 锚点。
     offset_x: 0,
     offset_y: 0,
     scale: 1,
     sprite_offset_x: 0,
     sprite_offset_y: 0,
+
+    height: 0,
+    width: 0,
 
     frame_idle: 0,
     frame_hover: 0,
@@ -28,6 +31,7 @@ self.state = {
     auto_draw: true,
     /// @type {function} 
     should_correspond: function(){return true},
+    
 
 }
 
@@ -56,6 +60,9 @@ function refresh_hitbox() {
     self.state.corresponding_area_b = _t + _h
 }
 
+function get_height() {
+    return self.state.height
+}
 
 /// @param {Asset.GMSprite} _sprite 
 /// @returns {Asset.GMObject.Button} 
@@ -69,12 +76,14 @@ function set_sprite(_sprite) {
 /// @returns {Asset.GMObject.Button} 
 function set_scale(_scale) {
     self.state.scale = _scale
+    self.state.height = sprite_get_height(self.state.sprite) * _scale
+    self.state.width = sprite_get_width(self.state.sprite) * _scale
     refresh_hitbox()
     return self
 }
 
-/// @param {Real} _left 精灵原点 GUI X（与 draw_sprite_ext 一致，非贴图左上角）
-/// @param {Real} _top 精灵原点 GUI Y
+/// @param {Real} _left 精灵原点 X（与 draw_sprite_ext 一致，非贴图左上角）
+/// @param {Real} _top 精灵原点 Y
 /// @returns {Asset.GMObject.Button} 
 function set_position(_left, _top) {
     self.state.offset_x = _left
@@ -148,14 +157,16 @@ function set_should_correspond(_should_correspond) {
 }
 
 function on_create() {
+    self.state.height = sprite_get_height(self.state.sprite)
+    self.state.width = sprite_get_width(self.state.sprite)
 }
 
 function on_step() {
     if (!self.state.should_correspond()) exit
     if (!sprite_exists(self.state.sprite)) exit
 
-    var _mx = device_mouse_x_to_gui(0)
-    var _my = device_mouse_y_to_gui(0)
+    var _mx = device_mouse_x(0)
+    var _my = device_mouse_y(0)
     var _l = self.state.corresponding_area_l
     var _t = self.state.corresponding_area_t
     var _r = self.state.corresponding_area_r
@@ -204,7 +215,7 @@ function on_step() {
     }
 }
 
-function on_draw_gui() {
+function on_draw() {
     if (!sprite_exists(self.state.sprite)) {
         exit
     }

@@ -12,6 +12,8 @@
   },
   "defaultScriptType":1,
   "Folders":[
+    {"$GMFolder":"","%Name":"Components","folderPath":"folders/Components.yy","name":"Components","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Basic","folderPath":"folders/Components/Basic.yy","name":"Basic","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Feature","folderPath":"folders/Feature.yy","name":"Feature","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Laboratory","folderPath":"folders/Feature/Laboratory.yy","name":"Laboratory","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Components","folderPath":"folders/Feature/Laboratory/Components.yy","name":"Components","resourceType":"GMFolder","resourceVersion":"2.0",},
@@ -373,6 +375,7 @@
     {"id":{"name":"font_song2","path":"fonts/font_song2/font_song2.yy",},},
     {"id":{"name":"font_yuan","path":"fonts/font_yuan/font_yuan.yy",},},
     {"id":{"name":"Button","path":"objects/Button/Button.yy",},},
+    {"id":{"name":"EventEntranceList","path":"objects/EventEntranceList/EventEntranceList.yy",},},
     {"id":{"name":"GridList","path":"objects/GridList/GridList.yy",},},
     {"id":{"name":"LaboratoryGUI","path":"objects/LaboratoryGUI/LaboratoryGUI.yy",},},
     {"id":{"name":"obj_abyss_pharaoh","path":"objects/obj_abyss_pharaoh/obj_abyss_pharaoh.yy",},},

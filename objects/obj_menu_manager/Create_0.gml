@@ -9,6 +9,13 @@ if surface_exists(application_surface){
 
 instance_create_depth(1355,820,-2,obj_startgame_button)
 instance_create_depth(100,0,-2,obj_player_info_ui)
+
+/// @type {Asset.GMObject.EventEntranceList} 
+var _entrance_list = instance_create_depth(0, 0, -2, EventEntranceList)
+_entrance_list.set_position(600,20)
+              .set_size(900, 300)
+
+
 if not instance_exists(obj_menu_music_controller){
 	var mus_inst = instance_create_depth(0,0,0,obj_menu_music_controller)
 	mus_inst.menu_music = mus_town

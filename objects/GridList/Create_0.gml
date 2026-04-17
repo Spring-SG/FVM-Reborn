@@ -19,8 +19,8 @@ self.state = {
     grid_x: 3,
     grid_gap: 10,
 
-    /// @type {Array<Asset.GMRoom>} 
-    correspond_rooms: [room_laboratory],
+    /// @type {function} 
+    should_correspond: function () {return true},
 
 }
 
@@ -56,8 +56,8 @@ function _require_item_api(_inst, _index) {
     if (!variable_instance_exists(_inst, "set_position")) {
         throw("GridList: items[" + string(_index) + "] missing set_position")
     }
-    if (!variable_instance_exists(_inst, "on_draw_gui")) {
-        throw("GridList: items[" + string(_index) + "] missing on_draw_gui")
+    if (!variable_instance_exists(_inst, "on_draw")) {
+        throw("GridList: items[" + string(_index) + "] missing on_draw")
     }
 }
 
@@ -81,21 +81,12 @@ function calculate_content_height() {
     return _rows * (_height + self.state.grid_gap) - self.state.grid_gap + self.state.padding_top + self.state.padding_bottom 
 }
 
-/// @param {Array<Asset.GMRoom>} _rooms 
-function set_correspond_rooms(_rooms) {
-    self.state.correspond_rooms = _rooms
+function set_should_correspond(_should_correspond) {
+    if (is_undefined(_should_correspond)) {
+        throw("GridList: should_correspond must be a function")
+    }
+    self.state.should_correspond = _should_correspond
     return self
-}
-
-function should_correspond() {
-    var _current = global.gui_stack.get_top()
-    if (is_undefined(_current)) {
-        return true
-    }
-    if (array_contains(self.state.correspond_rooms, _current)) {
-        return true
-    }
-    return false
 }
 
 
@@ -119,6 +110,11 @@ function set_items(_items) {
 
 function get_max_scroll() {
     return max(0, self.state.content_height - self.state.viewport_height)
+}
+
+function set_grid_x(_x) {
+    self.state.grid_x = max(1, _x)
+    return self
 }
 
 function clamp_scroll_bounds() {
@@ -191,8 +187,8 @@ function layout_items() {
 }
 
 function is_mouse_over_viewport() {
-    var _mx = device_mouse_x_to_gui(0)
-    var _my = device_mouse_y_to_gui(0)
+    var _mx = device_mouse_x(0)
+    var _my = device_mouse_y(0)
     return point_in_rectangle(
         _mx, _my,
         self.state.viewport_left, self.state.viewport_top,
@@ -217,7 +213,7 @@ function apply_wheel() {
 /// @description Begin Step — layout + scroll before child Step
 
 function on_begin_step() {
-    if (!should_correspond()) {
+    if (!self.state.should_correspond()) {
         exit
     }
     apply_wheel()
@@ -225,14 +221,9 @@ function on_begin_step() {
     layout_items()
 }
 
-/// @description 未使用 Draw 事件；保留空实现
+/// @description Draw：视口裁剪后绘制子项
 
 function on_draw() {
-}
-
-/// @description Draw GUI
-
-function on_draw_gui() {
     var _item_count = array_length(self.state.items)
     if (_item_count == 0) {
         return
@@ -258,9 +249,9 @@ function on_draw_gui() {
             continue
         }
 
-        var _on_draw_gui = variable_instance_get(inst, "on_draw_gui")
-        if (!is_undefined(_on_draw_gui)) {
-            method(inst, _on_draw_gui)()
+        var _on_draw = variable_instance_get(inst, "on_draw")
+        if (!is_undefined(_on_draw)) {
+            method(inst, _on_draw)()
         }
     }
 
