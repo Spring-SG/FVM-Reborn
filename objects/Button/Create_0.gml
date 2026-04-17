@@ -26,8 +26,9 @@ self.state = {
     /// @type {function} 
     on_click: undefined,
     auto_draw: true,
-    /// @type {Array<Enum.GuiEnum>} 
-    correspond_gui_enums: [],
+    /// @type {function} 
+    should_correspond: function(){return true},
+
 }
 
 
@@ -130,42 +131,28 @@ function set_auto_draw(_auto_draw) {
     return self
 }
 
-/// @param {function} _on_click 
+/// @param {Function ():Bool} _on_click 
 /// @returns {Asset.GMObject.Button} 
 function set_on_click(_on_click) {
     self.state.on_click = _on_click
     return self
 }
 
-/// @param {Array<Enum.GuiEnum>} _enums 
-/// @returns {Asset.GMObject.Button} 
-function set_correspond_gui_enums(_enums) {
-    self.state.correspond_gui_enums = _enums
+/// @param {function} _should_correspond 
+function set_should_correspond(_should_correspond) {
+    if (is_undefined(_should_correspond)) {
+        throw("should_correspond should not be undefined")
+    }
+    self.state.should_correspond = _should_correspond
     return self
 }
-
-function should_correspond() {
-    var _current = global.gui_stack.get_top()
-    if (is_undefined(_current)) {
-        return true
-    }
-    if (array_contains(self.state.correspond_gui_enums, _current)) {
-        return true
-    }
-    return false
-}
-
 
 function on_create() {
 }
 
 function on_step() {
-    if (!should_correspond()) {
-        exit
-    }
-    if (!sprite_exists(self.state.sprite)) {
-        exit
-    }
+    if (!self.state.should_correspond()) exit
+    if (!sprite_exists(self.state.sprite)) exit
 
     var _mx = device_mouse_x_to_gui(0)
     var _my = device_mouse_y_to_gui(0)

@@ -11,6 +11,8 @@ self.state = {
     current_stage_id: "",
     /// @type {Asset.GMObject.StageDetail} 
     stage_detail_widget: undefined,
+    /// @type {Asset.GMObject.Button} 
+    close_button: undefined,
 
     bottom_button_width: 210,
     bottom_button_height: 170,
@@ -37,14 +39,17 @@ function create_ui_elements() {
     /// @type {Asset.GMObject.Button} 
     var _close_button = instance_create_layer(0, 0, "Assets", Button)
     _close_button.set_position(room_width - 170, 55)
-        .set_correspond_gui_enums([GuiEnum.LABORATORY])
         .set_sprite(spr_closemenu_btn)
         .set_scale(1.9)
         .set_frames(0, 1, 2)
         .set_on_click(function() {
             global.menu_screen = true
-            room_goto(room_menu)
+            global.gui_stack.pop()
         })
+        .set_should_correspond(method({gui_state: self.state}, function() {
+            return gui_state.current_stage_id == ""
+        }))
+    self.state.close_button = _close_button
         
     
     /// @type {Array<Asset.GMObject.StageItem>} 
@@ -61,6 +66,9 @@ function create_ui_elements() {
         _item.init(_stage)
              .set_on_click(method({stage_id: _stage_id, gui_state: self.state}, function() {
                  gui_state.current_stage_id = stage_id
+             }))
+             .set_should_correspond(method({gui_state: self.state}, function() {
+                return gui_state.current_stage_id == ""
              }))
         array_push(_items, _item)
     }
@@ -81,7 +89,6 @@ function on_create() {
         throw("global.gui_stack is not defined")
     }
     
-    global.gui_stack.push(GuiEnum.LABORATORY)
     self.state.laboratory_manager = global.laboratory_manager
     var _stage_ids = self.state.laboratory_manager.get_stage_ids()
     if (array_length(_stage_ids) == 0) {

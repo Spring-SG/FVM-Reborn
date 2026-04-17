@@ -52,9 +52,23 @@ function on_close() {
         self.state.on_close_clicked()
         instance_destroy(self.state.close_button)
         self.state.close_button = undefined
-        global.gui_stack.pop()
         instance_destroy()
     }
+}
+
+function on_create_room() {
+    if (is_undefined(self.state.custom_stage)) {
+        return
+    }
+    var _parse_result = global.laboratory_manager.file_util.load_json_from_path(self.state.custom_stage.json_path)
+    if (_parse_result.is_failed()) {
+        throw _parse_result.get_error_stack()
+    }
+    var _level_data = level_entry_from_stage_metadata(self.state.custom_stage)
+    global.level_data = _level_data
+    global.level_id = self.state.custom_stage.id
+    global.level_file = _parse_result.data
+    global.gui_stack.to(room_ready)
 }
 
 /// @type {function} _on_close_clicked
@@ -66,8 +80,7 @@ function set_on_close_clicked(_on_close_clicked) {
 function create_widgets() {
     /// @type {Asset.GMObject.Button} 
     var _close_button = instance_create_layer(0, 0, "Float", Button)
-    _close_button.set_correspond_gui_enums([GuiEnum.STAGE_DETAIL])
-        .set_auto_draw(false)
+    _close_button.set_auto_draw(false)
         .set_sprite(spr_closemenu_btn)
         .set_scale(1.9)
         .set_frames(0, 1, 2)
@@ -76,17 +89,15 @@ function create_widgets() {
 
     /// @type {Asset.GMObject.Button} 
     var start_button = instance_create_layer(0, 0, "Float", Button)
-    start_button.set_correspond_gui_enums([GuiEnum.STAGE_DETAIL])
-                .set_auto_draw(false)
-                .set_sprite(spr_create_room)
-                .set_scale(2)
-                .set_on_click(method(self, on_close))
+    start_button.set_auto_draw(false)
+        .set_sprite(spr_create_room)
+        .set_scale(2)
+        .set_on_click(method(self, on_create_room))
     self.state.start_button = start_button
 }
 
 /// @description Events
 function on_create() {
-    global.gui_stack.push(GuiEnum.STAGE_DETAIL)
     self.state.height = sprite_get_height(spr_stage_detail) * self.state.scale
     self.state.width = sprite_get_width(spr_stage_detail) * self.state.scale
     create_widgets()

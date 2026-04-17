@@ -19,8 +19,9 @@ self.state = {
     grid_x: 3,
     grid_gap: 10,
 
-    /// @type {Array<Enum.GuiEnum>} 
-    correspond_gui_enums: [GuiEnum.LABORATORY],
+    /// @type {Array<Asset.GMRoom>} 
+    correspond_rooms: [room_laboratory],
+
 }
 
 /// @description Setup
@@ -80,9 +81,9 @@ function calculate_content_height() {
     return _rows * (_height + self.state.grid_gap) - self.state.grid_gap + self.state.padding_top + self.state.padding_bottom 
 }
 
-/// @param {Array<Enum.GuiEnum>} _enums 
-function set_correspond_gui_enums(_enums) {
-    self.state.correspond_gui_enums = _enums
+/// @param {Array<Asset.GMRoom>} _rooms 
+function set_correspond_rooms(_rooms) {
+    self.state.correspond_rooms = _rooms
     return self
 }
 
@@ -91,11 +92,12 @@ function should_correspond() {
     if (is_undefined(_current)) {
         return true
     }
-    if (array_contains(self.state.correspond_gui_enums, _current)) {
+    if (array_contains(self.state.correspond_rooms, _current)) {
         return true
     }
     return false
 }
+
 
 function set_items(_items) {
     if (self.state.viewport_height == 0 || self.state.viewport_width == 0) {

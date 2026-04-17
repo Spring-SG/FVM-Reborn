@@ -26,6 +26,10 @@ enum ErrorCode {
     SET_LUA_FUNCTION_FAILED = 0x2007,
     GET_LUA_PROPERTY_FAILED = 0x2008,
     INVALID_TYPE = 0x2009,
+
+    // gui_stack
+    GUI_STACK_EMPTY = 0x3001,
+    GUI_INVALID_ROOM = 0x3002,
 }
 
 function Result() constructor {
@@ -104,9 +108,12 @@ function CustomStage() constructor {
     self.mouse_level = 0 
     /// @type {Asset.GMSprite} 
     self.map_sprite = -1
-    self.pre_music = ""
-    self.elite_music = ""
-    self.boss_music = ""
+    /// @type {Asset.GMSound} 
+    self.pre_music = -1
+    /// @type {Asset.GMSound} 
+    self.elite_music = -1
+    /// @type {Asset.GMSound} 
+    self.boss_music = -1
 
     self.json_path = ""
 
@@ -135,8 +142,58 @@ function create_custom_stage(_json, _json_path) {
     _stage.json_path = _json_path
 
     var _sprite = variable_struct_get(_json,"map_sprite")
-    if (_sprite != undefined) {
-        _stage.map_sprite = (asset_get_index(_sprite))
-    }
+    _stage.map_sprite = asset_get_index(_sprite) 
+
+    var _pre_music = variable_struct_get(_json,"pre_music")
+    _stage.pre_music = asset_get_index(_pre_music)
+
+    var _elite_music = variable_struct_get(_json,"elite_music")
+    _stage.elite_music = asset_get_index(_elite_music)
+
+    var _boss_music = variable_struct_get(_json,"boss_music")
+    _stage.boss_music = asset_get_index(_boss_music)
+
     return _stage
+}
+
+
+/// @param {Struct.CustomStage} _meta 
+/// @returns {Struct}  One entry compatible with global.maps_map levels_data (see maps_init)
+function level_entry_from_stage_metadata(_meta) {
+    var lf = string_replace_all(string(_meta.json_path), "\\", "/")
+    var hf = lf
+    var spr_ix = _meta.map_sprite
+    if (spr_ix == -1) {
+        spr_ix = spr_cookie_island
+    }
+    var pre_ix = _meta.pre_music
+    if (pre_ix == -1) {
+        pre_ix = mus_readyroom
+    }
+    var elite_ix = _meta.elite_music
+    if (elite_ix == -1) {
+        elite_ix = pre_ix
+    }
+    var boss_ix = _meta.boss_music
+    if (boss_ix == -1) {
+        boss_ix = pre_ix
+    }
+    var bx = -1
+    var by = -1
+    return {
+        id: _meta.id,
+        name: _meta.name,
+        button_spr: spr_levelselect_button,
+        button_index: -1,
+        button_x: bx,
+        button_y: by,
+        level_file: lf,
+        hard_level_file: hf,
+        level_sprite: spr_ix,
+        pre_music: pre_ix,
+        elite_music: elite_ix,
+        boss_music: boss_ix,
+        player_level_require: 1,
+        pre_level_require: []
+    }
 }

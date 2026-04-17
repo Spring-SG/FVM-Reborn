@@ -17,8 +17,11 @@ self.state = {
     /// @type {Enum.MouseStatus} 
     mouse_status: MouseStatus.NONE,
     auto_draw: true,
-    /// @type {Array<Enum.GuiEnum>} 
-    correspond_gui_enums: [],
+    /// @type {Array<Asset.GMRoom>} 
+    correspond_rooms: [],
+
+    /// @type {function|Undefined} 
+    correspond_extra: undefined,
 }
 
 
@@ -49,21 +52,36 @@ function set_on_click(_on_click) {
     return self
 }
 
-/// @param {Array<Enum.GuiEnum>} _enums 
-function set_correspond_gui_enums(_enums) {
-    self.state.correspond_gui_enums = _enums
+/// @param {Array<Asset.GMRoom>} _rooms 
+function set_correspond_rooms(_rooms) {
+    self.state.correspond_rooms = _rooms
+    return self
+}
+
+
+/// @param {function} _fn 
+/// @returns {Asset.GMObject.CloseButton} 
+function set_correspond_extra(_fn) {
+    self.state.correspond_extra = _fn
     return self
 }
 
 function should_correspond() {
     var _current = global.gui_stack.get_top()
     if (is_undefined(_current)) {
+        if (self.state.correspond_extra != undefined) {
+            return self.state.correspond_extra()
+        }
         return true
     }
-    if (array_contains(self.state.correspond_gui_enums, _current)) {
-        return true
+    if (!array_contains(self.state.correspond_rooms, _current)) {
+        return false
     }
-    return false
+
+    if (self.state.correspond_extra != undefined && !self.state.correspond_extra()) {
+        return false
+    }
+    return true
 }
 
 

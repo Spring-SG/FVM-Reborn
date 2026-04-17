@@ -49,6 +49,26 @@ function LaboratoryManager() constructor {
     }
 
 
+    static register_all_stages = function() {
+        var _level_datas = []
+        for (var i = 0; i < array_length(self.stage_ids); i++) {
+            var _stage_id = self.stage_ids[i]
+            var _stage = self.get_stage(_stage_id)
+            var _level_data = level_entry_from_stage_metadata(_stage)
+            array_push(_level_datas, _level_data)
+        }
+        var _map_data = {
+            map_name: "laboratory",
+            map_sprite: -1,
+            level_datas: _level_datas
+        }
+        if (ds_map_exists(global.maps_map, "laboratory")) {
+            ds_map_replace(global.maps_map, "laboratory", _map_data)
+        } else {
+            ds_map_add(global.maps_map, "laboratory", _map_data)
+        }
+    }
+
     /// @returns {Struct.Result} 
     static load_all_stages = function() {
         var error_message = ""
