@@ -121,16 +121,22 @@ function on_draw() {
         self.state.start_button.on_draw()
     }
     if (!is_undefined(self.state.custom_stage)) {
-        draw_set_halign(fa_center);
-        draw_set_valign(fa_center);
-        draw_text(self.state.left + (self.state.width / 2), self.state.top + 114,self.state.custom_stage.name)
-        draw_set_halign(fa_left);
-    
-        draw_text(self.state.left + 160, self.state.top + 186, self.state.custom_stage.id)
-        draw_text(self.state.left + 130, self.state.top + 228, self.state.custom_stage.author)
-        draw_set_valign(fa_top);
-        // TODO: Support multi line render
-        draw_text(self.state.left + 55, self.state.top + 340, self.state.custom_stage.description)
+        scribble(self.state.custom_stage.name, "stage_detail_name")
+            .align(fa_center, fa_center)
+            .scale(1.2)
+            .starting_format("font_hei_outline_4dir_black")
+            .draw(self.state.left + (self.state.width / 2),  self.state.top + 114)
+
+        scribble(self.state.custom_stage.id)
+            .draw(self.state.left + 160, self.state.top + 170)
+
+        scribble(self.state.custom_stage.author)
+            .draw(self.state.left + 130, self.state.top + 228)
+        scribble(self.state.custom_stage.description, "stage_detail_desc")
+            .wrap(650, 360)
+            .line_spacing("90%")
+            .scale(1.0)
+            .draw(self.state.left + 50, self.state.top + 300)
       
     }
 }

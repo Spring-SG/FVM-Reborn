@@ -28,6 +28,9 @@ timer = 0
 
 /// @description preload textures
 
+
+
+
 self.texture_to_load = [
 	"UI",
 	// "cards",
@@ -42,11 +45,17 @@ self.texture_to_load = [
 
 self.texture_count = array_length(self.texture_to_load)
 self.texture_loaded = 0
-self.preloaded = false
+global.preloaded = variable_global_exists("preloaded") ? global.preloaded : false
 self.display_progress = 0
 
+function after_texture_load() {
+    scribble_font_set_default("font_hei")
+    scribble_font_bake_outline_4dir("font_hei", "font_hei_outline_4dir_black", c_dkgray, false)
+    global.preloaded = true;
+}
+
 function pre_load_texture() {
-    if (self.preloaded) return;
+    if (global.preloaded) return;
 
     if (self.animating) {
         var _target = self.texture_loaded;
@@ -57,7 +66,7 @@ function pre_load_texture() {
             self.animating = false;
             
             if (self.texture_loaded >= self.texture_count) {
-                self.preloaded = true;
+                after_texture_load();
             }
         }
         return;
@@ -80,7 +89,7 @@ self.offset_y = (room_height - 20) / 2
 self.animating = false
 function on_draw() {
     if (!self.animating && self.texture_loaded == 0) return;
-    if (self.preloaded) return;
+    if (global.preloaded) return;
 
     draw_set_colour(c_black);
     draw_set_alpha(0.8);

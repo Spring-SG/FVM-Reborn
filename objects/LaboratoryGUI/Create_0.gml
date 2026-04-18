@@ -81,8 +81,8 @@ function create_ui_elements() {
 }
 
 function on_create() {
-	draw_set_halign(fa_left);
-	draw_set_valign(fa_top);
+	draw_set_halign(fa_left)
+	draw_set_valign(fa_top)
     init_asset_size_and_offset()
 
     if (!variable_global_exists("laboratory_manager") || is_undefined(global.laboratory_manager)) {

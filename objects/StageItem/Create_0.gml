@@ -136,12 +136,19 @@ function on_draw() {
         )
         gpu_set_scissor(_prev_scissor)
 
-        draw_set_valign(fa_center)
-        draw_text(self.state.left + 30, self.state.top + 34, self.state.custom_stage.name)
-        draw_text(self.state.left + 154, self.state.top + 78, self.state.custom_stage.author)
-        draw_set_valign(fa_top)
-        // TODO: Support multi line render
-        draw_text(self.state.left + 156, self.state.top + 115, self.state.custom_stage.description)
+        scribble(self.state.custom_stage.name)
+            .align(fa_left, fa_center)
+            .starting_format("font_hei_outline_4dir_black")
+            .draw(self.state.left + 30, self.state.top + 36)
+        scribble(self.state.custom_stage.author)
+            .align(fa_left, fa_center)
+            .draw(self.state.left + 154, self.state.top + 78)
+        scribble(self.state.custom_stage.description)
+            .wrap(330, 80)
+            .line_spacing("90%")
+            .scale(0.82)
+            .draw(self.state.left + 156, self.state.top + 115)
+        
     }
 
 }
