@@ -136,8 +136,10 @@ function on_draw() {
         )
         gpu_set_scissor(_prev_scissor)
 
-        draw_text(self.state.left + 28, self.state.top + 18, self.state.custom_stage.author)
-        draw_text(self.state.left + 156, self.state.top + 67, self.state.custom_stage.name)
+        draw_set_valign(fa_center)
+        draw_text(self.state.left + 30, self.state.top + 34, self.state.custom_stage.name)
+        draw_text(self.state.left + 154, self.state.top + 78, self.state.custom_stage.author)
+        draw_set_valign(fa_top)
         // TODO: Support multi line render
         draw_text(self.state.left + 156, self.state.top + 115, self.state.custom_stage.description)
     }

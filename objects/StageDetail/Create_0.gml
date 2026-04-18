@@ -125,10 +125,10 @@ function on_draw() {
         draw_set_valign(fa_center);
         draw_text(self.state.left + (self.state.width / 2), self.state.top + 114,self.state.custom_stage.name)
         draw_set_halign(fa_left);
+    
+        draw_text(self.state.left + 160, self.state.top + 186, self.state.custom_stage.id)
+        draw_text(self.state.left + 130, self.state.top + 228, self.state.custom_stage.author)
         draw_set_valign(fa_top);
-
-        draw_text(self.state.left + 160, self.state.top + 175, self.state.custom_stage.id)
-        draw_text(self.state.left + 130, self.state.top + 213, self.state.custom_stage.author)
         // TODO: Support multi line render
         draw_text(self.state.left + 55, self.state.top + 340, self.state.custom_stage.description)
       
