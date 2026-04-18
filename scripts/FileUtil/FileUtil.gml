@@ -22,6 +22,12 @@ function FileUtil() constructor {
         return _sub_folders
     }
 
+    /// @param {String} _path 
+    /// @returns {String}
+    static transfer_path_to_windows = function(_path) {
+        return string_replace(_path, "/", "\\")
+    }
+
     /// @description return full path of files with specific extension in the folder
     /// @param {String} _path 
     /// @param {String} _extension 
@@ -104,6 +110,18 @@ function FileUtil() constructor {
             return new Result().fail(ErrorCode.CREATE_FILE_FAILED, "Failed to create file: " + _path + "\n" + string(e));
         }
         return new Result().success();
+    }
+
+    /// @param {String} _path
+    /// @returns {Struct.Result} 
+    static create_folder_if_not_exist = function(_path) {
+        if (!directory_exists(_path)) {
+            var _result = directory_create(_path);
+            if (!_result) {
+                return new Result().fail(ErrorCode.NO_SUCH_FILE, "Failed to create folder: " + _path);
+            }
+        }
+        return new Result().success()
     }
 
     /// @param {String} _path 

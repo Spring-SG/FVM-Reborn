@@ -14,6 +14,7 @@
   "Folders":[
     {"$GMFolder":"","%Name":"Components","folderPath":"folders/Components.yy","name":"Components","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Basic","folderPath":"folders/Components/Basic.yy","name":"Basic","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Extension","folderPath":"folders/Extension.yy","name":"Extension","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Feature","folderPath":"folders/Feature.yy","name":"Feature","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Laboratory","folderPath":"folders/Feature/Laboratory.yy","name":"Laboratory","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Components","folderPath":"folders/Feature/Laboratory/Components.yy","name":"Components","resourceType":"GMFolder","resourceVersion":"2.0",},
@@ -378,6 +379,7 @@
     {"$GMIncludedFile":"","%Name":"全水图困难模板.json","CopyToMask":-1,"filePath":"datafiles/level_data/volcanic","name":"全水图困难模板.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"全水图普通模板.json","CopyToMask":-1,"filePath":"datafiles/level_data/volcanic","name":"全水图普通模板.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"请不要修改这个文件夹中的文件","CopyToMask":-1,"filePath":"datafiles/level_data","name":"请不要修改这个文件夹中的文件","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"FvmNativeSupport.dll","CopyToMask":-1,"filePath":"datafiles/native","name":"FvmNativeSupport.dll","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"scribble_license.txt","CopyToMask":-1,"filePath":"datafiles","name":"scribble_license.txt","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
   ],
   "isEcma":false,
@@ -387,6 +389,7 @@
   },
   "name":"美食大战老鼠：重生",
   "resources":[
+    {"id":{"name":"WindowsNative","path":"extensions/WindowsNative/WindowsNative.yy",},},
     {"id":{"name":"font_hei","path":"fonts/font_hei/font_hei.yy",},},
     {"id":{"name":"font_number","path":"fonts/font_number/font_number.yy",},},
     {"id":{"name":"font_pixel","path":"fonts/font_pixel/font_pixel.yy",},},

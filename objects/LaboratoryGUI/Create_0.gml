@@ -35,7 +35,8 @@ function init_asset_size_and_offset() {
 
 }
 
-function create_ui_elements() {
+function create_widgets() {
+    /// @description Close Button
     /// @type {Asset.GMObject.Button} 
     var _close_button = instance_create_layer(0, 0, "Assets", Button)
     _close_button.set_position(room_width - 170, 55)
@@ -53,6 +54,7 @@ function create_ui_elements() {
     self.state.close_button = _close_button
         
     
+    /// @description Stage List
     /// @type {Array<Asset.GMObject.StageItem>} 
     var _items = []
     for (var _i = 0; _i < array_length(self.state.stage_ids); _i++) {
@@ -78,18 +80,35 @@ function create_ui_elements() {
     var _grid_list = instance_create_layer(room_width / 2, room_height / 2, "Assets", GridList)
     _grid_list.set_viewport(159, 175, 1550, 600)
               .set_items(_items)
+
+    /// @description Bottom Button
+    /// @type {Asset.GMObject.Button} 
+    var _my_stage_button = instance_create_layer(0, 0, "Assets", Button)
+    _my_stage_button.set_sprite(spr_my_stages)
+        .set_scale(self.state.bottom_button_scale)
+        .set_position(1180, 843)
+        .set_should_correspond(method({gui_state: self.state}, function() {
+            return gui_state.current_stage_id == ""
+        }))
+        .set_on_click(method({}, function() {
+            var _result = global.laboratory_manager.file_util.create_folder_if_not_exist(kCustomStageFolder)
+            if (_result.is_failed()) {
+                show_message_async(_result.message)
+            }
+            var _target = global.laboratory_manager.file_util.transfer_path_to_windows(working_directory + "/" + kCustomStageFolder)
+            native_open_folder(_target)
+        }))
 }
 
 function on_create() {
 	draw_set_halign(fa_left)
 	draw_set_valign(fa_top)
     init_asset_size_and_offset()
+    var _text = clipboard_get_text()
+    show_debug_message("Clipboard: " + _text)
 
     if (!variable_global_exists("laboratory_manager") || is_undefined(global.laboratory_manager)) {
         throw("global.laboratory_manager is not defined")
-    }
-    if (!variable_global_exists("gui_stack") || is_undefined(global.gui_stack)) {
-        throw("global.gui_stack is not defined")
     }
     
     self.state.laboratory_manager = global.laboratory_manager
@@ -106,7 +125,7 @@ function on_create() {
     global.menu_screen = false
     window_set_cursor(cr_arrow)
 
-    create_ui_elements()
+    create_widgets()
 }
 
 function on_step() {
@@ -139,12 +158,12 @@ function on_draw() {
         self.state.bottom_button_scale, self.state.bottom_button_scale,
         0, c_white, 1
     )
-    draw_sprite_ext(
-        spr_my_stages, 0,
-        1180, 843,
-        self.state.bottom_button_scale, self.state.bottom_button_scale,
-        0, c_white, 1
-    )
+    // draw_sprite_ext(
+    //     spr_my_stages, 0,
+    //     1180, 843,
+    //     self.state.bottom_button_scale, self.state.bottom_button_scale,
+    //     0, c_white, 1
+    // )
     draw_sprite_ext(
         spr_search_team, 0,
         1480, 852,
