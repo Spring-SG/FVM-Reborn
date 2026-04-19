@@ -2,7 +2,18 @@ draw_self()
 if unlock{
 	image_blend = c_white
 	if on_click{
-		draw_sprite_ext(spr_button_shader_2,0,x,y+5,1.8,1.8,0,c_white,0.3)
+		var shader_x = x;
+		var shader_y = y + 5;
+		
+		if (global.map_id == "volcanic_island") {
+			shader_y -= 2;
+		}
+
+		if (variable_struct_exists(special_boss_levels, target_level_id)) {
+			shader_x += 5;
+			shader_y += 5;
+		}
+		draw_sprite_ext(spr_button_shader_2,0,shader_x,shader_y,1.8,1.8,0,c_white,0.3)
 	}
 }
 else{

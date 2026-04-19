@@ -9,4 +9,4 @@ move_speed = 0.60
 placed = false
 armor_dropped = false
 
-can_place_list = ["toast_bread","chocolate_bread","melon_shield"]
+can_place_list = ["toast_bread","chocolate_bread","melon_shield","pineapple_explosive_bread"]

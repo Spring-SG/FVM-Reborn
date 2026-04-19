@@ -79,7 +79,7 @@ switch(state) {
     
     case ENEMY_STATE.NORMAL: {
         // 移动和动画逻辑
-        x -= current_move_speed;
+        x -= current_move_speed * move_speed_modify;
         if shield_max_hp > 0 && shield_hp > 0{
 			if shield_hp > hurt_rate * shield_max_hp{
 				if helmet_hp > 0 && hp > maxhp - helmet_hp{

@@ -129,7 +129,7 @@ switch state{
 			var infected = false
 			with obj_card_parent{
 				if grid_col == other.t_pos.col && grid_row == other.t_pos.row && plant_type != "coffee" && !invincible{
-					other.hp = clamp(other.hp+1000,0,other.maxhp)
+					other.hp = clamp(other.hp+other.maxhp*0.035,0,other.maxhp)
 					var inst = instance_create_depth(other.x,other.y,-800,obj_card_heal_effect)
 					inst.sprite_index = spr_mouse_heal_effect
 					if plant_id != "player"{
@@ -147,6 +147,9 @@ switch state{
 			}
 			if infected{
 				instance_create_depth(t_pos.x,t_pos.y+33,-800,obj_mummy_mouse)
+			}
+			else{
+				hp = clamp(hp+maxhp*0.035,0,maxhp)
 			}
 		}
 		

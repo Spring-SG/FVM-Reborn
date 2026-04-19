@@ -87,11 +87,14 @@ load_file(global.save_slot)
 //	unlock_card("whisky_bomb",9,0,7)
 //	unlock_card("oden_pot",9,0,7)
 //	unlock_card("cotton_candy",9,0,7)
-//	unlock_card("dragon_fruit",12,2,7)
-//	unlock_card("durian",12,2,7)
+//	unlock_card("dragon_fruit",9,0,7)
+//	unlock_card("durian",9,0,7)
+//	unlock_card("pineapple_explosive_bread",9,0,7)
+//	unlock_card("ice_cream",9,0,7)
+//	unlock_card("lightning_baguette",9,0,7)
 	
 //	global.save_data.player.gold = 20000000
-//	global.save_data.player.level = 30
+//	global.save_data.player.level = 35
 //	global.save_data.unlocked_items.max_card_level = 7
 //	global.save_data.unlocked_items.max_skill_level = 7
 //	global.save_data.unlocked_items.max_gem_level = 6
@@ -127,7 +130,7 @@ load_file(global.save_slot)
 //	//unlock_gem("power_gem")
 //	//unlock_gem("gale_gem")
 //	//unlock_gem("transform_gem")
-//	edit_gem_max_level("attack_gem",5)
+//	edit_gem_max_level("attack_gem",10)
 //	edit_gem_max_level("health_gem",10)
 
 //	set_material_amount("royal_spices",999999999)
@@ -151,4 +154,8 @@ if global.debug{
 }
 
 // room_goto(room_menu)
+var screen_width = display_get_width()
+var screen_height = display_get_height()
+window_set_size(screen_width*0.8,screen_height*0.8)
+
 global.gui_stack.to(room_menu)

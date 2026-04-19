@@ -28,7 +28,7 @@ var target_pos = get_world_position_from_grid(target_col,grid_row)
 if hp > 0 && state != ENEMY_STATE.DEAD{
 	if state == ENEMY_STATE.APPEAR{
 		anim_timer++
-		x -= current_move_speed
+		x -= current_move_speed * move_speed_modify
 		image_index = floor(anim_timer/flash_speed) mod 6
 		if hp <= (maxhp-helmet_hp) || x <= target_pos.x+80{
 			state = ENEMY_STATE.ACTING

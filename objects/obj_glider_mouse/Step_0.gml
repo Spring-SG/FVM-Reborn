@@ -26,7 +26,7 @@ else{
 if hp > 0 && state != ENEMY_STATE.DEAD{
 	if state == ENEMY_STATE.APPEAR{
 		anim_timer++
-		x -= current_move_speed
+		x -= current_move_speed * move_speed_modify
 		image_index = floor(anim_timer/flash_speed) mod 6
 		if hp <= (maxhp-helmet_hp) || x <= global.grid_offset_x + 150{
 			state = ENEMY_STATE.ACTING

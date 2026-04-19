@@ -862,6 +862,181 @@ function task_init(){
 			}
 			
 		)
+		register_task("main_level_25",
+			{
+				"type":"main_task",
+				"title":"晴空之夜",
+				"desc":"也许我该研究一下棉花糖是怎么承受我的重量的……",
+				"single_game":false,//非单局完成
+				"oneshot":false,//非一命完成
+				"task_unlock":"main_level_26",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"cotton_candy_sky_night",
+						"desc":"通关一次棉花糖天空（夜）",
+						"require":1,
+					}
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"secret_spices",
+						"amount":80
+					},
+					{
+						"type":"item",
+						"item_id":"middle_crystal",
+						"amount":60
+					},
+					{
+						"type":"gold",
+						"amount":6000
+					}
+				]
+			}
+			
+		)
+		register_task("main_level_26",
+			{
+				"type":"main_task",
+				"title":"高温果酱",
+				"desc":"谁能告诉我为什么果酱会有这么高的温度？",
+				"single_game":false,//非单局完成
+				"oneshot":false,//非一命完成
+				"task_unlock":"main_level_27",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"jam_tribe_daytime",
+						"desc":"通关一次果酱部落（日）",
+						"require":1,
+					}
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"secret_spices",
+						"amount":90
+					},
+					{
+						"type":"item",
+						"item_id":"middle_crystal",
+						"amount":75
+					},
+					{
+						"type":"gold",
+						"amount":7500
+					}
+				]
+			}
+			
+		)
+		register_task("main_level_27",
+			{
+				"type":"main_task",
+				"title":"杰克来也",
+				"desc":"能自我拆解的石头人？真有意思。",
+				"single_game":false,//非单局完成
+				"oneshot":false,//非一命完成
+				"task_unlock":"main_level_28",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"jam_tribe_night",
+						"desc":"通关一次果酱部落（夜）",
+						"require":1,
+					}
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"secret_spices",
+						"amount":100
+					},
+					{
+						"type":"item",
+						"item_id":"middle_crystal",
+						"amount":80
+					},
+					{
+						"type":"gold",
+						"amount":8000
+					}
+				]
+			}
+			
+		)
+		register_task("main_level_28",
+			{
+				"type":"main_task",
+				"title":"决战火山之巅",
+				"desc":"说得我都想点一杯雪顶咖啡了……",
+				"single_game":false,//非单局完成
+				"oneshot":false,//非一命完成
+				"task_unlock":"main_level_29",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"snowcap_volcano",
+						"desc":"通关一次雪顶火山）",
+						"require":1,
+					}
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"secret_spices",
+						"amount":200
+					},
+					{
+						"type":"item",
+						"item_id":"middle_crystal",
+						"amount":160
+					},
+					{
+						"type":"gold",
+						"amount":16000
+					}
+				]
+			}
+			
+		)
+		register_task("main_level_29",
+			{
+				"type":"main_task",
+				"title":"未至约期",
+				"desc":"这个主线任务还没有开放。",
+				"single_game":false,//非单局完成
+				"oneshot":false,//非一命完成
+				"task_unlock":"main_level_30",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"fennel_raft_daytime",
+						"desc":"请等待浮空岛开启",
+						"require":1,
+					}
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"secret_spices",
+						"amount":1
+					},
+					{
+						"type":"item",
+						"item_id":"middle_crystal",
+						"amount":1
+					},
+					{
+						"type":"gold",
+						"amount":1
+					}
+				]
+			}
+			
+		)
 	}
 	{//注册所有支线任务
 		register_task("card_upgrade_1",
@@ -1322,6 +1497,45 @@ function task_init(){
 				]
 			}
 		)
+		register_task("flame_save_6",
+			{
+				"type":"challenge_task",
+				"title":"未开放的节约之旅",
+				"desc":"冒险途中突发状况很多，需要积攒火苗才能及时应对。",
+				"single_game":true,//仅限单局游戏内完成
+				"oneshot":false,//非一命任务
+				"task_unlock":"flame_save_7",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"spiced_brine_garden",
+						"desc":"请等待浮空岛开启",
+						"require":1,
+					},
+					{
+						"type":"flame_left",
+						"desc":"关卡结算时，剩余1以上的火苗",
+						"require":1,
+					},
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"secret_spices",
+						"amount":1
+					},
+					{
+						"type":"item",
+						"item_id":"middle_crystal",
+						"amount":1
+					},
+					{
+						"type":"gold",
+						"amount":1
+					}
+				]
+			}
+		)
 		register_task("perfect_challenge_1",
 			{
 				"type":"challenge_task",
@@ -1540,8 +1754,8 @@ function task_init(){
 					},
 					{
 						"type":"time_limit",
-						"desc":"通关时间不超过600秒",
-						"require":600,
+						"desc":"通关时间不超过480秒",
+						"require":480,
 					},
 				],
 				"rewards":[
@@ -1563,6 +1777,55 @@ function task_init(){
 						"type":"item",
 						"item_id":"clover_2",
 						"amount":20
+					},
+				]
+			}
+		)
+		register_task("perfect_challenge_6",
+			{
+				"type":"challenge_task",
+				"title":"完美挑战-6",
+				"desc":"在限定条件下通关指定关卡，证明你的实力。",
+				"single_game":true,//仅限单局游戏内完成
+				"oneshot":false,//非一命任务
+				"task_unlock":"perfect_challenge_7",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"spiced_brine_garden",
+						"desc":"请等待浮空岛开启",
+						"require":1,
+					},
+					{
+						"type":"cat_loss",
+						"desc":"不得失去任何猫",
+						"require":0,
+					},
+					{
+						"type":"time_limit",
+						"desc":"通关时间不超过1秒",
+						"require":1,
+					},
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"secret_spices",
+						"amount":1
+					},
+					{
+						"type":"item",
+						"item_id":"middle_crystal",
+						"amount":1
+					},
+					{
+						"type":"gold",
+						"amount":1
+					},
+					{
+						"type":"item",
+						"item_id":"clover_2",
+						"amount":1
 					},
 				]
 			}
@@ -1803,6 +2066,56 @@ function task_init(){
 						"type":"item",
 						"item_id":"clover_2",
 						"amount":10
+					},
+				]
+			}
+		)
+		register_task("hardcore_challenge_6",
+			{
+				"type":"challenge_task",
+				"title":"极限挑战-6",
+				"desc":"你能在缺少输出的情况下完成关卡吗？",
+				"single_game":true,//仅限单局游戏内完成
+				"oneshot":false,//非一命任务
+				"task_unlock":"hardcore_challenge_7",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"spiced_brine_garden",
+						"desc":"请等待浮空岛开启",
+						"require":1,
+					},
+					{
+						"type":"weapon_limit",
+						"desc":"不能装备任何武器和宝石",
+						"require":1,
+					},
+					{
+						"type":"card_type_limit",
+						"desc":"不能携带任何一次性的伤害类卡片",
+						"limit_card_type":"bomb",
+						"require":1,
+					},
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"secret_spices",
+						"amount":1
+					},
+					{
+						"type":"gold",
+						"amount":1
+					},
+					{
+						"type":"item",
+						"item_id":"middle_crystal",
+						"amount":1
+					},
+					{
+						"type":"item",
+						"item_id":"clover_2",
+						"amount":1
 					},
 				]
 			}

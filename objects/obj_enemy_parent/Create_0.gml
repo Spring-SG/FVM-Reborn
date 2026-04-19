@@ -4,6 +4,7 @@ image_speed = 0
 atk = 10 //每次攻击伤害
 atk_cycle = 0.6 * 60 //攻击间隔
 move_speed = 0.32 //移动速度（像素/秒）
+move_speed_modify = 1
 hp = 100
 maxhp = 100
 hurt_rate = 0.5 //切换至受伤状态所需生命值比例

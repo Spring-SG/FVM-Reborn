@@ -31,6 +31,7 @@ if (hp <= 0 && state != BOSS_STATE.DEATH) {
 	global.save_data.player.gold += 3000
     timer = 0;
     state = BOSS_STATE.DEATH;
+	image_alpha = 1
     target_plant = noone;  // 清除攻击目标
 	with obj_battle{
 		if boss_count <= 1 && current_wave >= total_wave - 1{
@@ -86,19 +87,16 @@ switch state{
 				state = BOSS_STATE.SKILL1
 			}
 			else if skill_count == 1{
-				state = BOSS_STATE.SKILL4
-			}
-			else if skill_count == 2{
 				state = BOSS_STATE.SKILL2
 			}
-			else if skill_count == 3{
+			else if skill_count == 2{
 				state = BOSS_STATE.SKILL3
 			}
-			else if skill_count == 4{
+			else if skill_count == 3{
 				state = BOSS_STATE.SKILL4
 			}
 			skill_count ++
-			if skill_count >= 5{
+			if skill_count >= 4{
 				skill_count = 0
 			}
 			break
@@ -187,7 +185,7 @@ switch state{
 		if timer > 1 && timer <= 120{
 			if timer mod 39 == 0{
 				var se_pos = get_grid_position_from_world(x,y)
-				instance_create_depth(se_pos.x,se_pos.y+33,-800,obj_glider_mouse)
+				instance_create_depth(se_pos.x,se_pos.y+33,-800,obj_paratrooper_mouse)
 			}
 			x += x_move
 			y += y_move_speed
@@ -241,9 +239,9 @@ switch state{
 			x_move = (t_pos.x-90-x)/120
 		}
 		if timer > 1 && timer <= 120{
-			if timer mod 19 == 0{
+			if timer mod 23 == 0{
 				with obj_card_parent{
-					if grid_row == other.grid_row && grid_col == 6 - other.jump_times && !invincible && plant_id != "player" && plant_type != "coffee"{
+					if grid_row == other.grid_row && grid_col == 5 - other.jump_times && !invincible && plant_id != "player" && plant_type != "coffee"{
 						if hp >= max_hp{
 							obj_task_manager.card_loss ++
 						}

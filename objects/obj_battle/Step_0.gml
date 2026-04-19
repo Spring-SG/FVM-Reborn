@@ -6,7 +6,7 @@ battle_time ++
 if global.debug{
 	if keyboard_check_pressed(ord("M")){
 		var grid_pos = get_grid_position_from_world(mouse_x,mouse_y)
-		var inst = instance_create_depth(grid_pos.x,grid_pos.y+38,0,obj_special_armour_mouse)
+		var inst = instance_create_depth(grid_pos.x,grid_pos.y+38,0,obj_roller_skating_mouse)
 		inst.grid_row = grid_pos.row
 		inst.grid_col = grid_pos.col
 		inst.frozen_timer = 0000
@@ -14,7 +14,7 @@ if global.debug{
 	if keyboard_check_pressed(ord("N")){
 		var enemy_row = irandom_range(0,global.grid_rows-1)
 		var enemy_pos = get_world_position_from_grid(8,enemy_row)
-		instance_create_depth(enemy_pos.x-80,enemy_pos.y+33,-200,obj_fog_julie)
+		instance_create_depth(enemy_pos.x-80,enemy_pos.y+33,-200,obj_hot_vajra)
 		boss_count++
 		//var grid_pos = get_grid_position_from_world(mouse_x,mouse_y)
 		//var inst = instance_create_depth(grid_pos.x,grid_pos.y+38,0,obj_mario_mouse)
@@ -31,7 +31,7 @@ if global.debug{
 	}
 	if keyboard_check_pressed(ord("K")){
 		var grid_pos = get_grid_position_from_world(mouse_x,mouse_y)
-		var inst = instance_create_depth(grid_pos.x,grid_pos.y+38,0,obj_garbage_track_mouse)
+		var inst = instance_create_depth(grid_pos.x,grid_pos.y+38,0,obj_paratrooper_mouse)
 		inst.grid_row = grid_pos.row
 		inst.grid_col = grid_pos.col
 		inst.frozen_timer = 0000

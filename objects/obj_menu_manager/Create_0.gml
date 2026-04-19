@@ -111,7 +111,10 @@ function on_draw() {
     
     draw_set_color(c_white);
     draw_set_font(font_yuan);
-    var _text = "Loading " + string(self.texture_loaded) + "/" + string(self.texture_count);
+	var _text = "加载完成！"
+	if self.texture_loaded <= array_length(self.texture_to_load)-1{
+		_text = "加载中 " + string(self.texture_loaded) + "/" + string(self.texture_count) + " " + self.texture_to_load[clamp(self.texture_loaded,0,array_length(self.texture_to_load)-1)];
+	}
     draw_text(_x1, _y1 - 30, _text);
 }
 

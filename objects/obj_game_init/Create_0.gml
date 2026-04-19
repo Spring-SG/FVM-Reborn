@@ -7,7 +7,6 @@ global.level_file = {}
 global.level_name = "曲奇岛"
 global.level_data = {}
 global.debug = 0
-global.preload = false
 Music_Init()
 
 // 初始化全局键位映射

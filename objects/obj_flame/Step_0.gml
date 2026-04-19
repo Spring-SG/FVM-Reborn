@@ -1,5 +1,8 @@
 // STEP 事件
 if global.is_paused{
+	x -= hspeed
+	y -= vspeed
+	vspeed -= gravity
 	exit
 }
 if !is_capture{
