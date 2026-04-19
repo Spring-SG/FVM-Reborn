@@ -7,7 +7,7 @@ if hp <= 0 && state != ENEMY_STATE.DEAD{
 }
 event_inherited();
 
-if global.is_paused or is_frozen{
+if global.is_paused or is_frozen or is_stun{
 	exit
 }
 throw_timer --
@@ -46,13 +46,15 @@ if state == ENEMY_STATE.APPEAR{
 		for(var i = 0 ; i < grid_col;i++){
 			target_col = -1
 			var plant_list = ds_grid_get(global.grid_plants,i,grid_row)
-			if ds_list_size(plant_list) > 0{
-				for(var j = 0 ; j < ds_list_size(plant_list);j++){
-					var plant_inst = plant_list[| j]
-					if instance_exists(plant_inst){
-						if(plant_inst.plant_type != "coffee" && plant_inst.feature_type != "dwarf"){
-							target_col = i
-							break
+			if plant_list != undefined{
+				if ds_list_size(plant_list) > 0{
+					for(var j = 0 ; j < ds_list_size(plant_list);j++){
+						var plant_inst = plant_list[| j]
+						if instance_exists(plant_inst){
+							if(plant_inst.plant_type != "coffee" && plant_inst.feature_type != "dwarf"){
+								target_col = i
+								break
+							}
 						}
 					}
 				}

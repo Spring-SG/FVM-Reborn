@@ -298,6 +298,11 @@ switch state{
 				var enemy_pos = get_world_position_from_grid(8,enemy_row)
 				banding_summon_obj = instance_create_depth(enemy_pos.x-80,enemy_pos.y+33,-200,obj_lieutenant_buzz)
 				obj_battle.boss_count++
+				if global.level_id != "macchiato_port"{
+					banding_summon_obj.maxhp = 2500 * maxhp/50000
+					banding_summon_obj.hp = banding_summon_obj.maxhp
+					banding_summon_obj.skill_count = 2
+				}
 			}
 		}
 		

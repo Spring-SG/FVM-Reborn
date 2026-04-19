@@ -156,7 +156,9 @@ switch state{
 		if timer == 5 * 5 - 1{
 			for(var i = 0 ; i < global.grid_rows ; i++){
 				var spike_pos = get_world_position_from_grid(grid_col-1,i)
-				instance_create_depth(x-125,spike_pos.y+25,depth,obj_pete_spike)
+				var spike_inst = instance_create_depth(x-125,spike_pos.y+25,depth,obj_pete_spike)
+				spike_inst.maxhp *= (1+((maxhp - 40000)/40000)*0.5)
+				spike_inst.hp = spike_inst.maxhp
 			}
 		}
 		if timer >= 110 + 60 * 8 - 1{
@@ -205,7 +207,9 @@ switch state{
 			for(var i = 0 ; i < array_length(target_coord);i++){
 				var coord = target_coord[i]
 				var bandage_pos = get_world_position_from_grid(coord[0],coord[1])
-				instance_create_depth(bandage_pos.x+10,bandage_pos.y+20,-800,obj_pete_claw)
+				var claw_inst = instance_create_depth(bandage_pos.x+10,bandage_pos.y+20,-800,obj_pete_claw)
+				claw_inst.maxhp *= (1 + ((maxhp-40000)/40000)*0.5)
+				claw_inst.hp = claw_inst.maxhp
 			}
 		}
 		

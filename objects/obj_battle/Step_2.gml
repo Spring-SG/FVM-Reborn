@@ -7,9 +7,12 @@ with obj_enemy_parent{
 var c_min_time = wave_min_time
 if is_real(global.level_file.version){
 	if global.level_file.version >= 1.3{
-		if global.level_file.waves[current_wave].subwaves[current_subwave].local_min_wave_time >0{
-			c_min_time = global.level_file.waves[current_wave].subwaves[current_subwave].local_min_wave_time
+		if current_wave < total_wave{
+			if global.level_file.waves[current_wave].subwaves[current_subwave].local_min_wave_time >0{
+				c_min_time = global.level_file.waves[current_wave].subwaves[current_subwave].local_min_wave_time
+			}
 		}
+		
 	}
 }
 if current_wave_hp <= hp_ratio * current_total_hp && level_stage != "boss"{

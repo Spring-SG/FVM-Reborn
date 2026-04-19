@@ -1,4 +1,18 @@
 // Inherit the parent event
+if global.is_paused{
+	exit
+}
+
+remove_timer ++
+
+if remove_timer == 1{
+	with obj_card_parent{
+		if grid_row == other.grid_row && grid_col == other.grid_col && plant_id == "cotton_candy" && id != other.id{
+			instance_destroy()
+		}
+	}
+}
+
 event_inherited();
 
 if hp <= 0.33 * max_hp{

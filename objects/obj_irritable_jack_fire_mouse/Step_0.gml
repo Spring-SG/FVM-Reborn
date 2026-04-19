@@ -26,7 +26,7 @@ if state == ENEMY_STATE.ACTING && hp > 0 && state != ENEMY_STATE.DEAD{
 	if instance_exists(target_plant){
 		with target_plant{
 			if plant_id != "player"{
-				if !invincible{
+				if !invincible && plant_id != "cotton_candy"{
 					hp -= 2000
 					event_user(2)
 				}

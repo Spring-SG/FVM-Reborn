@@ -83,5 +83,6 @@ function enemy_init(){
 	register_enemy("fog_julie",{"name":"迷雾朱莉","_obj":obj_fog_julie,"hp":50000,"shield":0,"description":"迷雾朱莉：玛奇朵港BOSS","speed":0.3,"atk":10,"cycle":36,"range":90,"ash_proof":true,"spr":spr_fog_julie_idle,"feature":"land"})
 	register_enemy("lieutenant_buzz",{"name":"嗡嗡中尉","_obj":obj_lieutenant_buzz,"hp":50000,"shield":0,"description":"嗡嗡中尉：火山岛BOSS","speed":0.3,"atk":10,"cycle":36,"range":90,"ash_proof":true,"spr":spr_lieutenant_buzz_idle,"feature":"land"})
 	register_enemy("paratrooper_mouse",{"name":"伞兵鼠","_obj":obj_paratrooper_mouse,"hp":280,"shield":0,"description":"伞兵鼠：空降并使用瓜皮罩住卡片","speed":0.30,"atk":10,"cycle":36,"range":90,"ash_proof":false,"spr":spr_paratrooper_mouse_air,"feature":"land"})
-	register_enemy("irritable_jack",{"name":"暴躁杰克","_obj":obj_irritable_jack,"hp":50000,"shield":0,"description":"暴躁杰克：火山岛BOSS","speed":0.3,"atk":10,"cycle":36,"range":90,"ash_proof":true,"spr":spr_irritable_jack_idle,"feature":"land"})
+	register_enemy("irritable_jack",{"name":"暴躁杰克","_obj":obj_irritable_jack,"hp":60000,"shield":0,"description":"暴躁杰克：火山岛BOSS","speed":0.3,"atk":10,"cycle":36,"range":90,"ash_proof":true,"spr":spr_irritable_jack_idle,"feature":"land"})
+	register_enemy("hot_vajra",{"name":"炽热金刚","_obj":obj_hot_vajra,"hp":80000,"shield":0,"description":"炽热金刚：雪顶火山BOSS","speed":0.3,"atk":10,"cycle":36,"range":90,"ash_proof":true,"spr":spr_hot_vajra_idle,"feature":"land"})
 }

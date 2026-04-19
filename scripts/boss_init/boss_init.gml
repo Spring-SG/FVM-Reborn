@@ -14,5 +14,6 @@ function boss_init(){
 	register_boss("fog_julie",{"name":"迷雾朱莉","hp":50000,"icon":spr_fog_julie_icon})
 	register_boss("lieutenant_buzz",{"name":"嗡嗡中尉","hp":50000,"icon":spr_lieutenant_buzz_icon})
 	register_boss("irritable_jack",{"name":"暴躁杰克","hp":50000,"icon":spr_irritable_jack_icon})
+	register_boss("hot_vajra",{"name":"炽热金刚","hp":80000,"icon":spr_hot_vajra_icon})
 	
 }

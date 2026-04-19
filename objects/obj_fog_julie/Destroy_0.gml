@@ -25,5 +25,5 @@ if global.save_data.unlocked_items.mario_mouse_killed && global.save_data.player
 }
 instance_destroy(hpbar_inst)
 if instance_exists(banding_summon_obj){
-	banding_summon_obj.hp = 0
+	instance_destroy(banding_summon_obj)
 }

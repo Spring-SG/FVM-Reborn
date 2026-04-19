@@ -30,3 +30,5 @@ else if shape == 2{
 	spr_list = [spr_cotton_candy_2_0,spr_cotton_candy_2_1,spr_cotton_candy_2_2]
 	hole_count = 3
 }
+remove_timer = 0
+

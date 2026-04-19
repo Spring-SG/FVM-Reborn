@@ -239,9 +239,9 @@ switch state{
 			x_move = (t_pos.x-90-x)/120
 		}
 		if timer > 1 && timer <= 120{
-			if timer mod 19 == 0{
+			if timer mod 23 == 0{
 				with obj_card_parent{
-					if grid_row == other.grid_row && grid_col == 6 - other.jump_times && !invincible && plant_id != "player" && plant_type != "coffee"{
+					if grid_row == other.grid_row && grid_col == 5 - other.jump_times && !invincible && plant_id != "player" && plant_type != "coffee"{
 						if hp >= max_hp{
 							obj_task_manager.card_loss ++
 						}

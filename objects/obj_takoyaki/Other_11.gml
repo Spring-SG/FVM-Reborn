@@ -8,7 +8,7 @@ function find_priority_enemy() {
     // 检查右边一格内是否有敌人（假设一格为80像素）
     var right_range = 150;
     with (obj_enemy_parent) {
-        if (hp > 0 && can_hit(other.target_type,target_type)) { // 只考虑存活的敌人
+        if (hp > 0 && can_hit(other.target_type,target_type) && y > 0) { // 只考虑存活的敌人
             // 检查是否在右边一格内
             if (x >= other.x && x <= other.x + right_range && grid_row == other.grid_row) {
                 if (priority_enemy == noone || hp > priority_enemy.hp) {

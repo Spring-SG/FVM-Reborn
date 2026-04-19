@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"array_deep_copy",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"array_deep_copy",
+  "parent":{
+    "name":"assistant",
+    "path":"folders/脚本/assistant.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
