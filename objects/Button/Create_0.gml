@@ -189,7 +189,12 @@ function on_step() {
             _s.current_subimage = _s.frame_hover
             
             if (_mouse_up && _s.click_armed) {
-                if (!is_undefined(_s.on_click)) _s.on_click()
+                if (!is_undefined(_s.on_click)) {
+                    _s.mouse_status = MouseStatus.NONE
+                    _s.prev_mouse_status = MouseStatus.NONE
+                    window_set_cursor(cr_arrow)
+                    _s.on_click()
+                }
             }
         }
     }

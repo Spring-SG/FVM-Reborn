@@ -3,7 +3,6 @@ if on_click && obj_player_info_ui.menu_type == 0 && unlock{
     audio_play_sound(snd_button, 0, 0);
 	texture_prefetch("cards")
 	if target_level_id != "tower_cake"{
-	    // room_goto(room_ready);
 	    global.gui_stack.to(room_ready)
 	
 		// 这是文件在 datafiles 目录下的相对路径
@@ -38,9 +37,7 @@ if on_click && obj_player_info_ui.menu_type == 0 && unlock{
 		show_debug_message(global.level_data)
 	}
 	else{
-		instance_create_depth(room_width/2,room_height/2,-5,obj_tower_cake_bg)
-		obj_player_info_ui.menu_type = 4
-		obj_world_map_button.world_map = 2
+		global.gui_stack.to(room_tower_cake)
 	}
 }
 if !unlock && obj_player_info_ui.menu_type == 0{

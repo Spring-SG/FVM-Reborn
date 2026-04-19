@@ -46,9 +46,8 @@ for (var i = 0; i < array_length(buttons); i++) {
 							global.map_id = "delicious_island"
 							global.map_name = "美味岛"
 						}
-	                    // room_goto(room_map); // 或返回主菜单 room_goto(rm_main_menu);
-						global.gui_stack.pop()
 						global.menu_screen = true
+						global.gui_stack.pop()
 					}
                     break;
             }

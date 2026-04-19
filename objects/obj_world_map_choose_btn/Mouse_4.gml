@@ -11,15 +11,11 @@ if unlocked{
 			global.map_id = map_id
 		}
 		if room != room_target{
-			// room_goto(room_target)
 			global.gui_stack.to(room_target)
 		}
 	}
 	else{
-		instance_destroy(obj_world_map_menu)
-		instance_create_depth(room_width/2,room_height/2,-5,obj_tower_cake_bg)
-		obj_player_info_ui.menu_type = 4
-		obj_world_map_button.world_map = 2
+		global.gui_stack.to(room_tower_cake)
 	}
 }
 else{

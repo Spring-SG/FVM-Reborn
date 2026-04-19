@@ -153,7 +153,6 @@ if global.debug{
 //	global.save_data.unlocked_items.shovel = "gold"
 }
 
-// room_goto(room_menu)
 var screen_width = display_get_width()
 var screen_height = display_get_height()
 window_set_size(screen_width*0.8,screen_height*0.8)

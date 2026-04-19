@@ -4,7 +4,6 @@ if obj_player_info_ui.menu_type == 0{
 	texture_prefetch("cards")
 	if target_screen == "quit"{//退出按钮
 		if room == room_map{
-			// room_goto(room_menu)
 			global.gui_stack.pop()
 		}
 		else{

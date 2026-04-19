@@ -1,3 +1,5 @@
+global.menu_screen = true
+
 depth = -1200
 
 // 强制清除application_surface，避免上一房间图像残留
@@ -33,14 +35,14 @@ timer = 0
 
 self.texture_to_load = [
 	"UI",
-	// "cards",
-	// "enemy_delicious",
-	// "enemy_volcanic",
-	// "bullet",
-	// "effects",
-	// "player",
+	"cards",
+	"enemy_delicious",
+	"enemy_volcanic",
+	"bullet",
+	"effects",
+	"player",
 	"maps",
-	// "enemy_tower"
+	"enemy_tower"
 ]
 
 self.texture_count = array_length(self.texture_to_load)

@@ -38,12 +38,11 @@ if keyboard_check_pressed(vk_escape){
 		obj_world_map_button.world_map = 0
 	}
 	else if instance_exists(obj_tower_cake_bg){
-		instance_destroy(obj_tower_cake_bg)
 		obj_player_info_ui.menu_type = 0
 		obj_world_map_button.world_map = 0
+		global.gui_stack.pop()
 	}
 	else{
-		// room_goto(room_menu)
 		global.gui_stack.to(room_menu)
 	}
 }
