@@ -20,6 +20,19 @@ function create_widgets() {
                         .set_on_click(function() {
                             global.gui_stack.to(room_laboratory)
                         })
+                        .set_should_correspond(method({gui_state: self.state}, function() {
+                            var _has_float_layer = instance_exists(obj_config_menu) ||
+                                                   instance_exists(obj_edit_menu) ||
+                                                   instance_exists(obj_world_map_menu) ||
+                                                   instance_exists(obj_package_bg) ||
+                                                   instance_exists(obj_info_island_bg) ||
+                                                   instance_exists(obj_shop_bg) ||
+                                                   instance_exists(obj_task_bg) ||
+                                                   instance_exists(obj_craft_bg) ||
+                                                   instance_exists(obj_tower_cake_bg) ||
+                                                   instance_exists(obj_quit_confirm)
+                            return !_has_float_layer
+                        }))
 
     array_push(_items, _laboratory_entrance)
 

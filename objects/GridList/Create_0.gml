@@ -89,7 +89,6 @@ function set_should_correspond(_should_correspond) {
     return self
 }
 
-
 function set_items(_items) {
     if (self.state.viewport_height == 0 || self.state.viewport_width == 0) {
         throw("GridList: Set viewport first")
@@ -209,9 +208,7 @@ function apply_wheel() {
     clamp_scroll_bounds()
 }
 
-
 /// @description Begin Step — layout + scroll before child Step
-
 function on_begin_step() {
     if (!self.state.should_correspond()) {
         exit

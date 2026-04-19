@@ -32,6 +32,13 @@ enum ErrorCode {
     GUI_INVALID_ROOM = 0x3002,
 }
 
+function ScissorArea() constructor {
+    self.x = 0
+    self.y = 0
+    self.w = 0
+    self.h = 0
+}
+
 function Result() constructor {
     self.code = 0
     self.message = ""

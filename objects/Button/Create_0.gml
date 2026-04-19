@@ -24,6 +24,7 @@ self.state = {
 
     /// @type {Enum.MouseStatus} 
     mouse_status: MouseStatus.NONE,
+    prev_mouse_status: MouseStatus.NONE,
     click_armed: false,
 
     /// @type {function} 
@@ -162,56 +163,45 @@ function on_create() {
 }
 
 function on_step() {
-    if (!self.state.should_correspond()) exit
-    if (!sprite_exists(self.state.sprite)) exit
+    var _s = self.state
+    
+    if (!_s.should_correspond()) exit
+    if (!sprite_exists(_s.sprite)) exit
 
     var _mx = device_mouse_x(0)
     var _my = device_mouse_y(0)
-    var _l = self.state.corresponding_area_l
-    var _t = self.state.corresponding_area_t
-    var _r = self.state.corresponding_area_r
-    var _b = self.state.corresponding_area_b
-    var _over = point_in_rectangle(_mx, _my, _l, _t, _r, _b)
+    var _over = point_in_rectangle(_mx, _my, _s.corresponding_area_l, _s.corresponding_area_t, _s.corresponding_area_r, _s.corresponding_area_b)
+    var _old_status = _s.mouse_status
+    var _mouse_press = mouse_check_button(mb_left)
+    var _mouse_down = mouse_check_button_pressed(mb_left)
+    var _mouse_up = mouse_check_button_released(mb_left)
 
     if (!_over) {
-        if (self.state.mouse_status != MouseStatus.NONE) {
-            window_set_cursor(cr_arrow)
-        }
-        self.state.mouse_status = MouseStatus.NONE
-    } else if (mouse_check_button(mb_left)) {
-        if (self.state.mouse_status != MouseStatus.PRESS) {
-            window_set_cursor(cr_drag)
-        }
-        self.state.mouse_status = MouseStatus.PRESS
+        _s.mouse_status = MouseStatus.NONE
+        _s.current_subimage = _s.frame_idle
     } else {
-        if (self.state.mouse_status != MouseStatus.HOVER) {
-            window_set_cursor(cr_drag)
-        }
-        self.state.mouse_status = MouseStatus.HOVER
-    }
-
-    if (mouse_check_button_pressed(mb_left) && _over) {
-        self.state.click_armed = true
-    }
-
-    if (mouse_check_button(mb_left) && _over) {
-        self.state.current_subimage = self.state.frame_press
-    } else if (_over) {
-        self.state.current_subimage = self.state.frame_hover
-    } else {
-        self.state.current_subimage = self.state.frame_idle
-    }
-
-    if (mouse_check_button_released(mb_left)) {
-        if (self.state.click_armed && _over) {
-            window_set_cursor(cr_drag)
-            if (self.state.on_click != undefined) {
-                self.state.on_click()
+        if (_mouse_press) {
+            _s.mouse_status = MouseStatus.PRESS
+            _s.current_subimage = _s.frame_press
+            if (_mouse_down) _s.click_armed = true
+        } else {
+            _s.mouse_status = MouseStatus.HOVER
+            _s.current_subimage = _s.frame_hover
+            
+            if (_mouse_up && _s.click_armed) {
+                if (!is_undefined(_s.on_click)) _s.on_click()
             }
-        } else if (!_over) {
-            window_set_cursor(cr_arrow)
         }
-        self.state.click_armed = false
+    }
+
+    if (_mouse_up) _s.click_armed = false
+
+    if (_s.mouse_status != _old_status) {
+        if (_s.mouse_status == MouseStatus.NONE) {
+            window_set_cursor(cr_arrow)
+        } else {
+            window_set_cursor(cr_drag)
+        }
     }
 }
 

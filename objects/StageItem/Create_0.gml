@@ -14,6 +14,8 @@ self.state = {
     custom_stage: undefined,
     /// @type {Enum.MouseStatus} 
     mouse_status: MouseStatus.NONE,
+    /// @type {Enum.MouseStatus} 
+    prev_mouse_status: MouseStatus.NONE,
 
     /// @type {function ():Bool} 
     should_correspond: function(){return true},
@@ -72,19 +74,39 @@ function set_on_click(_on_click) {
 }
 
 function update_mouse() {
-    var _mx = device_mouse_x(0);
-    var _my = device_mouse_y(0);
-    if (point_in_rectangle(_mx, _my, self.state.left, self.state.top, self.state.left + self.state.width, self.state.top + self.state.height)) {
-        if (self.state.mouse_status != MouseStatus.HOVER) {
-            window_set_cursor(cr_drag)
-        }
-        self.state.mouse_status = MouseStatus.HOVER
+    var _s = self.state
+    var _mx = device_mouse_x_to_gui(0)
+    var _my = device_mouse_y_to_gui(0)
+    
+    var _in_bound = point_in_rectangle(_mx, _my, _s.left, _s.top, _s.left + _s.width, _s.top + _s.height)
+    
+    var _old_status = _s.mouse_status
 
+    if (!_in_bound) {
+        _s.mouse_status = MouseStatus.NONE
     } else {
-        if (self.state.mouse_status != MouseStatus.NONE) {
-            window_set_cursor(cr_arrow)
+        if (mouse_check_button(mb_left)) {
+            _s.mouse_status = MouseStatus.PRESS
+        } else {
+            if (_old_status == MouseStatus.PRESS) {
+                _s.mouse_status = MouseStatus.RELEASE
+                if (!is_undefined(_s.on_click)) _s.on_click()
+            } else {
+                _s.mouse_status = MouseStatus.HOVER
+            }
         }
-        self.state.mouse_status = MouseStatus.NONE
+    }
+
+    if (_s.mouse_status != _old_status) {
+        switch (_s.mouse_status) {
+            case MouseStatus.HOVER:
+            case MouseStatus.PRESS:
+                window_set_cursor(cr_drag)
+                break
+            default:
+                window_set_cursor(cr_arrow)
+                break
+        }
     }
 }
 
@@ -100,16 +122,7 @@ function on_step() {
     if (!self.state.should_correspond()) exit
 
     update_mouse()
-    if (mouse_check_button_pressed(mb_left) && (self.state.mouse_status == MouseStatus.HOVER)) {
-        self.state.mouse_status = MouseStatus.PRESS
-    }
-    if (mouse_check_button_released(mb_left) && (self.state.mouse_status == MouseStatus.HOVER)) {
-        self.state.mouse_status = MouseStatus.RELEASE
-        window_set_cursor(cr_arrow)
-        if (!is_undefined(self.state.on_click) ) {
-            self.state.on_click()
-        }
-    }
+    
 }
 
 function on_draw() {
@@ -118,13 +131,20 @@ function on_draw() {
     
     draw_sprite_ext(spr_stage_item, 0, self.x, self.y, self.state.scale, self.state.scale, 0, c_white, 1)
 
-    var _prev_scissor = gpu_get_scissor()
-    var _sprite_start_x = self.state.left + self.state.map_sprite_left
-    var _sprite_start_y = self.state.top + self.state.map_sprite_top
+
     if (!is_undefined(self.state.custom_stage)) {
+        /// @type {Struct.ScissorArea} 
+        var _prev_scissor = gpu_get_scissor()
+        var _sprite_start_x = self.state.left + self.state.map_sprite_left
+        var _sprite_start_y = self.state.top + self.state.map_sprite_top
+
+        var _prev_scissor_top = _prev_scissor.y
+        var _prev_scissor_bottom = _prev_scissor.y + _prev_scissor.h
+        var _default_scissor_bottom = _sprite_start_y + self.state.map_sprite_size
+        var _outlined_y = max((_default_scissor_bottom - _prev_scissor_bottom), 0)
         gpu_set_scissor(
-            _sprite_start_x, _sprite_start_y, 
-            self.state.map_sprite_size, self.state.map_sprite_size)
+            _sprite_start_x, max(_prev_scissor_top, _sprite_start_y), 
+            self.state.map_sprite_size, self.state.map_sprite_size - _outlined_y)
         draw_sprite_ext(
             self.state.custom_stage.map_sprite, 0, 
             _sprite_start_x, _sprite_start_y, 
