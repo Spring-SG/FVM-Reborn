@@ -287,7 +287,7 @@
   ],
   "ForcedPrefabProjectReferences":[],
   "IncludedFiles":[
-    {"$GMIncludedFile":"","%Name":"new_level.json","CopyToMask":-1,"filePath":"datafiles/laboratory","name":"new_level.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"将关卡的 json 文件放在这里","CopyToMask":-1,"filePath":"datafiles/laboratory","name":"将关卡的 json 文件放在这里","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"请不要修改这个文件夹中的文件","CopyToMask":-1,"filePath":"datafiles/level_data","name":"请不要修改这个文件夹中的文件","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"abyss_hard.json","CopyToMask":-1,"filePath":"datafiles/level_data","name":"abyss_hard.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"abyss.json","CopyToMask":-1,"filePath":"datafiles/level_data","name":"abyss.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
