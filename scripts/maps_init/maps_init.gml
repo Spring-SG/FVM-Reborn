@@ -724,4 +724,29 @@ function maps_init(){
 			]
 		}
 	)
+	register_map(
+		"floating_island",
+		{
+			"map_name":"浮空岛",
+			"map_sprite":spr_floating_island,
+			"levels_data":[
+				{
+					"id":"fennel_raft_daytime",
+					"name":"茴香竹筏（日）",
+					"button_spr":spr_levelselect_button_floating,
+					"button_index":0,
+					"button_x":900,
+					"button_y":790,
+					"level_file":"floating/fennel_raft_daytime.json",
+					"hard_level_file":"floating/fennel_raft_daytime_hard.json",
+					"level_sprite":spr_fennel_raft_daytime,
+					"pre_music":mus_volcanic_island_daytime_pre,
+					"elite_music":mus_volcanic_island_daytime_elite,
+					"boss_music":mus_volcanic_island_daytime_boss,
+					"player_level_require":35,
+					"pre_level_require":[]
+				},																										
+			]
+		}
+	)
 }

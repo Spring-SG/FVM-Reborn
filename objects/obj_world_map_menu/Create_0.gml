@@ -21,3 +21,10 @@ btn3.map_name = "火山岛"
 btn3.map_id = "volcanic_island"
 btn3.room_target = room_map
 btn3.level_require = 21
+
+var btn4 = instance_create_depth(x+402,y-170,depth-1,obj_world_map_choose_btn)
+btn4.sprite_index = spr_world_map_floating_island
+btn4.map_name = "浮空岛"
+btn4.map_id = "floating_island"
+btn4.room_target = room_map
+btn4.level_require = 35
