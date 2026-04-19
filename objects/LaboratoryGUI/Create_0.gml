@@ -13,7 +13,8 @@ self.state = {
     stage_detail_widget: undefined,
     /// @type {Asset.GMObject.Button} 
     close_button: undefined,
-
+    /// @type {Asset.GMObject.GridList} 
+    grid_list: undefined,
     bottom_button_width: 210,
     bottom_button_height: 170,
     bottom_button_scale: 1,
@@ -35,25 +36,16 @@ function init_asset_size_and_offset() {
 
 }
 
-function create_widgets() {
-    /// @description Close Button
-    /// @type {Asset.GMObject.Button} 
-    var _close_button = instance_create_layer(0, 0, "Assets", Button)
-    _close_button.set_position(room_width - 170, 55)
-        .set_sprite(spr_closemenu_btn)
-        .set_scale(1.9)
-        .set_frames(0, 1, 2)
-        .set_on_click(function() {
-            global.menu_screen = true
-            global.gui_stack.pop()
-            window_set_cursor(cr_arrow)
-        })
-        .set_should_correspond(method({gui_state: self.state}, function() {
-            return gui_state.current_stage_id == ""
-        }))
-    self.state.close_button = _close_button
-        
-    
+function refresh_custom_stages() {
+    var _stage_ids = self.state.laboratory_manager.get_stage_ids()
+    self.state.laboratory_manager.reset()
+    var _result = self.state.laboratory_manager.load_all_stages()
+    if (_result.is_failed()) {
+        show_message_async(_result.message)
+    }
+    _stage_ids = self.state.laboratory_manager.get_stage_ids()
+    self.state.stage_ids = _stage_ids
+
     /// @description Stage List
     /// @type {Array<Asset.GMObject.StageItem>} 
     var _items = []
@@ -73,13 +65,47 @@ function create_widgets() {
              .set_should_correspond(method({gui_state: self.state}, function() {
                 return gui_state.current_stage_id == ""
              }))
+        _item.visible = false
         array_push(_items, _item)
     }
+    self.state.grid_list.set_items(_items)
+}
 
+function create_widgets() {
+    /// @description Close Button
+    /// @type {Asset.GMObject.Button} 
+    var _close_button = instance_create_layer(0, 0, "Assets", Button)
+    _close_button.set_position(room_width - 170, 55)
+        .set_sprite(spr_closemenu_btn)
+        .set_scale(1.9)
+        .set_frames(0, 1, 2)
+        .set_on_click(function() {
+            global.menu_screen = true
+            global.gui_stack.pop()
+            window_set_cursor(cr_arrow)
+        })
+        .set_should_correspond(method({gui_state: self.state}, function() {
+            return gui_state.current_stage_id == ""
+        }))
+    self.state.close_button = _close_button
+        
     /// @type {Asset.GMObject.GridList} 
     var _grid_list = instance_create_layer(room_width / 2, room_height / 2, "Assets", GridList)
     _grid_list.set_viewport(159, 175, 1550, 600)
-              .set_items(_items)
+              .set_items([])
+    self.state.grid_list = _grid_list
+
+    /// @type {Asset.GMObject.Button} 
+    var _reset_button = instance_create_layer(0, 0, "Assets", Button)
+    _reset_button.set_sprite(spr_refresh_button)
+        .set_position(159, 110)
+        .set_scale(1.2)
+        .set_on_click(method({func: refresh_custom_stages}, function() {
+            func()
+        }))
+        .set_should_correspond(method({gui_state: self.state}, function() {
+            return gui_state.current_stage_id == ""
+        }))
 
     /// @description Bottom Button
     /// @type {Asset.GMObject.Button} 
@@ -112,20 +138,12 @@ function on_create() {
     }
     
     self.state.laboratory_manager = global.laboratory_manager
-    var _stage_ids = self.state.laboratory_manager.get_stage_ids()
-    if (array_length(_stage_ids) == 0) {
-        var _result = self.state.laboratory_manager.load_all_stages()
-        if (_result.is_failed()) {
-            show_message_async(_result.message)
-        }
-        _stage_ids = self.state.laboratory_manager.get_stage_ids()
-    }
-    self.state.stage_ids = _stage_ids
 
     global.menu_screen = false
     window_set_cursor(cr_arrow)
-
+    
     create_widgets()
+    refresh_custom_stages()
 }
 
 function on_step() {

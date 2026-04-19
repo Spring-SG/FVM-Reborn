@@ -88,6 +88,7 @@ function LaboratoryManager() constructor {
 
     static reset = function() {
         self.stages = {}
+        self.stage_ids = []
     }
 
     static dispose = function() {

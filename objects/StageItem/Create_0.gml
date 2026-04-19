@@ -65,9 +65,6 @@ function set_should_correspond(_should_correspond) {
     return self
 }
 
-
-
-
 /// @param {function} _on_click 
 function set_on_click(_on_click) {
     self.state.on_click = _on_click
@@ -152,6 +149,5 @@ function on_draw() {
     }
 
 }
-
 
 on_create()

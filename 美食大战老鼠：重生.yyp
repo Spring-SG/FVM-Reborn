@@ -1728,6 +1728,7 @@
     {"id":{"name":"spr_ready_room_slot_number","path":"sprites/spr_ready_room_slot_number/spr_ready_room_slot_number.yy",},},
     {"id":{"name":"spr_ready_room_slot","path":"sprites/spr_ready_room_slot/spr_ready_room_slot.yy",},},
     {"id":{"name":"spr_reday_room","path":"sprites/spr_reday_room/spr_reday_room.yy",},},
+    {"id":{"name":"spr_refresh_button","path":"sprites/spr_refresh_button/spr_refresh_button.yy",},},
     {"id":{"name":"spr_repairman_mouse_place","path":"sprites/spr_repairman_mouse_place/spr_repairman_mouse_place.yy",},},
     {"id":{"name":"spr_repairman_mouse_shield","path":"sprites/spr_repairman_mouse_shield/spr_repairman_mouse_shield.yy",},},
     {"id":{"name":"spr_repairman_mouse","path":"sprites/spr_repairman_mouse/spr_repairman_mouse.yy",},},
