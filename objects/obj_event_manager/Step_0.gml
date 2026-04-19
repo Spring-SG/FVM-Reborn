@@ -359,3 +359,27 @@ if global.level_id == "cotton_candy_sky_night"{
 		cloud_count ++
 	}
 }
+
+if global.level_id == "fennel_raft_daytime" && event_timer == 1{
+	// 平台1：位于 1~4 列，0~4 行，初始向向下移动
+	var pos1 = get_world_position_from_grid(1, 0)
+	var plat1 = instance_create_depth(pos1.x - global.grid_cell_size_x/2, pos1.y - global.grid_cell_size_y/2 - 35, 800, obj_platform)
+	plat1.sprite_index = spr_fennel_raft_platform_daytime
+	plat1.start_col = 1
+	plat1.start_row = 0
+	plat1.width = 4
+	plat1.length = 5
+	plat1.move_distance = 2
+	plat1.move_direction = 1
+
+	// 平台2：位于 5~8 列，2~6 行，初始向上移动
+	var pos2 = get_world_position_from_grid(5, 2)
+	var plat2 = instance_create_depth(pos2.x - global.grid_cell_size_x/2, pos2.y - global.grid_cell_size_y/2 - 35, 800, obj_platform)
+	plat2.sprite_index = spr_fennel_raft_platform_daytime
+	plat2.start_col = 5
+	plat2.start_row = 2
+	plat2.width = 4
+	plat2.length = 5
+	plat2.move_distance = 2
+	plat2.move_direction = -1
+}
