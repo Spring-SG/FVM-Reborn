@@ -124,11 +124,24 @@ if (is_selected) {
 		
         var card_shape = get_card_info_simple(card_id).shape
 		var card_data = deck_get_card_data(card_id,card_shape)
-        var can_plant = (can_place_at_position(mouse_x, mouse_y, card_data[? "plant_type"],card_data[? "feature_type"],card_data[? "target_card"]));
+        
+        var logical_x = mouse_x;
+        var logical_y = mouse_y;
+        var platform_shift_x = 0;
+        var platform_shift_y = 0;
+        var plat = instance_position(mouse_x, mouse_y, obj_platform);
+        if (plat != noone) {
+            platform_shift_x = plat.visual_x_shift;
+            platform_shift_y = plat.visual_y_shift;
+            logical_x -= platform_shift_x;
+            logical_y -= platform_shift_y;
+        }
+
+        var can_plant = (can_place_at_position(logical_x, logical_y, card_data[? "plant_type"],card_data[? "feature_type"],card_data[? "target_card"]));
         
         if (can_plant && global.flame >= current_cost) {
             // 创建植物实例
-			var grid_pos = get_grid_position_from_world(mouse_x, mouse_y);
+			var grid_pos = get_grid_position_from_world(logical_x, logical_y);
 			var plant_list = ds_grid_get(global.grid_plants, grid_pos.col, grid_pos.row);
 			if global.replace_placement{
 			for (var i = 0; i < ds_list_size(plant_list); i++) {
@@ -139,17 +152,17 @@ if (is_selected) {
 	                    }
 	                }
 			}
-            var new_plant = instance_create_depth(grid_pos.x, grid_pos.y, 0,card_obj);
+            var new_plant = instance_create_depth(grid_pos.x + platform_shift_x, grid_pos.y + platform_shift_y, 0,card_obj);
 			//new_plant.plant_type = plant_type;
 			// 计算深度值
 			var depth_value = calculate_plant_depth(grid_pos.col, grid_pos.row, new_plant.plant_type);
 			card_created(new_plant, grid_pos.col, grid_pos.row);
 			new_plant.depth = depth_value
 			if global.grid_terrains[grid_pos.row][grid_pos.col].type == "normal"{
-				instance_create_depth(grid_pos.x,grid_pos.y,-2,obj_place_effect)
+				instance_create_depth(grid_pos.x + platform_shift_x, grid_pos.y + platform_shift_y,-2,obj_place_effect)
 			}
 			else if global.grid_terrains[grid_pos.row][grid_pos.col].type == "water"{
-				var inst = instance_create_depth(grid_pos.x,grid_pos.y+20,-2500,obj_place_effect)
+				var inst = instance_create_depth(grid_pos.x + platform_shift_x, grid_pos.y + platform_shift_y + 20,-2500,obj_place_effect)
 				inst.sprite_index = spr_enter_water_effect
 			}
             

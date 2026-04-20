@@ -1,14 +1,26 @@
-if not is_placed{
-	var can_plant = (can_place_at_position(mouse_x, mouse_y, "normal","amphi","none"));
+﻿if not is_placed{
+	var logical_x = mouse_x;
+	var logical_y = mouse_y;
+	var platform_shift_x = 0;
+	var platform_shift_y = 0;
+	var plat = instance_position(mouse_x, mouse_y, obj_platform);
+	if (plat != noone) {
+		platform_shift_x = plat.visual_x_shift;
+		platform_shift_y = plat.visual_y_shift;
+		logical_x -= platform_shift_x;
+		logical_y -= platform_shift_y;
+	}
+
+	var can_plant = (can_place_at_position(logical_x, logical_y, "normal","amphi","none"));
 	if can_plant{
 		is_placed = true
 		global.is_paused = false
-		var grid_pos = get_grid_position_from_world(mouse_x,mouse_y)
-		x = grid_pos.x
-		y = grid_pos.y+10
+		var grid_pos = get_grid_position_from_world(logical_x, logical_y)
+		x = grid_pos.x + platform_shift_x
+		y = grid_pos.y+10 + platform_shift_y
 		grid_row = grid_pos.row
 		grid_col = grid_pos.col
-		card_created(self,grid_col,grid_row)
+		card_created(id,grid_col,grid_row)
 		audio_play_sound(snd_place1,0,0)
 		instance_create_depth(x,y,-2,obj_place_effect)
 		var plany_list = ds_grid_get(global.grid_plants,grid_col,grid_row)
