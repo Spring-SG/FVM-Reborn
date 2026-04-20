@@ -1,4 +1,5 @@
 if not obj_tower_cake_bg.is_submenu_opened{
 	audio_play_sound(snd_button,0,0)
-	instance_destroy(obj_tower_cake_bg)
+	global.gui_stack.pop()
+	global.menu_screen = true
 }

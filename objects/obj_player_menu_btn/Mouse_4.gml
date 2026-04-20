@@ -4,7 +4,7 @@ if obj_player_info_ui.menu_type == 0{
 	texture_prefetch("cards")
 	if target_screen == "quit"{//退出按钮
 		if room == room_map{
-			room_goto(room_menu)
+			global.gui_stack.pop()
 		}
 		else{
 			if not instance_exists(obj_quit_confirm){
@@ -38,5 +38,5 @@ if obj_player_info_ui.menu_type == 0{
 		instance_create_depth(room_width/2,room_height/2,-5,obj_task_bg)
 		obj_player_info_ui.menu_type = 4
 		obj_world_map_button.world_map = 2
-	}
+	} 
 }

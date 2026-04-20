@@ -14,7 +14,7 @@ if (keyboard_check_pressed(vk_space)) {
 						global.map_id = "delicious_island"
 						global.map_name = "美味岛"
 					}
-					room_goto(room_map)
+					global.gui_stack.pop()
 					global.menu_screen = true
 					obj_world_map_button.world_map = 0
 				}

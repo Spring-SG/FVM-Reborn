@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"LaboratoryTypedef",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"LaboratoryTypedef",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Feature/Laboratory/Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

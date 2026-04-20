@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"LaboratoryTest",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"LaboratoryTest",
+  "parent":{
+    "name":"UnitTest",
+    "path":"folders/UnitTest.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

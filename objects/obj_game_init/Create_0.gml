@@ -7,7 +7,6 @@ global.level_file = {}
 global.level_name = "曲奇岛"
 global.level_data = {}
 global.debug = 0
-global.preloaded = false
 Music_Init()
 
 // 初始化全局键位映射
@@ -85,6 +84,11 @@ for (var i = 0; i < array_length(global.keybind_config); i++) {
 	    var key_val = ini_read_real("keybinds", kb.name, kb.default1);
 	    global.keybind_map[? kb.name] = key_val;
 }
+
+global.laboratory_manager = new LaboratoryManager()
+global.laboratory_manager.init()
+global.gui_stack = new GuiStack()
+
 ini_close();
 audio_group_set_gain(music,global.music_volume,0)
 audio_group_set_gain(sound,global.sound_volume,0)

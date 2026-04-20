@@ -157,4 +157,4 @@ var screen_width = display_get_width()
 var screen_height = display_get_height()
 window_set_size(screen_width*0.8,screen_height*0.8)
 
-room_goto(room_menu)
+global.gui_stack.to(room_menu)

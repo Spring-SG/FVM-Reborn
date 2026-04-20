@@ -1,3 +1,5 @@
+global.menu_screen = true
+
 depth = -1200
 
 // 强制清除application_surface，避免上一房间图像残留
@@ -9,6 +11,13 @@ if surface_exists(application_surface){
 
 instance_create_depth(1355,820,-2,obj_startgame_button)
 instance_create_depth(100,0,-2,obj_player_info_ui)
+
+/// @type {Asset.GMObject.EventEntranceList} 
+var _entrance_list = instance_create_depth(0, 0, -2, EventEntranceList)
+_entrance_list.set_position(600,20)
+              .set_size(900, 300)
+
+
 if not instance_exists(obj_menu_music_controller){
 	var mus_inst = instance_create_depth(0,0,0,obj_menu_music_controller)
 	mus_inst.menu_music = mus_town
@@ -20,6 +29,9 @@ instance_create_depth(room_width-210,room_height,-1,obj_player_menu_bg)
 timer = 0
 
 /// @description preload textures
+
+
+
 
 self.texture_to_load = [
 	"UI",
@@ -35,7 +47,14 @@ self.texture_to_load = [
 
 self.texture_count = array_length(self.texture_to_load)
 self.texture_loaded = 0
+global.preloaded = variable_global_exists("preloaded") ? global.preloaded : false
 self.display_progress = 0
+
+function after_texture_load() {
+    scribble_font_set_default("font_hei")
+    scribble_font_bake_outline_4dir("font_hei", "font_hei_outline_4dir_black", c_dkgray, false)
+    global.preloaded = true;
+}
 
 function pre_load_texture() {
     if (global.preloaded) return;
@@ -49,7 +68,7 @@ function pre_load_texture() {
             self.animating = false;
             
             if (self.texture_loaded >= self.texture_count) {
-                global.preloaded = true;
+                after_texture_load();
             }
         }
         return;

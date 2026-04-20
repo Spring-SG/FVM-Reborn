@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"GuiStack",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"GuiStack",
+  "parent":{
+    "name":"Util",
+    "path":"folders/Util.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

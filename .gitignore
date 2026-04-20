@@ -59,3 +59,10 @@ Temporary Items
 *.old
 
 tmp/
+
+.vscode/
+
+# If all of your sprite sources are in this repo you can stick a "!" in front of this to track this file. Otherwise this file is machine-specific and should be ignored.
+sprites.import.json
+# This is a cache file for speeding up subsequent pipeline operations. It should not be tracked in git.
+sprites.info.json
