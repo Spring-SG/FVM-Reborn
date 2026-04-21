@@ -102,6 +102,21 @@ for(var i = 0 ; i < global.grid_rows ; i++){
 			}
 			
 		}
+		var map_objs = plant_list[i][j].object
+		if array_length(map_objs) > 0{
+			for(var k = 0; k < array_length(map_objs);k++){
+				var map_obj_data = get_map_object_data(map_objs[k])
+				var map_obj = map_obj_data._obj
+				var grid_pos = get_world_position_from_grid(j,i)
+				var new_x = grid_pos.x + map_obj_data.x_offset
+				var new_y = grid_pos.y + map_obj_data.y_offset
+				
+				var new_obj = instance_create_depth(new_x, new_y, -1200,map_obj);
+				new_obj.row = i
+				new_obj.col = j
+			}
+			
+		}
 	}
 	var new_x = global.grid_offset_x -1 * global.grid_cell_size_x
 	var new_y = global.grid_offset_y + i * global.grid_cell_size_y

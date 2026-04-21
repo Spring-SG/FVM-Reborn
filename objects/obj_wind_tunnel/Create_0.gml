@@ -5,6 +5,7 @@ image_speed = 0
 timer = 0
 attack_timer = 0
 row = -1
+col = -1
 depth = 48
 
 enemy_list = []

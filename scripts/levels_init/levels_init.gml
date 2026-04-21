@@ -24,4 +24,9 @@ function level_info_island_init(){
 	register_level_info_island("matcha_manor_daytime",{"name":"抹茶庄园（日）","icon":spr_levelselect_button_volcanic,"spr":spr_matcha_manor_daytime,"description":"地图格子很少，使用三向卡或三线卡或许会有奇效。\n飞行路障鼠会留下阻挡直射子弹的障碍物，一定要在它落地前就消灭掉。","spr_index":7})
 	register_level_info_island("matcha_manor_night",{"name":"抹茶庄园（夜）","icon":spr_levelselect_button_volcanic,"spr":spr_matcha_manor_night,"description":"针头男爵的技能较为简单，及时铲卡，处理蝙蝠群即可。","spr_index":8})
 	register_level_info_island("macchiato_port",{"name":"玛奇朵港","icon":spr_levelselect_button_volcanic,"spr":spr_macchiato_port,"description":"地图右侧的风洞每8秒就会开启一次，将老鼠向前推进3格，记得给第三格的\n卡片套上瓜皮。\n迷雾朱莉会生成迷雾和召唤嗡嗡中尉，记得准备好应对措施。","spr_index":9})
+	register_level_info_island("cotton_candy_sky_daytime",{"name":"棉花糖天空（日）","icon":spr_levelselect_button_volcanic,"spr":spr_cotton_candy_sky_daytime,"description":"云层上每30秒都会出现一个云洞，它会使卡片掉落，需要使用棉花糖填补。\n伞兵鼠会把卡片罩住，可以选择在空中将其吹走，或者给被挡住的卡片套上\n瓜皮。","spr_index":10})
+	register_level_info_island("cotton_candy_sky_night",{"name":"棉花糖天空（夜）","icon":spr_levelselect_button_volcanic,"spr":spr_cotton_candy_sky_night,"description":"嗡嗡中尉以干扰为主，破坏能力较弱，及时补充阵型即可。","spr_index":11})
+	register_level_info_island("jam_tribe_daytime",{"name":"果酱部落（日）","icon":spr_levelselect_button_volcanic,"spr":spr_jam_tribe_daytime,"description":"岩浆会让老鼠速度变为两倍，如果没有覆盖棉花糖，还会每秒对本格卡片造\n成10点伤害。","spr_index":12})
+	register_level_info_island("jam_tribe_night",{"name":"果酱部落（夜）","icon":spr_levelselect_button_volcanic,"spr":spr_jam_tribe_night,"description":"暴躁杰克的滚石技能需要每一行都有足够输出，需要注意布阵。","spr_index":13})
+	register_level_info_island("snowcap_volcano",{"name":"雪顶火山","icon":spr_levelselect_button_volcanic,"spr":spr_snowcap_volcano,"description":"火山岛的最后一个关卡，会接连出现5个BOSS，流程很长。","spr_index":14})
 }

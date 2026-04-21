@@ -18,10 +18,22 @@ else{
 }
 if obj_battle.current_wave == total_wave - 1 && obj_battle.current_subwave == current_total_subwaves{
 	last_wave = true
-	draw_sprite_ext(spr_level_wave_number,total_wave mod 10,x-340,y-40,1.8,1.8,0,c_white,1)
+	if total_wave < 10{
+		draw_sprite_ext(spr_level_wave_number,total_wave mod 10,x-340,y-40,1.8,1.8,0,c_white,1)
+	}
+	else{
+		draw_sprite_ext(spr_level_wave_number,total_wave div 10,x-350,y-40,1.8,1.8,0,c_white,1)
+		draw_sprite_ext(spr_level_wave_number,total_wave mod 10,x-330,y-40,1.8,1.8,0,c_white,1)
+	}
 }
 else{
-	draw_sprite_ext(spr_level_wave_number,obj_battle.current_wave mod 10,x-340,y-40,1.8,1.8,0,c_white,1)
+	if obj_battle.current_wave < 10{
+		draw_sprite_ext(spr_level_wave_number,obj_battle.current_wave mod 10,x-340,y-40,1.8,1.8,0,c_white,1)
+	}
+	else{
+		draw_sprite_ext(spr_level_wave_number,obj_battle.current_wave div 10,x-350,y-40,1.8,1.8,0,c_white,1)
+		draw_sprite_ext(spr_level_wave_number,obj_battle.current_wave mod 10,x-330,y-40,1.8,1.8,0,c_white,1)
+	}
 }
 if level_stage == "pre"{
 	level_progress = obj_battle.current_wave / elite_wave + (obj_battle.current_subwave /current_total_subwaves)/elite_wave

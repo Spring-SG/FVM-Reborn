@@ -18,18 +18,21 @@ if cooldown_timer <= 0{
 		var inst1 = instance_create_depth(inst_pos1.x-10,inst_pos1.y+10,-500,obj_cat)
 		inst1.row = start_row
 		inst1.state = "attack"
+		inst1.can_loss = false
 	}
 	for(var i = 1;i<=up_range;i++){
 		var inst_pos = get_world_position_from_grid(-1,start_row-i)
 		var inst = instance_create_depth(inst_pos1.x-10,inst_pos.y+10,-500,obj_cat)
 		inst.row = start_row-i
 		inst.state = "attack"
+		inst.can_loss = false
 	}
 	for(var i = 1;i<=down_range;i++){
 		var inst_pos = get_world_position_from_grid(-1,start_row+i)
 		var inst = instance_create_depth(inst_pos1.x-10,inst_pos.y+10,-500,obj_cat)
 		inst.row = start_row+i
 		inst.state = "attack"
+		inst.can_loss = false
 	}
 	
 	cooldown_timer = cooldown

@@ -13,6 +13,7 @@ current_page = 1
 total_page = 3
 level_select = -1
 real_level_index = -1
+menu_music = mus_menu
 
 reward_button_list = []
 level_button_list = []

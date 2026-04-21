@@ -17,15 +17,20 @@ if shape >= 1{
 	_range = 3.5*global.grid_cell_size_x + 20
 }
 
-with obj_enemy_parent{
-	if x - other.x >0 && x - other.x <= _range && grid_row == other.grid_row && can_target_on(other.target_type,target_type){
-		has_enemy = true
-		other.enemy_encounted = true
-		array_push(other.target_enemy,id)
+if state != CARD_STATE.RELAX{
+	with obj_enemy_parent{
+		if x - other.x >0 && x - other.x <= _range && grid_row == other.grid_row && can_target_on(other.target_type,target_type){
+			has_enemy = true
+			other.enemy_encounted = true
+			if array_get_index(other.target_enemy,id) == -1{
+				array_push(other.target_enemy,id)
+			}
+		}
 	}
 }
 
 if state == CARD_STATE.RELAX{
+	target_enemy = []
 	var eat_anim = 12
 	if shape >= 1 eat_anim = 10
 	relax_timer ++
