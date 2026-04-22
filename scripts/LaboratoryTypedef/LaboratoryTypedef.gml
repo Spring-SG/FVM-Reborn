@@ -127,6 +127,22 @@ function CustomStage() constructor {
 
 }
 
+/// @param {String} _path
+/// @param {String} _path_prefix
+/// @returns {Asset.GMSound}
+function get_audio_or_create(_path, _path_prefix) {
+    if (string_starts_with(_path, "./") || string_starts_with(_path, "../") || string_starts_with(_path, ".\\") || string_starts_with(_path, "..\\")) {
+		if (!string_ends_with(_path_prefix, "/") && !string_ends_with(_path_prefix, "\\")) {
+			_path_prefix = _path_prefix + "/"
+		}
+        _path_prefix += "../"
+		return global.laboratory_manager.load_dynamic_audio(_path_prefix + _path)
+	}
+
+    return asset_get_index(_path)
+}
+
+
 /// @param {Struct} _json 
 /// @param {String} _json_path
 /// @returns {Struct.CustomStage} 
@@ -151,14 +167,15 @@ function create_custom_stage(_json, _json_path) {
     var _sprite = variable_struct_get(_json,"map_sprite")
     _stage.map_sprite = asset_get_index(_sprite) 
 
-    var _pre_music = variable_struct_get(_json,"pre_music")
-    _stage.pre_music = asset_get_index(_pre_music)
+    /// @type {String} 
+    var _pre_music_path = variable_struct_get(_json,"pre_music")
+    _stage.pre_music = get_audio_or_create(_pre_music_path, _json_path)
 
-    var _elite_music = variable_struct_get(_json,"elite_music")
-    _stage.elite_music = asset_get_index(_elite_music)
+    var _elite_music_path = variable_struct_get(_json,"elite_music")
+    _stage.elite_music = get_audio_or_create(_elite_music_path, _json_path)
 
-    var _boss_music = variable_struct_get(_json,"boss_music")
-    _stage.boss_music = asset_get_index(_boss_music)
+    var _boss_music_path = variable_struct_get(_json,"boss_music")
+    _stage.boss_music = get_audio_or_create(_boss_music_path, _json_path)
 
     return _stage
 }
@@ -174,17 +191,8 @@ function level_entry_from_stage_metadata(_meta) {
         spr_ix = spr_cookie_island
     }
     var pre_ix = _meta.pre_music
-    if (pre_ix == -1) {
-        pre_ix = mus_readyroom
-    }
     var elite_ix = _meta.elite_music
-    if (elite_ix == -1) {
-        elite_ix = pre_ix
-    }
     var boss_ix = _meta.boss_music
-    if (boss_ix == -1) {
-        boss_ix = pre_ix
-    }
     var bx = -1
     var by = -1
     return {
@@ -203,4 +211,22 @@ function level_entry_from_stage_metadata(_meta) {
         player_level_require: 1,
         pre_level_require: []
     }
+}
+
+/// @param {Struct.CustomStage} _stage 
+/// @returns {Struct.Result}
+function verify_stage(_stage) {
+    if (_stage.map_sprite == -1) {
+        return new Result().fail(ErrorCode.INVALID_METADATA, "stage " + _stage.json_path + " has no valid map sprite")
+    }
+    if (_stage.pre_music == -1) {
+        return new Result().fail(ErrorCode.INVALID_METADATA, "stage " + _stage.json_path + " has no valid pre music")
+    }
+    if (_stage.elite_music == -1) {
+        return new Result().fail(ErrorCode.INVALID_METADATA, "stage " + _stage.json_path + " has no valid elite music")
+    }
+    if (_stage.boss_music == -1) {
+        return new Result().fail(ErrorCode.INVALID_METADATA, "stage " + _stage.json_path + " has no valid boss music")
+    }
+    return new Result().success()
 }
