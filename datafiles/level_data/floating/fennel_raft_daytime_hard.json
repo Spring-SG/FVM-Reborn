@@ -2232,9 +2232,7 @@
           "amount": 1
         }
       ],
-      "card_unlock": [
-        "cherry_pudding"
-      ],
+      "card_unlock": [],
       "weapon_unlock": [],
       "gem_unlock": [],
       "player_level": 24

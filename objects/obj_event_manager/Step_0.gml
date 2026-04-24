@@ -371,6 +371,10 @@ if global.level_id == "fennel_raft_daytime" && event_timer == 1{
 	plat1.length = 5
 	plat1.move_distance = 2
 	plat1.move_direction = 1
+	plat1.boundary_idle_duration = 480; // 边界停留时间
+	plat1.move_speed = 0.005;
+	plat1.initial_offset = 0; // 初始位置：偏移0格
+	plat1.initial_idle_duration = 0; // 初始停顿时间
 
 	// 平台2：位于 5~8 列，2~6 行，初始向上移动
 	var pos2 = get_world_position_from_grid(5, 2)
@@ -382,4 +386,444 @@ if global.level_id == "fennel_raft_daytime" && event_timer == 1{
 	plat2.length = 5
 	plat2.move_distance = 2
 	plat2.move_direction = -1
+	plat2.boundary_idle_duration = 480; // 边界停留时间
+	plat2.move_speed = 0.005;
+	plat2.initial_offset = 0; // 初始位置：偏移0格
+	plat2.initial_idle_duration = 0; // 初始停顿时间
+}
+
+if global.level_id == "fennel_raft_night" && event_timer == 1{
+	// 平台1：位于 1~4 列，0~4 行，初始向向下移动
+	var pos1 = get_world_position_from_grid(1, 0)
+	var plat1 = instance_create_depth(pos1.x - global.grid_cell_size_x/2, pos1.y - global.grid_cell_size_y/2 - 35, 800, obj_platform)
+	plat1.sprite_index = spr_fennel_raft_platform_night
+	plat1.start_col = 1
+	plat1.start_row = 0
+	plat1.width = 4
+	plat1.length = 5
+	plat1.move_distance = 2
+	plat1.move_direction = 1
+	plat1.boundary_idle_duration = 480; // 边界停留时间
+	plat1.move_speed = 0.005;
+	plat1.initial_offset = 0; // 初始位置：偏移0格
+	plat1.initial_idle_duration = 0; // 初始停顿时间
+
+	// 平台2：位于 5~8 列，2~6 行，初始向上移动
+	var pos2 = get_world_position_from_grid(5, 2)
+	var plat2 = instance_create_depth(pos2.x - global.grid_cell_size_x/2, pos2.y - global.grid_cell_size_y/2 - 35, 800, obj_platform)
+	plat2.sprite_index = spr_fennel_raft_platform_night
+	plat2.start_col = 5
+	plat2.start_row = 2
+	plat2.width = 4
+	plat2.length = 5
+	plat2.move_distance = 2
+	plat2.move_direction = -1
+	plat2.boundary_idle_duration = 480; // 边界停留时间
+	plat2.move_speed = 0.005;
+	plat2.initial_offset = 0; // 初始位置：偏移0格
+	plat2.initial_idle_duration = 0; // 初始停顿时间
+}
+
+if global.level_id == "cumin_bridge_daytime" && event_timer == 1{
+	var pos1 = get_world_position_from_grid(3, 1)
+	var plat1 = instance_create_depth(pos1.x - global.grid_cell_size_x/2, pos1.y - global.grid_cell_size_y/2 - 35, 800, obj_platform)
+	plat1.sprite_index = spr_cumin_bridge_platform_daytime
+	plat1.move_axis = "x"
+	plat1.start_col = 3
+	plat1.start_row = 1
+	plat1.width = 4
+	plat1.length = 1
+	plat1.move_distance = 2
+	plat1.move_direction = -1
+	plat1.boundary_idle_duration = 480; // 边界停留时间
+	plat1.move_speed = 0.005;
+	plat1.initial_offset = 2;
+	plat1.initial_idle_duration = 0; // 初始停顿时间
+
+	var pos2 = get_world_position_from_grid(2, 2)
+	var plat2 = instance_create_depth(pos2.x - global.grid_cell_size_x/2, pos2.y - global.grid_cell_size_y/2 - 35, 800, obj_platform)
+	plat2.sprite_index = spr_cumin_bridge_platform_daytime
+	plat2.move_axis = "x"
+	plat2.start_col = 2
+	plat2.start_row = 2
+	plat2.width = 4
+	plat2.length = 1
+	plat2.move_distance = 3
+	plat2.move_direction = 1
+	plat2.boundary_idle_duration = 480; // 边界停留时间
+	plat2.move_speed = 0.005;
+	plat2.initial_offset = 0;
+	plat2.initial_idle_duration = 0; // 初始停顿时间
+
+	var pos3 = get_world_position_from_grid(3, 3)
+	var plat3 = instance_create_depth(pos3.x - global.grid_cell_size_x/2, pos3.y - global.grid_cell_size_y/2 - 35, 800, obj_platform)
+	plat3.sprite_index = spr_cumin_bridge_platform_daytime
+	plat3.move_axis = "x"
+	plat3.start_col = 3
+	plat3.start_row = 3
+	plat3.width = 4
+	plat3.length = 1
+	plat3.move_distance = 2
+	plat3.move_direction = -1
+	plat3.boundary_idle_duration = 480; // 边界停留时间
+	plat3.move_speed = 0.005;
+	plat3.initial_offset = 2;
+	plat3.initial_idle_duration = 0; // 初始停顿时间
+
+	var pos4 = get_world_position_from_grid(2, 4)
+	var plat4 = instance_create_depth(pos4.x - global.grid_cell_size_x/2, pos4.y - global.grid_cell_size_y/2 - 35, 800, obj_platform)
+	plat4.sprite_index = spr_cumin_bridge_platform_daytime
+	plat4.move_axis = "x"
+	plat4.start_col = 2
+	plat4.start_row = 4
+	plat4.width = 4
+	plat4.length = 1
+	plat4.move_distance = 3
+	plat4.move_direction = 1
+	plat4.boundary_idle_duration = 480; // 边界停留时间
+	plat4.move_speed = 0.005;
+	plat4.initial_offset = 0;
+	plat4.initial_idle_duration = 0; // 初始停顿时间
+
+	var pos5 = get_world_position_from_grid(3, 5)
+	var plat5 = instance_create_depth(pos5.x - global.grid_cell_size_x/2, pos5.y - global.grid_cell_size_y/2 - 35, 800, obj_platform)
+	plat5.sprite_index = spr_cumin_bridge_platform_daytime
+	plat5.move_axis = "x"
+	plat5.start_col = 3
+	plat5.start_row = 5
+	plat5.width = 4
+	plat5.length = 1
+	plat5.move_distance = 2
+	plat5.move_direction = -1
+	plat5.boundary_idle_duration = 480; // 边界停留时间
+	plat5.move_speed = 0.005;
+	plat5.initial_offset = 2;
+	plat5.initial_idle_duration = 0; // 初始停顿时间
+}
+
+if global.level_id == "cumin_bridge_night" && event_timer == 1{
+	var pos1 = get_world_position_from_grid(3, 1)
+	var plat1 = instance_create_depth(pos1.x - global.grid_cell_size_x/2, pos1.y - global.grid_cell_size_y/2 - 35, 800, obj_platform)
+	plat1.sprite_index = spr_cumin_bridge_platform_night
+	plat1.move_axis = "x"
+	plat1.start_col = 3
+	plat1.start_row = 1
+	plat1.width = 4
+	plat1.length = 1
+	plat1.move_distance = 2
+	plat1.move_direction = -1
+	plat1.boundary_idle_duration = 480; // 边界停留时间
+	plat1.move_speed = 0.005;
+	plat1.initial_offset = 2;
+	plat1.initial_idle_duration = 0; // 初始停顿时间
+
+	var pos2 = get_world_position_from_grid(2, 2)
+	var plat2 = instance_create_depth(pos2.x - global.grid_cell_size_x/2, pos2.y - global.grid_cell_size_y/2 - 35, 800, obj_platform)
+	plat2.sprite_index = spr_cumin_bridge_platform_night
+	plat2.move_axis = "x"
+	plat2.start_col = 2
+	plat2.start_row = 2
+	plat2.width = 4
+	plat2.length = 1
+	plat2.move_distance = 3
+	plat2.move_direction = 1
+	plat2.boundary_idle_duration = 480; // 边界停留时间
+	plat2.move_speed = 0.005;
+	plat2.initial_offset = 0;
+	plat2.initial_idle_duration = 0; // 初始停顿时间
+
+	var pos3 = get_world_position_from_grid(3, 3)
+	var plat3 = instance_create_depth(pos3.x - global.grid_cell_size_x/2, pos3.y - global.grid_cell_size_y/2 - 35, 800, obj_platform)
+	plat3.sprite_index = spr_cumin_bridge_platform_night
+	plat3.move_axis = "x"
+	plat3.start_col = 3
+	plat3.start_row = 3
+	plat3.width = 4
+	plat3.length = 1
+	plat3.move_distance = 2
+	plat3.move_direction = -1
+	plat3.boundary_idle_duration = 480; // 边界停留时间
+	plat3.move_speed = 0.005;
+	plat3.initial_offset = 2;
+	plat3.initial_idle_duration = 0; // 初始停顿时间
+
+	var pos4 = get_world_position_from_grid(2, 4)
+	var plat4 = instance_create_depth(pos4.x - global.grid_cell_size_x/2, pos4.y - global.grid_cell_size_y/2 - 35, 800, obj_platform)
+	plat4.sprite_index = spr_cumin_bridge_platform_night
+	plat4.move_axis = "x"
+	plat4.start_col = 2
+	plat4.start_row = 4
+	plat4.width = 4
+	plat4.length = 1
+	plat4.move_distance = 3
+	plat4.move_direction = 1
+	plat4.boundary_idle_duration = 480; // 边界停留时间
+	plat4.move_speed = 0.005;
+	plat4.initial_offset = 0;
+	plat4.initial_idle_duration = 0; // 初始停顿时间
+
+	var pos5 = get_world_position_from_grid(3, 5)
+	var plat5 = instance_create_depth(pos5.x - global.grid_cell_size_x/2, pos5.y - global.grid_cell_size_y/2 - 35, 800, obj_platform)
+	plat5.sprite_index = spr_cumin_bridge_platform_night
+	plat5.move_axis = "x"
+	plat5.start_col = 3
+	plat5.start_row = 5
+	plat5.width = 4
+	plat5.length = 1
+	plat5.move_distance = 2
+	plat5.move_direction = -1
+	plat5.boundary_idle_duration = 480; // 边界停留时间
+	plat5.move_speed = 0.005;
+	plat5.initial_offset = 2;
+	plat5.initial_idle_duration = 0; // 初始停顿时间
+}
+
+if global.level_id == "marinade_garden" && event_timer == 1{
+	var pos1 = get_world_position_from_grid(0, 0)
+	var plat1 = instance_create_depth(pos1.x - global.grid_cell_size_x/2, pos1.y - global.grid_cell_size_y/2 - 35, 800, obj_platform)
+	plat1.sprite_index = spr_marinade_garden_platform
+	plat1.move_axis = "x"
+	plat1.start_col = 0
+	plat1.start_row = 0
+	plat1.width = 6
+	plat1.length = 7
+	plat1.move_distance = 3
+	plat1.move_direction = 1
+	plat1.boundary_idle_duration = 480; // 边界停留时间
+	plat1.move_speed = 0.005;
+	plat1.initial_offset = 0; // 初始位置：偏移0格
+	plat1.initial_idle_duration = 0; // 初始停顿时间
+}
+
+if global.level_id == "laurel_sky_daytime"{
+	if event_timer == 1{
+		for(var i = 0 ; i < 2  ; i ++){
+			for(var j = 2 ; j < 5; j ++){
+				var cloud_pos = get_world_position_from_grid(i,j)
+				var cloud_inst = instance_create_depth(cloud_pos.x,cloud_pos.y-30,10,obj_static_cloud)
+				cloud_inst.depth += cloud_count mod 2
+			}
+		}
+
+		var pos1 = get_world_position_from_grid(0, 0)
+		var plat1 = instance_create_depth(pos1.x - global.grid_cell_size_x/2, pos1.y - global.grid_cell_size_y/2 - 40, 800, obj_platform)
+		plat1.sprite_index = spr_laurel_sky_platform_daytime
+		plat1.move_axis = "x"
+		plat1.start_col = 0
+		plat1.start_row = 0
+		plat1.width = 5
+		plat1.length = 2
+		plat1.move_distance = 4
+		plat1.move_direction = 1
+		plat1.boundary_idle_duration = 480; // 边界停留时间
+		plat1.move_speed = 0.005;
+		plat1.initial_offset = 0;
+		plat1.initial_idle_duration = 0; // 初始停顿时间
+
+		var pos2 = get_world_position_from_grid(4, 5)
+		var plat2 = instance_create_depth(pos2.x - global.grid_cell_size_x/2, pos2.y - global.grid_cell_size_y/2 - 40, 800, obj_platform)
+		plat2.sprite_index = spr_laurel_sky_platform_daytime
+		plat2.move_axis = "x"
+		plat2.start_col = 4
+		plat2.start_row = 5
+		plat2.width = 5
+		plat2.length = 2
+		plat2.move_distance = 4
+		plat2.move_direction = -1
+		plat2.boundary_idle_duration = 480; // 边界停留时间
+		plat2.move_speed = 0.005;
+		plat2.initial_offset = 0;
+		plat2.initial_idle_duration = 0; // 初始停顿时间
+	}
+}
+
+if global.level_id == "laurel_sky_night"{
+	if event_timer == 1{
+		for(var i = 0 ; i < 2  ; i ++){
+			for(var j = 2 ; j < 5; j ++){
+				var cloud_pos = get_world_position_from_grid(i,j)
+				var cloud_inst = instance_create_depth(cloud_pos.x,cloud_pos.y-30,10,obj_static_cloud)
+				cloud_inst.depth += cloud_count mod 2
+				cloud_inst.sprite_index = spr_cloud_night
+			}
+		}
+
+		var pos1 = get_world_position_from_grid(0, 0)
+		var plat1 = instance_create_depth(pos1.x - global.grid_cell_size_x/2, pos1.y - global.grid_cell_size_y/2 - 40, 800, obj_platform)
+		plat1.sprite_index = spr_laurel_sky_platform_night
+		plat1.move_axis = "x"
+		plat1.start_col = 0
+		plat1.start_row = 0
+		plat1.width = 5
+		plat1.length = 2
+		plat1.move_distance = 4
+		plat1.move_direction = 1
+		plat1.boundary_idle_duration = 480; // 边界停留时间
+		plat1.move_speed = 0.005;
+		plat1.initial_offset = 0;
+		plat1.initial_idle_duration = 0; // 初始停顿时间
+
+		var pos2 = get_world_position_from_grid(4, 5)
+		var plat2 = instance_create_depth(pos2.x - global.grid_cell_size_x/2, pos2.y - global.grid_cell_size_y/2 - 40, 800, obj_platform)
+		plat2.sprite_index = spr_laurel_sky_platform_night
+		plat2.move_axis = "x"	plat2.start_col = 4
+		plat2.start_row = 5
+		plat2.width = 5
+		plat2.length = 2
+		plat2.move_distance = 4
+		plat2.move_direction = -1
+		plat2.boundary_idle_duration = 480; // 边界停留时间
+		plat2.move_speed = 0.005;
+		plat2.initial_offset = 0;
+		plat2.initial_idle_duration = 0; // 初始停顿时间
+	}
+}
+
+if global.level_id == "bayleaf_airport_daytime"{
+	if event_timer == 1{
+		for(var i = 0 ; i < 2  ; i ++){
+			for(var j = 0 ; j < 4; j ++){
+				var cloud_pos = get_world_position_from_grid(i,2*j)
+				var cloud_inst = instance_create_depth(cloud_pos.x,cloud_pos.y-30,10,obj_static_cloud)
+				cloud_inst.depth += cloud_count mod 2
+			}
+		}
+
+		var pos1 = get_world_position_from_grid(0, 1)
+		var plat1 = instance_create_depth(pos1.x - global.grid_cell_size_x/2, pos1.y - global.grid_cell_size_y/2 - 30, 800, obj_platform)
+		plat1.sprite_index = spr_bayleaf_airport_platform_daytime
+		plat1.move_axis = "x"
+		plat1.start_col = 0
+		plat1.start_row = 1
+		plat1.width = 4
+		plat1.length = 1
+		plat1.move_distance = 5
+		plat1.move_direction = 1
+		plat1.boundary_idle_duration = 480; // 边界停留时间
+		plat1.move_speed = 0.005;
+		plat1.initial_offset = 0;
+		plat1.initial_idle_duration = 0; // 初始停顿时间
+
+		var pos2 = get_world_position_from_grid(0, 3)
+		var plat2 = instance_create_depth(pos2.x - global.grid_cell_size_x/2, pos2.y - global.grid_cell_size_y/2 - 30, 800, obj_platform)
+		plat2.sprite_index = spr_bayleaf_airport_platform_daytime
+		plat2.move_axis = "x"
+		plat2.start_col = 0
+		plat2.start_row = 3
+		plat2.width = 4
+		plat2.length = 1
+		plat2.move_distance = 5
+		plat2.move_direction = 1
+		plat2.boundary_idle_duration = 480; // 边界停留时间
+		plat2.move_speed = 0.005;
+		plat2.initial_offset = 2;
+		plat2.initial_idle_duration = 0; // 初始停顿时间
+
+		var pos3 = get_world_position_from_grid(5, 5)
+		var plat3 = instance_create_depth(pos3.x - global.grid_cell_size_x/2, pos3.y - global.grid_cell_size_y/2 - 30, 800, obj_platform)
+		plat3.sprite_index = spr_bayleaf_airport_platform_daytime
+		plat3.move_axis = "x"
+		plat3.start_col = 5
+		plat3.start_row = 5
+		plat3.width = 4
+		plat3.length = 1
+		plat3.move_distance = 5
+		plat3.move_direction = -1
+		plat3.boundary_idle_duration = 480; // 边界停留时间
+		plat3.move_speed = 0.005;
+		plat3.initial_offset = 0;
+		plat3.initial_idle_duration = 0; // 初始停顿时间
+	}
+}
+
+if global.level_id == "bayleaf_airport_night"{
+	if event_timer == 1{
+		for(var i = 0 ; i < 2  ; i ++){
+			for(var j = 0 ; j < 4; j ++){
+				var cloud_pos = get_world_position_from_grid(i,2*j)
+				var cloud_inst = instance_create_depth(cloud_pos.x,cloud_pos.y-30,10,obj_static_cloud)
+				cloud_inst.depth += cloud_count mod 2
+				cloud_inst.sprite_index = spr_cloud_night
+			}
+		}
+
+		var pos1 = get_world_position_from_grid(0, 1)
+		var plat1 = instance_create_depth(pos1.x - global.grid_cell_size_x/2, pos1.y - global.grid_cell_size_y/2 - 30, 800, obj_platform)
+		plat1.sprite_index = spr_bayleaf_airport_platform_night
+		plat1.move_axis = "x"
+		plat1.start_col = 0
+		plat1.start_row = 1
+		plat1.width = 4
+		plat1.length = 1
+		plat1.move_distance = 5
+		plat1.move_direction = 1
+		plat1.boundary_idle_duration = 480; // 边界停留时间
+		plat1.move_speed = 0.005;
+		plat1.initial_offset = 0;
+		plat1.initial_idle_duration = 0; // 初始停顿时间
+
+		var pos2 = get_world_position_from_grid(0, 3)
+		var plat2 = instance_create_depth(pos2.x - global.grid_cell_size_x/2, pos2.y - global.grid_cell_size_y/2 - 30, 800, obj_platform)
+		plat2.sprite_index = spr_bayleaf_airport_platform_night
+		plat2.move_axis = "x"
+		plat2.start_col = 0
+		plat2.start_row = 3
+		plat2.width = 4
+		plat2.length = 1
+		plat2.move_distance = 5
+		plat2.move_direction = 1
+		plat2.boundary_idle_duration = 480; // 边界停留时间
+		plat2.move_speed = 0.005;
+		plat2.initial_offset = 2;
+		plat2.initial_idle_duration = 0; // 初始停顿时间
+
+		var pos3 = get_world_position_from_grid(5, 5)
+		var plat3 = instance_create_depth(pos3.x - global.grid_cell_size_x/2, pos3.y - global.grid_cell_size_y/2 - 30, 800, obj_platform)
+		plat3.sprite_index = spr_bayleaf_airport_platform_night
+		plat3.move_axis = "x"
+		plat3.start_col = 5
+		plat3.start_row = 5
+		plat3.width = 4
+		plat3.length = 1
+		plat3.move_distance = 5
+		plat3.move_direction = -1
+		plat3.boundary_idle_duration = 480; // 边界停留时间
+		plat3.move_speed = 0.005;
+		plat3.initial_offset = 0;
+		plat3.initial_idle_duration = 0; // 初始停顿时间
+	}
+}
+
+if global.level_id == "spice_airship"{
+	if event_timer == 1{
+		for(var i = 0 ; i < 2  ; i ++){
+			for(var j = 0 ; j < 2; j ++){
+				var cloud_pos = get_world_position_from_grid(i,j)
+				var cloud_inst = instance_create_depth(cloud_pos.x,cloud_pos.y-30,10,obj_static_cloud)
+				cloud_inst.depth += cloud_count mod 2
+				cloud_inst.sprite_index = spr_cloud_night
+			}
+			for(var j = 5; j < 7; j ++){
+				var cloud_pos = get_world_position_from_grid(i,j)
+				var cloud_inst = instance_create_depth(cloud_pos.x,cloud_pos.y-30,10,obj_static_cloud)
+				cloud_inst.depth += cloud_count mod 2
+				cloud_inst.sprite_index = spr_cloud_night
+			}
+		}
+
+		var pos1 = get_world_position_from_grid(0, 2)
+		var plat1 = instance_create_depth(pos1.x - global.grid_cell_size_x/2, pos1.y - global.grid_cell_size_y/2 - 30, 800, obj_platform)
+		plat1.sprite_index = spr_spice_airship_platform
+		plat1.move_axis = "x"
+		plat1.start_col = 0
+		plat1.start_row = 2
+		plat1.width = 6
+		plat1.length = 3
+		plat1.move_distance = 3
+		plat1.move_direction = 1
+		plat1.boundary_idle_duration = 480; // 边界停留时间
+		plat1.move_speed = 0.005;
+		plat1.initial_offset = 0;
+		plat1.initial_idle_duration = 0; // 初始停顿时间
+	}
 }

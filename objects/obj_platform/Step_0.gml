@@ -1,4 +1,4 @@
-﻿if (first_frame) {
+if (first_frame) {
     first_frame = false;
     
     if (!variable_instance_exists(id, "old_terrains")) {
@@ -10,8 +10,25 @@
         }
     }
     
-    for (var c = start_col; c < start_col + width; c++) {
-        for (var r = start_row; r < start_row + length; r++) {
+    // 初始位移
+    current_offset = initial_offset;
+    
+    // 调整平台初始视觉位置
+    var is_axis_x = (variable_instance_exists(id, "move_axis") && move_axis == "x");
+    var visual_offset_x = is_axis_x ? current_offset * global.grid_cell_size_x : 0;
+    var visual_offset_y = (!is_axis_x) ? current_offset * global.grid_cell_size_y : 0;
+    x += visual_offset_x;
+    y += visual_offset_y;
+    
+    // 计算初始位置的行列
+    var c_offset = is_axis_x ? current_offset : 0;
+    var r_offset = (!is_axis_x) ? current_offset : 0;
+    var cur_start_c = start_col + c_offset;
+    var cur_start_r = start_row + r_offset;
+    
+    // 初始化初始位置的地形
+    for (var c = cur_start_c; c < cur_start_c + width; c++) {
+        for (var r = cur_start_r; r < cur_start_r + length; r++) {
             if (r < global.grid_rows && c < global.grid_cols) {
                 global.grid_terrains[r][c].type = "normal";
             }
@@ -31,9 +48,11 @@ var cur_start_r = start_row + r_offset;
 
 if (state == "idle") {
     idle_timer++;
-    if (idle_timer >= idle_duration) {
+    var current_idle_duration = initial_idle_done ? boundary_idle_duration : initial_idle_duration;
+    if (idle_timer >= current_idle_duration) {
         state = "moving";
         idle_timer = 0;
+        initial_idle_done = true;
     }
 } 
 else if (state == "moving") {
@@ -198,10 +217,11 @@ else if (state == "moving") {
         }
         
         // 检查是否到达极限边界
-        if (abs(current_offset) >= move_distance || current_offset == 0) {
-            state = "idle";
-            move_direction *= -1; // 反转方向
-        }
+if (abs(current_offset) >= move_distance || current_offset == 0) {
+    state = "idle";
+    move_direction *= -1; // 反转方向
+    initial_idle_done = true; // 确保后续使用边界停留时间
+}
     }
 }
 
