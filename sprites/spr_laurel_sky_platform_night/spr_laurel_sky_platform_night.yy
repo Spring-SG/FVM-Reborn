@@ -23,7 +23,7 @@
   ],
   "name":"spr_laurel_sky_platform_night",
   "nineSlice":null,
-  "origin":0,
+  "origin":9,
   "parent":{
     "name":"Map Object",
     "path":"folders/精灵/Map Object.yy",
@@ -75,7 +75,7 @@
     ],
     "visibleRange":null,
     "volume":1.0,
-    "xorigin":0,
+    "xorigin":5,
     "yorigin":0,
   },
   "swatchColours":null,

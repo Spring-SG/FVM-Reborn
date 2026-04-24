@@ -23,46 +23,9 @@
       },
       {
         "object": [],
-        "type": "obstacle",
+        "type": "normal",
         "plant": []
       },
-      {
-        "object": [],
-        "type": "obstacle",
-        "plant": []
-      },
-      {
-        "object": [],
-        "type": "obstacle",
-        "plant": []
-      },
-      {
-        "object": [],
-        "type": "obstacle",
-        "plant": []
-      },
-      {
-        "object": [],
-        "type": "obstacle",
-        "plant": []
-      },
-      {
-        "object": [],
-        "type": "obstacle",
-        "plant": []
-      },
-      {
-        "object": [],
-        "type": "obstacle",
-        "plant": []
-      },
-      {
-        "object": [],
-        "type": "obstacle",
-        "plant": []
-      }
-    ],
-    [
       {
         "object": [],
         "type": "normal",
@@ -70,49 +33,39 @@
       },
       {
         "object": [],
-        "type": "obstacle",
+        "type": "normal",
         "plant": []
       },
       {
         "object": [],
-        "type": "obstacle",
+        "type": "normal",
         "plant": []
       },
       {
         "object": [],
-        "type": "obstacle",
+        "type": "normal",
         "plant": []
       },
       {
         "object": [],
-        "type": "obstacle",
+        "type": "normal",
         "plant": []
       },
       {
         "object": [],
-        "type": "obstacle",
+        "type": "normal",
         "plant": []
       },
       {
         "object": [],
-        "type": "obstacle",
-        "plant": []
-      },
-      {
-        "object": [],
-        "type": "obstacle",
-        "plant": []
-      },
-      {
-        "object": [],
-        "type": "obstacle",
+        "type": "normal",
         "plant": []
       }
     ],
     [
       {
         "object": [],
-        "type": "normal",
+        "type": "obstacle",
         "plant": []
       },
       {
@@ -164,46 +117,9 @@
       },
       {
         "object": [],
-        "type": "obstacle",
+        "type": "normal",
         "plant": []
       },
-      {
-        "object": [],
-        "type": "obstacle",
-        "plant": []
-      },
-      {
-        "object": [],
-        "type": "obstacle",
-        "plant": []
-      },
-      {
-        "object": [],
-        "type": "obstacle",
-        "plant": []
-      },
-      {
-        "object": [],
-        "type": "obstacle",
-        "plant": []
-      },
-      {
-        "object": [],
-        "type": "obstacle",
-        "plant": []
-      },
-      {
-        "object": [],
-        "type": "obstacle",
-        "plant": []
-      },
-      {
-        "object": [],
-        "type": "obstacle",
-        "plant": []
-      }
-    ],
-    [
       {
         "object": [],
         "type": "normal",
@@ -211,49 +127,39 @@
       },
       {
         "object": [],
-        "type": "obstacle",
+        "type": "normal",
         "plant": []
       },
       {
         "object": [],
-        "type": "obstacle",
+        "type": "normal",
         "plant": []
       },
       {
         "object": [],
-        "type": "obstacle",
+        "type": "normal",
         "plant": []
       },
       {
         "object": [],
-        "type": "obstacle",
+        "type": "normal",
         "plant": []
       },
       {
         "object": [],
-        "type": "obstacle",
+        "type": "normal",
         "plant": []
       },
       {
         "object": [],
-        "type": "obstacle",
-        "plant": []
-      },
-      {
-        "object": [],
-        "type": "obstacle",
-        "plant": []
-      },
-      {
-        "object": [],
-        "type": "obstacle",
+        "type": "normal",
         "plant": []
       }
     ],
     [
       {
         "object": [],
-        "type": "normal",
+        "type": "obstacle",
         "plant": []
       },
       {
@@ -305,9 +211,46 @@
       },
       {
         "object": [],
-        "type": "obstacle",
+        "type": "normal",
         "plant": []
       },
+      {
+        "object": [],
+        "type": "normal",
+        "plant": []
+      },
+      {
+        "object": [],
+        "type": "normal",
+        "plant": []
+      },
+      {
+        "object": [],
+        "type": "normal",
+        "plant": []
+      },
+      {
+        "object": [],
+        "type": "normal",
+        "plant": []
+      },
+      {
+        "object": [],
+        "type": "normal",
+        "plant": []
+      },
+      {
+        "object": [],
+        "type": "normal",
+        "plant": []
+      },
+      {
+        "object": [],
+        "type": "normal",
+        "plant": []
+      }
+    ],
+    [
       {
         "object": [],
         "type": "obstacle",
@@ -341,6 +284,63 @@
       {
         "object": [],
         "type": "obstacle",
+        "plant": []
+      },
+      {
+        "object": [],
+        "type": "obstacle",
+        "plant": []
+      },
+      {
+        "object": [],
+        "type": "obstacle",
+        "plant": []
+      }
+    ],
+    [
+      {
+        "object": [],
+        "type": "normal",
+        "plant": []
+      },
+      {
+        "object": [],
+        "type": "normal",
+        "plant": []
+      },
+      {
+        "object": [],
+        "type": "normal",
+        "plant": []
+      },
+      {
+        "object": [],
+        "type": "normal",
+        "plant": []
+      },
+      {
+        "object": [],
+        "type": "normal",
+        "plant": []
+      },
+      {
+        "object": [],
+        "type": "normal",
+        "plant": []
+      },
+      {
+        "object": [],
+        "type": "normal",
+        "plant": []
+      },
+      {
+        "object": [],
+        "type": "normal",
+        "plant": []
+      },
+      {
+        "object": [],
+        "type": "normal",
         "plant": []
       }
     ]
