@@ -1,12 +1,17 @@
 if global.is_paused{
 	exit
 }
+
+if !window_has_focus() && !global.is_paused{
+	global.is_paused = true
+}
+
 battle_time ++
 // obj_controller STEP 事件
 if global.debug{
 	if keyboard_check_pressed(ord("M")){
 		var grid_pos = get_grid_position_from_world(mouse_x,mouse_y)
-		var inst = instance_create_depth(grid_pos.x,grid_pos.y+38,0,obj_roller_skating_mouse)
+		var inst = instance_create_depth(grid_pos.x,grid_pos.y+38,0,obj_assault_mouse)
 		inst.grid_row = grid_pos.row
 		inst.grid_col = grid_pos.col
 		inst.frozen_timer = 0000

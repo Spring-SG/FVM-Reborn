@@ -26,7 +26,9 @@ function refresh_task_progress(){
 	//检查猫损失量
 	cat_loss = global.grid_rows
 	with obj_cat{
-		other.cat_loss--
+		if can_loss{
+			other.cat_loss--
+		}
 	}
 	for(var i = 0 ; i < array_length(global.save_data.tasks) ; i++){
 		var task_id = global.save_data.tasks[i].id

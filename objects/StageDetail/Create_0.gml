@@ -29,7 +29,7 @@ function set_position(_left, _top) {
     self.state.top = _top
 
     if (!is_undefined(self.state.close_button)) {
-        self.state.close_button.set_position(_left + self.state.width - 50, _top + 35)
+        self.state.close_button.set_position(_left + self.state.width - 50, _top + 44)
     }
     if (!is_undefined(self.state.start_button)) {
         self.state.start_button.set_position(self.state.left + self.state.width - 240, self.state.top + self.state.height - 110)

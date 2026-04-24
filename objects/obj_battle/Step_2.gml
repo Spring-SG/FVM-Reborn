@@ -8,8 +8,11 @@ var c_min_time = wave_min_time
 if is_real(global.level_file.version){
 	if global.level_file.version >= 1.3{
 		if current_wave < total_wave{
-			if global.level_file.waves[current_wave].subwaves[current_subwave].local_min_wave_time >0{
-				c_min_time = global.level_file.waves[current_wave].subwaves[current_subwave].local_min_wave_time
+			var current_total_subwaves = array_length(global.level_file.waves[current_wave].subwaves)
+			if current_subwave < current_total_subwaves{
+				if global.level_file.waves[current_wave].subwaves[current_subwave].local_min_wave_time >0{
+					c_min_time = global.level_file.waves[current_wave].subwaves[current_subwave].local_min_wave_time
+				}
 			}
 		}
 		

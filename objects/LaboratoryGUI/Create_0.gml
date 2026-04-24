@@ -1,5 +1,4 @@
 /// 
-
 self.state = {
     bg_scale: 0,
     offset_x: 0,
@@ -75,7 +74,7 @@ function create_widgets() {
     /// @description Close Button
     /// @type {Asset.GMObject.Button} 
     var _close_button = instance_create_layer(0, 0, "Assets", Button)
-    _close_button.set_position(room_width - 170, 55)
+    _close_button.set_position(room_width - 170, 60)
         .set_sprite(spr_closemenu_btn)
         .set_scale(1.9)
         .set_frames(0, 1, 2)

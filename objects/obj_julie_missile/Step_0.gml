@@ -6,7 +6,7 @@ var target_pos = get_world_position_from_grid(target_col,target_row)
 y += 5
 if y >= target_pos.y{
 	with obj_card_parent{
-		if (abs(grid_col - other.target_col) <= 2 && grid_row == other.target_row) &&plant_id != "player" && plant_type != "coffee" && !invincible{
+		if (abs(grid_col - other.target_col) <= 2 && grid_row == other.target_row) &&plant_id != "player" && plant_type != "coffee" && !invincible && plant_id != "cotton_candy"{
 			if hp >= max_hp{
 				obj_task_manager.card_loss++
 			}

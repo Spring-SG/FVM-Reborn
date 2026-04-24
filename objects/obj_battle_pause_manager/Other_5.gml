@@ -1,0 +1,1 @@
+global.laboretory_room = false

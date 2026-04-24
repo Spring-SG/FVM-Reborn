@@ -2,7 +2,7 @@ image_xscale = 1.8
 image_yscale = 1.8
 instance_create_depth(x+380,y-400,depth-1,obj_closeinfo_btn)
 info_cols = 4 //防御卡信息行列数
-info_rows = 16
+info_rows = 17
 info_button_select = 1
 //package_button_select = 1
 is_submenu_opened = false

@@ -9,29 +9,29 @@ if (grid_col < 0 || grid_col >= global.grid_cols || grid_row < 0 || grid_row >= 
 
 }
 else{
-	if global.grid_terrains[grid_row][grid_col].type == "water"{
-		if sprite_index == spr_assault_mouse_land or sprite_index == spr_assault_mouse_land_helmet{
-			state = ENEMY_STATE.ACTING
-			sprite_index = spr_duck_mouse_enter
-			timer = 0
-			audio_play_sound(snd_enter_water,0,0)
-			reversed = false
-		}
+	//if global.grid_terrains[grid_row][grid_col].type == "water"{
+	//	if sprite_index == spr_assault_mouse_land or sprite_index == spr_assault_mouse_land_helmet{
+	//		state = ENEMY_STATE.ACTING
+	//		sprite_index = spr_duck_mouse_enter
+	//		timer = 0
+	//		audio_play_sound(snd_enter_water,0,0)
+	//		reversed = false
+	//	}
 		
 
-	}
-	else{
-		if sprite_index == spr_assault_mouse or sprite_index == spr_assault_mouse_helmet{
-			state = ENEMY_STATE.ACTING
-			sprite_index = spr_assault_mouse_appear
-			timer = 0
-			audio_play_sound(snd_enter_water,0,0)
-			reversed = true
-		}
+	//}
+	//else{
+	//	if sprite_index == spr_assault_mouse or sprite_index == spr_assault_mouse_helmet{
+	//		state = ENEMY_STATE.ACTING
+	//		sprite_index = spr_assault_mouse_appear
+	//		timer = 0
+	//		audio_play_sound(snd_enter_water,0,0)
+	//		reversed = true
+	//	}
 		
 
-	}
-	if hp > maxhp - helmet_hp && state != ENEMY_STATE.ACTING{
+	//}
+	if hp > maxhp - helmet_hp{
 		if global.grid_terrains[grid_row][grid_col].type == "water"{
 			sprite_index = spr_assault_mouse_helmet
 		}
@@ -83,10 +83,10 @@ if state = ENEMY_STATE.ACTING{
 	}
 	else{
 		if reversed{
-			image_index = 7 - (floor(timer/flash_speed) mod 7) + 6
+			image_index = 7 - (floor(timer/flash_speed) mod 7) + 7
 		}
 		else{
-			image_index = (floor(timer/flash_speed) mod 7) + 6
+			image_index = (floor(timer/flash_speed) mod 7) + 7
 		}
 	}
 	if timer >= flash_speed * 7 or hp <= 0{

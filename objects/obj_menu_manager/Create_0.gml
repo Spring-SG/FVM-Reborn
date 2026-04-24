@@ -30,6 +30,8 @@ timer = 0
 
 /// @description preload textures
 
+global.laboratory_room = false
+
 
 
 

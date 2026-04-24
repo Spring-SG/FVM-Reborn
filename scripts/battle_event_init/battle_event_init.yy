@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"battle_event_init",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"battle_event_init",
+  "parent":{
+    "name":"battle_event",
+    "path":"folders/脚本/Battle/battle_event.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
