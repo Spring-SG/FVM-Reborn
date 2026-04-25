@@ -87,13 +87,13 @@ function draw_games_page(){
 	    
 		
 		// 创建植物血条开关
-	    var btn1 = instance_create_depth(x - 200, y - 180, depth-1, obj_setting_toggle);
+	    var btn1 = instance_create_depth(x - 180, y - 180, depth-1, obj_setting_toggle);
 	    btn1.config_key = "card_hpbar";
 	    btn1.state = global.card_hpbar;
 	    array_push(setting_buttons, btn1);
 		
 		// 创建敌人血条开关
-	    var btn2 = instance_create_depth(x - 200, y - 100, depth-1, obj_setting_toggle);
+	    var btn2 = instance_create_depth(x - 180, y - 100, depth-1, obj_setting_toggle);
 	    btn2.config_key = "enemy_hpbar";
 	    btn2.state = global.enemy_hpbar;
 	    array_push(setting_buttons, btn2);
@@ -103,6 +103,12 @@ function draw_games_page(){
 	    btn3.config_key = "difficulty";
 	    btn3.state = global.difficulty;
 	    array_push(setting_buttons, btn3);
+		
+		// 创建失焦暂停开关
+	    var btn4 = instance_create_depth(x - 180, y + 60, depth-1, obj_setting_toggle);
+	    btn4.config_key = "lose_focus_pause";
+	    btn4.state = global.lose_focus_pause;
+	    array_push(setting_buttons, btn4);
     
 	    // 标记当前设置页面
 	    current_settings = id;

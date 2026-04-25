@@ -537,7 +537,8 @@ function maps_init(){
 					"boss_music":mus_volcanic_tower_boss,
 					"pre_level":"tower_cake_18_1",
 					"rewards":[
-						{"card_id":"mouse_clip","target_shape":2}
+						{"card_id":"mouse_clip","target_shape":2},
+						{"card_id":"bull_firework","target_shape":1}
 					]
 				},
 				{

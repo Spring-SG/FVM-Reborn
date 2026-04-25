@@ -29,6 +29,7 @@ switch (button_select) {
 		draw_text(x - 380, y - 180, "卡片血条");
 		draw_text(x - 380, y - 100, "敌人血条");
 		draw_text(x - 380, y - 20, "难度");
+		draw_text(x - 380, y + 60, "失去焦点时暂停");
 		draw_set_halign(fa_left);
 		draw_set_valign(fa_top);
 		break
