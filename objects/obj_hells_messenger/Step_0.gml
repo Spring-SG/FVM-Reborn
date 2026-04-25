@@ -237,23 +237,25 @@ switch state{
 		}
 		
 		if timer == 16 * 5 * 3 + 30*jump_times && jump_times < 4{
-			var pos_choose = irandom_range(0,ds_list_size(avaliable_pos)-1)
-			var gr_pos = avaliable_pos[| pos_choose]
-			with obj_card_parent{
-				if plant_id != "player" && plant_type != "coffee" && !invincible
-				&& grid_row == gr_pos.row && grid_col == gr_pos.col{
-					var inst = instance_create_depth(x,y,-800,obj_card_inhale_effect)
-					inst.x_move = (other.x - x)/120
-					inst.y_move = (other.y-75-y)/120
-					inst.sprite_index = sprite_index
-					inst.image_index = image_index
-					if hp >= max_hp{
-						obj_task_manager.card_loss++
+			if ds_list_size(avaliable_pos) > 0{
+				var pos_choose = irandom_range(0,ds_list_size(avaliable_pos)-1)
+				var gr_pos = avaliable_pos[| pos_choose]
+				with obj_card_parent{
+					if plant_id != "player" && plant_type != "coffee" && !invincible
+					&& grid_row == gr_pos.row && grid_col == gr_pos.col{
+						var inst = instance_create_depth(x,y,-800,obj_card_inhale_effect)
+						inst.x_move = (other.x - x)/120
+						inst.y_move = (other.y-75-y)/120
+						inst.sprite_index = sprite_index
+						inst.image_index = image_index
+						if hp >= max_hp{
+							obj_task_manager.card_loss++
+						}
+						instance_destroy()
 					}
-					instance_destroy()
 				}
+				ds_list_delete(avaliable_pos,pos_choose)
 			}
-			ds_list_delete(avaliable_pos,pos_choose)
 			jump_times++
 		}
 		

@@ -20,7 +20,7 @@ draw_set_halign(fa_center)
 draw_set_valign(fa_middle)
 draw_set_font(font_hei)
 draw_set_color(c_black)
-draw_text(420,140,string(global.flame))
+draw_text(420,143,string(global.flame))
 draw_set_halign(fa_left)
 draw_set_valign(fa_top)
 
