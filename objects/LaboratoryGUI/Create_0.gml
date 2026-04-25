@@ -40,7 +40,8 @@ function refresh_custom_stages() {
     self.state.laboratory_manager.reset()
     var _result = self.state.laboratory_manager.load_all_stages()
     if (_result.is_failed()) {
-        show_message_async(_result.message)
+        show_message_async("加载某些关卡出现问题，日志已经复制到剪贴板中")
+        clipboard_set_text(_result.message)
     }
     _stage_ids = self.state.laboratory_manager.get_stage_ids()
     self.state.stage_ids = _stage_ids

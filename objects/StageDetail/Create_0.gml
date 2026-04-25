@@ -137,6 +137,41 @@ function on_draw() {
             .line_spacing("90%")
             .scale(1.0)
             .draw(self.state.left + 50, self.state.top + 300)
+
+        draw_sprite_ext(spr_level_progress_icon, 0, 
+            self.state.left + 60, self.state.top + self.state.height - 90, 
+            1.5, 1.5, 
+            0, c_white, 1)
+        scribble("Lv." +  string(self.state.custom_stage.mouse_level))
+            .draw(self.state.left + 90, self.state.top+self.state.height-108)
+        
+        draw_sprite_ext(spr_flame_small, 0, 
+            self.state.left + 200, self.state.top + self.state.height - 90, 
+            0.95, 0.95, 
+            0, c_white, 1)
+        scribble(string(self.state.custom_stage.initial_energy))
+            .draw(self.state.left + 230, self.state.top+self.state.height-106)
+        
+        draw_sprite_ext(spr_level_progress_flag, 0, 
+            self.state.left + 340, self.state.top + self.state.height - 80, 
+            1.2, 1.2, 
+            0, c_white, 1)
+        scribble(string(self.state.custom_stage.total_waves))
+            .draw(self.state.left + 370, self.state.top+self.state.height-106)
+        
+        draw_sprite_ext(spr_clock, 0, 
+            self.state.left + 38, self.state.top + self.state.height - 70, 
+            0.5, 0.5, 
+            0, c_white, 1)
+        scribble(string(self.state.custom_stage.time_limit) + "\"")
+            .draw(self.state.left + 90, self.state.top+self.state.height-65)
+
+        draw_sprite_ext(spr_first_wave_time, 0, 
+            self.state.left + 178, self.state.top + self.state.height - 70, 
+            0.5, 0.5, 
+            0, c_white, 1)
+        scribble(string(self.state.custom_stage.prepare_time) + "\"")
+            .draw(self.state.left + 230, self.state.top+self.state.height-65)
       
     }
 }
