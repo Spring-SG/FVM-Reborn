@@ -1,22 +1,31 @@
 function move_files () {
     var _user_profile = environment_get_variable("LOCALAPPDATA")
+    var _local_folder = global.laboratory_manager.file_util.transfer_path_to_windows( _user_profile + "\\FVM_Reborn")
+
     var _saves_old = global.laboratory_manager.file_util.transfer_path_to_windows( _user_profile + "\\美食大战老鼠_重生\\saves")
     var _saves_new = global.laboratory_manager.file_util.transfer_path_to_windows( _user_profile + "\\FVM_Reborn\\saves")
     var _save_folder_new_exists = native_folder_exists(_saves_new)
     var _save_folder_old_exists = native_folder_exists(_saves_old)
     if ((_save_folder_new_exists == 0) &&( _save_folder_old_exists == 1)) {
-        var _copy_result = native_copy_folder(_saves_old, _saves_new)
+        var _copy_result = native_copy_folder(_saves_old, _local_folder)
         if (_copy_result) {
             show_message_async("存档已自动迁移到[" + _saves_new + "]")
         }
     } 
 
-    var _local_laboratory = global.laboratory_manager.file_util.transfer_path_to_windows(working_directory + "\\laboratory")
+    show_debug_message("[dir]")
+    show_debug_message(working_directory)
+    var _local_laboratory = global.laboratory_manager.file_util.transfer_path_to_windows(working_directory + "laboratory")
     var _appdata_laboratory = global.laboratory_manager.file_util.transfer_path_to_windows( _user_profile + "\\FVM_Reborn\\laboratory")
     var _local_laboratory_exists = native_folder_exists(_local_laboratory)
     if (_local_laboratory_exists == 1) {
-        native_copy_folder(_local_laboratory, _appdata_laboratory)
+        var _copy_result = native_copy_folder(_local_laboratory, _local_folder)
+        if (_copy_result == 1) {
+            show_message_async("资源已自动迁移到[" + _appdata_laboratory + "]")
+        }
         native_delete_folder(_local_laboratory)
+    } else {
+        show_debug_message("无法找到[" + _local_laboratory + "]")
     }
 }
 
