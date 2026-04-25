@@ -15,6 +15,9 @@ if (keyboard_check_pressed(vk_space)) {
 						global.map_name = "美味岛"
 					}
 					global.gui_stack.pop()
+					if (obj_game_over.sprite_index != spr_lose) {
+						global.gui_stack.pop()
+					}
 					global.menu_screen = true
 					obj_world_map_button.world_map = 0
 				}

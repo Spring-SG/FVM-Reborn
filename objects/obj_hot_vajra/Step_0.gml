@@ -382,6 +382,8 @@ switch state{
 			band_inst2.maxhp = maxhp/2
 			band_inst1.hp = hp/2
 			band_inst2.hp = hp/2
+			band_inst1.hp_modified = true
+			band_inst2.hp_modified = true
 			obj_battle.boss_count += 1
 			instance_destroy(hpbar_inst)
 		}

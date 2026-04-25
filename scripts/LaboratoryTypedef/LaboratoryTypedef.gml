@@ -127,9 +127,81 @@ function CustomStage() constructor {
 
 }
 
+/// @param {String} _path
+/// @returns {Bool}
+function laboratory_path_is_relative(_path) {
+    return string_starts_with(_path, "./")
+        || string_starts_with(_path, "../")
+        || string_starts_with(_path, ".\\")
+        || string_starts_with(_path, "..\\")
+}
+
+/// @param {String} _path
+/// @param {String} _path_prefix
+/// @returns {String}
+function laboratory_resolve_datafile_path(_path, _path_prefix) {
+    if (!string_ends_with(_path_prefix, "/") && !string_ends_with(_path_prefix, "\\")) {
+        _path_prefix = _path_prefix + "/"
+    }
+    return _path_prefix + "../" + _path
+}
+
+/// @param {String} _path
+/// @param {String} _path_prefix
+/// @returns {Struct.Result<Asset.GMSound>}
+function get_audio_or_create(_path, _path_prefix) {
+    if (is_undefined(_path) || string_length(string(_path)) == 0) {
+        return new Result().success(-1)
+    }
+    _path = string(_path)
+    if (laboratory_path_is_relative(_path)) {
+        if (!string_ends_with(_path, ".ogg")) {
+            return new Result().fail(
+                ErrorCode.INVALID_TYPE,
+                "Failed to load audio for " + _path_prefix + "; invalid audio type: " + _path + " (expected .ogg)")
+        }
+        var _full = laboratory_resolve_datafile_path(_path, _path_prefix)
+        var _audio = global.laboratory_manager.load_dynamic_audio(_full)
+        if (is_undefined(_audio)) {
+            return new Result().fail(
+                ErrorCode.LOAD_RESOURCE_FAILED,
+                "Failed to load audio for " + _path_prefix + ": " + _full)
+        }
+        return new Result().success(_audio)
+    }
+    return new Result().success(asset_get_index(_path))
+}
+
+/// @param {String} _path
+/// @param {String} _path_prefix
+/// @returns {Struct.Result<Asset.GMSprite>}
+function get_sprite_or_create(_path, _path_prefix) {
+    if (is_undefined(_path) || string_length(string(_path)) == 0) {
+        return new Result().success(-1)
+    }
+    _path = string(_path)
+    if (laboratory_path_is_relative(_path)) {
+        if (!string_ends_with(_path, ".png")) {
+            return new Result().fail(
+                ErrorCode.INVALID_TYPE,
+                "Failed to load sprite for " + _path_prefix + "; invalid image type: " + _path + " (expected .png)")
+        }
+        var _full = laboratory_resolve_datafile_path(_path, _path_prefix)
+        var _spr = global.laboratory_manager.load_dynamic_sprite(_full)
+        if (is_undefined(_spr)) {
+            return new Result().fail(
+                ErrorCode.LOAD_RESOURCE_FAILED,
+                "Failed to load sprite for " + _path_prefix + ": " + _full)
+        }
+        return new Result().success(_spr)
+    }
+    return new Result().success(asset_get_index(_path))
+}
+
+
 /// @param {Struct} _json 
 /// @param {String} _json_path
-/// @returns {Struct.CustomStage} 
+/// @returns {Struct.Result<Struct.CustomStage>} 
 function create_custom_stage(_json, _json_path) {
     var _stage = new CustomStage()
     _stage.name = variable_struct_get(_json,"display_name")
@@ -148,19 +220,36 @@ function create_custom_stage(_json, _json_path) {
     
     _stage.json_path = _json_path
 
-    var _sprite = variable_struct_get(_json,"map_sprite")
-    _stage.map_sprite = asset_get_index(_sprite) 
+    var _sprite_path = variable_struct_get(_json, "map_sprite")
+    var _sprite_result = get_sprite_or_create(_sprite_path, _json_path)
+    if (_sprite_result.is_failed()) {
+        return _sprite_result
+    }
+    _stage.map_sprite = _sprite_result.data
 
-    var _pre_music = variable_struct_get(_json,"pre_music")
-    _stage.pre_music = asset_get_index(_pre_music)
+    /// @type {String} 
+    var _pre_music_path = variable_struct_get(_json,"pre_music")
+    var _pre_music_result = get_audio_or_create(_pre_music_path, _json_path)
+    if (_pre_music_result.is_failed()) {
+        return _pre_music_result
+    }
+    _stage.pre_music = _pre_music_result.data
 
-    var _elite_music = variable_struct_get(_json,"elite_music")
-    _stage.elite_music = asset_get_index(_elite_music)
+    var _elite_music_path = variable_struct_get(_json,"elite_music")
+    var _elite_music_result = get_audio_or_create(_elite_music_path, _json_path)
+    if (_elite_music_result.is_failed()) {
+        return _elite_music_result
+    }
+    _stage.elite_music = _elite_music_result.data
 
-    var _boss_music = variable_struct_get(_json,"boss_music")
-    _stage.boss_music = asset_get_index(_boss_music)
+    var _boss_music_path = variable_struct_get(_json,"boss_music")
+    var _boss_music_result = get_audio_or_create(_boss_music_path, _json_path)
+    if (_boss_music_result.is_failed()) {
+        return _boss_music_result
+    }
+    _stage.boss_music = _boss_music_result.data
 
-    return _stage
+    return new Result().success(_stage)
 }
 
 
@@ -174,17 +263,8 @@ function level_entry_from_stage_metadata(_meta) {
         spr_ix = spr_cookie_island
     }
     var pre_ix = _meta.pre_music
-    if (pre_ix == -1) {
-        pre_ix = mus_readyroom
-    }
     var elite_ix = _meta.elite_music
-    if (elite_ix == -1) {
-        elite_ix = pre_ix
-    }
     var boss_ix = _meta.boss_music
-    if (boss_ix == -1) {
-        boss_ix = pre_ix
-    }
     var bx = -1
     var by = -1
     return {
@@ -203,4 +283,22 @@ function level_entry_from_stage_metadata(_meta) {
         player_level_require: 1,
         pre_level_require: []
     }
+}
+
+/// @param {Struct.CustomStage} _stage 
+/// @returns {Struct.Result}
+function verify_stage(_stage) {
+    if (_stage.map_sprite == -1) {
+        return new Result().fail(ErrorCode.INVALID_METADATA, "stage " + _stage.json_path + " has no valid map sprite")
+    }
+    if (_stage.pre_music == -1) {
+        return new Result().fail(ErrorCode.INVALID_METADATA, "stage " + _stage.json_path + " has no valid pre music")
+    }
+    if (_stage.elite_music == -1) {
+        return new Result().fail(ErrorCode.INVALID_METADATA, "stage " + _stage.json_path + " has no valid elite music")
+    }
+    if (_stage.boss_music == -1) {
+        return new Result().fail(ErrorCode.INVALID_METADATA, "stage " + _stage.json_path + " has no valid boss music")
+    }
+    return new Result().success()
 }
