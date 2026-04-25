@@ -3626,7 +3626,7 @@
             "gold": 6000.0,
             "items": [
                 {
-                    "id": "natural_spices",
+                    "id": "secret_spices",
                     "amount": 300.0
                 },
                 {
@@ -3643,7 +3643,7 @@
             "gold": 6000.0,
             "items": [
                 {
-                    "id": "natural_spices",
+                    "id": "secret_spices",
                     "amount": 300.0
                 },
                 {

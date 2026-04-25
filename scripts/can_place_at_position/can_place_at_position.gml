@@ -1,4 +1,4 @@
-﻿/// @function can_plant_at_position(x, y, plant_type,feature_type,target_card)
+/// @function can_plant_at_position(x, y, plant_type,feature_type,target_card)
 /// @description 检查是否可以在指定位置种植植物
 /// @param {real} x X坐标
 /// @param {real} y Y坐标
@@ -88,7 +88,7 @@ function can_place_at_position(x, y, plant_type,feature_type,target_card) {
                     var plant = ds_list_find_value(plant_list, i);
                     if (!instance_exists(plant)) continue;
                     if (plant.plant_type == "coffee") {
-                        return false;
+                        //return false;
                     }
                 }
                 return true;

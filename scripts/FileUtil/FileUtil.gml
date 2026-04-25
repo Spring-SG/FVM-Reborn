@@ -174,4 +174,30 @@ function FileUtil() constructor {
         }
         return "level_data/" + f
     }
+
+    /// @param {String} _path 
+    /// @returns {Struct.Result} 
+    static load_sound_from_path = function(_path) {
+        if (!file_exists(_path)) {
+            return new Result().fail(ErrorCode.NO_SUCH_FILE, "File not found: " + _path)
+        }
+        var _loaded = audio_create_stream(_path);
+        if (_loaded == -1) {
+            return new Result().fail(ErrorCode.NO_SUCH_FILE, "Failed to load sound: " + _path)
+        }
+        return new Result().success(_loaded)
+    }
+
+    /// @param {String} _path 
+    /// @returns {Struct.Result} 
+    static load_sprite_from_path = function(_path) {
+        if (!file_exists(_path)) {
+            return new Result().fail(ErrorCode.NO_SUCH_FILE, "File not found: " + _path)
+        }
+        var _loaded = sprite_add(_path, 1, false, false, 0, 0)
+        if (_loaded == -1) {
+            return new Result().fail(ErrorCode.LOAD_RESOURCE_FAILED, "Failed to load sprite: " + _path)
+        }
+        return new Result().success(_loaded)
+    }
 }

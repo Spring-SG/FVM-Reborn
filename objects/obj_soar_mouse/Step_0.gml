@@ -30,7 +30,7 @@ if state == ENEMY_STATE.ACTING{
 		}
 		//y -= 0.50 
 	}
-	if timer >= flash_speed * 11 & timer <= flash_speed * 15{
+	if timer >= flash_speed * 11 && timer <= flash_speed * 15{
 		//y += 1.00
 	}
 	if timer >= flash_speed * 16 or hp <= 0{

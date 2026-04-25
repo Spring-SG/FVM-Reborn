@@ -2,8 +2,10 @@ if global.is_paused{
 	exit
 }
 
-if !window_has_focus() && !global.is_paused{
-	global.is_paused = true
+if global.lose_focus_pause{
+	if !window_has_focus() && !global.is_paused{
+		global.is_paused = true
+	}
 }
 
 battle_time ++

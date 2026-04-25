@@ -41,3 +41,6 @@ else if (config_key == "borderless_window"){
 	global.borderless_window = state
 	window_enable_borderless_fullscreen(global.borderless_window)
 }
+else if (config_key == "lose_focus_pause"){
+	global.lose_focus_pause = state
+}
