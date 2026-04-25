@@ -13,19 +13,12 @@ function move_files () {
         }
     } 
 
-    show_debug_message("[dir]")
-    show_debug_message(working_directory)
     var _local_laboratory = global.laboratory_manager.file_util.transfer_path_to_windows(working_directory + "laboratory")
     var _appdata_laboratory = global.laboratory_manager.file_util.transfer_path_to_windows( _user_profile + "\\FVM_Reborn\\laboratory")
     var _local_laboratory_exists = native_folder_exists(_local_laboratory)
     if (_local_laboratory_exists == 1) {
-        var _copy_result = native_copy_folder(_local_laboratory, _local_folder)
-        if (_copy_result == 1) {
-            show_message_async("资源已自动迁移到[" + _appdata_laboratory + "]")
-        }
+        native_copy_folder(_local_laboratory, _local_folder)
         native_delete_folder(_local_laboratory)
-    } else {
-        show_debug_message("无法找到[" + _local_laboratory + "]")
     }
 }
 
