@@ -1,6 +1,6 @@
 {
   "$GMProject":"v1",
-  "%Name":"美食大战老鼠：重生",
+  "%Name":"FVM-reborn",
   "AudioGroups":[
     {"$GMAudioGroup":"v1","%Name":"audiogroup_default","exportDir":"","name":"audiogroup_default","resourceType":"GMAudioGroup","resourceVersion":"2.0","targets":-1,},
     {"$GMAudioGroup":"v1","%Name":"sound","exportDir":"","name":"sound","resourceType":"GMAudioGroup","resourceVersion":"2.0","targets":-1,},
@@ -463,7 +463,7 @@
   "MetaData":{
     "IDEVersion":"2024.14.4.222",
   },
-  "name":"美食大战老鼠：重生",
+  "name":"FVM-reborn",
   "resources":[
     {"id":{"name":"WindowsNative","path":"extensions/WindowsNative/WindowsNative.yy",},},
     {"id":{"name":"font_hei","path":"fonts/font_hei/font_hei.yy",},},

@@ -117,11 +117,8 @@ function create_widgets() {
             return gui_state.current_stage_id == ""
         }))
         .set_on_click(method({}, function() {
-            var _result = global.laboratory_manager.file_util.create_folder_if_not_exist(kCustomStageFolder)
-            if (_result.is_failed()) {
-                show_message_async(_result.message)
-            }
-            var _target = global.laboratory_manager.file_util.transfer_path_to_windows(working_directory + "/" + kCustomStageFolder)
+            var _user_profile = environment_get_variable("LOCALAPPDATA")
+        	var _target = global.laboratory_manager.file_util.transfer_path_to_windows( _user_profile + "\\FVM_Reborn\\laboratory")
             native_open_folder(_target)
         }))
 }
@@ -176,12 +173,6 @@ function on_draw() {
         self.state.bottom_button_scale, self.state.bottom_button_scale,
         0, c_white, 1
     )
-    // draw_sprite_ext(
-    //     spr_my_stages, 0,
-    //     1180, 843,
-    //     self.state.bottom_button_scale, self.state.bottom_button_scale,
-    //     0, c_white, 1
-    // )
     draw_sprite_ext(
         spr_search_team, 0,
         1480, 852,
