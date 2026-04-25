@@ -13,7 +13,7 @@ else if btn_type == "save"{
 }
 else if btn_type == "open_save_folder"{
 	var _user_profile = environment_get_variable("LOCALAPPDATA")
-	var _target = global.laboratory_manager.file_util.transfer_path_to_windows( _user_profile + "\\美食大战老鼠_重生\\saves")
+	var _target = global.laboratory_manager.file_util.transfer_path_to_windows( _user_profile + "\\FVM_Reborn\\saves")
 	var ret = native_open_folder(_target)
 	show_debug_message(ret)
 }
