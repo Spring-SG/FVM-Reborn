@@ -27,7 +27,7 @@ image_xscale = 0.33
 image_yscale = 0.33
 image_speed = 0
 
-
+cooldown_ignore_list = ["ice_cream","magic_chicken"]
 
 //选择卡槽逻辑
 function select_slot(){
@@ -55,6 +55,12 @@ function try_place_once(){
 		
 		var card_shape = get_card_info_simple(card_id).shape
 		var card_data = deck_get_card_data(card_id,card_shape)
+		if card_id == "magic_chicken"{
+			if global.prev_place_id != ""{
+				card_shape = get_card_info_simple(global.prev_place_id).shape
+				card_data = deck_get_card_data(global.prev_place_id,card_shape)
+			}
+		}
         var can_plant = (can_place_at_position(mouse_x, mouse_y, card_data[? "plant_type"],card_data[? "feature_type"],card_data[? "target_card"]));
         
         if (can_plant && global.flame >= current_cost) {
@@ -91,6 +97,11 @@ function try_place_once(){
             // 重置冷却计时器
             cooldown_timer = 0;
             is_ready = false;
+			
+			if array_get_index(cooldown_ignore_list,card_id) == -1{
+				global.prev_place_id = card_id
+			}
+			
             if global.grid_terrains[grid_pos.row][grid_pos.col].type == "normal"{
 				audio_play_sound(snd_place1,0,0)
 			}

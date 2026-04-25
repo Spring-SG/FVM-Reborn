@@ -108,6 +108,10 @@ if (global.is_paused)
 							draw_set_colour(c_yellow)
 							draw_text(1200,435,"你的铲子已升级为银铲")
 						}
+						if global.level_data.id == "snowcap_volcano"{
+							draw_set_colour(c_yellow)
+							draw_text(1200,435,"你的铲子已升级为金铲")
+						}
 						
 					}
 					else{

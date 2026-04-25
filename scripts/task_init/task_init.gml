@@ -1754,8 +1754,8 @@ function task_init(){
 					},
 					{
 						"type":"time_limit",
-						"desc":"通关时间不超过480秒",
-						"require":480,
+						"desc":"通关时间不超过540秒",
+						"require":540,
 					},
 				],
 				"rewards":[

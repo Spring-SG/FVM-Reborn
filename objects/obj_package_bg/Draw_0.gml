@@ -9,7 +9,7 @@ draw_self()
 draw_sprite_ext(spr_package_bg_2,0,530,room_height/2,1.8,1.8,0,c_white,1)
 
 // 绘制玩家金币数量
-draw_set_font(font_yuan); 
+draw_set_font(font_number); 
 draw_set_color(c_yellow);
 draw_set_halign(fa_right);
 draw_set_valign(fa_bottom);
@@ -400,12 +400,12 @@ else if package_button_select == 3{
 				draw_set_halign(fa_right);
 				draw_set_valign(fa_bottom);
 				draw_set_colour(c_white)
-				draw_set_font(font_yuan)
+				draw_set_font(font_number)
 				if get_material_amount(material_id) < 10000{
 					draw_text(material_x+40,material_y+42,string(get_material_amount(material_id)))
 				}
 				else{
-					draw_text(material_x+40,material_y+42,string(floor(get_material_amount(material_id)/10000))+"万")
+					draw_text(material_x+40,material_y+42,string(floor(get_material_amount(material_id)/10000))+"w")
 				}
                 
                 // 检查鼠标是否悬停在道具上

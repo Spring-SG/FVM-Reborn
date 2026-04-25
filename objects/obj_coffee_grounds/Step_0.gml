@@ -24,6 +24,6 @@ if attack_timer == 1{
 		}
 	}
 }
-if attack_timer > current_flash_speed * 13{
+if attack_timer > current_flash_speed * 13 - 1{
 	instance_destroy()
 }

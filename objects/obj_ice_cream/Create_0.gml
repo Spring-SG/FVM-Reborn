@@ -25,4 +25,4 @@ if shape >= 2{
 flash_speed = 5
 plant_type = "coffee"
 is_slowdown = false
-ignore_list = ["ice_cream"]
+ignore_list = ["ice_cream","magic_chicken"]

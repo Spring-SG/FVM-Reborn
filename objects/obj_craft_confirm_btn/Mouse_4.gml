@@ -7,7 +7,10 @@ if target_id != ""{
 		var clover_list = [0,0,0]
 		var card_data = get_card_info_simple(target_id)
 		var current_level = card_data.max_level
-		if current_level <= 15{
+		if array_get_index(cannot_upgrade_card_list,target_id) != -1{
+			show_notice("该卡片无法被强化",60)
+		}
+		else if current_level <= 15{
 			var craft_rule_info = get_card_craft_rule(string(current_level+1))
 			var display_spices_amount = 0
 			var display_clover_amount = 0

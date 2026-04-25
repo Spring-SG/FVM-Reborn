@@ -12,6 +12,8 @@ function shop_init(){
 	register_goods("tar_sprayer",{"type":"card","cost":"80000","unlock_item_id":"tar_sprayer","description":"焦油喷壶：喷出可被点燃的油滴穿透攻击四格内敌人","display_name":"焦油喷壶"})
 	register_goods("durian",{"type":"card","cost":"30000","unlock_item_id":"durian","description":"榴莲：伤害3*3范围敌人","display_name":"榴莲"})
 	register_goods("dragon_fruit",{"type":"card","cost":"50000","unlock_item_id":"dragon_fruit","description":"火龙果：伤害3*3范围敌人","display_name":"火龙果"})
+	register_goods("magic_chicken",{"type":"card","cost":"80000","unlock_item_id":"magic_chicken","description":"幻幻鸡：复制成上一张放置的卡片","display_name":"幻幻鸡"})
+	register_goods("bull_firework",{"type":"card","cost":"50000","unlock_item_id":"bull_firework","description":"金牛烟花：召唤1只烟花牛冲撞敌人","display_name":"金牛烟花"})
 	
 	register_goods("card_slot_plus",{"type":"item","cost":"20000","unlock_item_id":"card_slot","description":"增加一格卡槽，仅可在卡槽数小于18时使用","display_name":"卡槽+1","spr":spr_slot_plus})
 	register_goods("card_slot_19",{"type":"item","cost":"50000","unlock_item_id":"card_slot_19","description":"解锁第19格卡槽","display_name":"卡槽第19格","spr":spr_slot_19})

@@ -6,7 +6,7 @@ draw_set_alpha(1);
 draw_self()
 
 // 绘制玩家金币数量
-draw_set_font(font_yuan); 
+draw_set_font(font_number); 
 draw_set_color(c_yellow);
 draw_set_halign(fa_right);
 draw_set_valign(fa_bottom);

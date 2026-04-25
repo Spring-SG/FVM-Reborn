@@ -257,7 +257,7 @@ function slots_init(){
 	])
 	register_card("pineapple_explosive_bread",obj_pineapple_explosive_bread,[
 	    {"shape":0, "sprite":spr_pineapple_explosive_bread_0_0, "cost":150, "cooldown":50*60, "description":"菠萝爆炸面包：死亡后产生3*3范围爆炸","plant_type":"normal","feature_type":"normal","target_card":"none"},
-	    {"shape":1, "sprite":spr_pineapple_explosive_bread_1_0, "cost":150, "cooldown":50*60, "description":"独角菠萝面包：死亡后产生3*3范围爆炸","plant_type":"normal","feature_type":"normal","target_card":"none"},
+	    {"shape":1, "sprite":spr_pineapple_explosive_bread_1_icon, "cost":150, "cooldown":50*60, "description":"独角菠萝面包：死亡后产生3*3范围爆炸","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_pineapple_explosive_bread_1_0},
 		{"shape":2, "sprite":spr_pineapple_explosive_bread_2_0, "cost":150, "cooldown":50*60, "description":"皇冠菠萝面包：死亡后产生5*5范围爆炸","plant_type":"normal","feature_type":"normal","target_card":"none"}
 	])
 	register_card("ice_cream",obj_ice_cream,[
@@ -270,5 +270,13 @@ function slots_init(){
 	    {"shape":1, "sprite":spr_lightning_baguette_1_icon, "cost":175, "cooldown":60*60, "description":"节能面包：同列的两根面包间会产生电流","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_lightning_baguette_1},
 		{"shape":2, "sprite":spr_lightning_baguette_2_icon, "cost":175, "cooldown":60*60, "description":"负离子面包：同列的两根面包间会产生两次电流","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_lightning_baguette_2}
 	])
+	register_card("bull_firework",obj_bull_firework,[
+	    {"shape":0, "sprite":spr_bull_firework, "cost":325, "cooldown":50*60, "description":"金牛烟花：召唤1只烟花牛冲撞敌人","plant_type":"normal","feature_type":"normal","target_card":"none"},
+	    {"shape":1, "sprite":spr_bull_firework_1, "cost":275, "cooldown":50*60, "description":"迷幻金牛烟花：召唤1只烟花牛冲撞敌人","plant_type":"normal","feature_type":"normal","target_card":"none"},
+		{"shape":2, "sprite":spr_bull_firework_2, "cost":275, "cooldown":50*60, "description":"璀璨金牛烟花：召唤3只烟花牛冲撞敌人","plant_type":"normal","feature_type":"normal","target_card":"none"}
+	])
+	register_card("magic_chicken", obj_magic_chicken, [
+	    {"shape":0, "sprite":spr_magic_chicken_icon, "cost":0, "cooldown":7*60, "description":"幻幻鸡：复制成上一张放置的卡片","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_magic_chicken}
+	]);
 	
 }

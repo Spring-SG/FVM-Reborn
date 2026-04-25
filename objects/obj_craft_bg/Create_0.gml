@@ -17,6 +17,7 @@ btn2.text_spr = spr_craft_gem_text
 card_material_id_list = ["natural_spices","secret_spices","royal_spices","clover_1","clover_2","clover_3"]
 gem_material_id_list = ["less_crystal","middle_crystal","advanced_crystal"]
 
+
 hover_card_index = -1
 hover_gem_index = -1
 close_timer = -1

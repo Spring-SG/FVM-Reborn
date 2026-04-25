@@ -159,6 +159,8 @@ if is_real(global.level_file.version){
 	}
 }
 
+global.prev_place_id = ""
+
 function enemy_subwave_summon(){
 	current_total_hp = 0
 	

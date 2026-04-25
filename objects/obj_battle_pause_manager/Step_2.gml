@@ -42,6 +42,9 @@ if (keyboard_check_pressed(vk_space)) {
 								if global.level_data.id == "macchiato_port"{
 									global.save_data.unlocked_items.shovel = "silver"
 								}
+								if global.level_data.id == "snowcap_volcano"{
+									global.save_data.unlocked_items.shovel = "gold"
+								}
 								if global.level_file.rewards[1].player_level >= global.save_data.player.level{
 									global.save_data.player.level = global.level_file.rewards[1].player_level
 								}

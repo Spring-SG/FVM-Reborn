@@ -14,9 +14,10 @@ draw_text(x,y+83,card_name)
 draw_set_halign(fa_left);
 draw_set_valign(fa_middle);
 draw_set_color(c_black);
-draw_set_font(font_yuan);
-draw_text_ext_transformed(x-12, y+40, string(card_data[? "cost"]),25,1800,1,1,0);
+draw_set_font(font_number);
+draw_text_ext_transformed(x-12, y+44, string(card_data[? "cost"]),25,1800,1,1,0);
 draw_sprite_ext(spr_flame, 0, x-24, y+43, 0.3, 0.3, 0, c_white, 1);
+draw_set_font(font_yuan)
 
 if !unlocked{
 	draw_set_alpha(0.5)

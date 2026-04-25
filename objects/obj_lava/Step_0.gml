@@ -42,7 +42,7 @@ if timer mod 60 == 0{
 	for(var i = 0 ; i < 5 ; i++){
 		if plant_order_list[i] != noone{
 			with plant_order_list[i]{
-				if (plant_type != "coffee" && !invincible && plant_id != "cotton_candy") || (plant_id == "player" && hp > 10){
+				if (plant_type != "coffee" && !invincible && plant_id != "cotton_candy" && !(plant_id == "player" && hp <= 10)){
 					hp -= 10
 					event_user(2)
 				}

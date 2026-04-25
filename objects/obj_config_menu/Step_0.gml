@@ -59,7 +59,7 @@ function draw_settings_page(){
 	    var btn4 = instance_create_depth(x - 200, y + 60, depth-1, obj_setting_toggle);
 	    btn4.config_key = "tex_fliter";
 	    btn4.state = global.tex_fliter;
-		btn4.tooltip_text = "关闭该选项可改善贴图变糊问题，但是会导致图像锐化"
+		btn4.tooltip_text = "开启此选项可以改善画质"
 	    array_push(setting_buttons, btn4);
 		
 		// 创建无边框窗口开关

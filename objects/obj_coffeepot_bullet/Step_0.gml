@@ -1,9 +1,11 @@
 if global.is_paused{
 	image_speed = 0
+	exit
 }
 else{
 	image_speed = 1
 }
+attack_timer ++
 //x += move_speed
 if shape>=2{
 	sprite_index = spr_coffeepot_bullet_2

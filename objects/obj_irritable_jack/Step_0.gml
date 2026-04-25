@@ -190,6 +190,8 @@ switch state{
 						rock_inst.prev_spr = spr_irritable_jack_body_skill_3
 						rock_inst.next_spr = spr_irritable_jack_body_skill_4
 					}
+					rock_inst.maxhp = rock_inst.maxhp + rock_inst.maxhp*((maxhp/30000)*0.5)
+					rock_inst.hp = rock_inst.maxhp
 				}
 			}
 		}
@@ -259,6 +261,7 @@ switch state{
 				else{
 					rock_inst.sprite_index = spr_irritable_jack_body_skill_3
 				}
+				
 				rock_count ++
 			}
 			if skill_timer == 238{

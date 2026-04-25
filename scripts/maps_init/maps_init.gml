@@ -465,7 +465,8 @@ function maps_init(){
 					"boss_music":mus_volcanic_tower_boss,
 					"pre_level":"tower_cake_15_2",
 					"rewards":[
-						
+						{"card_id":"pineapple_explosive_bread","target_shape":1},
+						{"card_id":"iron_fishbone","target_shape":2}
 					]
 				},
 				{
@@ -479,7 +480,7 @@ function maps_init(){
 					"boss_music":mus_volcanic_tower_boss,
 					"pre_level":"tower_cake_16_1",
 					"rewards":[
-						
+						{"card_id":"ice_cream","target_shape":1}
 					]
 				},
 				{
@@ -493,7 +494,7 @@ function maps_init(){
 					"boss_music":mus_volcanic_tower_boss,
 					"pre_level":"tower_cake_16_2",
 					"rewards":[
-						
+						{"card_id":"lightning_baguette","target_shape":1}
 					]
 				},
 				{
@@ -507,7 +508,7 @@ function maps_init(){
 					"boss_music":mus_volcanic_tower_boss,
 					"pre_level":"tower_cake_17_1",
 					"rewards":[
-						
+						{"card_id":"coffee_grounds","target_shape":2}
 					]
 				},
 				{
@@ -521,7 +522,8 @@ function maps_init(){
 					"boss_music":mus_volcanic_tower_boss,
 					"pre_level":"tower_cake_17_2",
 					"rewards":[
-						
+						{"card_id":"wooden_plate","target_shape":2},
+						{"card_id":"coffee_cup","target_shape":2}
 					]
 				},
 				{
@@ -535,7 +537,7 @@ function maps_init(){
 					"boss_music":mus_volcanic_tower_boss,
 					"pre_level":"tower_cake_18_1",
 					"rewards":[
-						
+						{"card_id":"mouse_clip","target_shape":2}
 					]
 				},
 				{
@@ -549,7 +551,7 @@ function maps_init(){
 					"boss_music":mus_volcanic_tower_boss,
 					"pre_level":"tower_cake_18_2",
 					"rewards":[
-						
+						{"card_id":"coffee_pot","target_shape":2}
 					]
 				},
 				{
@@ -563,7 +565,7 @@ function maps_init(){
 					"boss_music":mus_volcanic_tower_boss,
 					"pre_level":"tower_cake_19_1",
 					"rewards":[
-						
+						{"card_id":"melon_shield","target_shape":2}
 					]
 				},
 				{
@@ -577,7 +579,7 @@ function maps_init(){
 					"boss_music":mus_volcanic_tower_boss,
 					"pre_level":"tower_cake_19_2",
 					"rewards":[
-						
+						{"card_id":"ice_egg_boiler_pult","target_shape":2}
 					]
 				},
 				{
@@ -591,7 +593,7 @@ function maps_init(){
 					"boss_music":mus_volcanic_tower_boss,
 					"pre_level":"tower_cake_20_1",
 					"rewards":[
-						
+						{"card_id":"large_fire","target_shape":2}
 					]
 				},
 			]

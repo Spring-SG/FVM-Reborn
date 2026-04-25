@@ -6,7 +6,7 @@ draw_self()
 
 draw_sprite_ext(spr_craft_gold_require_bg,0,x-45,y+300,1.8,1.8,0,c_white,1)
 
-draw_set_font(font_yuan)
+draw_set_font(font_number)
 draw_set_colour(c_yellow)
 draw_set_valign(fa_middle)
 draw_set_halign(fa_left)
@@ -37,12 +37,12 @@ if button_select == 0{
 		draw_set_halign(fa_right);
 		draw_set_valign(fa_bottom);
 		draw_set_colour(c_white)
-		draw_set_font(font_yuan)
+		draw_set_font(font_number)
 		if get_material_amount(material_id) < 10000{
 			draw_text(x-752+i*84+40,y + 454+42,string(get_material_amount(material_id)))
 		}
 		else{
-			draw_text(x-752+i*84+40,y + 454+42,string(floor(get_material_amount(material_id)/10000))+"万")
+			draw_text(x-752+i*84+40,y + 454+42,string(floor(get_material_amount(material_id)/10000))+"w")
 		}
 		
 	}
@@ -148,7 +148,7 @@ if button_select == 0{
 			var spices_list = [0,0,0]
 			var clover_list = [0,0,0]
 			var craft_rule = get_card_craft_rule(string(card_data.max_level+1))
-			draw_set_font(font_yuan)
+			draw_set_font(font_number)
 			draw_set_colour(c_yellow)
 			draw_set_valign(fa_middle)
 			draw_set_halign(fa_left)
@@ -172,6 +172,7 @@ if button_select == 0{
 				display_spices_amount = get_material_amount(craft_rule.spices_require)
 			}
 			draw_text(x-455,y+35,string(display_spices_amount)+"/"+string(craft_rule.spices_amount))
+			draw_set_font(font_yuan)
 			if use_enhanced_spices{
 				draw_set_colour(c_red)
 				draw_text(x-455,y+60,"使用了高级香料")
@@ -195,7 +196,9 @@ if button_select == 0{
 				draw_sprite_ext(spr_craft_material,get_material_info(craft_rule.clover_require).icon,x-155,y-20,1.8,1.8,0,c_white,1)
 				draw_set_halign(fa_center)
 				draw_set_colour(c_black)
+				draw_set_font(font_number)
 				draw_text(x-155,y+35,string(display_clover_amount)+"/"+string(craft_rule.clover_amount))
+				draw_set_font(font_yuan)
 				if use_enhanced_clover{
 					draw_set_colour(c_red)
 					draw_text(x-155,y+60,"使用了高级四叶草")
@@ -222,12 +225,12 @@ else if button_select == 1{
 		draw_set_halign(fa_right);
 		draw_set_valign(fa_bottom);
 		draw_set_colour(c_white)
-		draw_set_font(font_yuan)
+		draw_set_font(font_number)
 		if get_material_amount(material_id) < 10000{
 			draw_text(x-752+i*84+40,y + 454+42,string(get_material_amount(material_id)))
 		}
 		else{
-			draw_text(x-752+i*84+40,y + 454+42,string(floor(get_material_amount(material_id)/10000))+"万")
+			draw_text(x-752+i*84+40,y + 454+42,string(floor(get_material_amount(material_id)/10000))+"w")
 		}
 	}
 	//绘制右侧栏位
@@ -281,6 +284,7 @@ else if button_select == 1{
         var weapon_data = global.gems_pool[? weapon_id];
         
         if (!is_undefined(weapon_data)) {
+			draw_set_font(font_yuan)
             // 获取鼠标位置
             var tooltip_x = mouse_x - 15;
             var tooltip_y = mouse_y - 15;
@@ -304,6 +308,7 @@ else if button_select == 1{
             draw_set_valign(fa_top);
             draw_set_alpha(1);
             draw_set_color(c_white);
+			draw_set_font(font_yuan)
 			draw_text(tooltip_x- string_width(tooltip_text), tooltip_y, tooltip_text);
 			
             
@@ -325,7 +330,7 @@ else if button_select == 1{
 		//绘制强化需要的材料
 		if get_gem_max_level(weapon_id) <= 14{
 			var craft_rule = get_gem_craft_rule(string(get_gem_max_level(weapon_id)+1))
-			draw_set_font(font_yuan)
+			draw_set_font(font_number)
 			draw_set_colour(c_yellow)
 			draw_set_valign(fa_middle)
 			draw_set_halign(fa_left)
@@ -349,6 +354,7 @@ else if button_select == 1{
 				display_crystal_amount = get_material_amount(craft_rule.crystal_require)
 			}
 			draw_text(x-305,y+15,string(display_crystal_amount)+"/"+string(craft_rule.crystal_amount))
+			draw_set_font(font_yuan)
 			if use_enhanced_crystal{
 				draw_set_colour(c_red)
 				draw_text(x-305,y+40,"使用了高级水晶")
