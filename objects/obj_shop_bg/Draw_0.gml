@@ -40,8 +40,8 @@ for(var i = 0 ; i< 4; i++){
 				draw_set_halign(fa_left);
 				draw_set_valign(fa_middle);
 				draw_set_color(c_black);
-				draw_set_font(font_yuan);
-				draw_text_ext_transformed(x-618+411*j-122-12, y-190+165*i+40, string(card_data[? "cost"]),25,1800,1,1,0);
+				draw_set_font(font_number);
+				draw_text_ext_transformed(x-618+411*j-122-12, y-190+165*i+44, string(card_data[? "cost"]),25,1800,1,1,0);
 				draw_sprite_ext(spr_flame, 0, x-618+411*j-122-24, y-190+165*i+43, 0.3, 0.3, 0, c_white, 1);
 				draw_set_halign(fa_left);
 				draw_set_valign(fa_top);
@@ -121,6 +121,60 @@ for(var i = 0 ; i< 4; i++){
 					draw_sprite_ext(spr_sold_out, 0, x-618+411*j,y-190+165*i, 1.8, 1.8, 0, c_white, 1);
 				}
 				
+			}
+		}
+		//绘制时装类型商品
+		if shop_button_select == 4{
+			if ds_list_find_value(goods_list,i*4+j+(current_page-1)*16) != undefined{
+				//根据商品id获取卡片信息
+				var card_data = global.goods_map[? ds_list_find_value(goods_list,i*4+j+(current_page-1)*16)]
+				var attire_data = get_attire_info(card_data.unlock_item_id)
+				draw_sprite_ext(spr_slot, 0, x-618+411*j-122,y-190+165*i, 0.33, 0.33, 0, c_white, 1);
+				draw_sprite_ext(attire_data.icon,0,x-618+411*j-122,y-190+165*i+25,1,1,0,c_white,1)
+				draw_set_halign(fa_left);
+				draw_set_valign(fa_middle);
+				draw_set_color(c_black);
+				draw_set_font(font_number);
+				//draw_text_ext_transformed(x-618+411*j-122-12, y-190+165*i+44, "0",25,1800,1,1,0);
+				//draw_sprite_ext(spr_flame, 0, x-618+411*j-122-24, y-190+165*i+43, 0.3, 0.3, 0, c_white, 1);
+				draw_set_halign(fa_left);
+				draw_set_valign(fa_top);
+				// 检查时装是否已解锁
+		            var is_unlocked = false;
+		            if is_attire_unlocked(card_data.unlock_item_id){
+						is_unlocked = true
+					}
+				if is_unlocked{
+					
+					draw_set_color(c_black)
+					draw_set_alpha(0.5)
+					draw_rectangle(x-618+411*j-205,y-190+165*i-82,x-618+411*j+205,y-190+165*i+82,false)
+					draw_set_alpha(1)
+					draw_sprite_ext(spr_sold_out, 0, x-618+411*j,y-190+165*i, 1.8, 1.8, 0, c_white, 1);
+				}
+			}
+		}
+		if shop_button_select == 5{
+			if ds_list_find_value(goods_list,i*4+j+(current_page-1)*16) != undefined{
+				//根据商品id获取卡片信息
+				var card_data = global.goods_map[? ds_list_find_value(goods_list,i*4+j+(current_page-1)*16)]
+				var attire_data = get_attire_info(card_data.unlock_item_id)
+				draw_sprite_ext(attire_data.icon,0,x-618+411*j-122,y-210+165*i+25,1,1,0,c_white,1)
+				draw_set_halign(fa_left);
+				draw_set_valign(fa_top);
+				// 检查时装是否已解锁
+		            var is_unlocked = false;
+		            if is_attire_unlocked(card_data.unlock_item_id){
+						is_unlocked = true
+					}
+				if is_unlocked{
+					
+					draw_set_color(c_black)
+					draw_set_alpha(0.5)
+					draw_rectangle(x-618+411*j-205,y-190+165*i-82,x-618+411*j+205,y-190+165*i+82,false)
+					draw_set_alpha(1)
+					draw_sprite_ext(spr_sold_out, 0, x-618+411*j,y-190+165*i, 1.8, 1.8, 0, c_white, 1);
+				}
 			}
 		}
 	}

@@ -16,27 +16,29 @@ if is_slowdown{
 	current_flash_speed *= 2
 }
 
-var sleep_anim = 19
-if shape >= 1 sleep_anim = 11
+if card_equipped_attire_id(plant_id) == -1{
+	var sleep_anim = 19
+	if shape >= 1 sleep_anim = 11
 
-if state == CARD_STATE.SLEEP{
-	anim_timer++
-	image_index = floor(anim_timer/current_flash_speed) mod sleep_anim
-	//if anim_timer > 60{
-	//	state = CARD_STATE.AWAKE
-	//}
-}
-if state == CARD_STATE.AWAKE{
-	wake_timer++
-	image_index = floor(wake_timer/current_flash_speed) mod 6 + sleep_anim
-	if wake_timer >= 5*current_flash_speed{
-		sprite_index = spr_rotating_coffee_pot;
-		if shape >= 1{
-			sprite_index = spr_rotating_coffee_pot_1
+	if state == CARD_STATE.SLEEP{
+		anim_timer++
+		image_index = floor(anim_timer/current_flash_speed) mod sleep_anim
+		//if anim_timer > 60{
+		//	state = CARD_STATE.AWAKE
+		//}
+	}
+	if state == CARD_STATE.AWAKE{
+		wake_timer++
+		image_index = floor(wake_timer/current_flash_speed) mod 6 + sleep_anim
+		if wake_timer >= 5*current_flash_speed{
+			sprite_index = spr_rotating_coffee_pot;
+			if shape >= 1{
+				sprite_index = spr_rotating_coffee_pot_1
+			}
+			image_index = 0
+			timer = 0
+			state = CARD_STATE.IDLE
 		}
-		image_index = 0
-		timer = 0
-		state = CARD_STATE.IDLE
 	}
 }
 

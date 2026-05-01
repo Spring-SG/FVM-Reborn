@@ -1,5 +1,8 @@
 // 用户事件1 - 发射子弹
 var inst = instance_create_depth(x-40, y-125, depth-500, obj_iceeggboilerpult_bullet)
+if card_equipped_attire_id(plant_id) == "ice_egg_pisces"{
+	inst.sprite_index = spr_ice_egg_pisces_bullet
+}
 
 audio_play_sound(snd_throw, 0, 0)
 

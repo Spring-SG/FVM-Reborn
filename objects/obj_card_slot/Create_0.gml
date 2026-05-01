@@ -61,33 +61,94 @@ function try_place_once(){
 				card_data = deck_get_card_data(global.prev_place_id,card_shape)
 			}
 		}
-        var can_plant = (can_place_at_position(mouse_x, mouse_y, card_data[? "plant_type"],card_data[? "feature_type"],card_data[? "target_card"]));
+        var found_plat = noone;
+        var platform_shift_x = 0;
+        var platform_shift_y = 0;
+        var logical_col = -1;
+        var logical_row = -1;
+        
+        with (obj_platform) {
+            var is_axis_x = (variable_instance_exists(id, "move_axis") && move_axis == "x");
+            var shift_x = is_axis_x ? visual_x_shift : 0;
+            var shift_y = (!is_axis_x) ? visual_y_shift : 0;
+            var adj_x = mouse_x - shift_x;
+            var adj_y = mouse_y - shift_y;
+            var grid_pos_adj = get_grid_position_from_world(adj_x, adj_y);
+            
+            var c_off = is_axis_x ? current_offset : 0;
+            var r_off = (!is_axis_x) ? current_offset : 0;
+            var p_start_c = start_col + c_off;
+            var p_start_r = start_row + r_off;
+            
+            if (grid_pos_adj.col >= p_start_c && grid_pos_adj.col < p_start_c + width &&
+                grid_pos_adj.row >= p_start_r && grid_pos_adj.row < p_start_r + length) {
+                found_plat = id;
+                logical_col = grid_pos_adj.col;
+                logical_row = grid_pos_adj.row;
+                platform_shift_x = shift_x;
+                platform_shift_y = shift_y;
+                break;
+            }
+            
+            var grid_pos_dir = get_grid_position_from_world(mouse_x, mouse_y);
+            if (grid_pos_dir.col >= p_start_c && grid_pos_dir.col < p_start_c + width &&
+                grid_pos_dir.row >= p_start_r && grid_pos_dir.row < p_start_r + length) {
+                found_plat = id;
+                logical_col = grid_pos_dir.col;
+                logical_row = grid_pos_dir.row;
+                platform_shift_x = shift_x;
+                platform_shift_y = shift_y;
+                break;
+            }
+        }
+        
+        if (found_plat == noone) {
+            var grid_pos_direct = get_grid_position_from_world(mouse_x, mouse_y);
+            logical_col = grid_pos_direct.col;
+            logical_row = grid_pos_direct.row;
+        }
+        
+        var logical_world = get_world_position_from_grid(logical_col, logical_row);
+
+        var can_plant = (can_place_at_position(logical_world.x, logical_world.y, card_data[? "plant_type"],card_data[? "feature_type"],card_data[? "target_card"]));
         
         if (can_plant && global.flame >= current_cost) {
             // 创建植物实例
-			var grid_pos = get_grid_position_from_world(mouse_x, mouse_y);
-			var plant_list = ds_grid_get(global.grid_plants, grid_pos.col, grid_pos.row);
-			//替换放置逻辑
-			if global.replace_placement{
-			for (var i = 0; i < ds_list_size(plant_list); i++) {
-	                    var plant = ds_list_find_value(plant_list, i);
-	                    if (plant.plant_type == card_data[? "plant_type"] && plant.plant_id != "player") {
-	                        card_destroyed(plant)
-							instance_destroy(plant)
-	                    }
-	                }
+			var plant_list = ds_grid_get(global.grid_plants, logical_col, logical_row);
+			var target_card_id = card_data[? "target_card"];
+			
+			// 如果有target_card，替换底座卡片
+			if (target_card_id != undefined && target_card_id != "none") {
+				// 销毁目标卡片
+				for (var i = 0; i < ds_list_size(plant_list); i++) {
+					var plant = ds_list_find_value(plant_list, i);
+					if (instance_exists(plant) && variable_instance_exists(plant, "plant_id") && plant.plant_id == target_card_id) {
+						card_destroyed(plant);
+						instance_destroy(plant);
+						break;
+					}
+				}
 			}
-            var new_plant = instance_create_depth(grid_pos.x, grid_pos.y, 0,card_obj);
-			//new_plant.plant_type = plant_type;
+			// 通用替换逻辑（替换同类植物或开启替换模式）
+			else if global.replace_placement{
+				for (var i = 0; i < ds_list_size(plant_list); i++) {
+					var plant = ds_list_find_value(plant_list, i);
+					if (plant.plant_type == card_data[? "plant_type"] && plant.plant_id != "player" && plant.plant_type != "coffee") {
+						card_destroyed(plant);
+						instance_destroy(plant);
+					}
+				}
+			}
+            var new_plant = instance_create_depth(logical_world.x + platform_shift_x, logical_world.y + platform_shift_y, 0,card_obj);
 			// 计算深度值
-			var depth_value = calculate_plant_depth(grid_pos.col, grid_pos.row, new_plant.plant_type);
-			card_created(new_plant, grid_pos.col, grid_pos.row);
+			var depth_value = calculate_plant_depth(logical_col, logical_row, new_plant.plant_type);
+			card_created(new_plant, logical_col, logical_row);
 			new_plant.depth = depth_value
-			if global.grid_terrains[grid_pos.row][grid_pos.col].type == "normal"{
-				instance_create_depth(grid_pos.x,grid_pos.y,-2,obj_place_effect)
+			if global.grid_terrains[logical_row][logical_col].type == "normal"{
+				instance_create_depth(logical_world.x + platform_shift_x, logical_world.y + platform_shift_y,-2,obj_place_effect)
 			}
-			else if global.grid_terrains[grid_pos.row][grid_pos.col].type == "water"{
-				var inst = instance_create_depth(grid_pos.x,grid_pos.y+20,-2500,obj_place_effect)
+			else if global.grid_terrains[logical_row][logical_col].type == "water"{
+				var inst = instance_create_depth(logical_world.x + platform_shift_x, logical_world.y + platform_shift_y + 20,-2500,obj_place_effect)
 				inst.sprite_index = spr_enter_water_effect
 			}
             
@@ -102,10 +163,10 @@ function try_place_once(){
 				global.prev_place_id = card_id
 			}
 			
-            if global.grid_terrains[grid_pos.row][grid_pos.col].type == "normal"{
+            if global.grid_terrains[logical_row][logical_col].type == "normal"{
 				audio_play_sound(snd_place1,0,0)
 			}
-			else if global.grid_terrains[grid_pos.row][grid_pos.col].type == "water"{
+			else if global.grid_terrains[logical_row][logical_col].type == "water"{
 				audio_play_sound(snd_enter_water,0,0)
 			}
             // 取消选择

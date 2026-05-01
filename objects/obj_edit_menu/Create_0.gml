@@ -3,8 +3,12 @@ image_yscale = 2.8;
 
 // 初始化变量
 character_name = global.player_name; // 从全局变量获取当前角色名
-selected_sprite = global.player_sprite; // 当前选择的形象
-temp_sprite = selected_sprite; // 临时存储选择的形象（用于取消操作）
+player_attire_id_list = get_card_attire_list("player")//获取玩家时装列表
+selected_attire_id = card_equipped_attire_id("player")//获取玩家当前装备时装
+selected_attire_index = -1 // 当前选择的时装索引
+if selected_attire_id != -1{
+	selected_attire_index = array_get_index(player_attire_id_list,selected_attire_id)
+}
 
 // 创建保存按钮
 var save_btn = instance_create_depth(x - 250, y + 280, depth-1, obj_edit_menu_button);
@@ -36,3 +40,9 @@ input_field.active = true;
 var btn3 = instance_create_depth(x - 120, y -95 , depth-1, obj_save_slot_select_btn);
 btn3.config_key = "save_slot";
 btn3.state = global.save_slot;
+
+var btn4 = instance_create_depth(x-180,y+25,depth-1,obj_player_attire_select_btn)
+btn4.type = "prev"
+
+var btn5 = instance_create_depth(x+30,y+25,depth-1,obj_player_attire_select_btn)
+btn5.type = "next"

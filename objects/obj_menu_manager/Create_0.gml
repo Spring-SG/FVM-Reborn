@@ -30,7 +30,7 @@ timer = 0
 
 /// @description preload textures
 
-global.laboratory_room = false
+global.laboretory_room = false
 
 
 
@@ -84,12 +84,12 @@ function pre_load_texture() {
 }
 
 
-self.total_progress_bar_width = 350
+self.total_progress_bar_width = 700
 self.active_bg = $fde98b
 self.inactive_bg = c_white
 self.active_width = 0
 self.offset_x = (room_width - self.total_progress_bar_width) / 2
-self.offset_y = (room_height - 20) / 2
+self.offset_y = (room_height/2 + 250)
 self.animating = false
 function on_draw() {
     if (!self.animating && self.texture_loaded == 0) return;
@@ -112,6 +112,7 @@ function on_draw() {
 
     draw_set_color(self.active_bg);
     draw_rectangle(_x1, _y1, _x1 + _current_width, _y1 + _bar_h, false);
+	draw_sprite_ext(spr_game_logo,0,room_width/2,room_height/3,1,1,0,c_white,1)
     
     draw_set_color(c_white);
     draw_set_font(font_yuan);

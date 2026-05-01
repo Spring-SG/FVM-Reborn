@@ -31,6 +31,10 @@ if not info_got{
 	ds_map_add(target_current_info,"level",global.save_data.unlocked_cards[info_index].level)
 	ds_map_add(target_current_info,"shape",global.save_data.unlocked_cards[info_index].shape)
 	ds_map_add(target_current_info,"skill",global.save_data.unlocked_cards[info_index].skill)
+	if array_length(get_card_attire_list(card_id)) > 0{
+		var inst2 = instance_create_depth(x+520,y,depth-1,obj_card_attire_menu)
+		inst2.target_card_id = card_id
+	}
 	info_got = 1
 }
 draw_text(x,y-70,string(target_current_info[? "level"]))
