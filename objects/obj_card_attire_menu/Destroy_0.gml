@@ -1,0 +1,1 @@
+instance_destroy(obj_card_attire_select_btn)

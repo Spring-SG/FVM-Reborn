@@ -4,3 +4,4 @@ if (instance_exists(obj_text_input)) {
     instance_destroy(obj_text_input);
 }
 instance_destroy(obj_save_slot_select_btn)
+instance_destroy(obj_player_attire_select_btn)

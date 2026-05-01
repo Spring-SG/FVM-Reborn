@@ -41,6 +41,10 @@ for (var i = 0; i < array_length(buttons); i++) {
 							global.save_data.player.gold -= cost
 							unlock_gem(target_item)
 						}
+						else if btn_type == "attire"{
+							global.save_data.player.gold -= cost
+							unlock_attire(target_item)
+						}
 						else if btn_type == "item"{
 							global.save_data.player.gold -= cost
 							if target_item == "card_slot" && global.save_data.unlocked_items.max_slot < 18{

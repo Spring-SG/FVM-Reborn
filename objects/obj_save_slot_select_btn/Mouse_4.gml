@@ -16,6 +16,8 @@
 	}
 
 	if (config_key == "save_slot"){
+		save_file(global.save_slot)
 		global.save_slot = state
 		load_file(global.save_slot)
+		global.gui_stack.to(room_menu)
 	}

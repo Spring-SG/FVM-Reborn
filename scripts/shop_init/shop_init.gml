@@ -35,4 +35,21 @@ function shop_init(){
 	register_goods("strength_gem",{"type":"gem","cost":"50000","unlock_item_id":"strength_gem","description":"蓄力宝石：增加周围卡片伤害","display_name":"蓄力宝石"})
 	register_goods("ice_spoon_crossbow",{"type":"weapon","cost":"20000","unlock_item_id":"ice_spoon_crossbow","description":"冰勺弩枪：投掷减速冰鸡蛋","display_name":"冰勺弩枪"})
 	register_goods("poseidon_dart_gun",{"type":"weapon","cost":"80000","unlock_item_id":"poseidon_dart_gun","description":"海神镖枪：发射两个追踪飞镖攻击敌人","display_name":"海神镖枪"})
+	
+	register_goods("ice_egg_pisces",{"type":"card_attire","cost":"50000","unlock_item_id":"ice_egg_pisces","description":"冰煮蛋器投手的双鱼座精灵时装","display_name":"冰蛋星座时装"})
+	register_goods("water_pipe_libra",{"type":"card_attire","cost":"50000","unlock_item_id":"water_pipe_libra","description":"双向水管的天秤座精灵时装","display_name":"水管星座时装"})
+	register_goods("wine_rack_sagittarius",{"type":"card_attire","cost":"50000","unlock_item_id":"wine_rack_sagittarius","description":"三线酒架的射手座精灵时装","display_name":"酒架星座时装"})
+	register_goods("brazier_taurus",{"type":"card_attire","cost":"50000","unlock_item_id":"brazier_taurus","description":"火盆的金牛座精灵时装","display_name":"火盆星座时装"})
+	register_goods("large_fire_gemini",{"type":"card_attire","cost":"50000","unlock_item_id":"large_fire_gemini","description":"大火炉的双子座精灵时装","display_name":"大火星座时装"})
+	register_goods("takoyaki_cancer",{"type":"card_attire","cost":"50000","unlock_item_id":"takoyaki_cancer","description":"章鱼烧的巨蟹座精灵时装","display_name":"章鱼星座时装"})
+	register_goods("gatling_popcorn",{"type":"card_attire","cost":"50000","unlock_item_id":"gatling_popcorn","description":"机枪小笼包的玉蜀黍时装","display_name":"机枪玉米时装"})
+	register_goods("rotate_leo",{"type":"card_attire","cost":"50000","unlock_item_id":"rotate_leo","description":"旋转咖啡喷壶的狮子座精灵时装","display_name":"旋转星座时装"})
+	register_goods("melon_virgo",{"type":"card_attire","cost":"50000","unlock_item_id":"melon_virgo","description":"瓜皮护罩的处女座精灵时装","display_name":"瓜皮星座时装"})
+	
+	register_goods("player_attire_1",{"type":"player_attire","cost":"50000","unlock_item_id":"player_attire_1","description":"角色的雪球兔兔时装","display_name":"雪球兔兔"})
+	register_goods("player_attire_2",{"type":"player_attire","cost":"50000","unlock_item_id":"player_attire_2","description":"角色的提拉米苏时装","display_name":"提拉米苏"})
+	register_goods("player_attire_3",{"type":"player_attire","cost":"50000","unlock_item_id":"player_attire_3","description":"角色的魔影圣衣时装","display_name":"魔影圣衣"})
+	register_goods("player_attire_4",{"type":"player_attire","cost":"50000","unlock_item_id":"player_attire_4","description":"角色的公会制服时装","display_name":"公会制服"})
+	register_goods("player_attire_5",{"type":"player_attire","cost":"50000","unlock_item_id":"player_attire_5","description":"角色的龙族传说时装","display_name":"龙族传说"})
+	register_goods("player_attire_6",{"type":"player_attire","cost":"50000","unlock_item_id":"player_attire_6","description":"角色的神奇精灵时装","display_name":"神奇精灵"})
 }

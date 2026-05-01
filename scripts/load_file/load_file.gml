@@ -40,8 +40,12 @@ function load_file(file_slot) {
 				if array_get_index(global.save_data.completed_levels,"abyss") != -1{
 					unlock_card("chocolate_pult",0,0,5)
 				}
+				global.save_data.version = 1.5
 			}
-			global.save_data.version = 1.5
+			if global.save_data.version == 1.5{
+				global.save_data.attires = []
+				global.save_data.version = 1.6
+			}
 		}
         return true;
     } catch(e) {
@@ -133,7 +137,8 @@ function reset_file(file_slot){
 					"state":"new"
 				}
 			],
-			"completed_tasks":[]
+			"completed_tasks":[],
+			"attires":[]
         };
 	save_file(file_slot)
 }

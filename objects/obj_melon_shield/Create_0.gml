@@ -23,6 +23,18 @@ if shape == 2{
 	inner_inst.y -= 5
 }
 sprite_index = sprite_list[0]
+if card_equipped_attire_id(plant_id) != -1{
+	var spr_list = get_attire_info(card_equipped_attire_id(plant_id)).outer_spr
+	sprite_list = spr_list[shape]
+	var inner_spr_list = get_attire_info(card_equipped_attire_id(plant_id)).inner_spr
+	inner_inst.sprite_index = inner_spr_list[shape]
+	if card_equipped_attire_id(plant_id) == "melon_virgo"{
+		inner_inst.y = y - 42
+		if shape == 0{
+			inner_inst.y += 4
+		}
+	}
+}
 idle_anim = 10
 flash_speed = 5
 plant_type = "shield_outer"

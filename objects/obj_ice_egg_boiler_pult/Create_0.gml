@@ -16,6 +16,11 @@ else if shape == 2{
 	sprite_index = spr_ice_egg_boiler_pult_2
 }
 
+if card_equipped_attire_id(plant_id) != -1{
+	var spr_list = get_attire_info(card_equipped_attire_id(plant_id)).spr
+	sprite_index = spr_list[shape]
+}
+
 // ========== 特定属性默认值 ==========
 
 attack_anim = 13;

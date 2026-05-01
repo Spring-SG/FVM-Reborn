@@ -7,7 +7,7 @@ if hp <= 0 && state != ENEMY_STATE.DEAD{
 
 event_inherited();
 
-if global.is_paused || is_frozen || is_stun{
+if global.is_paused || is_frozen || is_stun || is_scare{
 	exit
 }
 

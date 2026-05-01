@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"attire_info",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"attire_info",
+  "parent":{
+    "name":"Attire",
+    "path":"folders/脚本/Menu/Attire.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -20,6 +20,7 @@ material_init()
 craft_rule_init()
 task_init()
 map_object_init()
+attire_init()
 //battle_event_init()
 randomise()
 
@@ -157,8 +158,8 @@ if global.debug{
 //	global.save_data.unlocked_items.shovel = "gold"
 }
 
-var screen_width = display_get_width()
-var screen_height = display_get_height()
-window_set_size(screen_width*0.8,screen_height*0.8)
+var screen_width = display_get_width()/1920
+var screen_height = display_get_height()/1080
+window_set_size(1920*0.8*screen_width,1080*0.8*screen_width)
 
 global.gui_stack.to(room_menu)

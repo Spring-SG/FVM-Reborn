@@ -24,6 +24,9 @@ if btn_type == "confirm"{
 		global.save_data.unlocked_cards[info_index].skill = obj_card_edit_menu.target_current_info[? "skill"]
 	}
 	
+	with(obj_card_attire_menu){
+		event_user(0)
+	}
 	
 	save_file(global.save_slot)
 }
@@ -58,6 +61,9 @@ else if btn_type == "apply"{
 		}
 	}
 	
+	with(obj_card_attire_menu){
+		event_user(0)
+	}
 	
 	save_file(global.save_slot)
 }
