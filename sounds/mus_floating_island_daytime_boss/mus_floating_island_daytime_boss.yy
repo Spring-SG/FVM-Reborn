@@ -1,0 +1,26 @@
+{
+  "$GMSound":"v2",
+  "%Name":"mus_floating_island_daytime_boss",
+  "audioGroupId":{
+    "name":"music",
+    "path":"audiogroups/music",
+  },
+  "bitDepth":1,
+  "channelFormat":0,
+  "compression":0,
+  "compressionQuality":4,
+  "conversionMode":0,
+  "duration":65.14939,
+  "exportDir":"",
+  "name":"mus_floating_island_daytime_boss",
+  "parent":{
+    "name":"Battle BGM",
+    "path":"folders/声音/Battle BGM.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"mus_floating_island_daytime_boss.mp3",
+  "volume":1.0,
+}

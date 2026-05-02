@@ -57,7 +57,7 @@ function load_file(file_slot) {
 function reset_file(file_slot){
 	//重置到初始存档
 	global.save_data = {
-            "version": 1.5,
+            "version": 1.6,
             "player": {
                 "gold": 0,
                 "level": 1,
