@@ -4,7 +4,7 @@
   "bboxMode":0,
   "bbox_bottom":1079,
   "bbox_left":0,
-  "bbox_right":1714,
+  "bbox_right":1713,
   "bbox_top":0,
   "collisionKind":1,
   "collisionTolerance":0,
@@ -12,14 +12,14 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"v1","%Name":"89b4e073-7c8e-4ceb-988b-cf12b291976f","name":"89b4e073-7c8e-4ceb-988b-cf12b291976f","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"a45d35a3-5458-40ce-83c8-9dcd9945085f","name":"a45d35a3-5458-40ce-83c8-9dcd9945085f","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,
   "height":1080,
   "HTile":false,
   "layers":[
-    {"$GMImageLayer":"","%Name":"4421313b-0be6-4953-b503-08acfe530aa3","blendMode":0,"displayName":"default","isLocked":false,"name":"4421313b-0be6-4953-b503-08acfe530aa3","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
+    {"$GMImageLayer":"","%Name":"56b677ce-da30-4ce6-bca2-8e19eed6ccb3","blendMode":0,"displayName":"default","isLocked":false,"name":"56b677ce-da30-4ce6-bca2-8e19eed6ccb3","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
   "name":"spr_floating_island",
   "nineSlice":null,
@@ -69,8 +69,8 @@
     "tracks":[
       {"$GMSpriteFramesTrack":"","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"$KeyframeStore<SpriteFrameKeyframe>":"","Keyframes":[
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"89b4e073-7c8e-4ceb-988b-cf12b291976f","path":"sprites/spr_floating_island/spr_floating_island.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"398d6de0-6822-4e2a-b7c9-1109172056b5","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"a45d35a3-5458-40ce-83c8-9dcd9945085f","path":"sprites/spr_floating_island/spr_floating_island.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"980f7e2b-8377-47ab-9ef9-f8b50974127a","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange":null,
@@ -86,5 +86,5 @@
   },
   "type":0,
   "VTile":false,
-  "width":1715,
+  "width":1714,
 }
