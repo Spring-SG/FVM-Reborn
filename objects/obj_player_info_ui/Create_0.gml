@@ -14,7 +14,7 @@ _avatar.set_sprite(kDefaultAvatar)
     .set_size(avatar_size, avatar_size)
     .set_radius(avatar_size / 2)
     .set_sprite_offset(64, 64)
-    .set_sprite_scale(1.5)
+    .set_sprite_scale(1)
     .set_use_custom_scale(true)
     .finish_init()
 self.avatar = _avatar
