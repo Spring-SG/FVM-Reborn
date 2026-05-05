@@ -12,6 +12,20 @@ if (first_frame) {
     
     current_offset = initial_offset;
     
+    // 预检初始方向，防止在边界处继续向外侧移动而突破限制
+    // 同时如果处于该极端情况，视作已抵达边界，直接进入边界停留倒计时
+    if (current_offset >= move_distance && move_direction > 0) {
+        move_direction = -1;
+        state = "idle";
+        idle_timer = 0;
+        initial_idle_done = true;
+    } else if (current_offset <= -move_distance && move_direction < 0) {
+        move_direction = 1;
+        state = "idle";
+        idle_timer = 0;
+        initial_idle_done = true;
+    }
+    
     var is_axis_x = (variable_instance_exists(id, "move_axis") && move_axis == "x");
     var visual_offset_x = is_axis_x ? current_offset * global.grid_cell_size_x : 0;
     var visual_offset_y = (!is_axis_x) ? current_offset * global.grid_cell_size_y : 0;
@@ -100,7 +114,9 @@ else if (state == "moving") {
                         for (var i = 0; i < ds_list_size(old_list); i++) {
                             var plant = ds_list_find_value(old_list, i);
                             ds_list_add(new_list, plant);
-                            if (instance_exists(plant)) plant.grid_row = target_r;
+                            if (instance_exists(plant)) {
+                                plant.grid_row = target_r;
+                            }
                         }
                         ds_list_clear(old_list);
                         ds_grid_set(global.grid_plants, c, target_r, new_list);
@@ -124,7 +140,9 @@ else if (state == "moving") {
                         for (var i = 0; i < ds_list_size(old_list); i++) {
                             var plant = ds_list_find_value(old_list, i);
                             ds_list_add(new_list, plant);
-                            if (instance_exists(plant)) plant.grid_col = target_c;
+                            if (instance_exists(plant)) {
+                                plant.grid_col = target_c;
+                            }
                         }
                         ds_list_clear(old_list);
                         ds_grid_set(global.grid_plants, target_c, r, new_list);
@@ -195,6 +213,13 @@ else if (state == "moving") {
                         if (variable_instance_exists(plant, "target_x")) plant.target_x += visual_delta_x;
                         if (variable_instance_exists(plant, "target_y")) plant.target_y += visual_delta_y;
                         
+                        var grid_pos = get_grid_position_from_world(plant.x, plant.y);
+                        plant.grid_col = grid_pos.col;
+                        plant.grid_row = grid_pos.row;
+                        if (variable_instance_exists(plant, "plant_type")) {
+                            plant.depth = calculate_plant_depth(plant.grid_col, plant.grid_row, plant.plant_type);
+                        }
+                        
                         if (variable_instance_exists(plant, "banding_star_obj") && instance_exists(plant.banding_star_obj)) {
                             plant.banding_star_obj.x += visual_delta_x;
                             plant.banding_star_obj.y += visual_delta_y;
@@ -208,6 +233,10 @@ else if (state == "moving") {
                                     y += visual_delta_y;
                                     if (variable_instance_exists(id, "target_x")) target_x += visual_delta_x;
                                     if (variable_instance_exists(id, "target_y")) target_y += visual_delta_y;
+                                    
+                                    if (object_index == obj_melon_shield_inner && instance_exists(parent_plant)) {
+                                        depth = calculate_plant_depth(parent_plant.grid_col, parent_plant.grid_row, "shield_inner");
+                                    }
                                 }
                             }
                         }
