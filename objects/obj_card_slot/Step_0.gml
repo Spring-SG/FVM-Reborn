@@ -190,8 +190,7 @@ if (is_selected) {
 			
 			// 如果有target_card，替换底座卡片
 			if (target_card_id != undefined && target_card_id != "none") {
-				// 销毁目标卡片
-				for (var i = 0; i < ds_list_size(plant_list); i++) {
+				for (var i = ds_list_size(plant_list) - 1; i >= 0; i--) {
 					var plant = ds_list_find_value(plant_list, i);
 					if (instance_exists(plant) && variable_instance_exists(plant, "plant_id") && plant.plant_id == target_card_id) {
 						card_destroyed(plant);
@@ -202,9 +201,9 @@ if (is_selected) {
 			}
 			// 通用替换逻辑（替换同类植物或开启替换模式）
 			else if global.replace_placement{
-				for (var i = 0; i < ds_list_size(plant_list); i++) {
+				for (var i = ds_list_size(plant_list) - 1; i >= 0; i--) {
 					var plant = ds_list_find_value(plant_list, i);
-					if (plant.plant_type == card_data[? "plant_type"] && plant.plant_id != "player" && plant.plant_type != "coffee") {
+					if (instance_exists(plant) && plant.plant_type == card_data[? "plant_type"] && plant.plant_id != "player" && plant.plant_type != "coffee") {
 						card_destroyed(plant);
 						instance_destroy(plant);
 					}

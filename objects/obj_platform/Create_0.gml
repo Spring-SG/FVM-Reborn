@@ -1,4 +1,4 @@
-﻿// 平台的基本网格属性（移动范围）
+// 平台的基本网格属性（移动范围）
 start_col = 0;          // 平台起始列
 start_row = 0;          // 平台起始行
 width = 1;              // 宽度（占多少列）
@@ -24,6 +24,7 @@ move_speed = 0.01;      // 每帧移动进度（0.01 表示 100帧走完1格）
 // 标志位
 first_frame = true;     // 用于在第一帧初始化网格地形
 initial_idle_done = false; // 初始停顿是否完成
+step_migrated = true;   // 当前步骤是否已迁移grid_plants
 
 // 视觉位移偏差记录，供预览和放置逻辑读取
 visual_x_shift = 0;
