@@ -10,23 +10,33 @@ if (first_frame) {
         }
     }
     
-    // 初始位移
     current_offset = initial_offset;
     
-    // 调整平台初始视觉位置
+    // 预检初始方向，防止在边界处继续向外侧移动而突破限制
+    // 同时如果处于该极端情况，视作已抵达边界，直接进入边界停留倒计时
+    if (current_offset >= move_distance && move_direction > 0) {
+        move_direction = -1;
+        state = "idle";
+        idle_timer = 0;
+        initial_idle_done = true;
+    } else if (current_offset <= -move_distance && move_direction < 0) {
+        move_direction = 1;
+        state = "idle";
+        idle_timer = 0;
+        initial_idle_done = true;
+    }
+    
     var is_axis_x = (variable_instance_exists(id, "move_axis") && move_axis == "x");
     var visual_offset_x = is_axis_x ? current_offset * global.grid_cell_size_x : 0;
     var visual_offset_y = (!is_axis_x) ? current_offset * global.grid_cell_size_y : 0;
     x += visual_offset_x;
     y += visual_offset_y;
     
-    // 计算初始位置的行列
     var c_offset = is_axis_x ? current_offset : 0;
     var r_offset = (!is_axis_x) ? current_offset : 0;
     var cur_start_c = start_col + c_offset;
     var cur_start_r = start_row + r_offset;
     
-    // 初始化初始位置的地形
     for (var c = cur_start_c; c < cur_start_c + width; c++) {
         for (var r = cur_start_r; r < cur_start_r + length; r++) {
             if (r < global.grid_rows && c < global.grid_cols) {
@@ -40,11 +50,7 @@ if (global.is_paused) {
     exit; 
 }
 
-// 计算动态起点的行列（兼容 x 与 y 轴偏移）
-var c_offset = (variable_instance_exists(id, "move_axis") && move_axis == "x") ? current_offset : 0;
-var r_offset = (!variable_instance_exists(id, "move_axis") || move_axis == "y") ? current_offset : 0;
-var cur_start_c = start_col + c_offset;
-var cur_start_r = start_row + r_offset;
+var is_axis_x = (variable_instance_exists(id, "move_axis") && move_axis == "x");
 
 if (state == "idle") {
     idle_timer++;
@@ -53,76 +59,22 @@ if (state == "idle") {
         state = "moving";
         idle_timer = 0;
         initial_idle_done = true;
+        move_progress = 0;
+        step_migrated = false;
     }
 } 
 else if (state == "moving") {
-    move_progress += move_speed;
-    
-    // 计算这一步的视觉位移 delta，并应用给植物
-    var delta_progress = move_speed;
-    var is_finish = false;
-    
-    if (move_progress >= 1.0) {
-        delta_progress -= (move_progress - 1.0); // 截断超出的部分
-        move_progress = 1.0;
-        is_finish = true;
-    }
-    
-    var is_axis_x = (variable_instance_exists(id, "move_axis") && move_axis == "x");
-    var visual_delta_x = is_axis_x ? delta_progress * move_direction * global.grid_cell_size_x : 0;
-    var visual_delta_y = !is_axis_x ? delta_progress * move_direction * global.grid_cell_size_y : 0;
-    
-    // 更新平台整体记录的总偏差（用于修正放置位置和预览）
-    visual_x_shift = is_axis_x ? (move_progress * move_direction * global.grid_cell_size_x) : 0;
-    visual_y_shift = (!is_axis_x) ? (move_progress * move_direction * global.grid_cell_size_y) : 0;
-    
-    // 平台本身的贴图位移
-    x += visual_delta_x;
-    y += visual_delta_y;
-    
-    // 带领当前区域内的植物同步位移
-    for (var c = cur_start_c; c < cur_start_c + width; c++) {
-        for (var r = cur_start_r; r < cur_start_r + length; r++) {
-            if (r >= 0 && r < global.grid_rows && c >= 0 && c < global.grid_cols) {
-                var plant_list = ds_grid_get(global.grid_plants, c, r);
-                for (var i = 0; i < ds_list_size(plant_list); i++) {
-                    var plant = ds_list_find_value(plant_list, i);
-                    if (instance_exists(plant)) {
-                        plant.x += visual_delta_x;
-                        plant.y += visual_delta_y;
-                        if (variable_instance_exists(plant, "target_x")) plant.target_x += visual_delta_x;
-                        if (variable_instance_exists(plant, "target_y")) plant.target_y += visual_delta_y;
-                        
-                        // 星级同步移动
-                        if (variable_instance_exists(plant, "banding_star_obj") && instance_exists(plant.banding_star_obj)) {
-                            plant.banding_star_obj.x += visual_delta_x;
-                            plant.banding_star_obj.y += visual_delta_y;
-                        }
-                        
-                        
-                        // 其他附属特效和武器（例如玩家的盾牌、武器、其他带有 parent_plant 或 parent_player 的特效）
-                        with (all) {
-                            if ((variable_instance_exists(id, "parent_plant") && parent_plant == plant) || 
-                                (variable_instance_exists(id, "parent_player") && parent_player == plant)) {
-                                if (id != plant) {
-                                    x += visual_delta_x;
-                                    y += visual_delta_y;
-                                    if (variable_instance_exists(id, "target_x")) target_x += visual_delta_x;
-                                    if (variable_instance_exists(id, "target_y")) target_y += visual_delta_y;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    // 【逻辑同步】
-    if (is_finish) {
-        // 完成1格迁移前，先恢复旧区域边缘的地形为原本属性
+    // 每步移动开始时迁移grid_plants
+    if (!step_migrated) {
+        step_migrated = true;
+        
+        var c_offset = is_axis_x ? current_offset : 0;
+        var r_offset = (!is_axis_x) ? current_offset : 0;
+        var cur_start_c = start_col + c_offset;
+        var cur_start_r = start_row + r_offset;
+        
+        // 1. 恢复离开边缘的地形
         if (!is_axis_x) {
-            // Y移动：如果是向下移动，离开的是顶部的 1 行；向上移动，离开的是底部的 1 行
             var leave_r = (move_direction > 0) ? cur_start_r : (cur_start_r + length - 1);
             for (var c = cur_start_c; c < cur_start_c + width; c++) {
                 if (leave_r >= 0 && leave_r < global.grid_rows && c >= 0 && c < global.grid_cols) {
@@ -134,7 +86,6 @@ else if (state == "moving") {
                 }
             }
         } else {
-            // X移动：如果是向右移动，离开的是左边的 1 列；向左移动，离开的是右边的 1 列
             var leave_c = (move_direction > 0) ? cur_start_c : (cur_start_c + width - 1);
             for (var r = cur_start_r; r < cur_start_r + length; r++) {
                 if (r >= 0 && r < global.grid_rows && leave_c >= 0 && leave_c < global.grid_cols) {
@@ -147,9 +98,8 @@ else if (state == "moving") {
             }
         }
         
-        // 完成1格迁移，数组搬家
+        // 2. 迁移grid_plants
         if (!is_axis_x) {
-            // [Y轴移动搬家逻辑]
             var r_start = (move_direction > 0) ? (cur_start_r + length - 1) : cur_start_r;
             var r_end   = (move_direction > 0) ? (cur_start_r - 1) : (cur_start_r + length);
             var r_step  = -move_direction;
@@ -164,15 +114,18 @@ else if (state == "moving") {
                         for (var i = 0; i < ds_list_size(old_list); i++) {
                             var plant = ds_list_find_value(old_list, i);
                             ds_list_add(new_list, plant);
-                            if (instance_exists(plant)) plant.row = target_r;
+                            if (instance_exists(plant)) {
+                                plant.grid_row = target_r;
+                            }
                         }
                         ds_list_clear(old_list);
+                        ds_grid_set(global.grid_plants, c, target_r, new_list);
+                        ds_grid_set(global.grid_plants, c, r, old_list);
                     }
                 }
             }
         } 
         else {
-            // [X轴移动搬家逻辑]
             var c_start = (move_direction > 0) ? (cur_start_c + width - 1) : cur_start_c;
             var c_end   = (move_direction > 0) ? (cur_start_c - 1) : (cur_start_c + width);
             var c_step  = -move_direction;
@@ -187,27 +140,27 @@ else if (state == "moving") {
                         for (var i = 0; i < ds_list_size(old_list); i++) {
                             var plant = ds_list_find_value(old_list, i);
                             ds_list_add(new_list, plant);
-                            if (instance_exists(plant)) plant.col = target_c; 
-                            // 注意：根据游戏引擎实际逻辑，有些系统只依赖row，但如果原逻辑拥有col，这里保证严谨设置
+                            if (instance_exists(plant)) {
+                                plant.grid_col = target_c;
+                            }
                         }
                         ds_list_clear(old_list);
+                        ds_grid_set(global.grid_plants, target_c, r, new_list);
+                        ds_grid_set(global.grid_plants, c, r, old_list);
                     }
                 }
             }
         }
         
+        // 3. 更新current_offset
         current_offset += move_direction;
-        move_progress = 0;
-        visual_x_shift = 0;
-        visual_y_shift = 0;
         
-        // 重新计算占据后的区域并设置为 "normal" (无论是否是极限边缘)
+        // 4. 设置新进入边缘的地形
         var new_c_offset = is_axis_x ? current_offset : 0;
         var new_r_offset = (!is_axis_x) ? current_offset : 0;
         var new_cur_start_c = start_col + new_c_offset;
         var new_cur_start_r = start_row + new_r_offset;
         
-        // 将新的占用区域设为 "normal"
         for (var c = new_cur_start_c; c < new_cur_start_c + width; c++) {
             for (var r = new_cur_start_r; r < new_cur_start_r + length; r++) {
                 if (r >= 0 && r < global.grid_rows && c >= 0 && c < global.grid_cols) {
@@ -216,15 +169,94 @@ else if (state == "moving") {
             }
         }
         
-        // 检查是否到达极限边界
-if (abs(current_offset) >= move_distance || current_offset == 0) {
-    state = "idle";
-    move_direction *= -1; // 反转方向
-    initial_idle_done = true; // 确保后续使用边界停留时间
-}
+        // 5. 设置初始visual_shift
+        visual_x_shift = is_axis_x ? (-move_direction * global.grid_cell_size_x) : 0;
+        visual_y_shift = (!is_axis_x) ? (-move_direction * global.grid_cell_size_y) : 0;
+    }
+    
+    // 移动动画
+    move_progress += move_speed;
+    
+    var delta_progress = move_speed;
+    var is_finish = false;
+    
+    if (move_progress >= 1.0) {
+        delta_progress -= (move_progress - 1.0);
+        move_progress = 1.0;
+        is_finish = true;
+    }
+    
+    var visual_delta_x = is_axis_x ? delta_progress * move_direction * global.grid_cell_size_x : 0;
+    var visual_delta_y = !is_axis_x ? delta_progress * move_direction * global.grid_cell_size_y : 0;
+    
+    visual_x_shift = is_axis_x ? ((move_progress - 1) * move_direction * global.grid_cell_size_x) : 0;
+    visual_y_shift = (!is_axis_x) ? ((move_progress - 1) * move_direction * global.grid_cell_size_y) : 0;
+    
+    x += visual_delta_x;
+    y += visual_delta_y;
+    
+    // 带领植物同步位移
+    var move_c_offset = is_axis_x ? current_offset : 0;
+    var move_r_offset = (!is_axis_x) ? current_offset : 0;
+    var move_cur_start_c = start_col + move_c_offset;
+    var move_cur_start_r = start_row + move_r_offset;
+    
+    for (var c = move_cur_start_c; c < move_cur_start_c + width; c++) {
+        for (var r = move_cur_start_r; r < move_cur_start_r + length; r++) {
+            if (r >= 0 && r < global.grid_rows && c >= 0 && c < global.grid_cols) {
+                var plant_list = ds_grid_get(global.grid_plants, c, r);
+                for (var i = 0; i < ds_list_size(plant_list); i++) {
+                    var plant = ds_list_find_value(plant_list, i);
+                    if (instance_exists(plant)) {
+                        plant.x += visual_delta_x;
+                        plant.y += visual_delta_y;
+                        if (variable_instance_exists(plant, "target_x")) plant.target_x += visual_delta_x;
+                        if (variable_instance_exists(plant, "target_y")) plant.target_y += visual_delta_y;
+                        
+                        var grid_pos = get_grid_position_from_world(plant.x, plant.y);
+                        plant.grid_col = grid_pos.col;
+                        plant.grid_row = grid_pos.row;
+                        if (variable_instance_exists(plant, "plant_type")) {
+                            plant.depth = calculate_plant_depth(plant.grid_col, plant.grid_row, plant.plant_type);
+                        }
+                        
+                        if (variable_instance_exists(plant, "banding_star_obj") && instance_exists(plant.banding_star_obj)) {
+                            plant.banding_star_obj.x += visual_delta_x;
+                            plant.banding_star_obj.y += visual_delta_y;
+                        }
+                        
+                        with (all) {
+                            if ((variable_instance_exists(id, "parent_plant") && parent_plant == plant) || 
+                                (variable_instance_exists(id, "parent_player") && parent_player == plant)) {
+                                if (id != plant) {
+                                    x += visual_delta_x;
+                                    y += visual_delta_y;
+                                    if (variable_instance_exists(id, "target_x")) target_x += visual_delta_x;
+                                    if (variable_instance_exists(id, "target_y")) target_y += visual_delta_y;
+                                    
+                                    if (object_index == obj_melon_shield_inner && instance_exists(parent_plant)) {
+                                        depth = calculate_plant_depth(parent_plant.grid_col, parent_plant.grid_row, "shield_inner");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    if (is_finish) {
+        move_progress = 0;
+        visual_x_shift = 0;
+        visual_y_shift = 0;
+        
+        if (abs(current_offset) >= move_distance || current_offset == 0) {
+            state = "idle";
+            move_direction *= -1;
+            initial_idle_done = true;
+        } else {
+            step_migrated = false;
+        }
     }
 }
-
-
-
-

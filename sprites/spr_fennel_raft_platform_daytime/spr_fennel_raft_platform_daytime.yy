@@ -25,8 +25,8 @@
   "nineSlice":null,
   "origin":0,
   "parent":{
-    "name":"Map Object",
-    "path":"folders/精灵/Map Object.yy",
+    "name":"platform",
+    "path":"folders/精灵/Map Object/platform.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",
