@@ -12,14 +12,14 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"v1","%Name":"56de3b34-e751-457a-af2d-7fc8e34e0ff8","name":"56de3b34-e751-457a-af2d-7fc8e34e0ff8","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"ddc4e8c6-a634-4835-80d6-7a818fea00a3","name":"ddc4e8c6-a634-4835-80d6-7a818fea00a3","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,
   "height":119,
   "HTile":false,
   "layers":[
-    {"$GMImageLayer":"","%Name":"c4e0a3f8-07f6-47a2-b501-34d27ec08ee1","blendMode":0,"displayName":"default","isLocked":false,"name":"c4e0a3f8-07f6-47a2-b501-34d27ec08ee1","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
+    {"$GMImageLayer":"","%Name":"07bd6c60-3f87-477a-b5d0-8660b8a007b8","blendMode":0,"displayName":"default","isLocked":false,"name":"07bd6c60-3f87-477a-b5d0-8660b8a007b8","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
   "name":"spr_spices_central_isle_platform_1",
   "nineSlice":null,
@@ -69,14 +69,14 @@
     "tracks":[
       {"$GMSpriteFramesTrack":"","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"$KeyframeStore<SpriteFrameKeyframe>":"","Keyframes":[
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"56de3b34-e751-457a-af2d-7fc8e34e0ff8","path":"sprites/spr_spices_central_isle_platform_1/spr_spices_central_isle_platform_1.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"56259cf8-de88-4fce-8c4f-34367eddc6e7","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"ddc4e8c6-a634-4835-80d6-7a818fea00a3","path":"sprites/spr_spices_central_isle_platform_1/spr_spices_central_isle_platform_1.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"3693da96-782f-4b6f-ac1e-5ad6c1a77d82","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange":null,
     "volume":1.0,
-    "xorigin":-3,
-    "yorigin":3,
+    "xorigin":-2,
+    "yorigin":2,
   },
   "swatchColours":null,
   "swfPrecision":0.5,

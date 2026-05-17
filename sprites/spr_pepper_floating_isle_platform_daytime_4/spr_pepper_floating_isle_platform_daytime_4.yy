@@ -12,14 +12,14 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"v1","%Name":"25c498ac-a6c7-4121-abdd-5655839c594a","name":"25c498ac-a6c7-4121-abdd-5655839c594a","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"7053a13e-f0e0-40e0-a6fe-069e834cce7a","name":"7053a13e-f0e0-40e0-a6fe-069e834cce7a","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,
   "height":340,
   "HTile":false,
   "layers":[
-    {"$GMImageLayer":"","%Name":"c4bf25eb-7270-4d75-a0ad-ab06239c71f3","blendMode":0,"displayName":"default","isLocked":false,"name":"c4bf25eb-7270-4d75-a0ad-ab06239c71f3","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
+    {"$GMImageLayer":"","%Name":"be0366ce-5472-4bbe-a3d6-dbcd0c36b112","blendMode":0,"displayName":"default","isLocked":false,"name":"be0366ce-5472-4bbe-a3d6-dbcd0c36b112","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
   "name":"spr_pepper_floating_isle_platform_daytime_4",
   "nineSlice":null,
@@ -69,14 +69,14 @@
     "tracks":[
       {"$GMSpriteFramesTrack":"","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"$KeyframeStore<SpriteFrameKeyframe>":"","Keyframes":[
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"25c498ac-a6c7-4121-abdd-5655839c594a","path":"sprites/spr_pepper_floating_isle_platform_daytime_4/spr_pepper_floating_isle_platform_daytime_4.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"833efaeb-ca78-43ca-b047-83301534f1e5","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"7053a13e-f0e0-40e0-a6fe-069e834cce7a","path":"sprites/spr_pepper_floating_isle_platform_daytime_4/spr_pepper_floating_isle_platform_daytime_4.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"253bc1dd-32e4-45e9-8277-669584223327","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange":null,
     "volume":1.0,
-    "xorigin":-10,
-    "yorigin":-5,
+    "xorigin":-8,
+    "yorigin":-4,
   },
   "swatchColours":null,
   "swfPrecision":0.5,

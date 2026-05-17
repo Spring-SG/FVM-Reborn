@@ -2,7 +2,7 @@
   "$GMSprite":"v2",
   "%Name":"spr_bayleaf_airport_platform_night",
   "bboxMode":0,
-  "bbox_bottom":126,
+  "bbox_bottom":125,
   "bbox_left":0,
   "bbox_right":469,
   "bbox_top":0,
@@ -12,14 +12,14 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"v1","%Name":"feba19cc-5c04-4ce7-8872-e25db8939b8c","name":"feba19cc-5c04-4ce7-8872-e25db8939b8c","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"d41aab17-8f70-46cc-9ffb-9d0a85e3f7e2","name":"d41aab17-8f70-46cc-9ffb-9d0a85e3f7e2","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,
-  "height":127,
+  "height":126,
   "HTile":false,
   "layers":[
-    {"$GMImageLayer":"","%Name":"15183f09-c5a0-4366-ae70-475f29e384de","blendMode":0,"displayName":"default","isLocked":false,"name":"15183f09-c5a0-4366-ae70-475f29e384de","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
+    {"$GMImageLayer":"","%Name":"b9459e34-5d1a-4e32-ac06-40dd4ff6c935","blendMode":0,"displayName":"default","isLocked":false,"name":"b9459e34-5d1a-4e32-ac06-40dd4ff6c935","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
   "name":"spr_bayleaf_airport_platform_night",
   "nineSlice":null,
@@ -69,13 +69,13 @@
     "tracks":[
       {"$GMSpriteFramesTrack":"","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"$KeyframeStore<SpriteFrameKeyframe>":"","Keyframes":[
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"feba19cc-5c04-4ce7-8872-e25db8939b8c","path":"sprites/spr_bayleaf_airport_platform_night/spr_bayleaf_airport_platform_night.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"6f976590-1f86-45c1-9ddd-1813f6722ed8","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"d41aab17-8f70-46cc-9ffb-9d0a85e3f7e2","path":"sprites/spr_bayleaf_airport_platform_night/spr_bayleaf_airport_platform_night.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"0a509284-af90-43b5-a5d6-6c851317fcd2","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange":null,
     "volume":1.0,
-    "xorigin":25,
+    "xorigin":21,
     "yorigin":0,
   },
   "swatchColours":null,

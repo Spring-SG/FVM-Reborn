@@ -31,4 +31,4 @@ visual_x_shift = 0;
 visual_y_shift = 0;
 
 // 深度设定：确保踩在地板或水面上方，所有的植物下面
-depth = -5;
+depth = 0;

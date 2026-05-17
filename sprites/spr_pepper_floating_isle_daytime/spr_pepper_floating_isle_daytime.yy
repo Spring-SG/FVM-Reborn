@@ -12,14 +12,14 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"v1","%Name":"074ac467-e17e-4b69-bc43-76ffd05a633e","name":"074ac467-e17e-4b69-bc43-76ffd05a633e","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"c1d1d48b-bbc4-4971-be3f-d103a8ef7bf4","name":"c1d1d48b-bbc4-4971-be3f-d103a8ef7bf4","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,
   "height":1080,
   "HTile":false,
   "layers":[
-    {"$GMImageLayer":"","%Name":"c5fd629c-af45-4170-b97d-e1fe7c81c398","blendMode":0,"displayName":"default","isLocked":false,"name":"c5fd629c-af45-4170-b97d-e1fe7c81c398","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
+    {"$GMImageLayer":"","%Name":"66e68ce7-ca89-4bbf-b471-effa352aecf8","blendMode":0,"displayName":"default","isLocked":false,"name":"66e68ce7-ca89-4bbf-b471-effa352aecf8","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
   "name":"spr_pepper_floating_isle_daytime",
   "nineSlice":null,
@@ -69,8 +69,8 @@
     "tracks":[
       {"$GMSpriteFramesTrack":"","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"$KeyframeStore<SpriteFrameKeyframe>":"","Keyframes":[
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"074ac467-e17e-4b69-bc43-76ffd05a633e","path":"sprites/spr_pepper_floating_isle_daytime/spr_pepper_floating_isle_daytime.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"4794f568-8e05-446e-86c1-6170a9012cac","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"c1d1d48b-bbc4-4971-be3f-d103a8ef7bf4","path":"sprites/spr_pepper_floating_isle_daytime/spr_pepper_floating_isle_daytime.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"02c8b391-e850-493a-b8d5-b646f8c8ed7f","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange":null,

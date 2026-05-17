@@ -1005,8 +1005,8 @@ function task_init(){
 		register_task("main_level_29",
 			{
 				"type":"main_task",
-				"title":"未至约期",
-				"desc":"这个主线任务还没有开放。",
+				"title":"白日竹筏",
+				"desc":"茴香竹筏（日）",
 				"single_game":false,//非单局完成
 				"oneshot":false,//非一命完成
 				"task_unlock":"main_level_30",
@@ -1014,7 +1014,7 @@ function task_init(){
 					{
 						"type":"level_complete",
 						"target_level":"fennel_raft_daytime",
-						"desc":"请等待浮空岛开启",
+						"desc":"通关一次茴香竹筏（日）",
 						"require":1,
 					}
 				],
@@ -1022,16 +1022,541 @@ function task_init(){
 					{
 						"type":"item",
 						"item_id":"secret_spices",
-						"amount":1
+						"amount":150
 					},
 					{
 						"type":"item",
 						"item_id":"middle_crystal",
-						"amount":1
+						"amount":100
 					},
 					{
 						"type":"gold",
-						"amount":1
+						"amount":10000
+					}
+				]
+			}
+			
+		)
+		register_task("main_level_30",
+			{
+				"type":"main_task",
+				"title":"黑夜竹筏",
+				"desc":"茴香竹筏（夜）",
+				"single_game":false,//非单局完成
+				"oneshot":false,//非一命完成
+				"task_unlock":"main_level_31",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"fennel_raft_night",
+						"desc":"通关一次茴香竹筏（夜）",
+						"require":1,
+					}
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"secret_spices",
+						"amount":150
+					},
+					{
+						"type":"item",
+						"item_id":"middle_crystal",
+						"amount":100
+					},
+					{
+						"type":"gold",
+						"amount":10000
+					}
+				]
+			}
+			
+		)
+		register_task("main_level_31",
+			{
+				"type":"main_task",
+				"title":"白日断桥",
+				"desc":"孜然断桥（日）",
+				"single_game":false,//非单局完成
+				"oneshot":false,//非一命完成
+				"task_unlock":"main_level_32",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"cumin_bridge_daytime",
+						"desc":"通关一次孜然断桥（日）",
+						"require":1,
+					}
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"secret_spices",
+						"amount":200
+					},
+					{
+						"type":"item",
+						"item_id":"middle_crystal",
+						"amount":150
+					},
+					{
+						"type":"gold",
+						"amount":12000
+					}
+				]
+			}
+			
+		)
+		register_task("main_level_32",
+			{
+				"type":"main_task",
+				"title":"黑夜断桥",
+				"desc":"孜然断桥（夜）",
+				"single_game":false,//非单局完成
+				"oneshot":false,//非一命完成
+				"task_unlock":"main_level_33",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"cumin_bridge_night",
+						"desc":"通关一次孜然断桥（夜）",
+						"require":1,
+					}
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"secret_spices",
+						"amount":200
+					},
+					{
+						"type":"item",
+						"item_id":"middle_crystal",
+						"amount":150
+					},
+					{
+						"type":"gold",
+						"amount":12000
+					}
+				]
+			}
+			
+		)
+		register_task("main_level_33",
+			{
+				"type":"main_task",
+				"title":"卤料花园",
+				"desc":"卤料花园",
+				"single_game":false,//非单局完成
+				"oneshot":false,//非一命完成
+				"task_unlock":"main_level_34",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"marinade_garden",
+						"desc":"通关一次卤料花园",
+						"require":1,
+					}
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"secret_spices",
+						"amount":400
+					},
+					{
+						"type":"item",
+						"item_id":"middle_crystal",
+						"amount":300
+					},
+					{
+						"type":"gold",
+						"amount":24000
+					}
+				]
+			}
+			
+		)
+		register_task("main_level_34",
+			{
+				"type":"main_task",
+				"title":"白日月桂",
+				"desc":"月桂天空（日）",
+				"single_game":false,//非单局完成
+				"oneshot":false,//非一命完成
+				"task_unlock":"main_level_35",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"laurel_sky_daytime",
+						"desc":"通关一次月桂天空（日）",
+						"require":1,
+					}
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"royal_spices",
+						"amount":250
+					},
+					{
+						"type":"item",
+						"item_id":"middle_crystal",
+						"amount":200
+					},
+					{
+						"type":"gold",
+						"amount":14000
+					}
+				]
+			}
+			
+		)
+		register_task("main_level_35",
+			{
+				"type":"main_task",
+				"title":"黑夜月桂",
+				"desc":"月桂天空（夜）",
+				"single_game":false,//非单局完成
+				"oneshot":false,//非一命完成
+				"task_unlock":"main_level_36",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"laurel_sky_night",
+						"desc":"通关一次月桂天空（夜）",
+						"require":1,
+					}
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"royal_spices",
+						"amount":250
+					},
+					{
+						"type":"item",
+						"item_id":"middle_crystal",
+						"amount":200
+					},
+					{
+						"type":"gold",
+						"amount":14000
+					}
+				]
+			}
+			
+		)
+		register_task("main_level_36",
+			{
+				"type":"main_task",
+				"title":"白日空港",
+				"desc":"香叶空港（日）",
+				"single_game":false,//非单局完成
+				"oneshot":false,//非一命完成
+				"task_unlock":"main_level_37",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"bayleaf_airport_daytime",
+						"desc":"通关一次香叶空港（日）",
+						"require":1,
+					}
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"royal_spices",
+						"amount":300
+					},
+					{
+						"type":"item",
+						"item_id":"middle_crystal",
+						"amount":250
+					},
+					{
+						"type":"gold",
+						"amount":16000
+					}
+				]
+			}
+			
+		)
+		register_task("main_level_37",
+			{
+				"type":"main_task",
+				"title":"黑夜空港",
+				"desc":"香叶空港（夜）",
+				"single_game":false,//非单局完成
+				"oneshot":false,//非一命完成
+				"task_unlock":"main_level_38",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"bayleaf_airport_night",
+						"desc":"通关一次香叶空港（夜）",
+						"require":1,
+					}
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"royal_spices",
+						"amount":300
+					},
+					{
+						"type":"item",
+						"item_id":"middle_crystal",
+						"amount":250
+					},
+					{
+						"type":"gold",
+						"amount":16000
+					}
+				]
+			}
+			
+		)
+		register_task("main_level_38",
+			{
+				"type":"main_task",
+				"title":"香料飞船",
+				"desc":"香料飞船",
+				"single_game":false,//非单局完成
+				"oneshot":false,//非一命完成
+				"task_unlock":"main_level_39",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"spice_airship",
+						"desc":"通关一次香料飞船",
+						"require":1,
+					}
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"royal_spices",
+						"amount":600
+					},
+					{
+						"type":"item",
+						"item_id":"middle_crystal",
+						"amount":500
+					},
+					{
+						"type":"gold",
+						"amount":32000
+					}
+				]
+			}
+			
+		)
+		register_task("main_level_39",
+			{
+				"type":"main_task",
+				"title":"白日浮岛",
+				"desc":"花椒浮岛（日）",
+				"single_game":false,//非单局完成
+				"oneshot":false,//非一命完成
+				"task_unlock":"main_level_40",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"pepper_floating_isle_daytime",
+						"desc":"通关一次花椒浮岛（日）",
+						"require":1,
+					}
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"royal_spices",
+						"amount":350
+					},
+					{
+						"type":"item",
+						"item_id":"middle_crystal",
+						"amount":300
+					},
+					{
+						"type":"gold",
+						"amount":18000
+					}
+				]
+			}
+			
+		)
+		register_task("main_level_40",
+			{
+				"type":"main_task",
+				"title":"黑夜浮岛",
+				"desc":"花椒浮岛（夜）",
+				"single_game":false,//非单局完成
+				"oneshot":false,//非一命完成
+				"task_unlock":"main_level_41",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"pepper_floating_isle_night",
+						"desc":"通关一次花椒浮岛（夜）",
+						"require":1,
+					}
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"royal_spices",
+						"amount":350
+					},
+					{
+						"type":"item",
+						"item_id":"middle_crystal",
+						"amount":300
+					},
+					{
+						"type":"gold",
+						"amount":18000
+					}
+				]
+			}
+			
+		)
+		register_task("main_level_41",
+			{
+				"type":"main_task",
+				"title":"白日彩虹",
+				"desc":"丁香彩虹（日）",
+				"single_game":false,//非单局完成
+				"oneshot":false,//非一命完成
+				"task_unlock":"main_level_42",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"lilac_rainbow_daytime",
+						"desc":"通关一次丁香彩虹（日）",
+						"require":1,
+					}
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"royal_spices",
+						"amount":400
+					},
+					{
+						"type":"item",
+						"item_id":"middle_crystal",
+						"amount":350
+					},
+					{
+						"type":"gold",
+						"amount":20000
+					}
+				]
+			}
+			
+		)
+		register_task("main_level_42",
+			{
+				"type":"main_task",
+				"title":"黑夜彩虹",
+				"desc":"丁香彩虹（夜）",
+				"single_game":false,//非单局完成
+				"oneshot":false,//非一命完成
+				"task_unlock":"main_level_43",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"lilac_rainbow_night",
+						"desc":"通关一次丁香彩虹（夜）",
+						"require":1,
+					}
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"royal_spices",
+						"amount":400
+					},
+					{
+						"type":"item",
+						"item_id":"middle_crystal",
+						"amount":350
+					},
+					{
+						"type":"gold",
+						"amount":20000
+					}
+				]
+			}
+			
+		)
+		register_task("main_level_43",
+			{
+				"type":"main_task",
+				"title":"十三香中心岛",
+				"desc":"十三香中心岛",
+				"single_game":false,//非单局完成
+				"oneshot":false,//非一命完成
+				"task_unlock":"main_level_44",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"spices_central_isle",
+						"desc":"通关一次十三香中心岛",
+						"require":1,
+					}
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"royal_spices",
+						"amount":800
+					},
+					{
+						"type":"item",
+						"item_id":"middle_crystal",
+						"amount":700
+					},
+					{
+						"type":"gold",
+						"amount":40000
+					}
+				]
+			}
+			
+		)
+		register_task("main_level_44",
+			{
+				"type":"main_task",
+				"title":"未至约期",
+				"desc":"这个主线任务还没有开放。",
+				"single_game":false,//非单局完成
+				"oneshot":false,//非一命完成
+				"task_unlock":"main_level_45",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"sugar_space_station",
+						"desc":"请等待星际穿越开启",
+						"require":1,
+					}
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"royal_spices",
+						"amount":0
+					},
+					{
+						"type":"item",
+						"item_id":"advanced_crystal",
+						"amount":0
+					},
+					{
+						"type":"gold",
+						"amount":0
 					}
 				]
 			}
@@ -1282,20 +1807,107 @@ function task_init(){
 				"requirements":[
 					{
 						"type":"card_upgrade",
-						"target_card_level":20,
-						"desc":"请等待后续开放更高星级",
+						"target_card_level":11,
+						"desc":"将8张卡片强化至11星",
 						"require":8,
 					}
 				],
 				"rewards":[
 					{
 						"type":"item",
-						"item_id":"secret_spices",
-						"amount":100
+						"item_id":"royal_spices",
+						"amount":200
 					},
 					{
 						"type":"gold",
-						"amount":6000
+						"amount":20000
+					}
+				]
+			}
+		)
+		register_task("card_upgrade_10",
+			{
+				"type":"side_task",
+				"title":"增强实力-10",
+				"desc":"只有拥有更高级的卡片才能抵御越来越多的敌人。",
+				"single_game":false,//非单局完成
+				"oneshot":false,//非一命完成
+				"task_unlock":"card_upgrade_11",
+				"requirements":[
+					{
+						"type":"card_upgrade",
+						"target_card_level":12,
+						"desc":"将8张卡片强化至12星",
+						"require":8,
+					}
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"royal_spices",
+						"amount":300
+					},
+					{
+						"type":"gold",
+						"amount":30000
+					}
+				]
+			}
+		)
+		register_task("card_upgrade_11",
+			{
+				"type":"side_task",
+				"title":"增强实力-11",
+				"desc":"只有拥有更高级的卡片才能抵御越来越多的敌人。",
+				"single_game":false,//非单局完成
+				"oneshot":false,//非一命完成
+				"task_unlock":"card_upgrade_12",
+				"requirements":[
+					{
+						"type":"card_upgrade",
+						"target_card_level":13,
+						"desc":"将10张卡片强化至13星",
+						"require":10,
+					}
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"royal_spices",
+						"amount":600
+					},
+					{
+						"type":"gold",
+						"amount":40000
+					}
+				]
+			}
+		)
+		register_task("card_upgrade_12",
+			{
+				"type":"side_task",
+				"title":"增强实力-11",
+				"desc":"只有拥有更高级的卡片才能抵御越来越多的敌人。",
+				"single_game":false,//非单局完成
+				"oneshot":false,//非一命完成
+				"task_unlock":"card_upgrade_13",
+				"requirements":[
+					{
+						"type":"card_upgrade",
+						"target_card_level":20,
+						"desc":"请等待后续开放更高星级",
+						"require":10,
+					}
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"royal_spices",
+						"amount":0
+					},
+					{
+						"type":"gold",
+						"amount":0
 					}
 				]
 			}
@@ -1500,7 +2112,7 @@ function task_init(){
 		register_task("flame_save_6",
 			{
 				"type":"challenge_task",
-				"title":"未开放的节约之旅",
+				"title":"卤料花园节约之旅",
 				"desc":"冒险途中突发状况很多，需要积攒火苗才能及时应对。",
 				"single_game":true,//仅限单局游戏内完成
 				"oneshot":false,//非一命任务
@@ -1508,30 +2120,147 @@ function task_init(){
 				"requirements":[
 					{
 						"type":"level_complete",
-						"target_level":"spiced_brine_garden",
-						"desc":"请等待浮空岛开启",
+						"target_level":"marinade_garden",
+						"desc":"通关一次卤料花园",
 						"require":1,
 					},
 					{
 						"type":"flame_left",
-						"desc":"关卡结算时，剩余1以上的火苗",
-						"require":1,
+						"desc":"关卡结算时，剩余8000以上的火苗",
+						"require":8000,
 					},
 				],
 				"rewards":[
 					{
 						"type":"item",
 						"item_id":"secret_spices",
-						"amount":1
+						"amount":400
 					},
 					{
 						"type":"item",
 						"item_id":"middle_crystal",
-						"amount":1
+						"amount":200
 					},
 					{
 						"type":"gold",
-						"amount":1
+						"amount":15000
+					}
+				]
+			}
+		)
+		register_task("flame_save_7",
+			{
+				"type":"challenge_task",
+				"title":"香料飞船节约之旅",
+				"desc":"冒险途中突发状况很多，需要积攒火苗才能及时应对。",
+				"single_game":true,//仅限单局游戏内完成
+				"oneshot":false,//非一命任务
+				"task_unlock":"flame_save_8",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"spice_airship",
+						"desc":"通关一次香料飞船",
+						"require":1,
+					},
+					{
+						"type":"flame_left",
+						"desc":"关卡结算时，剩余10000以上的火苗",
+						"require":10000,
+					},
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"royal_spices",
+						"amount":400
+					},
+					{
+						"type":"item",
+						"item_id":"middle_crystal",
+						"amount":300
+					},
+					{
+						"type":"gold",
+						"amount":25000
+					}
+				]
+			}
+		)
+		register_task("flame_save_8",
+			{
+				"type":"challenge_task",
+				"title":"十三香中心岛节约之旅",
+				"desc":"冒险途中突发状况很多，需要积攒火苗才能及时应对。",
+				"single_game":true,//仅限单局游戏内完成
+				"oneshot":false,//非一命任务
+				"task_unlock":"flame_save_9",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"spices_central_isle",
+						"desc":"通关一次十三香中心岛",
+						"require":1,
+					},
+					{
+						"type":"flame_left",
+						"desc":"关卡结算时，剩余12000以上的火苗",
+						"require":12000,
+					},
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"royal_spices",
+						"amount":800
+					},
+					{
+						"type":"item",
+						"item_id":"middle_crystal",
+						"amount":600
+					},
+					{
+						"type":"gold",
+						"amount":50000
+					}
+				]
+			}
+		)
+		register_task("flame_save_9",
+			{
+				"type":"challenge_task",
+				"title":"未开放的节约之旅",
+				"desc":"冒险途中突发状况很多，需要积攒火苗才能及时应对。",
+				"single_game":true,//仅限单局游戏内完成
+				"oneshot":false,//非一命任务
+				"task_unlock":"flame_save_10",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"hamburger_king_star",
+						"desc":"请等待星际穿越开启",
+						"require":1,
+					},
+					{
+						"type":"flame_left",
+						"desc":"关卡结算时，剩余0以上的火苗",
+						"require":0,
+					},
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"royal_spices",
+						"amount":0
+					},
+					{
+						"type":"item",
+						"item_id":"middle_crystal",
+						"amount":0
+					},
+					{
+						"type":"gold",
+						"amount":0
 					}
 				]
 			}
@@ -1792,8 +2521,8 @@ function task_init(){
 				"requirements":[
 					{
 						"type":"level_complete",
-						"target_level":"spiced_brine_garden",
-						"desc":"请等待浮空岛开启",
+						"target_level":"marinade_garden",
+						"desc":"通关一次卤料花园",
 						"require":1,
 					},
 					{
@@ -1803,29 +2532,176 @@ function task_init(){
 					},
 					{
 						"type":"time_limit",
-						"desc":"通关时间不超过1秒",
-						"require":1,
+						"desc":"通关时间不超过450秒",
+						"require":450,
 					},
 				],
 				"rewards":[
 					{
 						"type":"item",
-						"item_id":"secret_spices",
-						"amount":1
+						"item_id":"royal_spices",
+						"amount":400
 					},
 					{
 						"type":"item",
-						"item_id":"middle_crystal",
-						"amount":1
+						"item_id":"advanced_crystal",
+						"amount":50
 					},
 					{
 						"type":"gold",
-						"amount":1
+						"amount":20000
 					},
 					{
 						"type":"item",
 						"item_id":"clover_2",
-						"amount":1
+						"amount":5
+					},
+				]
+			}
+		)
+		register_task("perfect_challenge_7",
+			{
+				"type":"challenge_task",
+				"title":"完美挑战-7",
+				"desc":"在限定条件下通关指定关卡，证明你的实力。",
+				"single_game":true,//仅限单局游戏内完成
+				"oneshot":false,//非一命任务
+				"task_unlock":"perfect_challenge_8",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"spice_airship",
+						"desc":"通关一次香料飞船",
+						"require":1,
+					},
+					{
+						"type":"cat_loss",
+						"desc":"不得失去任何猫",
+						"require":0,
+					},
+					{
+						"type":"time_limit",
+						"desc":"通关时间不超过450秒",
+						"require":450,
+					},
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"royal_spices",
+						"amount":600
+					},
+					{
+						"type":"item",
+						"item_id":"advanced_crystal",
+						"amount":50
+					},
+					{
+						"type":"gold",
+						"amount":35000
+					},
+					{
+						"type":"item",
+						"item_id":"clover_2",
+						"amount":10
+					},
+				]
+			}
+		)
+		register_task("perfect_challenge_8",
+			{
+				"type":"challenge_task",
+				"title":"完美挑战-8",
+				"desc":"在限定条件下通关指定关卡，证明你的实力。",
+				"single_game":true,//仅限单局游戏内完成
+				"oneshot":false,//非一命任务
+				"task_unlock":"perfect_challenge_9",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"spices_central_isle",
+						"desc":"通关一次十三香中心岛",
+						"require":1,
+					},
+					{
+						"type":"cat_loss",
+						"desc":"不得失去任何猫",
+						"require":0,
+					},
+					{
+						"type":"time_limit",
+						"desc":"通关时间不超过540秒",
+						"require":540,
+					},
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"royal_spices",
+						"amount":1200
+					},
+					{
+						"type":"item",
+						"item_id":"advanced_crystal",
+						"amount":50
+					},
+					{
+						"type":"gold",
+						"amount":70000
+					},
+					{
+						"type":"item",
+						"item_id":"clover_3",
+						"amount":20
+					},
+				]
+			}
+		)
+		register_task("perfect_challenge_9",
+			{
+				"type":"challenge_task",
+				"title":"完美挑战-9",
+				"desc":"在限定条件下通关指定关卡，证明你的实力。",
+				"single_game":true,//仅限单局游戏内完成
+				"oneshot":false,//非一命任务
+				"task_unlock":"perfect_challenge_10",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"hamburger_king_star",
+						"desc":"请等待星际穿越开启",
+						"require":1,
+					},
+					{
+						"type":"cat_loss",
+						"desc":"不得失去任何猫",
+						"require":0,
+					},
+					{
+						"type":"time_limit",
+						"desc":"通关时间不超过0秒",
+						"require":0,
+					},
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"royal_spices",
+						"amount":0
+					},
+					{
+						"type":"item",
+						"item_id":"advanced_crystal",
+						"amount":0
+					},
+					{
+						"type":"gold",
+						"amount":0
+					},
+					{
+						"type":"item",
+						"item_id":"clover_3",
+						"amount":0
 					},
 				]
 			}
@@ -2081,8 +2957,8 @@ function task_init(){
 				"requirements":[
 					{
 						"type":"level_complete",
-						"target_level":"spiced_brine_garden",
-						"desc":"请等待浮空岛开启",
+						"target_level":"marinade_garden",
+						"desc":"通关一次卤料花园",
 						"require":1,
 					},
 					{
@@ -2100,22 +2976,172 @@ function task_init(){
 				"rewards":[
 					{
 						"type":"item",
-						"item_id":"secret_spices",
-						"amount":1
+						"item_id":"royal_spices",
+						"amount":200
 					},
 					{
 						"type":"gold",
-						"amount":1
+						"amount":15000
 					},
 					{
 						"type":"item",
-						"item_id":"middle_crystal",
-						"amount":1
+						"item_id":"advanced_crystal",
+						"amount":25
 					},
 					{
 						"type":"item",
 						"item_id":"clover_2",
-						"amount":1
+						"amount":5
+					},
+				]
+			}
+		)
+		register_task("hardcore_challenge_7",
+			{
+				"type":"challenge_task",
+				"title":"极限挑战-7",
+				"desc":"你能在缺少输出的情况下完成关卡吗？",
+				"single_game":true,//仅限单局游戏内完成
+				"oneshot":false,//非一命任务
+				"task_unlock":"hardcore_challenge_8",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"spice_airship",
+						"desc":"通关一次香料飞船",
+						"require":1,
+					},
+					{
+						"type":"weapon_limit",
+						"desc":"不能装备任何武器和宝石",
+						"require":1,
+					},
+					{
+						"type":"card_type_limit",
+						"desc":"不能携带任何一次性的伤害类卡片",
+						"limit_card_type":"bomb",
+						"require":1,
+					},
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"royal_spices",
+						"amount":400
+					},
+					{
+						"type":"gold",
+						"amount":30000
+					},
+					{
+						"type":"item",
+						"item_id":"advanced_crystal",
+						"amount":25
+					},
+					{
+						"type":"item",
+						"item_id":"clover_2",
+						"amount":5
+					},
+				]
+			}
+		)
+		register_task("hardcore_challenge_8",
+			{
+				"type":"challenge_task",
+				"title":"极限挑战-8",
+				"desc":"你能在缺少输出的情况下完成关卡吗？",
+				"single_game":true,//仅限单局游戏内完成
+				"oneshot":false,//非一命任务
+				"task_unlock":"hardcore_challenge_9",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"spices_central_isle",
+						"desc":"通关一次十三香中心岛",
+						"require":1,
+					},
+					{
+						"type":"weapon_limit",
+						"desc":"不能装备任何武器和宝石",
+						"require":1,
+					},
+					{
+						"type":"card_type_limit",
+						"desc":"不能携带任何一次性的伤害类卡片",
+						"limit_card_type":"bomb",
+						"require":1,
+					},
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"royal_spices",
+						"amount":800
+					},
+					{
+						"type":"gold",
+						"amount":60000
+					},
+					{
+						"type":"item",
+						"item_id":"advanced_crystal",
+						"amount":25
+					},
+					{
+						"type":"item",
+						"item_id":"clover_3",
+						"amount":10
+					},
+				]
+			}
+		)
+		register_task("hardcore_challenge_9",
+			{
+				"type":"challenge_task",
+				"title":"极限挑战-9",
+				"desc":"你能在缺少输出的情况下完成关卡吗？",
+				"single_game":true,//仅限单局游戏内完成
+				"oneshot":false,//非一命任务
+				"task_unlock":"hardcore_challenge_10",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"hamburger_king_star",
+						"desc":"请等待星际穿越开启",
+						"require":1,
+					},
+					{
+						"type":"weapon_limit",
+						"desc":"不能装备任何武器和宝石",
+						"require":1,
+					},
+					{
+						"type":"card_type_limit",
+						"desc":"不能携带任何一次性的伤害类卡片",
+						"limit_card_type":"bomb",
+						"require":1,
+					},
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"royal_spices",
+						"amount":0
+					},
+					{
+						"type":"gold",
+						"amount":0
+					},
+					{
+						"type":"item",
+						"item_id":"advanced_crystal",
+						"amount":0
+					},
+					{
+						"type":"item",
+						"item_id":"clover_3",
+						"amount":0
 					},
 				]
 			}

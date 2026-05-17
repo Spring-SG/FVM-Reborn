@@ -11,7 +11,7 @@ if global.is_paused or is_frozen or is_stun{
 	exit
 }
 throw_timer --
-if (throw_timer <= 0 || state == ENEMY_STATE.ATTACK) && !throwed && hp > 0{
+if (throw_timer <= 0 || state == ENEMY_STATE.ATTACK) && !throwed && grid_col <= 8 && hp > 0{
 	throwed = true
 	state = ENEMY_STATE.APPEAR
 	timer = 0
