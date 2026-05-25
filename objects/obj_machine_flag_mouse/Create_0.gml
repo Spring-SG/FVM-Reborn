@@ -16,3 +16,4 @@ state = ENEMY_STATE.APPEAR
 sprite_index = spr_machine_flag_mouse_air
 special_ash = true
 anim_timer = 0
+immune_to_ash = true
