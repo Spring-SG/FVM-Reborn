@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="FvmNativeSupport/FvmNativeSupport.vcxproj" Id="c3356136-0aad-417f-a998-ef28dd731fc2" />
+</Solution>
