@@ -15,15 +15,21 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="entry.cpp">
+    <ClCompile Include="test.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FileSystem.h">
+    <ClInclude Include="file_system.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Typedef.h">
+    <ClInclude Include="typedef.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="entry.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="json.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
