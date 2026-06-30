@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_network_commands",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_network_commands",
+  "parent":{
+    "name":"Shell",
+    "path":"folders/脚本/Shell.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

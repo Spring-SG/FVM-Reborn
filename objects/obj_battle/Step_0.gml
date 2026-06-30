@@ -1,3 +1,5 @@
+
+
 if global.is_paused{
 	exit
 }
@@ -119,6 +121,10 @@ if keyboard_check_pressed(vk_shift) || keyboard_check_pressed(vk_lshift){
 	}
 }
 
+
+if (global.network.mode!="client"){
+	
+	
 if battle_time >= (global.level_file.first_wave_delay * 60) && level_stage == "ready" {
     
     level_stage = "pre"
@@ -209,3 +215,6 @@ if global.debug{
 		}
 	}
 }
+	
+}
+	

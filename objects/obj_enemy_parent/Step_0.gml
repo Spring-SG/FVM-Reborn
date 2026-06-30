@@ -335,9 +335,19 @@ switch(state) {
 
 // 死亡处理
 if (hp <= 0 && state != ENEMY_STATE.DEAD) {
-    timer = 0;
-    state = ENEMY_STATE.DEAD;
-    target_plant = noone;  // 清除攻击目标
+	//if(global.network.mode!="client"){
+	    timer = 0;
+	    state = ENEMY_STATE.DEAD;
+	    target_plant = noone;  // 清除攻击目标
+	/*}
+	else if (global.network.mode=="server"){
+		var _list = global.network.connected_clients;
+		var _size = array_length(_list);
+		for (var _i = 0; _i < _size; _i++) {
+			var _socket = _list[_i];
+			send_message(_socket, MSG_ENEMY_DESTROYED, global.network.map_instance_id_net_id[id]);
+		}
+	}*/
 }
 
 // 透明度处理

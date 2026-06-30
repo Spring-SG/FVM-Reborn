@@ -85,36 +85,40 @@ for(var i = 0 ; i < global.grid_rows;i++){
 		global.row_feature[i] = "land"
 	}
 }
+
 for(var i = 0 ; i < global.grid_rows ; i++){
 	for(var j = 0 ; j < global.grid_cols ; j ++){
-		var cards = plant_list[i][j].plant
-		if array_length(cards) > 0{
-			for(var k = 0; k < array_length(cards);k++){
-				var card_data = deck_get_card_data(cards[k],0)
-				var card_obj = card_data[? "obj"]
-				var new_x = global.grid_offset_x + j * global.grid_cell_size_x
-				var new_y = global.grid_offset_y + i * global.grid_cell_size_y
-				var grid_pos = get_grid_position_from_world(new_x,new_y)
-				var new_plant = instance_create_depth(grid_pos.x, grid_pos.y, 0,card_obj);
-				var depth_value = calculate_plant_depth(j, i, new_plant.plant_type);
-				card_created(new_plant, j, i);
-				new_plant.depth = depth_value
+		
+		if (global.network.mode!="client"){
+			var cards = plant_list[i][j].plant
+			if array_length(cards) > 0{
+				for(var k = 0; k < array_length(cards);k++){
+					var card_data = deck_get_card_data(cards[k],0)
+					var card_obj = card_data[? "obj"]
+					var new_x = global.grid_offset_x + j * global.grid_cell_size_x
+					var new_y = global.grid_offset_y + i * global.grid_cell_size_y
+					var grid_pos = get_grid_position_from_world(new_x,new_y)
+					var new_plant = instance_create_depth(grid_pos.x, grid_pos.y, 0,card_obj);
+					var depth_value = calculate_plant_depth(j, i, new_plant.plant_type);
+					card_created(new_plant, j, i);
+					new_plant.depth = depth_value;
+				}
 			}
-			
-		}
-		var map_objs = plant_list[i][j].object
-		if array_length(map_objs) > 0{
-			for(var k = 0; k < array_length(map_objs);k++){
-				var map_obj_data = get_map_object_data(map_objs[k])
-				var map_obj = map_obj_data._obj
-				var grid_pos = get_world_position_from_grid(j,i)
-				var new_x = grid_pos.x + map_obj_data.x_offset
-				var new_y = grid_pos.y + map_obj_data.y_offset
+		
+			var map_objs = plant_list[i][j].object
+			if array_length(map_objs) > 0{
+				for(var k = 0; k < array_length(map_objs);k++){
+					var map_obj_data = get_map_object_data(map_objs[k])
+					var map_obj = map_obj_data._obj
+					var grid_pos = get_world_position_from_grid(j,i)
+					var new_x = grid_pos.x + map_obj_data.x_offset
+					var new_y = grid_pos.y + map_obj_data.y_offset
 				
-				var new_obj = instance_create_depth(new_x, new_y, -1200,map_obj);
-				new_obj.row = i
-				new_obj.col = j
-			}
+					var new_obj = instance_create_depth(new_x, new_y, -1200,map_obj);
+					new_obj.row = i
+					new_obj.col = j
+				}
+		  }
 			
 		}
 	}
@@ -295,6 +299,14 @@ function enemy_subwave_summon(){
             var grid_pos = get_grid_position_from_world(new_x, new_y);
             var new_enemy = instance_create_depth(grid_pos.x+30, grid_pos.y + 38, 0, enemy_obj);
             
+			if(global.network.mode="server"){
+				var _list = global.network.connected_clients;
+				var _size = array_length(_list);
+				for (var _i = 0; _i < _size; _i++) {
+					var _socket = _list[_i];
+					send_message(_socket, MSG_SPAWN_ENEMY,grid_pos.x+30, grid_pos.y + 3,object_get_name(enemy_obj));
+				}
+			}
             // 更新统计信息
             current_total_hp += global.enemy_map[? enemy_list[i].type].hp;
             
