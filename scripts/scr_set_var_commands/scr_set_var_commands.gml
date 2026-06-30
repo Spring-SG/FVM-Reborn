@@ -1,57 +1,5 @@
-// ============================================================
-// CVAR 系统（控制台变量）
-// ============================================================
-
-global.cvars = {};
-
-/// @description 设置一个控制台变量
-/// 用法: setcvar <键名> <值>
-function sh_setcvar(args) {
-    if (array_length(args) < 3) {
-        return "[CVAR] 用法: setcvar <键> <值>";
-    }
-    var _key = args[1];
-    var _val = args[2];
-    global.cvars[$ _key] = _val;
-    return "[CVAR] " + _key + " = " + _val;
-}
-
-/// @description 列出所有控制台变量
-/// 用法: listcvar
-function sh_listcvar(args) {
-    var _keys = variable_struct_get_names(global.cvars);
-    if (array_length(_keys) == 0) {
-        return "[CVAR] 没有变量";
-    }
-    var _str = "=== CVARS ===\n";
-    for (var i = 0; i < array_length(_keys); i++) {
-        var _key = _keys[i];
-        _str += _key + " = " + string(global.cvars[$ _key]) + "\n";
-    }
-    return _str;
-}
-
-// 可选：获取单个变量的函数（方便脚本内部使用）
-function sh_getcvar(args) {
-    if (array_length(args) < 2) return "[CVAR] 用法: getcvar <键>";
-    var _key = args[1];
-    if (!variable_struct_exists(global.cvars, _key)) {
-        return "[CVAR] 变量不存在: " + _key;
-    }
-    return string(global.cvars[$ _key]);
-}
 
 
-// ============================================================
-// 植物生成系统（命令行 + 脚本调用）
-// ============================================================
-
-/// @description 在指定网格位置生成植物（通用函数）
-/// @param {real} col 列索引
-/// @param {real} row 行索引
-/// @param {asset} plant_obj 植物对象资源
-/// @param {struct} [props] 可选，要覆盖的属性键值对
-/// @return {instance} 新创建的植物实例，失败返回 -1
 function spawn_plant(col, row, plant_obj, props) {
     // 边界检查
     if (col < 0 || col >= global.grid_cols || row < 0 || row >= global.grid_rows) {

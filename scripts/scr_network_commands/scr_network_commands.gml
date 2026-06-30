@@ -8,7 +8,6 @@ global.network = {
     server_ip: "",
     server_port: 27085,
     connected_clients: [],
-    client_socket: -1,
     target_ip: "",
     target_port: 27085,
     is_connected: false,
@@ -47,38 +46,6 @@ function sh_makeserver(args) {
     } else {
         return "[网络] 创建服务器失败，端口可能被占用";
     }
-}
-
-function connecttest(args) {
-    if (global.network.mode != "server") {
-        return "[网络] 服务器未启动";
-    }
-
-    // 1. 创建客户端套接字
-    var _client = network_create_socket(network_socket_tcp);
-    if (_client < 0) {  // 失败返回 -1
-        return "[网络] 创建套接字失败";
-    }
-
-    // 2. 发起连接
-    var _success = network_connect_raw(_client, "127.0.0.1", global.network.server_port);
-    if (_success < 0) {  // 失败返回 -1，成功返回 >=0
-        return "[网络] 连接失败";
-    }
-
-
-    // 4. 发送测试消息
-    var _buf = buffer_create(1024, buffer_fixed, 1);
-    buffer_write(_buf, buffer_string, "Hello from client");
-    var _size = buffer_tell(_buf);
-    buffer_seek(_buf, buffer_seek_start, 0);
-    network_send_raw(_client, _buf, _size);
-    buffer_delete(_buf);
-
-    // 6. 断开连接
-    network_destroy(_client);
-
-    return "[网络] 连接测试完成";
 }
 
 
@@ -150,11 +117,11 @@ function sh_disconnect() {
     if (global.network.mode != "client") {
         return "[网络] 当前不是客户端模式";
     }
-    if (global.network.client_socket != -1) {
-        network_destroy(global.network.client_socket);
+    if (global.network.server_socket != -1) {
+        network_destroy(global.network.server_socket);
     }
     global.network.mode = "offline";
-    global.network.client_socket = -1;
+    global.network.server_socket = -1;
     global.network.target_ip = "";
     global.network.target_port = 27085;
     global.network.is_connected = false;
@@ -175,7 +142,7 @@ function sh_status() {
             break;
         case "client":
             _status += "连接目标: " + global.network.target_ip + ":" + string(global.network.target_port) + "\n";
-            _status += "Socket ID: " + string(global.network.client_socket) + "\n";
+            _status += "Socket ID: " + string(global.network.server_socket) + "\n";
             _status += "连接状态: " + (global.network.is_connected ? "已连接 ✓" : "未连接 ✗") + "\n";
             break;
         case "offline":
@@ -183,6 +150,35 @@ function sh_status() {
             break;
     }
     return _status;
+}
+
+
+function sh_say(args){
+
+	var _message = "";
+	if (is_array(args)) {
+	    for (var i = 0; i < array_length(args); i++) {
+	        _message += (i ? " " : "") + string(args[i]);
+	    }
+	} else {
+	    _message = string(args);
+	}
+	if (_message == "")return;
+
+    if global.network.mode == "server"{
+        var _list = global.network.connected_clients;
+        var _size = array_length(_list);
+        for (var _i = 0; _i < _size; _i++) {
+            var _socket = _list[_i];
+            send_message(_socket, MSG_CHAT, _message);
+        } 
+    }
+    if global.network.mode == "client"{
+        send_message(global.network.server_socket, MSG_CHAT, _message);
+    }
+    if global.network.mode == "offline"{
+        shell_print(_message);
+    }
 }
 
 // ============================================================

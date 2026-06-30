@@ -23,7 +23,7 @@ switch (_type) {
         break;
             
     case network_type_disconnect:
-	    var _sock = async_load[? "id"];
+	    var _sock = async_load[? "socket"];
 	    show_debug_message("[网络] 收到断开事件, socket: " + string(_sock) + ", 模式: " + global.network.mode);
 
 	    if (global.network.mode == "server") {
@@ -41,11 +41,16 @@ switch (_type) {
 	        } else {
 	            show_debug_message("[网络] 客户端断开但未在列表中找到: " + string(_sock));
 	        }
+			
+			shell_print("客户端"+string(_sock)+" 断开连接");
+			show_notice("客户端"+string(_sock)+" 断开连接",60);
 	    } else if (global.network.mode == "client") {
-	        global.network.is_connected = false;
-	        global.network.client_socket = -1;
+			sh_disconnect();
+			shell_print("与服务器断开连接");
+			show_notice("与服务器断开连接",60);
 	        show_debug_message("[网络] 与服务器断开连接");
-	    } else {
+	    } else 
+		if (global.network.mode == "client"){
 	        show_debug_message("[网络] 断开事件但模式未知: " + global.network.mode);
 	    }
 	    break;

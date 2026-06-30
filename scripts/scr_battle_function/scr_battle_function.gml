@@ -87,14 +87,12 @@ function parse_network_message(buf) {
         {
 			var _str = "";
 			for (var i = 0; i < buffer_get_size(buf); i++) _str += string(buffer_peek(buf, i, buffer_u8)) + " ";
-			show_debug_message(_str);
-            // 字段：消息内容 (string)
             var chat_text = buffer_read(buf, buffer_string);
-            // TODO: 调用处理函数
-            // handle_chat(chat_text);
             show_debug_message("[解析] 收到 MSG_CHAT: " + chat_text);
 			shell_print(chat_text);
-			
+			if global.network.mode == "server"{
+				sh_say(chat_text);
+			}
 
 
             break;
@@ -233,6 +231,7 @@ function parse_network_message(buf) {
             var result = buffer_read(buf, buffer_u8);
             // TODO: 调用处理函数
             // handle_game_over(result);
+			
             show_debug_message("[解析] 收到 MSG_GAME_OVER: 结果=" + string(result));
             break;
         }
