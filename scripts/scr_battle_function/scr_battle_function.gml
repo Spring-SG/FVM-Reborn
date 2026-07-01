@@ -61,23 +61,33 @@ function parse_network_message(buf) {
         // ========== 客户端请求 ==========
         case MSG_UNIT_REQUEST:
         {
-            // 字段：level(u8), col(u8), row(u8), skill(u8), shape(u8), obj_name(string)
+            // 字段：level(u8), col(u8), row(u8), skill(u8), shape(u8), obj_name(string), meta_info(string)
             var level = buffer_read(buf, buffer_u8);
             var col = buffer_read(buf, buffer_u8);
             var row = buffer_read(buf, buffer_u8);
             var skill = buffer_read(buf, buffer_u8);
             var shape = buffer_read(buf, buffer_u8);
             var object_name = buffer_read(buf, buffer_string);
+            var meta = buffer_read(buf, buffer_string);
             var temp_map = ds_map_create();
+			if (meta != "") {
+				var _st = json_parse(meta);
+				var _keys = variable_struct_get_names(_st);
+				for (var i = 0; i < array_length(_keys); i++) {
+					var _key = _keys[i];
+					ds_map_add(temp_map, _key, _st[$ _key]);
+				}
+			}
+			
             var _plant = spawn_plant(col, row, asset_get_index(object_name), temp_map);
+            ds_map_destroy(temp_map);
 
             add_net_id(_plant.id);
             network_apply_plant_level(_plant, level, skill, shape);
 
-            show_debug_message("[解析] MSG_UNIT_REQUEST: type=" + object_name + " Lv=" + string(level));
+            show_debug_message("[解析] MSG_UNIT_REQUEST: type=" + object_name + " Lv=" + string(level)+" meta="+meta);
             break;
         }
-		
         
         case MSG_REMOVE_UNIT_REQUEST:
         {
@@ -151,7 +161,7 @@ function parse_network_message(buf) {
         
         case MSG_SPAWN_UNIT:
         {
-            // 字段：net_id(s32), level(u8), col(u8), row(u8), skill(u8), shape(u8), object_name(string)
+            // 字段：net_id(s32), level(u8), col(u8), row(u8), skill(u8), shape(u8), object_name(string), meta_info(string)
             var net_id = buffer_read(buf, buffer_s32);
             var level = buffer_read(buf, buffer_u8);
             var col = buffer_read(buf, buffer_u8);
@@ -159,18 +169,31 @@ function parse_network_message(buf) {
             var skill = buffer_read(buf, buffer_u8);
             var shape = buffer_read(buf, buffer_u8);
             var object_name = buffer_read(buf, buffer_string);
+            var meta = buffer_read(buf, buffer_string);
 
             var temp_map = ds_map_create();
+            ds_map_add(temp_map, "level", level);
+            ds_map_add(temp_map, "skill", skill);
+            ds_map_add(temp_map, "shape", shape);
+			  if (meta != "") {
+			      var _st = json_parse(meta);
+			      var _keys = variable_struct_get_names(_st);
+			      for (var i = 0; i < array_length(_keys); i++) {
+			          var _key = _keys[i];
+			          ds_map_add(temp_map, _key, _st[$ _key]);
+			      }
+			  }
             global.network.plant_able = true;
             var _plant = spawn_plant(col, row, asset_get_index(object_name), temp_map);
+            ds_map_destroy(temp_map);
             global.network.plant_able = false;
 
             set_net_id(_plant.id, net_id);
             network_apply_plant_level(_plant, level, skill, shape);
 
-            show_debug_message("[解析] MSG_SPAWN_UNIT: ID=" + string(net_id) + " type=" + object_name + " Lv=" + string(level));
+            show_debug_message("[解析] MSG_SPAWN_UNIT: ID=" + string(net_id) + " type=" + object_name + " Lv=" + string(level)+" meta="+meta);
             break;
-        
+
         }
         
         case MSG_SPAWN_ENEMY:
@@ -554,13 +577,14 @@ function send_message(socket, msg_id) {
     // 根据消息ID写入对应的字段
     switch (msg_id) {
         // ======== 客户端请求 ========
-        case MSG_UNIT_REQUEST:          // 参数: level(u8), col(u8), row(u8), skill(u8), shape(u8), obj_name(string)
+        case MSG_UNIT_REQUEST:          // 参数: level(u8), col(u8), row(u8), skill(u8), shape(u8), obj_name(string), meta_info(string)
             buffer_write(buf, buffer_u8, argument[2]);
             buffer_write(buf, buffer_u8, argument[3]);
             buffer_write(buf, buffer_u8, argument[4]);
             buffer_write(buf, buffer_u8, argument[5]);
             buffer_write(buf, buffer_u8, argument[6]);
             buffer_write(buf, buffer_string, argument[7]);
+            buffer_write(buf, buffer_string, argument[8]);
             break;
             
 		case MSG_REMOVE_UNIT_REQUEST:      // 参数: net_id(s32), col(u8), row(u8), flame_rate(f32)
@@ -608,7 +632,7 @@ function send_message(socket, msg_id) {
             buffer_write(buf, buffer_string, argument[3]);
             break;
             
-        case MSG_SPAWN_UNIT:            // 参数: 网络ID(s32), level(u8), col(u8), row(u8), skill(u8), shape(u8), object_name(string)
+        case MSG_SPAWN_UNIT:            // 参数: 网络ID(s32), level(u8), col(u8), row(u8), skill(u8), shape(u8), object_name(string), meta_info(string)
             buffer_write(buf, buffer_s32, argument[2]);
             buffer_write(buf, buffer_u8, argument[3]);
             buffer_write(buf, buffer_u8, argument[4]);
@@ -616,6 +640,7 @@ function send_message(socket, msg_id) {
             buffer_write(buf, buffer_u8, argument[6]);
             buffer_write(buf, buffer_u8, argument[7]);
             buffer_write(buf, buffer_string, argument[8]);
+            buffer_write(buf, buffer_string, argument[9]);
             break;
             
         case MSG_SPAWN_ENEMY:           // 参数: net_id(s32), x(f32), y(f32), object_name(string)

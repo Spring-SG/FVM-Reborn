@@ -33,6 +33,7 @@ function spawn_plant(col, row, plant_obj, props) {
             _plant[$ _key] = props[$ _key];
         }
     }
+	
 	card_created(_plant, col, row);
     
     // 放置特效（注意：如果不需要特效可跳过）
