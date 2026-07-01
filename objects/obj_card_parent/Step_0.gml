@@ -1,26 +1,38 @@
-// obj_plant_parent 的 Step 事件
-if global.is_paused{
-	exit
-}
-if ice_timer > 0{
-	ice_timer--
-	is_slowdown = true
-}
-else{
-	is_slowdown = false
-}
-if frozen_timer > 0{
-	frozen_timer--
-	is_frozen = true
-}
-else{
-	is_frozen = false
-}
-if hp <= 0{
-	instance_destroy()
-}
+	// obj_plant_parent 的 Step 事件
+	if global.is_paused{
+		exit
+	}
+	// 客户端：拦截死亡，等待服务端广播 MSG_UNIT_DEATH
+	if (global.network.mode == "client" && hp <= 0) { exit; }
 
-if flash_value >0{
+	if ice_timer > 0{
+		ice_timer--
+		is_slowdown = true
+	}
+	else{
+		is_slowdown = false
+	}
+	if frozen_timer > 0{
+		frozen_timer--
+		is_frozen = true
+	}
+	else{
+		is_frozen = false
+	}
+	if hp <= 0{
+		// 服务端：广播死亡给所有客户端
+		if (global.network.mode == "server") {
+			var _dtype = (is_frozen) ? 1 : 0;
+			var _net_id = (ds_map_exists(global.network.map_instance_id_net_id, id)) ? global.network.map_instance_id_net_id[? id] : -1;
+			var _list = global.network.connected_clients;
+			var _size = array_length(_list);
+			for (var _i = 0; _i < _size; _i++) {
+				send_message(_list[_i], MSG_UNIT_DEATH, _net_id, 0, _dtype);
+			}
+		}
+		instance_destroy()
+	}
+	if flash_value >0{
 	
 	flash_value -= 10
 	

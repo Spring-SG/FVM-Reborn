@@ -1,5 +1,3 @@
-
-
 if global.is_paused{
 	exit
 }
@@ -62,33 +60,33 @@ if global.debug{
 
 	if keyboard_check_pressed(ord("R")){
 		var grid_pos = get_grid_position_from_world(mouse_x, mouse_y);
-		if (grid_pos.col >= 0 && grid_pos.col < global.grid_cols && 
-	        grid_pos.row >= 0 && grid_pos.row < global.grid_rows) {
-    
-		    var new_plant = instance_create_depth(grid_pos.x, grid_pos.y, 0,obj_small_fire);
+		if (grid_pos.col >= 0 && grid_pos.col < global.grid_cols &&
+			grid_pos.row >= 0 && grid_pos.row < global.grid_rows) {
+
+			var new_plant = instance_create_depth(grid_pos.x, grid_pos.y, 0,obj_small_fire);
 			var depth_value = calculate_plant_depth(grid_pos.col, grid_pos.row, new_plant.plant_type);
 			card_created(new_plant, grid_pos.col, grid_pos.row);
 			new_plant.depth = depth_value
 			new_plant.flame_produce = 15000
 			new_plant.ice_timer = 600
-			instance_create_depth(grid_pos.x,grid_pos.y,-2,obj_place_effect)        
+			instance_create_depth(grid_pos.x,grid_pos.y,-2,obj_place_effect)
 			audio_play_sound(snd_place1,0,0)
 		}
 	}
 
 	if keyboard_check_pressed(ord("A")){
 		var grid_pos = get_grid_position_from_world(mouse_x, mouse_y);
-		if (grid_pos.col >= 0 && grid_pos.col < global.grid_cols && 
-	        grid_pos.row >= 0 && grid_pos.row < global.grid_rows) {
-    
-		    var new_plant = instance_create_depth(grid_pos.x, grid_pos.y, 0,obj_xiao_long_bao);
+		if (grid_pos.col >= 0 && grid_pos.col < global.grid_cols &&
+			grid_pos.row >= 0 && grid_pos.row < global.grid_rows) {
+
+			var new_plant = instance_create_depth(grid_pos.x, grid_pos.y, 0,obj_xiao_long_bao);
 			var depth_value = calculate_plant_depth(grid_pos.col, grid_pos.row, new_plant.plant_type);
 			card_created(new_plant, grid_pos.col, grid_pos.row);
 			new_plant.depth = depth_value
 			new_plant.atk = 90
 			new_plant.ice_timer = 600
 			new_plant.frozen_timer = 240
-			instance_create_depth(grid_pos.x,grid_pos.y,-2,obj_place_effect)        
+			instance_create_depth(grid_pos.x,grid_pos.y,-2,obj_place_effect)
 			audio_play_sound(snd_place1,0,0)
 		}
 	}
@@ -103,6 +101,12 @@ if time_limit > 0{
 		time_limit --
 	}
 	if time_limit <= 0{
+		if global.network.mode == "server"{
+			var _clients = global.network.connected_clients;
+			for (var i = 0; i < array_length(_clients); i++) {
+				send_message(_clients[i], MSG_GAME_OVER, 0);
+			}
+		}
 		global.is_paused = true
 		global.game_over = true
 		instance_create_depth(room_width/2,room_height/2,-3001,obj_game_over)
@@ -123,16 +127,23 @@ if keyboard_check_pressed(vk_shift) || keyboard_check_pressed(vk_lshift){
 
 
 if (global.network.mode!="client"){
-	
-	
+
+
 if battle_time >= (global.level_file.first_wave_delay * 60) && level_stage == "ready" {
-    
-    level_stage = "pre"
-    audio_play_sound(snd_mouse_wave_attack, 0, 0)
-    
-    enemy_subwave_summon()
-    
-    current_subwave += 1;
+
+	level_stage = "pre"
+	audio_play_sound(snd_mouse_wave_attack, 0, 0)
+
+	enemy_subwave_summon()
+// 同步进度条
+	if (global.network.mode == "server") {
+		var _cl = global.network.connected_clients;
+		for (var _j = 0; _j < array_length(_cl); _j++) {
+			send_message(_cl[_j], MSG_PROGRESS_SYNC, current_wave, current_subwave);
+		}
+	}
+
+	current_subwave += 1;
 }
 var current_total_subwaves = 0
 var wave_data = {}
@@ -167,6 +178,28 @@ if wave_data.boss_wave && level_stage != "boss" && global.save_data.unlocked_ite
 		new_battle_music = global.level_data.boss_music
 		event_user(0)
 	}
+
+	// 广播boss生成给所有客户端
+	if (global.network.mode == "server") {
+		add_net_id(boss_inst.id);
+		var _boss1_net = global.network.map_instance_id_net_id[? boss_inst.id];
+		if (is_real(global.level_file.version) && wave_data.boss2 != "") {
+			add_net_id(boss_2_inst.id);
+			var _boss2_net = global.network.map_instance_id_net_id[? boss_2_inst.id];
+		}
+		var _list = global.network.connected_clients;
+		var _size = array_length(_list);
+		for (var _i = 0; _i < _size; _i++) {
+			var _socket = _list[_i];
+			send_message(_socket, MSG_SPAWN_BOSS, _boss1_net, enemy_pos.x-80, enemy_pos.y+30, object_get_name(global.enemy_map[? wave_data.boss]._obj), boss_inst.hp, boss_inst.maxhp, enemy_row);
+		}
+		if (is_real(global.level_file.version) && wave_data.boss2 != "") {
+			for (var _i = 0; _i < _size; _i++) {
+				var _socket = _list[_i];
+				send_message(_socket, MSG_SPAWN_BOSS, _boss2_net, enemy_pos_2.x-80, enemy_pos_2.y+30, object_get_name(global.enemy_map[? wave_data.boss2]._obj), boss_2_inst.hp, boss_2_inst.maxhp, enemy_row_2);
+			}
+		}
+	}
 }
 if wave_timer <= 0 && level_stage == "pre"{
 	if(global.save_data.unlocked_items.elite_unlocked) || !global.save_data.unlocked_items.elite_unlocked && current_wave < global.level_file.elite_wave{
@@ -178,6 +211,12 @@ if wave_timer <= 0 && level_stage == "pre"{
 		}
 		else if current_wave < total_wave{
 			current_wave += 1
+			if (global.network.mode == "server") {
+				var _cl = global.network.connected_clients;
+				for (var _j = 0; _j < array_length(_cl); _j++) {
+					send_message(_cl[_j], MSG_PROGRESS_SYNC, current_wave, current_subwave);
+				}
+			}
 			current_subwave = 0
 			audio_play_sound(snd_mouse_wave_attack,0,0)
 			instance_create_depth(room_width/2,room_height/2,-300,obj_huge_wave_text)
@@ -188,9 +227,44 @@ if wave_timer <= 0 && level_stage == "boss"{
 	enemy_subwave_summon()
 	if current_subwave < current_total_subwaves-1{
 		current_subwave+=1
+			if (global.network.mode == "server") {
+				var _cl = global.network.connected_clients;
+				for (var _j = 0; _j < array_length(_cl); _j++) {
+					send_message(_cl[_j], MSG_PROGRESS_SYNC, current_wave, current_subwave);
+				}
+			}
 	}
 	else{
 		current_subwave = 0
+	}
+}
+
+// 每60步同步一次 HP 和位置
+if (global.network.mode == "server" && battle_time mod 60 == 0) {
+	var _list = global.network.connected_clients;
+	var _size = array_length(_list);
+
+	with (obj_enemy_parent) {
+		if (hp > 0 && state != ENEMY_STATE.DEAD) {
+			var _net_id = (ds_map_exists(global.network.map_instance_id_net_id, id)) ? global.network.map_instance_id_net_id[? id] : -1;
+			if (_net_id != -1) {
+				for (var _i = 0; _i < _size; _i++) {
+					send_message(_list[_i], MSG_ENEMY_HP, _net_id, hp, maxhp);
+					send_message(_list[_i], MSG_ENEMY_CALIBRATE, _net_id, x, y);
+				}
+			}
+		}
+	}
+
+	with (obj_card_parent) {
+		if (hp > 0) {
+			var _net_id = (ds_map_exists(global.network.map_instance_id_net_id, id)) ? global.network.map_instance_id_net_id[? id] : -1;
+			if (_net_id != -1) {
+				for (var _i = 0; _i < _size; _i++) {
+					send_message(_list[_i], MSG_UNIT_HP, _net_id, hp, max_hp);
+				}
+			}
+		}
 	}
 }
 
@@ -215,6 +289,7 @@ if global.debug{
 		}
 	}
 }
-	
 }
-	
+
+
+

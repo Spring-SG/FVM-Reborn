@@ -1,11 +1,9 @@
-
-// 消息ID常量（使用s32，方便扩展）
 // ============================
 // 网络消息ID定义（共17条）
 // ============================
 
 #macro MSG_UNIT_REQUEST         1   // C→S: 请求放置我方单位（含类型、等级、网格坐标）
-#macro MSG_REMOVE_UNIT          2   // C→S: 请求移除/铲除指定我方单位（携带网络ID）
+#macro MSG_REMOVE_UNIT_REQUEST  2   // C→S: 请求移除/铲除指定我方单位（携带网络ID）
 #macro MSG_CHAT                 3   // C→S: 发送聊天消息（携带文本内容）
 
 
@@ -25,12 +23,27 @@
 #macro MSG_SYNC_INITIAL_STATE   17  // S→C: 全量状态同步（新客户端加入时发送所有单位、敌人及全局状态）
 #macro MSG_START_BATTLE			18	// S→C: 开始战斗
 #macro MSG_ENTER_ROOM_READY		19	// S→C: 进入房间
+#macro MSG_SPAWN_BOSS           20  // S→C: 广播产生BOSS
+#macro MSG_REMOVE_UNIT          21  // S→C: 广播移除/铲除指定我方单位
+#macro MSG_UNIT_DEATH           22  // S→C: 广播单位死亡（敌人/植物，含死因）
+#macro MSG_ENEMY_STEAL           23  // S→C: 广播敌方偷取植物
+#macro MSG_PROGRESS_SYNC         24  // S→C: 广播进度条同步
 
 
 function add_net_id(ins_id){
 	ds_map_add(global.network.map_net_id_instance_id,global.network.net_instance_count,ins_id);
 	ds_map_add(global.network.map_instance_id_net_id,ins_id,global.network.net_instance_count);
 	global.network.net_instance_count++;
+}
+
+/// @function set_net_id(ins_id, net_id)
+/// @description 用服务端分配的 net_id 注册实例，保证两端一致
+function set_net_id(ins_id, net_id){
+	ds_map_add(global.network.map_net_id_instance_id, net_id, ins_id);
+	ds_map_add(global.network.map_instance_id_net_id, ins_id, net_id);
+	if (net_id >= global.network.net_instance_count) {
+		global.network.net_instance_count = net_id + 1;
+	}
 }
 
 /// @function parse_network_message(buffer)
@@ -48,31 +61,57 @@ function parse_network_message(buf) {
         // ========== 客户端请求 ==========
         case MSG_UNIT_REQUEST:
         {
-            // 字段：单位类型ID (u8), 等级 (u8), col (u8), row (u8)
+            // 字段：level(u8), col(u8), row(u8), skill(u8), shape(u8), obj_name(string)
             var level = buffer_read(buf, buffer_u8);
             var col = buffer_read(buf, buffer_u8);
             var row = buffer_read(buf, buffer_u8);
+            var skill = buffer_read(buf, buffer_u8);
+            var shape = buffer_read(buf, buffer_u8);
             var object_name = buffer_read(buf, buffer_string);
-			var temp_map = ds_map_create();
-			var _plant = spawn_plant(col, row, asset_get_index(object_name), temp_map);
-			
-			add_net_id(_plant.id);
-            // TODO: 调用处理函数
-            // handle_unit_request(unit_type, level, col, row);
-            show_debug_message("[解析] 收到 MSG_UNIT_REQUEST: 类型=" + string(object_name) + " 等级=" + string(level) + " 位置(" + string(col) + "," + string(row) + ")");
+            var temp_map = ds_map_create();
+            var _plant = spawn_plant(col, row, asset_get_index(object_name), temp_map);
+
+            add_net_id(_plant.id);
+            network_apply_plant_level(_plant, level, skill, shape);
+
+            show_debug_message("[解析] MSG_UNIT_REQUEST: type=" + object_name + " Lv=" + string(level));
             break;
         }
+		
         
+        case MSG_REMOVE_UNIT_REQUEST:
+        {
+            // 字段：net_id(s32), col(u8), row(u8), flame_rate(f32)
+            var net_id = buffer_read(buf, buffer_s32);
+            var col = buffer_read(buf, buffer_u8);
+            var row = buffer_read(buf, buffer_u8);
+            var flame_rate = buffer_read(buf, buffer_f32);
+
+            // 服务端执行铲除
+            network_shovel_remove(col, row, net_id, flame_rate);
+
+            // 广播给所有客户端
+            network_broadcast_shovel_remove(col, row, net_id, flame_rate);
+
+            show_debug_message("[解析] 收到 MSG_REMOVE_UNIT_REQUEST: ID=" + string(net_id) + " col=" + string(col) + " row=" + string(row));
+            break;
+        }
+
         case MSG_REMOVE_UNIT:
         {
-            // 字段：网络ID (s32)
+            // 字段：net_id(s32), col(u8), row(u8), flame_rate(f32)
             var net_id = buffer_read(buf, buffer_s32);
-            // TODO: 调用处理函数
-            // handle_remove_unit(net_id);
-            show_debug_message("[解析] 收到 MSG_REMOVE_UNIT: 网络ID=" + string(net_id));
+            var col = buffer_read(buf, buffer_u8);
+            var row = buffer_read(buf, buffer_u8);
+            var flame_rate = buffer_read(buf, buffer_f32);
+
+            // 客户端执行铲除
+            network_shovel_remove(col, row, net_id, flame_rate);
+
+            show_debug_message("[解析] 收到 MSG_REMOVE_UNIT: ID=" + string(net_id) + " col=" + string(col) + " row=" + string(row));
             break;
         }
-        
+
         case MSG_PAUSE_TOGGLE:
         {
             // 字段：暂停状态 (u8) 0继续 1暂停
@@ -112,43 +151,65 @@ function parse_network_message(buf) {
         
         case MSG_SPAWN_UNIT:
         {
-            // 字段：网络ID(s32), 等级(u8), col(u8), row(u8), object_name(string)
+            // 字段：net_id(s32), level(u8), col(u8), row(u8), skill(u8), shape(u8), object_name(string)
             var net_id = buffer_read(buf, buffer_s32);
             var level = buffer_read(buf, buffer_u8);
             var col = buffer_read(buf, buffer_u8);
             var row = buffer_read(buf, buffer_u8);
+            var skill = buffer_read(buf, buffer_u8);
+            var shape = buffer_read(buf, buffer_u8);
             var object_name = buffer_read(buf, buffer_string);
-			
-			var temp_map = ds_map_create();
-			global.network.plant_able = true;
-			var _plant = spawn_plant(col, row, asset_get_index(object_name), temp_map);
-			global.network.plant_able = false;
-			
-			add_net_id(_plant.id);
-            // TODO: 调用处理函数
-            // handle_spawn_unit(net_id, unit_type, level, col, row, hp, max_hp);
-            show_debug_message("[解析] 收到 MSG_SPAWN_UNIT: ID=" + string(net_id) + " 类型=" + object_name + " 等级=" + string(level) + " 位置(" + string(col) + "," + string(row) + ") ");
+
+            var temp_map = ds_map_create();
+            global.network.plant_able = true;
+            var _plant = spawn_plant(col, row, asset_get_index(object_name), temp_map);
+            global.network.plant_able = false;
+
+            set_net_id(_plant.id, net_id);
+            network_apply_plant_level(_plant, level, skill, shape);
+
+            show_debug_message("[解析] MSG_SPAWN_UNIT: ID=" + string(net_id) + " type=" + object_name + " Lv=" + string(level));
             break;
+        
         }
         
         case MSG_SPAWN_ENEMY:
         {
-            // 字段：网络ID(s32), 敌人类型ID(u8), 行(u8), 出生列偏移(s16), 当前血量(s32), 最大血量(s32)
+            // 字段：网络ID(s32), x(f32), y(f32), object_name(string)
+            var net_id = buffer_read(buf, buffer_s32);
             var px = buffer_read(buf, buffer_f32);
             var py = buffer_read(buf, buffer_f32);
             var object_name = buffer_read(buf, buffer_string);
-			
-			
-			var new_enemy = instance_create_depth(px, py, 0, asset_get_index(object_name));
-			add_net_id(new_enemy.id);
-			
-			
-            // TODO: 调用处理函数
-            // handle_spawn_enemy(net_id, enemy_type, row, col_offset, hp, max_hp);
-            show_debug_message("[解析] 收到 MSG_SPAWN_ENEMY:" +" 类型=" + object_name+ string(px)+","+string(py) );
+
+            var new_enemy = instance_create_depth(px, py, 0, asset_get_index(object_name));
+            set_net_id(new_enemy.id, net_id);
+
+            show_debug_message("[解析] MSG_SPAWN_ENEMY: ID=" + string(net_id) + " type=" + object_name);
             break;
         }
-        
+
+        case MSG_SPAWN_BOSS:
+        {
+            // 字段：net_id(s32), x(f32), y(f32), object_name(string), hp(s32), maxhp(s32), row(u8)
+            var net_id = buffer_read(buf, buffer_s32);
+            var px = buffer_read(buf, buffer_f32);
+            var py = buffer_read(buf, buffer_f32);
+            var object_name = buffer_read(buf, buffer_string);
+            var hp_val = buffer_read(buf, buffer_s32);
+            var maxhp_val = buffer_read(buf, buffer_s32);
+            var boss_row = buffer_read(buf, buffer_u8);
+
+            var new_boss = instance_create_depth(px, py, -200, asset_get_index(object_name));
+            set_net_id(new_boss.id, net_id);
+            new_boss.hp = hp_val;
+            new_boss.maxhp = maxhp_val;
+            new_boss.grid_row = boss_row;
+            obj_battle.boss_count++;
+
+            show_debug_message("[解析] MSG_SPAWN_BOSS: ID=" + string(net_id) + " type=" + object_name + " HP=" + string(hp_val) + "/" + string(maxhp_val));
+            break;
+        }
+
         case MSG_ENEMY_STATE:
         {
             // 字段：网络ID(s32), 状态(u8), 速度(f32), 目标列(s16)
@@ -166,26 +227,33 @@ function parse_network_message(buf) {
         {
             // 字段：网络ID(s32), 当前血量(s32), 最大血量(s32)
             var net_id = buffer_read(buf, buffer_s32);
-            var hp = buffer_read(buf, buffer_s32);
+            var hp_val = buffer_read(buf, buffer_s32);
             var max_hp = buffer_read(buf, buffer_s32);
-            // TODO: 调用处理函数
-            // handle_enemy_hp(net_id, hp, max_hp);
-            show_debug_message("[解析] 收到 MSG_ENEMY_HP: ID=" + string(net_id) + " HP=" + string(hp) + "/" + string(max_hp));
+            var _inst = global.network.map_net_id_instance_id[? net_id];
+            if (instance_exists(_inst)) {
+                // 客户端已判定死亡但未收到确认时不覆盖（防止复活）
+                if (!(_inst.hp <= 0 && _inst.state != ENEMY_STATE.DEAD)) {
+                    _inst.hp = hp_val;
+                    _inst.maxhp = max_hp;
+                }
+            }
+            show_debug_message("[解析] 收到 MSG_ENEMY_HP: ID=" + string(net_id) + " HP=" + string(hp_val) + "/" + string(max_hp));
             break;
         }
-        
         case MSG_ENEMY_CALIBRATE:
         {
             // 字段：网络ID(s32), 世界X(f32), 世界Y(f32)
             var net_id = buffer_read(buf, buffer_s32);
             var wx = buffer_read(buf, buffer_f32);
             var wy = buffer_read(buf, buffer_f32);
-            // TODO: 调用处理函数
-            // handle_enemy_calibrate(net_id, wx, wy);
+            var _inst = global.network.map_net_id_instance_id[? net_id];
+            if (instance_exists(_inst)) {
+                _inst.x = wx;
+                _inst.y = wy;
+            }
             show_debug_message("[解析] 收到 MSG_ENEMY_CALIBRATE: ID=" + string(net_id) + " 位置(" + string(wx) + "," + string(wy) + ")");
             break;
         }
-        
         case MSG_ENEMY_DESTROYED:
         {
             // 字段：网络ID(s32)
@@ -207,14 +275,16 @@ function parse_network_message(buf) {
         {
             // 字段：网络ID(s32), 当前血量(s32), 最大血量(s32)
             var net_id = buffer_read(buf, buffer_s32);
-            var hp = buffer_read(buf, buffer_s32);
+            var hp_val = buffer_read(buf, buffer_s32);
             var max_hp = buffer_read(buf, buffer_s32);
-            // TODO: 调用处理函数
-            // handle_unit_hp(net_id, hp, max_hp);
-            show_debug_message("[解析] 收到 MSG_UNIT_HP: ID=" + string(net_id) + " HP=" + string(hp) + "/" + string(max_hp));
+            var _inst = global.network.map_net_id_instance_id[? net_id];
+            if (instance_exists(_inst)) {
+                _inst.hp = hp_val;
+                _inst.max_hp = max_hp;
+            }
+            show_debug_message("[解析] 收到 MSG_UNIT_HP: ID=" + string(net_id) + " HP=" + string(hp_val) + "/" + string(max_hp));
             break;
         }
-        
         case MSG_UNIT_DESTROYED:
         {
             // 字段：网络ID(s32)
@@ -225,12 +295,79 @@ function parse_network_message(buf) {
             break;
         }
         
+
+        case MSG_UNIT_DEATH:
+        {
+            // 字段：net_id(s32), is_enemy(u8), death_type(u8)
+            var net_id = buffer_read(buf, buffer_s32);
+            var is_enemy = buffer_read(buf, buffer_u8);
+            var death_type = buffer_read(buf, buffer_u8);
+            // 0=normal, 1=frozen, 2=ash
+
+            var _inst = noone;
+            if (ds_map_exists(global.network.map_net_id_instance_id, net_id)) {
+                _inst = global.network.map_net_id_instance_id[? net_id];
+            }
+
+            if (instance_exists(_inst)) {
+                if (is_enemy) {
+                    // 敌方单位死亡 — 服务端动画已播完确认销毁，直接移除
+                    instance_destroy(_inst);
+                } else {
+                    // 我方单位死亡（instance_destroy 会触发 Destroy 事件自动调用 card_destroyed）
+                    _inst.hp = -1;
+                    instance_destroy(_inst);
+                }
+            }
+
+            show_debug_message("[解析] 收到 MSG_UNIT_DEATH: ID=" + string(net_id) + " is_enemy=" + string(is_enemy) + " death_type=" + string(death_type));
+            break;
+        }
+
+        case MSG_ENEMY_STEAL:
+        {
+            // 字段：net_id(s32), col(u8), row(u8)
+            var net_id = buffer_read(buf, buffer_s32);
+            var col = buffer_read(buf, buffer_u8);
+            var row = buffer_read(buf, buffer_u8);
+
+            // 执行偷取
+            network_enemy_steal(col, row, net_id);
+
+            // 服务端收到客户端请求后广播给所有客户端
+            if (global.network.mode == "server") {
+                network_broadcast_enemy_steal(col, row, net_id);
+            }
+
+            show_debug_message("[解析] 收到 MSG_ENEMY_STEAL: ID=" + string(net_id) + " col=" + string(col) + " row=" + string(row));
+            break;
+
+        }
+        case MSG_PROGRESS_SYNC:
+        {
+            var wave = buffer_read(buf, buffer_u8);
+            var subwave = buffer_read(buf, buffer_u8);
+            obj_battle.current_wave = wave;
+            obj_battle.current_subwave = subwave;
+            break;
+        }
         case MSG_GAME_OVER:
         {
             // 字段：结果(u8) 0失败 1胜利
             var result = buffer_read(buf, buffer_u8);
             // TODO: 调用处理函数
             // handle_game_over(result);
+			global.is_paused = true;
+			global.game_over = true;
+			if result==1{
+				var inst = instance_create_depth(room_width/2,room_height/2,-3001,obj_game_over);
+				inst.sprite_index = spr_win;
+				audio_play_sound(snd_win,0,0);
+			}else{
+
+				instance_create_depth(room_width/2,room_height/2,-3001,obj_game_over);
+				audio_play_sound(snd_lose,0,0);
+			}
 			
             show_debug_message("[解析] 收到 MSG_GAME_OVER: 结果=" + string(result));
             break;
@@ -417,17 +554,46 @@ function send_message(socket, msg_id) {
     // 根据消息ID写入对应的字段
     switch (msg_id) {
         // ======== 客户端请求 ========
-        case MSG_UNIT_REQUEST:          // 参数: level(u8), col(u8), row(u8), obj_name(string)
+        case MSG_UNIT_REQUEST:          // 参数: level(u8), col(u8), row(u8), skill(u8), shape(u8), obj_name(string)
             buffer_write(buf, buffer_u8, argument[2]);
             buffer_write(buf, buffer_u8, argument[3]);
             buffer_write(buf, buffer_u8, argument[4]);
-            buffer_write(buf, buffer_string, argument[5]);
+            buffer_write(buf, buffer_u8, argument[5]);
+            buffer_write(buf, buffer_u8, argument[6]);
+            buffer_write(buf, buffer_string, argument[7]);
             break;
             
-        case MSG_REMOVE_UNIT:           // 参数: net_id(s32)
-            buffer_write(buf, buffer_s32, argument[2]);
-            break;
+		case MSG_REMOVE_UNIT_REQUEST:      // 参数: net_id(s32), col(u8), row(u8), flame_rate(f32)
+			buffer_write(buf, buffer_s32, argument[2]);
+			buffer_write(buf, buffer_u8, argument[3]);
+			buffer_write(buf, buffer_u8, argument[4]);
+			buffer_write(buf, buffer_f32, argument[5]);
+			break;
+
+		case MSG_REMOVE_UNIT:           // 参数: net_id(s32), col(u8), row(u8), flame_rate(f32)
+			buffer_write(buf, buffer_s32, argument[2]);
+			buffer_write(buf, buffer_u8, argument[3]);
+			buffer_write(buf, buffer_u8, argument[4]);
+			buffer_write(buf, buffer_f32, argument[5]);
+			case MSG_ENEMY_STEAL:           // 参数: net_id(s32), col(u8), row(u8)
+				buffer_write(buf, buffer_s32, argument[2]);
+				buffer_write(buf, buffer_u8, argument[3]);
+				buffer_write(buf, buffer_u8, argument[4]);
+				break;
+
+			case MSG_PROGRESS_SYNC:         // 参数: current_wave(u8), current_subwave(u8)
+				buffer_write(buf, buffer_u8, argument[2]);
+				buffer_write(buf, buffer_u8, argument[3]);
+				break;
+
+			break;
             
+			case MSG_UNIT_DEATH:           // 参数: net_id(s32), is_enemy(u8), death_type(u8)
+				buffer_write(buf, buffer_s32, argument[2]);
+				buffer_write(buf, buffer_u8, argument[3]);
+				buffer_write(buf, buffer_u8, argument[4]);
+				break;
+
         case MSG_PAUSE_TOGGLE:          // 参数: pause_state(u8)
             buffer_write(buf, buffer_u8, argument[2]);
             break;
@@ -442,21 +608,34 @@ function send_message(socket, msg_id) {
             buffer_write(buf, buffer_string, argument[3]);
             break;
             
-        case MSG_SPAWN_UNIT:            // 参数: 网络ID(s32), 等级(u8), col(u8), row(u8), object_name(u8)
+        case MSG_SPAWN_UNIT:            // 参数: 网络ID(s32), level(u8), col(u8), row(u8), skill(u8), shape(u8), object_name(string)
             buffer_write(buf, buffer_s32, argument[2]);
             buffer_write(buf, buffer_u8, argument[3]);
             buffer_write(buf, buffer_u8, argument[4]);
             buffer_write(buf, buffer_u8, argument[5]);
-            buffer_write(buf, buffer_string, argument[6]);
-			
+            buffer_write(buf, buffer_u8, argument[6]);
+            buffer_write(buf, buffer_u8, argument[7]);
+            buffer_write(buf, buffer_string, argument[8]);
             break;
             
-        case MSG_SPAWN_ENEMY:           // 参数: x,y,type
-            buffer_write(buf, buffer_f32, argument[2]);
+        case MSG_SPAWN_ENEMY:           // 参数: net_id(s32), x(f32), y(f32), object_name(string)
+            buffer_write(buf, buffer_s32, argument[2]);
             buffer_write(buf, buffer_f32, argument[3]);
-            buffer_write(buf, buffer_string, argument[4]);
+            buffer_write(buf, buffer_f32, argument[4]);
+            buffer_write(buf, buffer_string, argument[5]);
             break;
-            
+
+        case MSG_SPAWN_BOSS:            // 参数: net_id(s32), x(f32), y(f32), object_name(string), hp(s32), maxhp(s32), row(u8)
+            buffer_write(buf, buffer_s32, argument[2]);
+            buffer_write(buf, buffer_f32, argument[3]);
+            buffer_write(buf, buffer_f32, argument[4]);
+            buffer_write(buf, buffer_string, argument[5]);
+            buffer_write(buf, buffer_s32, argument[6]);
+            buffer_write(buf, buffer_s32, argument[7]);
+            buffer_write(buf, buffer_u8, argument[8]);
+            break;
+            break;
+
         case MSG_ENEMY_STATE:           // 参数: net_id(s32), state(u8), speed(f32), target_col(s16)
             buffer_write(buf, buffer_s32, argument[2]);
             buffer_write(buf, buffer_u8, argument[3]);

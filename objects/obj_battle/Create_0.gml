@@ -298,13 +298,15 @@ function enemy_subwave_summon(){
             
             var grid_pos = get_grid_position_from_world(new_x, new_y);
             var new_enemy = instance_create_depth(grid_pos.x+30, grid_pos.y + 38, 0, enemy_obj);
-            
+
 			if(global.network.mode="server"){
+				add_net_id(new_enemy.id);
+				var _net_id = global.network.map_instance_id_net_id[? new_enemy.id];
 				var _list = global.network.connected_clients;
 				var _size = array_length(_list);
 				for (var _i = 0; _i < _size; _i++) {
 					var _socket = _list[_i];
-					send_message(_socket, MSG_SPAWN_ENEMY,grid_pos.x+30, grid_pos.y + 3,object_get_name(enemy_obj));
+					send_message(_socket, MSG_SPAWN_ENEMY, _net_id, grid_pos.x+30, grid_pos.y + 3, object_get_name(enemy_obj));
 				}
 			}
             // 更新统计信息

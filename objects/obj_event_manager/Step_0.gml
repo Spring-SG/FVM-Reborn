@@ -381,6 +381,14 @@ if is_real(global.level_file.version){
 						bat.target_col = b_col
 						bat.target_row = b_row
 						bat.banding_target_inst = inst
+						if (global.network.mode == "server") {
+							add_net_id(bat.id);
+							var _bat_net = global.network.map_instance_id_net_id[? bat.id];
+							var _list3 = global.network.connected_clients;
+							for (var _k = 0; _k < array_length(_list3); _k++) {
+								send_message(_list3[_k], MSG_SPAWN_ENEMY, _bat_net, target_pos.x+10, target_pos.y-room_height, object_get_name(obj_bat_mouse));
+							}
+						}
 					}
 				}
 			}
@@ -424,6 +432,14 @@ if is_real(global.level_file.version){
 								var inst = instance_create_depth(target_pos.x+10,target_pos.y+33,-500,obj_assault_mouse)
 								inst.grid_col = b_col
 								inst.grid_row = b_row
+												if (global.network.mode == "server") {
+								add_net_id(inst.id);
+								var _net_id = global.network.map_instance_id_net_id[? inst.id];
+								var _list2 = global.network.connected_clients;
+								for (var _j = 0; _j < array_length(_list2); _j++) {
+									send_message(_list2[_j], MSG_SPAWN_ENEMY, _net_id, target_pos.x+10, target_pos.y+33, object_get_name(obj_assault_mouse));
+								}
+							}
 								break
 							}
 						}

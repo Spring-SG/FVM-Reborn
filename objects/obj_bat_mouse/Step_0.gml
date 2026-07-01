@@ -88,15 +88,21 @@ if hp > 0 && state != ENEMY_STATE.DEAD && banding_target_inst.state != "appear"{
 	        // 如果找到目标植物，进入攻击状态
 	        if (plant_in_range != noone) {
 	            if instance_exists(plant_in_range){
-					with plant_in_range{
-						if plant_id != "player"{
-							var inst = instance_create_depth(x,y,depth+1,obj_card_stolen)
-							inst.sprite_index = sprite_index
-							inst.image_index = image_index
-							instance_destroy()
-						}
-					}
-				}
+	                var _net_id = (ds_map_exists(global.network.map_instance_id_net_id, plant_in_range)) 
+	                    ? global.network.map_instance_id_net_id[? plant_in_range] : -1;
+	                
+	                // 客户端：拦截，发请求给服务端
+	                if (global.network.mode == "client") {
+	                    send_message(global.network.server_socket, MSG_ENEMY_STEAL, _net_id, target_col, target_row);
+	                } else {
+	                    // 服务端或单机：执行偷取
+	                    network_enemy_steal(target_col, target_row, _net_id);
+	                    // 服务端广播给所有客户端
+	                    if (global.network.mode == "server") {
+	                        network_broadcast_enemy_steal(target_col, target_row, _net_id);
+	                    }
+	                }
+	            }
 	        }
 		}
 	}

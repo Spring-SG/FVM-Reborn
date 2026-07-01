@@ -23,9 +23,7 @@ function spawn_plant(col, row, plant_obj, props) {
     var _depth = calculate_plant_depth(col, row, _plant.plant_type);
     _plant.depth = _depth;
     
-    // 注册到网格系统
-    card_created(_plant, col, row);
-	
+    // 
     
     // 应用自定义属性
     if (is_struct(props)) {
@@ -35,6 +33,7 @@ function spawn_plant(col, row, plant_obj, props) {
             _plant[$ _key] = props[$ _key];
         }
     }
+	card_created(_plant, col, row);
     
     // 放置特效（注意：如果不需要特效可跳过）
     if (instance_exists(obj_place_effect)) {
@@ -219,6 +218,31 @@ function sh_spawn(args) {
 }
 
 /// @description rt-shell 元数据：spawn
+/// @description 命令行：伪造游戏结束，测试客户端接收
+function sh_win(args) {
+    if (global.network.mode == "server") {
+        var _cl = global.network.connected_clients;
+        for (var i = 0; i < array_length(_cl); i++) {
+            send_message(_cl[i], MSG_GAME_OVER, 1);
+            show_debug_message("[WIN DEBUG] sent to " + string(_cl[i]));
+        }
+        return "[WIN] sent to " + string(array_length(_cl)) + " clients";
+    }
+    if (global.network.mode == "client") {
+        send_message(global.network.server_socket, MSG_GAME_OVER, 1);
+        return "[WIN] sent to server";
+    }
+    return "[WIN] no network";
+}
+function meta_win() {
+    return {
+        description: "伪造游戏胜利消息，测试客户端是否收到",
+        arguments: [],
+        suggestions: [],
+        hidden: false,
+        deferred: false
+    };
+}
 function meta_spawn() {
     return {
         description: "在指定网格位置生成植物",

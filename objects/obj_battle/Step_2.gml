@@ -28,6 +28,13 @@ if not global.is_paused{
 }
 if (!global.save_data.unlocked_items.elite_unlocked && current_wave >= global.level_file.elite_wave)||current_wave >= global.level_file.total_waves{
 	if current_wave_hp <= 0 && !instance_exists(obj_game_over){
+		if global.network.mode == "server"{
+			var _clients = global.network.connected_clients;
+		    for (var i = 0; i < array_length(_clients); i++) {
+		        send_message(_clients[i], MSG_GAME_OVER, 1);
+		    }
+		}
+		
 		global.is_paused = true
 		global.game_over = true
 		var inst = instance_create_depth(room_width/2,room_height/2,-3001,obj_game_over)

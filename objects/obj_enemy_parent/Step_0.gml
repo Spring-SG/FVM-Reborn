@@ -1,8 +1,14 @@
-// 修改后的僵尸Step事件
-if global.is_paused{
-	exit
-}
-if ice_timer > 0{
+	// 修改后的僵尸Step事件
+	if global.is_paused{
+		exit
+	}
+	// 客户端：直接死亡，不等待服务端
+	if (hp <= 0 && state != ENEMY_STATE.DEAD) {
+		timer = 0;
+		state = ENEMY_STATE.DEAD;
+		target_plant = noone;
+	}
+	if ice_timer > 0{
 	ice_timer--
 	is_slowdown = true
 }
@@ -40,6 +46,7 @@ if hp <= 0{
 	scare_timer = 0
 	left_move_flashs = 0
 	stun_timer = 0
+
 }
 var current_atk_cycle = 0
 var current_move_speed = 0
@@ -352,6 +359,15 @@ if (hp <= 0 && state != ENEMY_STATE.DEAD) {
 
 // 透明度处理
 if (image_alpha <= 0 && state == ENEMY_STATE.DEAD) {
+	if (global.network.mode == "server") {
+			var _dtype = (is_frozen) ? 1 : 0;
+			var _net_id = (ds_map_exists(global.network.map_instance_id_net_id, id)) ? global.network.map_instance_id_net_id[? id] : -1;
+			var _list = global.network.connected_clients;
+			var _size = array_length(_list);
+			for (var _i = 0; _i < _size; _i++) {
+				send_message(_list[_i], MSG_UNIT_DEATH, _net_id, 1, _dtype);
+			}
+		}
     instance_destroy();
 }
 
@@ -368,6 +384,12 @@ grid_col = zombie_grid.col;
 grid_row = zombie_grid.row;
 
 if x < global.grid_offset_x-150 && hp > 0 && not place_meeting(x,y,obj_cat){
+	if global.network.mode == "server"{
+		var _clients = global.network.connected_clients;
+		for (var i = 0; i < array_length(_clients); i++) {
+		    send_message(_clients[i], MSG_GAME_OVER, 0);
+		}
+	}
 	global.is_paused = true
 	global.game_over = true
 	instance_create_depth(room_width/2,room_height/2,-3001,obj_game_over)
