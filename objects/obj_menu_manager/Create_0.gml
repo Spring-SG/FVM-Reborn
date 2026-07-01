@@ -53,10 +53,19 @@ self.texture_loaded = 0
 global.preloaded = variable_global_exists("preloaded") ? global.preloaded : false
 self.display_progress = 0
 
+if !global.preloaded{
+	instance_create_depth(-800,-800,0,obj_update_checker_btn)
+}
+
 function after_texture_load() {
     scribble_font_set_default("font_hei")
     scribble_font_bake_outline_4dir("font_hei", "font_hei_outline_4dir_black", c_dkgray, false)
-    global.preloaded = true;
+	if !global.preloaded{
+		with obj_update_checker_btn{
+			event_user(1)
+		}
+		global.preloaded = true;
+	}
 }
 
 function pre_load_texture() {

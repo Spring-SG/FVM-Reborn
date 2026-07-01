@@ -1,6 +1,6 @@
 function slots_init(){
 	register_card("xiao_long_bao", obj_xiao_long_bao, [
-	    {"shape":0, "sprite":spr_xiao_long_bao, "cost":100, "cooldown":7*60, "description":"小笼包：发射包子","plant_type":"normal","feature_type":"normal","target_card":"none"}
+	    {"shape":0, "sprite":spr_xiao_long_bao, "cost":100, "cooldown":7*60, "description":"小笼包：发射包子","plant_type":"normal","feature_type":"bun","target_card":"none"}
 	]);
 	
 	register_card("small_fire", obj_small_fire, [
@@ -20,7 +20,7 @@ function slots_init(){
 	])
 	
 	register_card("double_long_bao",obj_double_long_bao,[
-	    {"shape":0, "sprite":spr_double_long_bao, "cost":200, "cooldown":7*60, "description":"双层小笼包：发射两发包子","plant_type":"normal","feature_type":"normal","target_card":"none"}
+	    {"shape":0, "sprite":spr_double_long_bao, "cost":200, "cooldown":7*60, "description":"双层小笼包：发射两发包子","plant_type":"normal","feature_type":"bun","target_card":"none"}
 	])
 	
 	register_card("mouse_clip",obj_mouse_clip,[
@@ -39,7 +39,7 @@ function slots_init(){
 		{"shape":2, "sprite":spr_wooden_plate_2, "cost":0, "cooldown":7*60, "description":"坚韧木盘子：一次放置三个，在水上承载卡片","plant_type":"lilypad","feature_type":"water","target_card":"none"}
 	])
 	register_card("ice_long_bao", obj_ice_long_bao, [
-	    {"shape":0, "sprite":spr_ice_long_bao, "cost":175, "cooldown":7*60, "description":"冰冻小笼包：发射减速冰包子","plant_type":"normal","feature_type":"normal","target_card":"none"}
+	    {"shape":0, "sprite":spr_ice_long_bao, "cost":175, "cooldown":7*60, "description":"冰冻小笼包：发射减速冰包子","plant_type":"normal","feature_type":"bun","target_card":"none"}
 	]);
 	register_card("goblet_lamp", obj_goblet_lamp, [
 	    {"shape":0, "sprite":spr_goblet_lamp, "cost":25, "cooldown":7*60, "description":"酒杯灯：先生产少量火苗，一段时间后正常","plant_type":"normal","feature_type":"normal","target_card":"none"},
@@ -193,7 +193,7 @@ function slots_init(){
 		{"shape":2, "sprite":spr_firework_dragon_icon_2, "cost":0, "cooldown":75*60, "description":"炽焰花火龙：立即生产12朵火苗","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_firework_dragon_2}
 	]);
 	register_card("double_ice_long_bao",obj_double_ice_long_bao,[
-	    {"shape":0, "sprite":spr_double_ice_long_bao, "cost":225, "cooldown":7*60, "description":"双层冰冻小笼包：发射两发冰包子","plant_type":"normal","feature_type":"normal","target_card":"none"}
+	    {"shape":0, "sprite":spr_double_ice_long_bao, "cost":225, "cooldown":7*60, "description":"双层冰冻小笼包：发射两发冰包子","plant_type":"normal","feature_type":"bun","target_card":"none"}
 	])
 	register_card("cat_chest",obj_cat_chest,[
 	    {"shape":0, "sprite":spr_cat_chest_1, "cost":200, "cooldown":30*60, "description":"猫猫箱：将老鼠惊吓至相邻行并使其丢弃防具","plant_type":"normal","feature_type":"normal","target_card":"none"}
@@ -220,10 +220,10 @@ function slots_init(){
 		{"shape":2, "sprite":spr_tar_sprayer_2, "cost":150, "cooldown":7*60, "description":"祝融喷壶：穿透攻击六格内敌人","plant_type":"normal","feature_type":"normal","target_card":"none"}
 	]);
 	register_card("triple_long_bao", obj_triple_long_bao, [
-	    {"shape":0, "sprite":spr_triple_long_bao, "cost":125, "cooldown":7*60, "description":"三向小笼包：向三个方向发射包子","plant_type":"normal","feature_type":"normal","target_card":"none"}
+	    {"shape":0, "sprite":spr_triple_long_bao, "cost":125, "cooldown":7*60, "description":"三向小笼包：向三个方向发射包子","plant_type":"normal","feature_type":"tbun","target_card":"none"}
 	]);
 	register_card("triple_ice_long_bao", obj_triple_ice_long_bao, [
-	    {"shape":0, "sprite":spr_triple_ice_long_bao, "cost":225, "cooldown":7*60, "description":"三向冰冻小笼包：向三个方向发射冰包子","plant_type":"normal","feature_type":"normal","target_card":"none"}
+	    {"shape":0, "sprite":spr_triple_ice_long_bao, "cost":225, "cooldown":7*60, "description":"三向冰冻小笼包：向三个方向发射冰包子","plant_type":"normal","feature_type":"tbun","target_card":"none"}
 	]);
 	register_card("hotdog_cannon", obj_hotdog_cannon, [
 	    {"shape":0, "sprite":spr_hotdog_cannon, "cost":225, "cooldown":7*60, "description":"热狗大炮：发射冰弹攻击空中和地面敌人","plant_type":"normal","feature_type":"normal","target_card":"none"},
@@ -278,5 +278,20 @@ function slots_init(){
 	register_card("magic_chicken", obj_magic_chicken, [
 	    {"shape":0, "sprite":spr_magic_chicken_icon, "cost":0, "cooldown":7*60, "description":"幻幻鸡：复制成上一张放置的卡片","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_magic_chicken}
 	]);
+	register_card("xinjiang_fried_noodles",obj_xinjiang_fried_noodles,[
+	    {"shape":0, "sprite":spr_xinjiang_fried_noodles, "cost":150, "cooldown":7*60, "description":"新疆炒面：攻击前方三格敌人","plant_type":"normal","feature_type":"normal","target_card":"none"},
+	    {"shape":1, "sprite":spr_xinjiang_fried_noodles_1, "cost":175, "cooldown":7*60, "description":"刀削拉面：攻击前方三格敌人","plant_type":"normal","feature_type":"normal","target_card":"none"},
+		{"shape":2, "sprite":spr_xinjiang_fried_noodles_icon_2, "cost":225, "cooldown":7*60, "description":"真刀削拉面：攻击前方四格敌人","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_xinjiang_fried_noodles_2}
+	])
+	register_card("king_long_bao",obj_king_long_bao,[
+	    {"shape":0, "sprite":spr_king_long_bao_0_0, "cost":125, "cooldown":5*60, "description":"国王小笼包：发射包子，可填充2张包子类卡片","plant_type":"normal","feature_type":"king_bun","target_card":"none"},
+	    {"shape":1, "sprite":spr_king_long_bao_1_0, "cost":125, "cooldown":5*60, "description":"红心国王小笼包：发射包子，可填充3张包子类卡片","plant_type":"normal","feature_type":"king_bun","target_card":"none"},
+		{"shape":2, "sprite":spr_king_long_bao_2_0, "cost":125, "cooldown":5*60, "description":"黑心国王小笼包：发射包子，可填充5张包子类卡片","plant_type":"normal","feature_type":"king_bun","target_card":"none"}
+	])
+	register_card("king_triple_long_bao",obj_king_triple_long_bao,[
+	    {"shape":0, "sprite":spr_king_triple_long_bao_0_0, "cost":175, "cooldown":5*60, "description":"三向国王小笼包：发射包子，可填充2张三向包子类卡片","plant_type":"normal","feature_type":"king_tbun","target_card":"none"},
+	    {"shape":1, "sprite":spr_king_triple_long_bao_1_0, "cost":175, "cooldown":5*60, "description":"红心三向国王小笼包：发射包子，可填充3张三向包子类卡片","plant_type":"normal","feature_type":"king_tbun","target_card":"none"},
+		{"shape":2, "sprite":spr_king_triple_long_bao_2_0, "cost":175, "cooldown":5*60, "description":"黑心三向国王小笼包：发射包子，可填充5张三向包子类卡片","plant_type":"normal","feature_type":"king_tbun","target_card":"none"}
+	])
 	
 }

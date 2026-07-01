@@ -3,11 +3,13 @@ if global.is_paused{
 	exit
 }
 current_cost = cost
-if ds_map_find_value(global.plus_card_map,card_id) != undefined{
-	var plus_info = ds_map_find_value(global.plus_card_map,card_id)
-	with plus_info[0]{
-		if shape < plus_info[1]{
-			other.current_cost += 50
+if card_id != "magic_chicken"{
+	if ds_map_find_value(global.plus_card_map,card_id) != undefined{
+		var plus_info = ds_map_find_value(global.plus_card_map,card_id)
+		with plus_info[0]{
+			if shape < plus_info[1]{
+				other.current_cost += 50
+			}
 		}
 	}
 }
@@ -206,7 +208,9 @@ if (is_selected) {
 			if global.replace_placement{
 				for (var i = 0; i < ds_list_size(plant_list); i++) {
 					var plant = ds_list_find_value(plant_list, i);
-					if (instance_exists(plant) && plant.plant_type == card_data[? "plant_type"] && plant.plant_id != "player" && plant.plant_type != "coffee") {
+					if (instance_exists(plant) && plant.plant_type == card_data[? "plant_type"] && plant.plant_id != "player" && plant.plant_type != "coffee"
+					&& !((card_data[? "feature_type"]=="bun" && plant.feature_type == "king_bun")||(card_data[? "feature_type"]=="king_bun" && plant.feature_type == "king_bun"))
+					&& !((card_data[? "feature_type"]=="tbun" && plant.feature_type == "king_tbun")||(card_data[? "feature_type"]=="king_tbun" && plant.feature_type == "king_tbun"))) {
 						card_destroyed(plant);
 						instance_destroy(plant);
 					}

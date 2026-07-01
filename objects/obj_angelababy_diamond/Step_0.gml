@@ -73,9 +73,9 @@ grid_col = zombie_grid.col;
 grid_row = zombie_grid.row;
 
 if state != "appear"{
-	if global.grid_terrains[grid_pos.row][grid_pos.col].type != "obstacle"{
-		current_grid_type = global.grid_terrains[grid_pos.row][grid_pos.col].type
-		global.grid_terrains[grid_pos.row][grid_pos.col].type = "obstacle"
-	}
+	//if global.grid_terrains[grid_pos.row][grid_pos.col].type != "obstacle"{
+	//	current_grid_type = global.grid_terrains[grid_pos.row][grid_pos.col].type
+	//	global.grid_terrains[grid_pos.row][grid_pos.col].type = "obstacle"
+	//}
 
 }

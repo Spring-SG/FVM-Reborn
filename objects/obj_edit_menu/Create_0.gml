@@ -46,3 +46,5 @@ btn4.type = "prev"
 
 var btn5 = instance_create_depth(x+30,y+25,depth-1,obj_player_attire_select_btn)
 btn5.type = "next"
+
+var btn6 = instance_create_depth(x - 120, y +175 , depth-1, obj_update_checker_btn);

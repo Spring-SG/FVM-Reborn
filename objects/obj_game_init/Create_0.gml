@@ -30,7 +30,7 @@ global.level_id = ""
 global.level_file = {}
 global.level_name = "曲奇岛"
 global.level_data = {}
-global.debug = 1
+global.debug = 0
 global.laboretory_room = false
 Music_Init()
 

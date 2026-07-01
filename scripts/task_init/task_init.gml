@@ -2539,8 +2539,8 @@ function task_init(){
 				"rewards":[
 					{
 						"type":"item",
-						"item_id":"royal_spices",
-						"amount":400
+						"item_id":"secret_spices",
+						"amount":800
 					},
 					{
 						"type":"item",
@@ -2976,8 +2976,8 @@ function task_init(){
 				"rewards":[
 					{
 						"type":"item",
-						"item_id":"royal_spices",
-						"amount":200
+						"item_id":"secret_spices",
+						"amount":800
 					},
 					{
 						"type":"gold",

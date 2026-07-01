@@ -97,6 +97,9 @@ load_file(global.save_slot)
 	unlock_card("lightning_baguette",10,1,7)
 	unlock_card("bull_firework",10,1,7)
 	unlock_card("magic_chicken",0,0,0)
+	unlock_card("xinjiang_fried_noodles",12,2,7)
+	unlock_card("king_long_bao",12,2,7)
+	unlock_card("king_triple_long_bao",12,2,7)
 	
 	global.save_data.player.gold = 20000000
 	global.save_data.player.level = 55

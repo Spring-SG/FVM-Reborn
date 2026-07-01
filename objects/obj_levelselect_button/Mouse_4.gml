@@ -41,7 +41,12 @@ if on_click && obj_player_info_ui.menu_type == 0 && unlock{
 	}
 }
 if !unlock && obj_player_info_ui.menu_type == 0{
-	show_notice("达到"+string(player_level_require)+"级以解锁此关",60)
+	if player_level_require > 80{
+		show_notice("暂未开放，敬请期待！",60)
+	}
+	else{
+		show_notice("达到"+string(player_level_require)+"级以解锁此关",60)
+	}
 }
 
 

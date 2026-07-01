@@ -15,7 +15,7 @@ function boss_init(){
 	register_boss("lieutenant_buzz",{"name":"嗡嗡中尉","hp":50000,"icon":spr_lieutenant_buzz_icon})
 	register_boss("irritable_jack",{"name":"暴躁杰克","hp":50000,"icon":spr_irritable_jack_icon})
 	register_boss("hot_vajra",{"name":"炽热金刚","hp":80000,"icon":spr_hot_vajra_icon})
-	register_boss("huang_xiaoming",{"name":"小明鼠","hp":60000,"icon":spr_huang_xiaoming_icon})
-	register_boss("angelababy",{"name":"baby鼠","hp":60000,"icon":spr_angelababy_icon})
+	register_boss("huang_xiaoming",{"name":"酷帅小明","hp":60000,"icon":spr_huang_xiaoming_icon})
+	register_boss("angelababy",{"name":"闪亮Baby","hp":60000,"icon":spr_angelababy_icon})
 	register_boss("mouse_train_1",{"name":"列车初级","hp":80000,"icon":spr_mouse_train_icon})
 }

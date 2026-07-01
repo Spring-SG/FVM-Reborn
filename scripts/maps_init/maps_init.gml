@@ -1046,7 +1046,7 @@ function maps_init(){
 					"pre_music":mus_floating_island_daytime_pre,
 					"elite_music":mus_floating_island_daytime_elite,
 					"boss_music":mus_floating_island_daytime_boss,
-					"player_level_require":51,
+					"player_level_require":99,
 					"pre_level_require":[]
 				},
 				{
@@ -1062,7 +1062,7 @@ function maps_init(){
 					"pre_music":mus_floating_island_night_pre,
 					"elite_music":mus_floating_island_night_elite,
 					"boss_music":mus_floating_island_night_boss,
-					"player_level_require":52,
+					"player_level_require":99,
 					"pre_level_require":[]
 				},
 				{
@@ -1078,7 +1078,7 @@ function maps_init(){
 					"pre_music":mus_floating_island_daytime_pre,
 					"elite_music":mus_floating_island_daytime_elite,
 					"boss_music":mus_floating_island_daytime_boss,
-					"player_level_require":53,
+					"player_level_require":99,
 					"pre_level_require":[]
 				},
 				{
@@ -1094,7 +1094,7 @@ function maps_init(){
 					"pre_music":mus_floating_island_night_pre,
 					"elite_music":mus_floating_island_night_elite,
 					"boss_music":mus_floating_island_night_boss,
-					"player_level_require":54,
+					"player_level_require":99,
 					"pre_level_require":[]
 				},
 				{
@@ -1110,7 +1110,23 @@ function maps_init(){
 					"pre_music":mus_floating_island_crown_pre,
 					"elite_music":mus_floating_island_crown_elite,
 					"boss_music":mus_floating_island_daytime_boss,
-					"player_level_require":55,
+					"player_level_require":99,
+					"pre_level_require":[]
+				},
+				{
+					"id":"tower_cake",
+					"name":"魔塔蛋糕",
+					"button_spr":spr_levelselect_button,
+					"button_index":14,
+					"button_x":1228,
+					"button_y":330,
+					"level_file":"volcanic/cheese_castle.json",
+					"hard_level_file":"volcanic/cheese_castle_hard.json",
+					"level_sprite":spr_cheese_castle,
+					"pre_music":mus_volcanic_island_crown_pre,
+					"elite_music":mus_volcanic_island_crown_elite,
+					"boss_music":mus_volcanic_island_night_boss,
+					"player_level_require":8,
 					"pre_level_require":[]
 				},
 			]
