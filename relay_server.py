@@ -158,13 +158,17 @@ class Relay:
     #  2. 转发消息
     # ================================================================
     async def _broadcast(self, room: Room, body: bytes):
+        """房主 → 所有客户端（并行 drain）"""
         packet = struct.pack("<H", len(body)) + body
+        tasks = []
         for c in list(room.clients.values()):
             c.write(packet)
-        for c in list(room.clients.values()):
-            await self.flush(c)
+            tasks.append(self.flush(c))
+        if tasks:
+            await asyncio.gather(*tasks, return_exceptions=True)
 
     async def _to_host(self, room: Room, body: bytes):
+        """客户端 → 房主"""
         if room.host and not room.host.is_closing():
             packet = struct.pack("<H", len(body)) + body
             room.host.write(packet)
