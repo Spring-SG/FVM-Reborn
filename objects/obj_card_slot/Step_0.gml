@@ -215,6 +215,10 @@ if (is_selected) {
 			var depth_value = calculate_plant_depth(logical_col, logical_row, new_plant.plant_type);
 			card_created(new_plant, logical_col, logical_row);
 			new_plant.depth = depth_value
+			new_plant_sprite_index  = new_plant.sprite_index
+			if(global.network.mode=="client"){
+				instance_destroy(new_plant);
+			}
 			if global.grid_terrains[logical_row][logical_col].type == "normal"{
 				instance_create_depth(logical_world.x + platform_shift_x, logical_world.y + platform_shift_y,-2,obj_place_effect)
 			}
@@ -232,6 +236,7 @@ if (is_selected) {
             is_ready = false;
 			if array_get_index(cooldown_ignore_list,card_id) == -1{
 				global.prev_place_id = card_id
+				global.prev_place_id_shape = new_plant_sprite_index
 			}
             
 			if global.grid_terrains[logical_row][logical_col].type == "normal"{

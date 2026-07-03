@@ -2,6 +2,13 @@ if global.is_paused{
 	exit
 }
 
+// 客户端跳过，服务端开启日志
+if (global.network.mode == "client") exit;
+if (global.network.mode == "server"){ 
+	instance_log_enable();
+	_evt_pre_terrains = json_stringify(global.grid_terrains);
+    _evt_pre_row      = json_stringify(global.row_feature);
+}
 event_timer ++
 {//（旧代码）硬编码的事件和地图物件
 	if global.level_data.name == "布丁岛（日）" || global.level_data.name == "布丁岛（夜）"{
@@ -381,14 +388,6 @@ if is_real(global.level_file.version){
 						bat.target_col = b_col
 						bat.target_row = b_row
 						bat.banding_target_inst = inst
-						if (global.network.mode == "server") {
-							add_net_id(bat.id);
-							var _bat_net = global.network.map_instance_id_net_id[? bat.id];
-							var _list3 = global.network.connected_clients;
-							for (var _k = 0; _k < array_length(_list3); _k++) {
-								send_message(_list3[_k], MSG_SPAWN_ENEMY, _bat_net, target_pos.x+10, target_pos.y-room_height, object_get_name(obj_bat_mouse));
-							}
-						}
 					}
 				}
 			}
@@ -432,14 +431,6 @@ if is_real(global.level_file.version){
 								var inst = instance_create_depth(target_pos.x+10,target_pos.y+33,-500,obj_assault_mouse)
 								inst.grid_col = b_col
 								inst.grid_row = b_row
-												if (global.network.mode == "server") {
-								add_net_id(inst.id);
-								var _net_id = global.network.map_instance_id_net_id[? inst.id];
-								var _list2 = global.network.connected_clients;
-								for (var _j = 0; _j < array_length(_list2); _j++) {
-									send_message(_list2[_j], MSG_SPAWN_ENEMY, _net_id, target_pos.x+10, target_pos.y+33, object_get_name(obj_assault_mouse));
-								}
-							}
 								break
 							}
 						}
@@ -1026,4 +1017,76 @@ if global.level_id == "spice_airship"{
 		plat1.initial_offset = 0;
 		plat1.initial_idle_duration = 0; // 初始停顿时间
 	}
+
+
+}
+
+
+// ====== 服务端：发送操作日志 ======
+if (global.network.mode == "server") {
+	var _actions = [];
+
+	// 属性白名单
+	var _sync_keys = [
+		"target_col", "target_row", "grid_col", "grid_row",
+		"col", "row", "is_hole",
+		"image_index", "image_alpha", "image_speed",
+		"start_col", "start_row", "width", "length",
+		"move_distance", "move_direction", "move_axis",
+		"boundary_idle_duration", "move_speed",
+		"initial_offset", "initial_idle_duration"
+	];
+
+	// 新创建的实例（统一分配 net_id + 采集属性）
+	for (var _i = 0; _i < array_length(global._evt_created); _i++) {
+		var _id = global._evt_created[_i];
+		if (instance_exists(_id)) {
+			with (_id) {
+				if (!ds_map_exists(global.network.map_instance_id_net_id, id)) {
+					add_net_id(id);
+				}
+				var _props = {};
+				for (var _k = 0; _k < array_length(_sync_keys); _k++) {
+					var _key = _sync_keys[_k];
+					if (variable_instance_exists(id, _key)) {
+						_props[$ _key] = variable_instance_get(id, _key);
+					}
+				}
+				array_push(_actions, {
+					op: "spawn",
+					obj: object_get_name(object_index),
+					x: x, y: y, depth: depth,
+					net_id: global.network.map_instance_id_net_id[? id],
+					props: _props
+				});
+			}
+		}
+	}
+
+	// 销毁的实例
+	for (var _i = 0; _i < array_length(global._evt_destroyed); _i++) {
+		array_push(_actions, {
+			op: "destroy",
+			id: global._evt_destroyed[_i]
+		});
+	}
+	
+	// 全局变量改变
+    if (json_stringify(global.grid_terrains) != _evt_pre_terrains) {
+        array_push(_actions, { op: "state", key: "grid_terrains", val: json_stringify(global.grid_terrains) });
+    }
+    if (json_stringify(global.row_feature) != _evt_pre_row) {
+        array_push(_actions, { op: "state", key: "row_feature", val: json_stringify(global.row_feature) });
+    }
+	  
+	  
+	if (array_length(_actions) > 0) {
+		var _list = global.network.connected_clients;
+		var _json = json_stringify(_actions);
+		for (var _j = 0; _j < array_length(_list); _j++) {
+			send_message(_list[_j], MSG_EVENT_ACTIONS, _json);
+		}
+	}
+
+	instance_log_disable();
 }

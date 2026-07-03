@@ -34,11 +34,12 @@ if (!global.save_data.unlocked_items.elite_unlocked && current_wave >= global.le
 		        send_message(_clients[i], MSG_GAME_OVER, 1);
 		    }
 		}
-		
+		if global.network.mode != "client"{
 		global.is_paused = true
 		global.game_over = true
 		var inst = instance_create_depth(room_width/2,room_height/2,-3001,obj_game_over)
 		inst.sprite_index = spr_win
 		audio_play_sound(snd_win,0,0)
+		}
 	}
 }

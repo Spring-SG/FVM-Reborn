@@ -164,7 +164,11 @@ function network_broadcast_enemy_steal(col, row, net_id) {
 /// @param {real} skill        技能分支
 /// @param {real} shape        形态
 /// @description 用网络同步的星级/技能/形态重新初始化植物属性，覆盖本地存档
-function network_apply_plant_level(_plant, level, skill, shape) {
+function network_apply_plant_level(_plant) {
+	
+	if(_plant.object_index == obj_player_character){
+		exit;
+	}
     // 1. 清理本地存档创建的星标
     if (variable_instance_exists(_plant, "banding_star_obj")) {
         if (instance_exists(_plant.banding_star_obj)) {
@@ -174,9 +178,9 @@ function network_apply_plant_level(_plant, level, skill, shape) {
     }
 
     // 2. 设置网络值
-    _plant.current_level = level;
-    _plant.skill = skill;
-    _plant.shape = shape;
+    var level = _plant.current_level;
+    var skill = _plant.skill ;
+    var shape = _plant.shape ;
 
     // 3. 重新计算属性
     var upgrade_data = get_plant_data_with_skill(_plant.plant_id, shape, level, skill);
@@ -214,5 +218,77 @@ function network_apply_plant_level(_plant, level, skill, shape) {
         inst.sprite_index = star_spr;
         inst.parent_card = _plant.id;
         _plant.banding_star_obj = inst.id;
+    }
+}
+
+/// @function network_spawn_enemy(_x, _y, _obj)
+/// @description 创建敌方单位并广播给所有客户端
+function network_spawn_enemy(_x, _y, _inst) {
+    if (global.network.mode == "server") {
+        add_net_id(_inst.id);
+        var _nid = global.network.map_instance_id_net_id[? _inst.id];
+        var _cl = global.network.connected_clients;
+        for (var _j = 0; _j < array_length(_cl); _j++) {
+			send_message(_cl[_j], MSG_SPAWN_ENEMY, _nid, _x, _y, object_get_name(_inst.object_index));
+        }
+    }
+}
+
+/// @function network_active_skill(type, col, row, level)
+/// @description 释放主动宝石技能
+function network_active_skill(_type, _col, _row, _level) {
+    var _gi = get_gem_info(_type);
+    var _range = (variable_struct_exists(_gi, "range") ? _gi.range[_level] : 7);
+
+    // 技能提示
+    var _text = instance_create_depth(room_width/2+80, room_height/3-100, -500, obj_gem_text);
+    switch (_type) {
+        case "laser_gem": _text.sprite_index = spr_laser_gem_text; break;
+        case "bomb_gem": _text.sprite_index = spr_bomb_gem_text; break;
+        case "freeze_gem": _text.sprite_index = spr_freeze_gem_text; break;
+        case "cateye_gem": _text.sprite_index = spr_cateye_gem_text; break;
+    }
+
+    switch (_type) {
+        case "laser_gem":
+            var r = _range - 1; var up = floor(r/2); var dn = ceil(r/2);
+            var sr = clamp(_row, up, global.grid_rows - dn - 1);
+            var p = get_world_position_from_grid(-1, sr);
+            var inst = instance_create_depth(p.x, p.y+35, -500, obj_laser_gem_spawn); inst.row = sr;
+            for (var i = 1; i <= up; i++) { p = get_world_position_from_grid(-1, sr-i); inst = instance_create_depth(p.x, p.y+35, -500, obj_laser_gem_spawn); inst.row = sr-i; }
+            for (var i = 1; i <= dn; i++) { p = get_world_position_from_grid(-1, sr+i); inst = instance_create_depth(p.x, p.y+35, -500, obj_laser_gem_spawn); inst.row = sr+i; }
+            break;
+
+        case "bomb_gem":
+            var _cols = [7,5,7,5,7]; var _rows = [1,2,3,4,5];
+            for (var i = 0; i < 5; i++) { var p = get_world_position_from_grid(_cols[i], _rows[i]); var inst = instance_create_depth(p.x, p.y+30, -500, obj_bomb_gem_effect); inst.grid_row = _rows[i]; }
+            break;
+
+        case "freeze_gem":
+            var r = _range - 1; var up = floor(r/2); var dn = ceil(r/2);
+            var sr = clamp(_row, up, global.grid_rows - dn - 1);
+            var p = get_world_position_from_grid(-1, sr);
+            var inst = instance_create_depth(p.x, p.y+35, -500, obj_freeze_gem_spawn); inst.row = sr;
+            for (var i = 1; i <= up; i++) { p = get_world_position_from_grid(-1, sr-i); inst = instance_create_depth(p.x, p.y+35, -500, obj_freeze_gem_spawn); inst.row = sr-i; }
+            for (var i = 1; i <= dn; i++) { p = get_world_position_from_grid(-1, sr+i); inst = instance_create_depth(p.x, p.y+35, -500, obj_freeze_gem_spawn); inst.row = sr+i; }
+            break;
+
+        case "cateye_gem":
+            var r = _range - 1; var up = floor(r/2); var dn = ceil(r/2);
+            var sr = clamp(_row, up, global.grid_rows - dn - 1);
+            var p = get_world_position_from_grid(-1, sr);
+            var inst = instance_create_depth(p.x-10, p.y+10, -500, obj_cat); inst.row = sr; inst.state = "attack"; inst.can_loss = false;
+            for (var i = 1; i <= up; i++) { p = get_world_position_from_grid(-1, sr-i); inst = instance_create_depth(p.x-10, p.y+10, -500, obj_cat); inst.row = sr-i; inst.state = "attack"; inst.can_loss = false; }
+            for (var i = 1; i <= dn; i++) { p = get_world_position_from_grid(-1, sr+i); inst = instance_create_depth(p.x-10, p.y+10, -500, obj_cat); inst.row = sr+i; inst.state = "attack"; inst.can_loss = false; }
+            break;
+    }
+}
+
+/// @function network_broadcast_active_skill(type, col, row, level)
+function network_broadcast_active_skill(_type, _col, _row, _level) {
+    if (global.network.mode != "server") return;
+    var _cl = global.network.connected_clients;
+    for (var i = 0; i < array_length(_cl); i++) {
+        send_message(_cl[i], MSG_ACTIVE_SKILL, _type, _col, _row, _level);
     }
 }

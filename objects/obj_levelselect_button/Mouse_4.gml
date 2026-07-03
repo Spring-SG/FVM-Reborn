@@ -34,6 +34,7 @@ if on_click && obj_player_info_ui.menu_type == 0 && unlock{
 		}
 		var map_button_array = struct_get(ds_map_find_value(global.maps_map,global.map_id),"levels_data")
 		global.level_data = map_button_array[level_index]
+		global.level_data_index = level_index
 		show_debug_message(global.level_data)
 		
 		if(global.network.mode == "server"){

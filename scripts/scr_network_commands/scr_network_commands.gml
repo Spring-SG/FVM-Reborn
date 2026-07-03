@@ -3,7 +3,7 @@
 // ============================================================
 global.network = {
     mode: "offline",
-    plant_able: true,
+    client_able: true,
     server_socket: -1,
     server_ip: "",
     server_port: 27085,
@@ -102,7 +102,7 @@ function sh_connectserver(args) {
     if (_result >= 0) {
         global.network.mode = "client";
         global.network.server_socket = _sock;
-		global.network.plant_able = false;
+		global.network.client_able = false;
         global.network.target_ip = _ip;
         global.network.target_port = _port;
         global.network.is_connected = true;
@@ -125,7 +125,11 @@ function sh_disconnect() {
     global.network.target_ip = "";
     global.network.target_port = 27085;
     global.network.is_connected = false;
+	
+	if (global.gui_stack.get_top() ==  room_battle)
+		global.gui_stack.pop(); 
     return "[网络] 已断开连接";
+	
 }
 
 function sh_status() {

@@ -107,15 +107,24 @@ if time_limit > 0{
 				send_message(_clients[i], MSG_GAME_OVER, 0);
 			}
 		}
-		global.is_paused = true
-		global.game_over = true
-		instance_create_depth(room_width/2,room_height/2,-3001,obj_game_over)
-		audio_play_sound(snd_lose,0,0)
+		if global.network.mode != "client"{
+			global.is_paused = true
+			global.game_over = true
+			instance_create_depth(room_width/2,room_height/2,-3001,obj_game_over)
+			audio_play_sound(snd_lose,0,0)
+		}
 	}
 }
 
 
+
 if keyboard_check_pressed(vk_shift) || keyboard_check_pressed(vk_lshift){
+	if (global.network.mode == "server") {
+		var _cl = global.network.connected_clients;
+		for (var i = 0; i < array_length(_cl); i++) {
+			send_message(_cl[i], MSG_SERVER_ACTION, speed_up ? 0 : 1);
+		}
+	}
 	speed_up = not speed_up
 	if speed_up{
 		game_set_speed(120,gamespeed_fps)
@@ -124,6 +133,33 @@ if keyboard_check_pressed(vk_shift) || keyboard_check_pressed(vk_lshift){
 		game_set_speed(60,gamespeed_fps)
 	}
 }
+
+// game over 后服务端快捷键
+if (global.game_over && global.network.mode == "server") {
+	if (keyboard_check_pressed(vk_space)) {
+		var _cl = global.network.connected_clients;
+		for (var i = 0; i < array_length(_cl); i++) {
+			send_message(_cl[i], MSG_SERVER_ACTION, 4);
+		}
+		global.gui_stack.to(room_ready);
+	}
+	if (keyboard_check_pressed(ord("R"))) {
+		var _cl = global.network.connected_clients;
+		for (var i = 0; i < array_length(_cl); i++) {
+			send_message(_cl[i], MSG_SERVER_ACTION, 5);
+		}
+		global.gui_stack.pop();
+		room_goto(room_battle);
+	}
+}
+
+if speed_up{
+	game_set_speed(120,gamespeed_fps)
+}
+else{
+	game_set_speed(60,gamespeed_fps)
+}
+
 
 
 if (global.network.mode!="client"){

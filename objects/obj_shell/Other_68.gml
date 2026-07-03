@@ -19,6 +19,22 @@ switch (_type) {
 			show_debug_message("[网络] 新客户端连接: " + string(_sock));
 			show_notice("[网络] 新客户端连接: " + string(_sock),60)
 			send_message(_sock, MSG_CHAT,"收到连接 over");
+
+			// 同步当前房间
+			if (room_exists(room_ready) && room == room_ready) {
+				var _json = json_stringify({
+					target_level_id: global.level_id,
+					target_level_file: global.level_data.level_file,
+					target_level_file_hard: global.level_data.hard_level_file,
+					level_index: global.level_data_index,
+					map_id: global.map_id
+				});
+				send_message(_sock, MSG_ENTER_ROOM_READY, _json);
+			}
+			/*
+			if (room_exists(room_battle) && room == room_battle) {
+				send_message(_sock, MSG_START_BATTLE);
+			}*/
         }
         break;
             
@@ -44,13 +60,14 @@ switch (_type) {
 			
 			shell_print("客户端"+string(_sock)+" 断开连接");
 			show_notice("客户端"+string(_sock)+" 断开连接",60);
-	    } else if (global.network.mode == "client") {
+	    } else 
+		if (global.network.mode == "client") {
 			sh_disconnect();
 			shell_print("与服务器断开连接");
 			show_notice("与服务器断开连接",60);
 	        show_debug_message("[网络] 与服务器断开连接");
 	    } else 
-		if (global.network.mode == "client"){
+		{
 	        show_debug_message("[网络] 断开事件但模式未知: " + global.network.mode);
 	    }
 	    break;
@@ -62,7 +79,6 @@ switch (_type) {
 		if (_len <= 0) break;
 		
 		
-		show_debug_message("当前buf"+string(_len)+" 当前长度"+string(global.recv_size))
 		
 		// 1. 追加新收到的数据到全局接收buffer
 		buffer_copy(_buf, 0, _len, global.recv_buf, global.recv_size);

@@ -20,16 +20,6 @@
 		is_frozen = false
 	}
 	if hp <= 0{
-		// 服务端：广播死亡给所有客户端
-		if (global.network.mode == "server") {
-			var _dtype = (is_frozen) ? 1 : 0;
-			var _net_id = (ds_map_exists(global.network.map_instance_id_net_id, id)) ? global.network.map_instance_id_net_id[? id] : -1;
-			var _list = global.network.connected_clients;
-			var _size = array_length(_list);
-			for (var _i = 0; _i < _size; _i++) {
-				send_message(_list[_i], MSG_UNIT_DEATH, _net_id, 0, _dtype);
-			}
-		}
 		instance_destroy()
 	}
 	if flash_value >0{

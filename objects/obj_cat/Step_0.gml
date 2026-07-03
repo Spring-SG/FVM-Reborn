@@ -1,6 +1,7 @@
 if global.is_paused{
 	exit
 }
+
 timer ++
 switch (state) {
     case "idle":
@@ -19,7 +20,15 @@ switch (state) {
 with obj_enemy_parent{
 	if abs(x - other.x) <= 120{
 		if other.state == "idle" && other.row == grid_row && hp > 0 && (array_get_index(other.ignore_list,mouse_id) == -1)&& (array_get_index(other.target_ignore,mouse_id) == -1){
-			other.state = "awake"
+			if (global.network.mode != "client"){
+				other.state = "awake"
+				if (global.network.mode == "server") {
+					var _list = global.network.connected_clients;
+					for (var _i = 0; _i < array_length(_list); _i++) {
+						send_message(_list[_i], MSG_CAT_ATTACK, other.row);
+					}
+				}
+			}
 			other.timer = 0
 		}
 		if other.state != "idle" && other.row == grid_row && hp > 0  && (array_get_index(other.ignore_list,mouse_id) == -1){

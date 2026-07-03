@@ -359,15 +359,6 @@ if (hp <= 0 && state != ENEMY_STATE.DEAD) {
 
 // 透明度处理
 if (image_alpha <= 0 && state == ENEMY_STATE.DEAD) {
-	if (global.network.mode == "server") {
-			var _dtype = (is_frozen) ? 1 : 0;
-			var _net_id = (ds_map_exists(global.network.map_instance_id_net_id, id)) ? global.network.map_instance_id_net_id[? id] : -1;
-			var _list = global.network.connected_clients;
-			var _size = array_length(_list);
-			for (var _i = 0; _i < _size; _i++) {
-				send_message(_list[_i], MSG_UNIT_DEATH, _net_id, 1, _dtype);
-			}
-		}
     instance_destroy();
 }
 
@@ -390,10 +381,12 @@ if x < global.grid_offset_x-150 && hp > 0 && not place_meeting(x,y,obj_cat){
 		    send_message(_clients[i], MSG_GAME_OVER, 0);
 		}
 	}
+	if global.network.mode != "client"{
 	global.is_paused = true
 	global.game_over = true
 	instance_create_depth(room_width/2,room_height/2,-3001,obj_game_over)
 	audio_play_sound(snd_lose,0,0)
+	}
 }
 
 //破冰动画

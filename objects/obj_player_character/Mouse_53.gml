@@ -1,4 +1,4 @@
-﻿if not is_placed{
+if not is_placed{
 	var logical_x = mouse_x;
 	var logical_y = mouse_y;
 	var platform_shift_x = 0;
@@ -20,7 +20,23 @@
 		y = grid_pos.y+10 + platform_shift_y
 		grid_row = grid_pos.row
 		grid_col = grid_pos.col
-		card_created(id,grid_col,grid_row)
+		card_created(id,grid_col,grid_row);
+		if(global.network.mode=="client"){
+			var gem_index = 0
+			if global.save_data.equipped_items.main_weapon.id != ""{
+				var gem_list = global.save_data.equipped_items.main_weapon.gems
+				for(var i = 0 ; i < array_length(gem_list);i++){
+					var gem_id = gem_list[i]
+					var gem_info = get_gem_info(gem_id)
+					if gem_info.obj != noone{
+						instance_create_depth(390,213+gem_index*80,-500,gem_info.obj)
+						gem_index++
+					}
+				}
+			}
+			instance_destroy(id);
+			exit;
+		}
 		audio_play_sound(snd_place1,0,0)
 		instance_create_depth(x,y,-2,obj_place_effect)
 		var plany_list = ds_grid_get(global.grid_plants,grid_col,grid_row)

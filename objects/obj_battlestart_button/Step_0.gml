@@ -20,7 +20,9 @@ if button_pushed{
 				var _socket = _list[i];
 				send_message(_socket, MSG_START_BATTLE);
 			}
-
+			ds_map_clear(global.network.map_instance_id_net_id)
+			ds_map_clear(global.network.map_net_id_instance_id)
+			global.network.net_instance_count=0
 		}
 	}
 }

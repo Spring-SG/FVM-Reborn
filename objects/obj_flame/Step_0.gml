@@ -84,6 +84,9 @@ if !is_capture{
     
     
 	    if (collect_timer >= collect_duration) {
+			if global.network.mode!="offline"{
+				value =  ceil(value * 0.6);
+			}
 	        global.flame += value;
 	        //var fx = instance_create_layer(target_x, target_y, "Effects", obj_sun_fx);
 	       // fx.value = value;

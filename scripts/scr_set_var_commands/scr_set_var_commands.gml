@@ -46,35 +46,11 @@ function spawn_plant(col, row, plant_obj, props) {
 
 	if _plant.object_index == obj_player_character{
 		if not _plant.is_placed{
-			/*
-			var logical_x = mouse_x;
-			var logical_y = mouse_y;
-			var platform_shift_x = 0;
-			var platform_shift_y = 0;
-			var plat = instance_position(mouse_x, mouse_y, obj_platform);
-			if (plat != noone) {
-				platform_shift_x = plat.visual_x_shift;
-				platform_shift_y = plat.visual_y_shift;
-				logical_x -= platform_shift_x;
-				logical_y -= platform_shift_y;
-			}
-			
-			var can_plant = (can_place_at_position(logical_x, logical_y, "normal","amphi","none"));
-			if can_plant{
-			*/
 
 			
 			if true{
 				_plant.is_placed = true
-				/*
-				global.is_paused = false
-				var grid_pos = get_grid_position_from_world(logical_x, logical_y)
-				x = grid_pos.x + platform_shift_x
-				y = grid_pos.y+10 + platform_shift_y
-				grid_row = grid_pos.row
-				grid_col = grid_pos.col
-				*/
-				
+
 				_plant.x = global.grid_offset_x + col * global.grid_cell_size_x + global.grid_cell_size_x / 2 ;
 				_plant.y = global.grid_offset_y + row * global.grid_cell_size_y + global.grid_cell_size_y / 2 + 10;
 				var plat = instance_position(_plant.x, _plant.y, obj_platform);
@@ -96,45 +72,104 @@ function spawn_plant(col, row, plant_obj, props) {
 					card_created(card,grid_col,grid_row)
 			
 				}
-				var gem_index = 0
-				if global.save_data.equipped_items.main_weapon.id != ""{
-					var main_info = get_weapon_info(global.save_data.equipped_items.main_weapon.id)
-					var main_weapon_inst = instance_create_depth(_plant.x-10,_plant.y-100,_plant.depth-1,main_info.obj)
-					main_weapon_inst.parent_player = _plant.id
-					main_weapon_inst.grid_row = grid_row
-					main_weapon_inst.grid_col = grid_col
-					_plant.cycle = main_info.cycle
-					var gem_list = global.save_data.equipped_items.main_weapon.gems
-					for(var i = 0 ; i < array_length(gem_list);i++){
-						var gem_id = gem_list[i]
-						var gem_info = get_gem_info(gem_id)
-						if gem_info.obj != noone{
-							instance_create_depth(390,213+gem_index*80,-500,gem_info.obj)
-							gem_index++
+				
+
+			  var _eq = props[$ "player"];
+			  if (!is_undefined(_eq)) {
+					var _mw_name_id = _eq[$ "main_weapon_id"] ?? "";
+					if (_mw_name_id != "") {
+						var main_info = get_weapon_info(_mw_name_id) 
+						var main_weapon_inst = instance_create_depth(_plant.x-10, _plant.y-100, _plant.depth-1, main_info.obj);
+						main_weapon_inst.parent_player = _plant.id; 
+						main_weapon_inst.grid_row = grid_row; 
+						main_weapon_inst.grid_col = grid_col;
+						_plant.cycle =  main_info.cycle;
+						main_weapon_inst.atk =  _eq[$ "main_weapon_atk"];
+						
+						
+						var gem_level = _eq[$ "power_gem_level"] ?? -1;
+						if (gem_level >= 0) {
+						    main_weapon_inst.atk = get_weapon_info(_mw_name_id).atk_impact[gem_level];
+						}
+
+						gem_level = _eq[$ "gale_gem_level"] ?? -1;
+						if (gem_level >= 0) {
+						     var _wi = get_weapon_info(_mw_name_id);
+						     if (variable_struct_exists(_wi, "cycle_impact"))  {
+						          main_weapon_inst.cycle = _wi.cycle_impact[gem_level];
+						     }
 						}
 					}
-				}
-				if global.save_data.equipped_items.secondary_weapon.id != ""{
-					var s_inst = instance_create_depth(_plant.x,_plant.y,_plant.depth,obj_player_shield)
-					s_inst.parent_player = _plant.id
-					s_inst.grid_row = grid_row
-					s_inst.grid_col = grid_col
-					var main_info = get_weapon_info(global.save_data.equipped_items.secondary_weapon.id)
-					_plant.hp += main_info.hp_increase
-					_plant.max_hp += main_info.hp_increase
-					if get_gem_index("health_gem") != -1{
-						_plant.hp += get_gem_info("health_gem").hp_increase * (get_gem_level("health_gem")+1)
-						_plant.max_hp += get_gem_info("health_gem").hp_increase * (get_gem_level("health_gem")+1)
+		
+					var _sw_name_id = _eq[$ "secondary_weapon"] ?? "";
+					if (_sw_name_id != "") {
+						var s_inst = instance_create_depth(_plant.x,_plant.y,_plant.depth,obj_player_shield)
+						s_inst.parent_player = _plant.id
+						s_inst.grid_row = grid_row
+						s_inst.grid_col = grid_col
+						var main_info = get_weapon_info(_sw_name_id)
+						_plant.hp += main_info.hp_increase
+						_plant.max_hp += main_info.hp_increase
+						
+						_plant.hp += _eq[$ "health_gem_increase"]
+						_plant.max_hp += _eq[$ "health_gem_increase"]
+						
+						var gem_level = _eq[$ "produce_gem_level"] ?? -1;
+						if (gem_level >= 0) {
+							var gem_info = get_gem_info("produce_gem")
+							s_inst.cycle = gem_info.cycle[gem_level] * 60
+							s_inst.flame_produce = gem_info.flame_value[gem_level]
+							s_inst.first_produce_delay = gem_info.first_produce_delay * 60
+							s_inst.first_produce =produce_gem_level
+							s_inst.produce_gem = true
+						}
+
+						gem_level = _eq[$ "slow_down_gem_level"] ?? -1;
+						if (gem_level >= 0) {
+							s_inst.slow_down_gem = true;
+							var gem_info = get_gem_info("slow_down_gem");
+							if gem_level > 10 gem_level = 10;
+							s_inst.slow_down_cycle = gem_info.cooldown[gem_level] * 60;
+						}
+						
+						gem_level = _eq[$ "bleed_gem_level"] ?? -1;
+						if (gem_level >= 0) {
+							s_inst.bleed_gem = true;
+							var gem_info = get_gem_info("bleed_gem");
+							if gem_level > 10 gem_level = 10;
+							s_inst.bleed_damage = gem_info.atk[gem_level];
+						}
+						
+						gem_level = _eq[$ "guard_gem_level"] ?? -1;
+						if (gem_level >= 0) {
+							s_inst.guard_gem = true;
+							var gem_info = get_gem_info("guard_gem");
+							if gem_level > 10 gem_level = 10;
+							s_inst.max_hp_increase = gem_info.max_hp_increase[gem_level];
+						}
+						
+						gem_level = _eq[$ "strength_gem_level"] ?? -1;
+						if (gem_level >= 0) {
+							s_inst.strength_gem = true;
+							var gem_info = get_gem_info("strength_gem");
+							if gem_level > 10 gem_level = 10;
+							s_inst.atk_ratio = gem_info.atk_ratio[gem_level];
+						}
 					}
-				}
-				if global.save_data.equipped_items.super_weapon.id != ""{
-					var main_info = get_weapon_info(global.save_data.equipped_items.super_weapon.id)
-					var main_weapon_inst = instance_create_depth(_plant.x-10,_plant.y-100,_plant.depth-1,main_info.obj)
-					main_weapon_inst.parent_player = _plant.id
-					main_weapon_inst.grid_row = grid_row
-					main_weapon_inst.grid_col = grid_col
+		
+					var _sup_name_id = _eq[$ "super_weapon_id"] ?? "";
+					if (_sup_name_id != "") {
+						var main_info = get_weapon_info(_sup_name_id);
+						var main_weapon_inst = instance_create_depth(_plant.x-10,_plant.y-100,_plant.depth-1,main_info.obj)
+						main_weapon_inst.parent_player = _plant.id
+						main_weapon_inst.grid_row = grid_row
+						main_weapon_inst.grid_col = grid_col
 					}
+					
 				}
+					
+			  }
+
 		}
 	}
     return _plant;
@@ -244,6 +279,29 @@ function meta_win() {
         deferred: false
     };
 }
+/// @description 命令行：测试主动技能
+function sh_skill(args) {
+    if (array_length(args) < 2) return "[skill] skill <type> [level]";
+    var _type = args[1];
+    var _level = (array_length(args) >= 3) ? real(args[2]) : 0;
+    var _x = obj_player_character.x;
+    var _y = obj_player_character.y;
+    network_active_skill(_type, _x, _y, _level);
+    if (global.network.mode == "server") {
+        network_broadcast_active_skill(_type, _x, _y, _level);
+    }
+    return "[skill] " + _type + " Lv=" + string(_level);
+}
+function meta_skill() {
+    return {
+        description: "主动技能测试: laser_gem bomb_gem freeze_gem cateye_gem [level]",
+        arguments: ["type", "level"],
+        suggestions: [["laser_gem","bomb_gem","freeze_gem","cateye_gem"], []],
+        hidden: false,
+        deferred: false
+    };
+}
+
 function meta_spawn() {
     return {
         description: "在指定网格位置生成植物",
