@@ -89,6 +89,7 @@ for(var i = 0 ; i < global.grid_rows;i++){
 for(var i = 0 ; i < global.grid_rows ; i++){
 	for(var j = 0 ; j < global.grid_cols ; j ++){
 		
+		// 客户端跳过
 		if (global.network.mode!="client"){
 			var cards = plant_list[i][j].plant
 			if array_length(cards) > 0{
@@ -298,7 +299,8 @@ function enemy_subwave_summon(){
             
             var grid_pos = get_grid_position_from_world(new_x, new_y);
             var new_enemy = instance_create_depth(grid_pos.x+30, grid_pos.y + 38, 0, enemy_obj);
-
+		
+			// 服务端广播产生敌人
 			if(global.network.mode="server"){
 				add_net_id(new_enemy.id);
 				var _net_id = global.network.map_instance_id_net_id[? new_enemy.id];

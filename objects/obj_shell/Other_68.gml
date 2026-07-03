@@ -31,10 +31,6 @@ switch (_type) {
 				});
 				send_message(_sock, MSG_ENTER_ROOM_READY, _json);
 			}
-			/*
-			if (room_exists(room_battle) && room == room_battle) {
-				send_message(_sock, MSG_START_BATTLE);
-			}*/
         }
         break;
             
@@ -51,6 +47,7 @@ switch (_type) {
 	                break;
 	            }
 	        }
+			
 	        if (_idx != -1) {
 	            array_delete(global.network.connected_clients, _idx, 1);
 	            show_debug_message("[网络] 客户端断开并从列表移除: " + string(_sock));
@@ -60,14 +57,14 @@ switch (_type) {
 			
 			shell_print("客户端"+string(_sock)+" 断开连接");
 			show_notice("客户端"+string(_sock)+" 断开连接",60);
-	    } else 
-		if (global.network.mode == "client") {
+	    } 
+		else if (global.network.mode == "client") {
 			sh_disconnect();
 			shell_print("与服务器断开连接");
 			show_notice("与服务器断开连接",60);
 	        show_debug_message("[网络] 与服务器断开连接");
-	    } else 
-		{
+	    } 
+		else {
 	        show_debug_message("[网络] 断开事件但模式未知: " + global.network.mode);
 	    }
 	    break;
@@ -75,35 +72,22 @@ switch (_type) {
     case network_type_data:
 		var _buf = async_load[? "buffer"];
 		var _len = buffer_get_size(_buf);
-
 		if (_len <= 0) break;
-		
-		
 		
 		// 1. 追加新收到的数据到全局接收buffer
 		buffer_copy(_buf, 0, _len, global.recv_buf, global.recv_size);
 		global.recv_size += _len;
-		
 		var read_ptr = 0;
-		// 修正循环条件：保证剩余数据至少2字节才能读长度头，避免越界
 		while (global.recv_size - read_ptr >= 2)
 		{
 		    // 读取小端u16包长度
 		    var len = buffer_peek(global.recv_buf, read_ptr, buffer_u16);
 		    var full_pkt = 2 + len;
-
-		    // 数据不足完整包则退出，不再丢完整包
 		    if (read_ptr + full_pkt > global.recv_size) break;
-
-		    // 临时body buffer传给解析函数
 		    var body = buffer_create(len, buffer_fixed, 1);
 		    buffer_copy(global.recv_buf, read_ptr + 2, len, body, 0);
-			
 		    parse_network_message(body);
-				
-
 		    buffer_delete(body);
-
 		    read_ptr += full_pkt;
 		}
 
@@ -113,7 +97,6 @@ switch (_type) {
 		{
 		    var temp_buf = buffer_create(remain_len, buffer_fixed, 1);
 		    buffer_copy(global.recv_buf, read_ptr, remain_len, temp_buf, 0);
-		    // 重置全局buffer读写头，写入剩余半包
 		    buffer_seek(global.recv_buf, buffer_seek_start, 0);
 		    buffer_copy(temp_buf, 0, remain_len, global.recv_buf, 0);
 		    buffer_delete(temp_buf);

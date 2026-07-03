@@ -4,7 +4,8 @@
 /// @param {real} col 网格列
 /// @param {real} row 网格行
 function card_created(plant_inst, col, row) {
-
+	
+	// 客户端拦截种植，放送种植请求
 	if(global.network.mode=="client"&&!global.network.client_able){
 		var skill = variable_instance_get(plant_inst, "skill") ?? 0;
 		var shape = variable_instance_get(plant_inst, "shape") ?? 0;
@@ -46,6 +47,7 @@ function card_created(plant_inst, col, row) {
     // 更新所有植物的深度偏移
 	sort_plants_in_grid(col, row)
 
+	// 服务端广播种植消息
 	if(global.network.mode=="server"){
 		var level = variable_instance_get(plant_inst, "current_level") ?? 0;
 		var skill = variable_instance_get(plant_inst, "skill") ?? 0;
@@ -78,7 +80,6 @@ function card_created(plant_inst, col, row) {
 		} else {
 			_meta = package_character(plant_inst);
 		}
-  
   
 		var _list = global.network.connected_clients;
 		var _size = array_length(_list);

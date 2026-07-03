@@ -7,29 +7,31 @@
 #macro MSG_UNIT_REQUEST         1   // C→S: 请求放置我方单位（含类型、等级、网格坐标）
 #macro MSG_REMOVE_UNIT_REQUEST  2   // C→S: 请求移除/铲除指定我方单位（携带网络ID）
 #macro MSG_CHAT                 3   // C→S: 发送聊天消息（携带文本内容）
-#macro MSG_ACTIVE_SKILL_REQUEST 25  // C→S: 请求释放主动技能
+#macro MSG_ACTIVE_SKILL_REQUEST 4   // C→S: 请求释放主动技能
 
 
-#macro MSG_SPAWN_UNIT           6   // S→C: 广播创建我方单位（网络ID、类型、等级、坐标、血量等）
-#macro MSG_SPAWN_ENEMY          7   // S→C: 广播创建敌人（网络ID、类型、行、列偏移、血量等）
-#macro MSG_ENEMY_HP             9   // S→C: 广播敌人血量变化（网络ID、当前血量、最大血量）
-#macro MSG_ENEMY_CALIBRATE      10  // S→C: 敌人位置校准（网络ID、世界X、世界Y）
-#macro MSG_UNIT_HP              12  // S→C: 广播我方单位血量变化（网络ID、当前血量、最大血量）
-#macro MSG_GAME_OVER            14  // S→C: 广播游戏结束（结果：0失败/1胜利）
-#macro MSG_SYNC_INITIAL_STATE   17  // S→C: 全量状态同步（新客户端加入时发送所有单位、敌人及全局状态）
-#macro MSG_START_BATTLE			18	// S→C: 开始战斗
-#macro MSG_ENTER_ROOM_READY		19	// S→C: 进入房间
-#macro MSG_SPAWN_BOSS           20  // S→C: 广播产生BOSS
-#macro MSG_REMOVE_UNIT          21  // S→C: 广播移除/铲除指定我方单位
-#macro MSG_ENEMY_STEAL          23  // S→C: 广播敌方偷取植物
-#macro MSG_PROGRESS_SYNC        24  // S→C: 广播进度条同步
-#macro MSG_ACTIVE_SKILL         26  // S→C: 广播释放主动技能
-#macro MSG_SERVER_ACTION        27  // S→C: 0正常/1加速/2暂停/3继续/4回房/5重开
-#macro MSG_EVENT_ACTIONS        28  // S→C: event_manager 操作日志(JSON)
-#macro MSG_DESTROY              30  // S→C: 广播销毁实例
-#macro MSG_CAT_ATTACK           31  // S→C: 猫撞击敌人(row, sprite_name, image_index)
+#macro MSG_SPAWN_UNIT           5   // S→C: 广播创建我方单位（网络ID、类型、等级、坐标、血量等）
+#macro MSG_SPAWN_ENEMY          6   // S→C: 广播创建敌人（网络ID、类型、行、列偏移、血量等）
+#macro MSG_ENEMY_HP             7   // S→C: 广播敌人血量变化（网络ID、当前血量、最大血量）
+#macro MSG_ENEMY_CALIBRATE      8   // S→C: 敌人位置校准（网络ID、世界X、世界Y）
+#macro MSG_UNIT_HP              9   // S→C: 广播我方单位血量变化（网络ID、当前血量、最大血量）
+#macro MSG_GAME_OVER            10  // S→C: 广播游戏结束（结果：0失败/1胜利）
+#macro MSG_SYNC_INITIAL_STATE   11  // S→C: 全量状态同步（新客户端加入时发送所有单位、敌人及全局状态）
+#macro MSG_START_BATTLE			12	// S→C: 开始战斗
+#macro MSG_ENTER_ROOM_READY		13	// S→C: 进入房间
+#macro MSG_SPAWN_BOSS           14  // S→C: 广播产生BOSS
+#macro MSG_REMOVE_UNIT          15  // S→C: 广播移除/铲除指定我方单位
+#macro MSG_ENEMY_STEAL          16  // S→C: 广播敌方偷取植物
+#macro MSG_PROGRESS_SYNC        17  // S→C: 广播进度条同步
+#macro MSG_ACTIVE_SKILL         18  // S→C: 广播释放主动技能
+#macro MSG_SERVER_ACTION        19  // S→C: 0正常/1加速/2暂停/3继续/4回房/5重开
+#macro MSG_EVENT_ACTIONS        20  // S→C: event_manager 操作日志(JSON)
+#macro MSG_DESTROY              21  // S→C: 广播销毁实例
+#macro MSG_CAT_ATTACK           22  // S→C: 猫撞击敌人(row, sprite_name, image_index)
+#macro MSG_PUB_INFO             23  // M→A: 中继器到所有人发消息
 
-
+/// @function add_net_id(ins_id, net_id)
+/// @description 为实例产生一个 net_id
 function add_net_id(ins_id){
 	ds_map_add(global.network.map_net_id_instance_id,global.network.net_instance_count,ins_id);
 	ds_map_add(global.network.map_instance_id_net_id,ins_id,global.network.net_instance_count);
@@ -45,6 +47,30 @@ function set_net_id(ins_id, net_id){
 		global.network.net_instance_count = net_id + 1;
 	}
 }
+
+
+/// @function shell_print(msg)
+/// @param {string} msg  打印消息到shell中
+function shell_print(msg) {
+	inst_id = inst_224771E1; 
+    // 检查实例是否存在
+    if (!instance_exists(inst_id)) {
+        show_debug_message("[shell_push_output] 实例 " + string(inst_id) + " 不存在");
+        return;
+    }
+    
+    // 通过 with 操作该实例
+    with (inst_id) {
+        // 检查 output 数组是否存在
+        if (!variable_struct_exists(self, "output")) {
+            show_debug_message("[shell_push_output] 实例 " + string(inst_id) + " 没有 output 数组");
+            return;
+        }
+        // 压入消息
+        array_push(output, msg);
+    }
+}
+
 
 /// @function parse_network_message(buffer)
 /// @param {buffer} buf  完整的消息体缓冲区（已剥去长度头）
@@ -138,8 +164,6 @@ function parse_network_message(buf) {
 			if global.network.mode == "server"{
 				sh_say(chat_text);
 			}
-
-
             break;
         }
         
@@ -531,34 +555,42 @@ function parse_network_message(buf) {
 		
 		}
         
+		
+		case MSG_PUB_INFO:
+		{
+			var chat_text = buffer_read(buf, buffer_string);
+			show_debug_message("[解析] 收到 MSG_PUB_INFO: " + chat_text);
+
+	
+			switch (chat_text) {
+				case "\\modserver":
+				    global.network.mode = "server";
+				    global.network.connected_clients = [global.network.server_socket];
+				    global.network.server_port = global.network.target_port;
+				    break;
+				case "\\modclient":
+				    break;
+				case "\\host_left":
+				    shell_print("[系统] 房主已离开，房间关闭");
+				    sh_disconnect();
+				    break;
+				case "\\kicked":
+				    shell_print("[系统] 你被房主踢出了房间");
+				    sh_disconnect();
+				    break;
+				default:
+					shell_print(chat_text);
+					
+			}
+	
+			break;
+		}
+		
         default:
         {
             show_debug_message("[解析] 警告：未知消息ID " + string(msg_id) + "，跳过该消息");
             break;
         }
-    }
-}
-
-
-
-
-function shell_print(msg) {
-	inst_id = inst_224771E1; 
-    // 检查实例是否存在
-    if (!instance_exists(inst_id)) {
-        show_debug_message("[shell_push_output] 实例 " + string(inst_id) + " 不存在");
-        return;
-    }
-    
-    // 通过 with 操作该实例
-    with (inst_id) {
-        // 检查 output 数组是否存在
-        if (!variable_struct_exists(self, "output")) {
-            show_debug_message("[shell_push_output] 实例 " + string(inst_id) + " 没有 output 数组");
-            return;
-        }
-        // 压入消息
-        array_push(output, msg);
     }
 }
 

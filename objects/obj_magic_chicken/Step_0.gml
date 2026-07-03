@@ -18,6 +18,7 @@
 			var grid_pos = get_world_position_from_grid(grid_col,grid_row)
 			var new_card = instance_create_depth(grid_pos.x,grid_pos.y,0,card_slot_data[? "obj"])
 			
+			// 当前网络同步需要的数据，不影响offline模式 
 			if (variable_instance_exists(self, "target_card_info")){
 				new_card[$ "level"] = target_card_info[$ "level"]
 				new_card[$ "shape"] = target_card_info[$ "shape"]
@@ -25,7 +26,10 @@
 				new_card[$ "current_level"] = target_card_info[$ "level"]
 				new_card[$ "sprite_index"] = target_card_info[$ "sprite_index"]
 			}
+			
 			card_created(new_card,grid_col,grid_row)
+			
+			// 当前网络同步需要的数据，不影响offline模式
 			network_apply_plant_level(new_card);
 			
 		}

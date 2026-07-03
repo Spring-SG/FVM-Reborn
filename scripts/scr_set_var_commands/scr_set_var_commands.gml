@@ -41,13 +41,10 @@ function spawn_plant(col, row, plant_obj, props) {
         instance_create_depth(_grid_pos.x, _grid_pos.y, -2, obj_place_effect);
         audio_play_sound(snd_place1, 0, 0);
     }
-    
-
-
+	
+	// 种植角色
 	if _plant.object_index == obj_player_character{
 		if not _plant.is_placed{
-
-			
 			if true{
 				_plant.is_placed = true
 
@@ -175,6 +172,8 @@ function spawn_plant(col, row, plant_obj, props) {
     return _plant;
 }
 
+/*
+
 /// @description 命令行：生成植物
 /// 用法: spawn <列> <行> <植物对象名> [属性=值...]
 /// 示例: spawn 2 3 obj_small_fire
@@ -270,6 +269,7 @@ function sh_win(args) {
     }
     return "[WIN] no network";
 }
+
 function meta_win() {
     return {
         description: "伪造游戏胜利消息，测试客户端是否收到",
@@ -279,6 +279,7 @@ function meta_win() {
         deferred: false
     };
 }
+
 /// @description 命令行：测试主动技能
 function sh_skill(args) {
     if (array_length(args) < 2) return "[skill] skill <type> [level]";
@@ -292,6 +293,7 @@ function sh_skill(args) {
     }
     return "[skill] " + _type + " Lv=" + string(_level);
 }
+
 function meta_skill() {
     return {
         description: "主动技能测试: laser_gem bomb_gem freeze_gem cateye_gem [level]",
@@ -321,3 +323,4 @@ function meta_spawn() {
         deferred: false
     };
 }
+*/

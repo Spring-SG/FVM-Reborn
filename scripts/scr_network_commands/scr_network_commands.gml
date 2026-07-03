@@ -156,7 +156,6 @@ function sh_status() {
     return _status;
 }
 
-
 function sh_say(args){
 
 	var _message = "";
@@ -182,6 +181,47 @@ function sh_say(args){
     }
     if global.network.mode == "offline"{
         shell_print(_message);
+    }
+}
+
+function sh_connectpubserver(args) {
+    if (global.network.mode != "offline") {
+        return "[网络] 已有网络连接，请先断开";
+    }
+
+    // 用法: makepubserver <IP> <ID> [端口]
+    if (array_length(args) < 3) {
+        return "[网络] 用法: makepubserver <IP> <房间ID> [端口]";
+    }
+
+    var _ip   = args[1];
+    var _id   = args[2];           // 房间ID，字符串
+    var _port = 27085;
+    if (array_length(args) >= 4) {
+        _port = real(args[3]);
+    }
+
+    if (_port <= 0 || _port > 65535) {
+        return "[网络] 端口号无效";
+    }
+
+    var _sock = network_create_socket(network_socket_tcp);
+    if (_sock < 0) return "[网络] 创建 socket 失败";
+
+    var _result = network_connect_raw(_sock, _ip, _port);
+    if (_result >= 0) {
+		
+		send_message(_sock, MSG_CHAT,"/connectroom "+string(_id));
+        global.network.mode = "client";
+        global.network.server_socket = _sock;
+		global.network.client_able = false;
+        global.network.target_ip = _ip;
+        global.network.target_port = _port;
+        global.network.is_connected = true;
+        return "[网络] 连接 " + _ip + ":" + string(_port) + " 成功";
+    } else {
+        network_destroy(_sock);
+        return "[网络] 连接失败";
     }
 }
 

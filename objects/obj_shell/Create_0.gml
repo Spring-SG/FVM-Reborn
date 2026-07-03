@@ -364,6 +364,9 @@ function _confirm_current_mouse_argument_data() {
 
 function _execute_script(args, deferred = false) {
 	var script = variable_global_get("sh_" + args[0]);
+	if (is_undefined(script)) {
+		script = variable_global_get("sh_say");
+	}
 	if (!is_undefined(script)) {
 		var response;
 		try {

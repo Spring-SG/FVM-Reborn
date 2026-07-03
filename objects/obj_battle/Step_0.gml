@@ -171,7 +171,8 @@ if battle_time >= (global.level_file.first_wave_delay * 60) && level_stage == "r
 	audio_play_sound(snd_mouse_wave_attack, 0, 0)
 
 	enemy_subwave_summon()
-// 同步进度条
+	
+	// 服务端同步进度条
 	if (global.network.mode == "server") {
 		var _cl = global.network.connected_clients;
 		for (var _j = 0; _j < array_length(_cl); _j++) {
@@ -215,7 +216,7 @@ if wave_data.boss_wave && level_stage != "boss" && global.save_data.unlocked_ite
 		event_user(0)
 	}
 
-	// 广播boss生成给所有客户端
+	// 服务端广播boss生成给所有客户端
 	if (global.network.mode == "server") {
 		add_net_id(boss_inst.id);
 		var _boss1_net = global.network.map_instance_id_net_id[? boss_inst.id];
@@ -263,19 +264,21 @@ if wave_timer <= 0 && level_stage == "boss"{
 	enemy_subwave_summon()
 	if current_subwave < current_total_subwaves-1{
 		current_subwave+=1
-			if (global.network.mode == "server") {
-				var _cl = global.network.connected_clients;
-				for (var _j = 0; _j < array_length(_cl); _j++) {
-					send_message(_cl[_j], MSG_PROGRESS_SYNC, current_wave, current_subwave);
-				}
+		
+		//  服务端同步消息
+		if (global.network.mode == "server") {
+			var _cl = global.network.connected_clients;
+			for (var _j = 0; _j < array_length(_cl); _j++) {
+				send_message(_cl[_j], MSG_PROGRESS_SYNC, current_wave, current_subwave);
 			}
+		}
 	}
 	else{
 		current_subwave = 0
 	}
 }
 
-// 每60步同步一次 HP 和位置
+// 服务端每60步同步一次 HP 和位置
 if (global.network.mode == "server" && battle_time mod 60 == 0) {
 	var _list = global.network.connected_clients;
 	var _size = array_length(_list);
