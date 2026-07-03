@@ -32,6 +32,13 @@ for (var i = 0; i < array_length(buttons); i++) {
                     
                 case 0: // 确定
                     // 退出游戏逻辑
+					// 通知所有客户端离开战斗
+					if (global.network.mode == "server") {
+						var _cl = global.network.connected_clients;
+						for (var i = 0; i < array_length(_cl); i++) {
+							send_message(_cl[i], MSG_SERVER_ACTION, 4);
+						}
+					}
 					if instance_exists(obj_player_info_ui){
 						obj_player_info_ui.menu_type = 0
 					}

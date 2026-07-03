@@ -10,6 +10,13 @@ if (keyboard_check_pressed(vk_space)) {
         else if (global.is_paused && !global.show_menu) {
             // 取消暂停
 			if global.game_over{
+				// 通知所有客户端离开战斗
+				if (global.network.mode == "server") {
+					var _cl = global.network.connected_clients;
+					for (var i = 0; i < array_length(_cl); i++) {
+						send_message(_cl[i], MSG_SERVER_ACTION, 4);
+					}
+				}
 				if settlement || obj_game_over.sprite_index == spr_lose || global.level_file.version == "1.0.0"{
 					if global.map_id == "tower_cake" || global.map_id == "delicious_town"{
 						global.map_id = "delicious_island"

@@ -1,8 +1,9 @@
+# -*- coding: utf-8 -*-
 """
 中继服务器
-  1. 管理客户端 — 房间、房主/客户端角色、加入/离开
-  2. 转发消息   — 房主→广播给房间所有客户端，客户端→只转给房主
-  3. CHAT命令   — 解析 MSG_CHAT 中 /connectroom、/list 等命令
+  1. 管理客户端 - 房间、房主/客户端角色、加入/离开
+  2. 转发消息   - 房主→广播给房间所有客户端，客户端→只转给房主
+  3. CHAT命令   - 解析 MSG_CHAT 中 /connectroom、/list 等命令
 
 包格式与 GM 端一致: [u16 body_len][i32 msg_id][payload]
 """
@@ -58,10 +59,11 @@ class Relay:
             "\\rename":      ("修改昵称", " <新名字>"),
             "\\kick":        ("房主踢人", " <玩家名>"),
             "\\listcommand": ("列出所有命令", ""),
+            "\\listroom":    ("列出所有房间", ""),
         }
 
     # ================================================================
-    #  包读写 — GM buffer_string 需要 \\0 终止符
+    #  包读写 - GM buffer_string 需要 \\0 终止符
     # ================================================================
     async def read_pkt(self, reader):
         """读 [u16 len][i32 msg_id][payload]"""
@@ -174,6 +176,20 @@ class Relay:
             room.host.write(packet)
             await self.flush(room.host)
 
+    async def _broadcast_except(self, room: Room, body: bytes, exclude):
+        """广播给房间所有人（除 exclude 外）"""
+        packet = struct.pack("<H", len(body)) + body
+        tasks = []
+        if room.host and room.host is not exclude:
+            room.host.write(packet)
+            tasks.append(self.flush(room.host))
+        for c in list(room.clients.values()):
+            if c is not exclude:
+                c.write(packet)
+                tasks.append(self.flush(c))
+        if tasks:
+            await asyncio.gather(*tasks, return_exceptions=True)
+
     # ================================================================
     #  3. CHAT 命令处理
     # ================================================================
@@ -262,11 +278,22 @@ class Relay:
                 self.write_str(cw, MSG_CHAT, notice)
             return True
 
+        # ---- \\listroom ----
+        if cmd == "\\listroom":
+            if not self.rooms:
+                self.write_str(writer, MSG_CHAT, "[系统] 当前没有房间")
+            else:
+                lines = ["=== 房间列表 ==="]
+                for rid, r in self.rooms.items():
+                    lines.append(f"  {rid} - {r.member_count} 人")
+                self.write_str(writer, MSG_CHAT, "\n".join(lines))
+            return True
+
         # ---- \\listcommand ----
         if cmd == "\\listcommand":
             lines = ["=== 可用命令 ==="]
             for cname, (desc, usage) in self.commands.items():
-                lines.append(f"  {cname}{usage} — {desc}")
+                lines.append(f"  {cname}{usage} - {desc}")
             self.write_str(writer, MSG_CHAT, "\n".join(lines))
             return True
 
@@ -311,6 +338,16 @@ class Relay:
         self.write_pkt(writer, MSG_PUB_INFO, role_str.encode() + NUL)
         await self.flush(writer)
 
+        if role == 0:
+            self.write_str(writer, MSG_CHAT,
+                f"[系统] 你已创建房间 {room.id}\n"
+                f"[系统] 你的名字是 {name}，可使用 \\listcommand 查看命令")
+        else:
+            self.write_str(writer, MSG_CHAT,
+                f"[系统] 你已加入房间 {room.id}\n"
+                f"[系统] 你的名字是 {name}，可使用 \\listcommand 查看命令，或等待房主操作")
+        self.write_str(writer, MSG_CHAT, f"[系统] 输入文字即可聊天")
+
         print(f"  [{room.id}] {name} 加入 ({room.member_count} 人)")
 
         if role == 1 and room.host:
@@ -337,8 +374,10 @@ class Relay:
                     if self._handle_cmd(writer, room, role, cid, txt):
                         await self.flush(writer)
                         continue
-                    # 普通聊天 → "名称: xxx"
-                    txt = name + ": " + txt
+                    # 普通聊天 → "名称: xxx"（已包含名字前缀则跳过）
+                    already = any(txt.startswith(n + ": ") for n in room.used_names())
+                    if not already:
+                        txt = name + ": " + txt
                     body = struct.pack("<i", msg_id) + txt.encode() + NUL
 
                 if role == 0:
