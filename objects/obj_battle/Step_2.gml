@@ -1,3 +1,18 @@
+// 客户端：帧末清理boss产物临时实例(等服务端MSG_EVENT_ACTIONS同步)
+if (global.network.mode == "client") {
+	global.network.client_able = true;
+	for (var _i = 0; _i < array_length(global._boss_client_cleanup); _i++) {
+		var _inst = global._boss_client_cleanup[_i];
+		if (instance_exists(_inst)) instance_destroy(_inst);
+	}
+	global._boss_client_cleanup = [];
+	// 清理孤儿hpbar(boss已销毁但hpbar未清理)
+	with (obj_boss_hpbar) {
+	    if (!instance_exists(target_boss)) instance_destroy();
+	}
+	global.network.client_able = false;
+}
+
 current_wave_hp = 0
 with obj_enemy_parent{
 	if target_type != "obstacle"{

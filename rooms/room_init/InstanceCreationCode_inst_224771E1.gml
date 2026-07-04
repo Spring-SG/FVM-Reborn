@@ -14,5 +14,5 @@ obj_shell.width = 1024;
 obj_shell.height = 600;
 
 
-global.recv_buf = buffer_create(65536, buffer_fixed, 1);
+global.recv_buf = buffer_create(4194304, buffer_fixed, 1);
 global.recv_size = 0;

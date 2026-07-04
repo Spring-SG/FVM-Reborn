@@ -1195,6 +1195,30 @@ if (global.network.mode == "server") {
 		}
 	}
 
+	// boss产物延迟队列：boss技能跑完后属性齐全，补发spawn
+	for (var _i = 0; _i < array_length(global._boss_spawn_queue); _i++) {
+		var _id = global._boss_spawn_queue[_i];
+		if (instance_exists(_id)) {
+			with (_id) {
+				var _props = {};
+				for (var _k = 0; _k < array_length(_sync_keys); _k++) {
+					var _key = _sync_keys[_k];
+					if (variable_instance_exists(id, _key)) {
+						_props[$ _key] = variable_instance_get(id, _key);
+					}
+				}
+				array_push(_actions, {
+					op: "spawn",
+					obj: object_get_name(object_index),
+					x: x, y: y, depth: depth,
+					net_id: global.network.map_instance_id_net_id[? id],
+					props: _props
+				});
+			}
+		}
+	}
+	global._boss_spawn_queue = [];
+
 	// 销毁的实例
 	for (var _i = 0; _i < array_length(global._evt_destroyed); _i++) {
 		array_push(_actions, {

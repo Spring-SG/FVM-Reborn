@@ -80,14 +80,14 @@ switch (_type) {
 		buffer_copy(_buf, 0, _len, global.recv_buf, global.recv_size);
 		global.recv_size += _len;
 		var read_ptr = 0;
-		while (global.recv_size - read_ptr >= 2)
+		while (global.recv_size - read_ptr >= 4)
 		{
 		    // 读取小端u16包长度
-		    var len = buffer_peek(global.recv_buf, read_ptr, buffer_u16);
-		    var full_pkt = 2 + len;
+		    var len = buffer_peek(global.recv_buf, read_ptr, buffer_u32);
+		    var full_pkt = 4 + len;
 		    if (read_ptr + full_pkt > global.recv_size) break;
 		    var body = buffer_create(len, buffer_fixed, 1);
-		    buffer_copy(global.recv_buf, read_ptr + 2, len, body, 0);
+		    buffer_copy(global.recv_buf, read_ptr + 4, len, body, 0);
 		    parse_network_message(body);
 		    buffer_delete(body);
 		    read_ptr += full_pkt;

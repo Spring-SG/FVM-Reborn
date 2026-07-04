@@ -11,6 +11,7 @@ if not obj_tower_cake_bg.is_submenu_opened{
 				level_data: global.level_data,
 				level_file: global.level_file
 			});
+			
 			var _list = global.network.connected_clients;
 			for (var _i = 0; _i < array_length(_list); _i++) {
 				send_message(_list[_i], MSG_ENTER_ROOM_READY, _json);

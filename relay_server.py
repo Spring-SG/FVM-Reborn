@@ -71,10 +71,10 @@ class Relay:
     #  包读写 - GM buffer_string 需要 \\0 终止符
     # ================================================================
     async def read_pkt(self, reader):
-        """读 [u16 len][i32 msg_id][payload]"""
+        """读 [u32 len][i32 msg_id][payload]"""
         try:
-            raw = await reader.readexactly(2)
-            body_len = struct.unpack("<H", raw)[0]
+            raw = await reader.readexactly(4)
+            body_len = struct.unpack("<I", raw)[0]
             raw = await reader.readexactly(body_len)
             msg_id  = struct.unpack_from("<i", raw, 0)[0]
             payload = raw[4:]
@@ -86,7 +86,7 @@ class Relay:
         if writer.is_closing():
             return
         body   = struct.pack("<i", msg_id) + payload
-        packet = struct.pack("<H", len(body)) + body
+        packet = struct.pack("<I", len(body)) + body
         writer.write(packet)
 
     def write_str(self, writer, msg_id: int, text: str):
@@ -166,7 +166,7 @@ class Relay:
     # ================================================================
     async def _broadcast(self, room: Room, body: bytes):
         """房主 → 所有客户端（并行 drain）"""
-        packet = struct.pack("<H", len(body)) + body
+        packet = struct.pack("<I", len(body)) + body
         tasks = []
         for c in list(room.clients.values()):
             c.write(packet)
@@ -177,13 +177,13 @@ class Relay:
     async def _to_host(self, room: Room, body: bytes):
         """客户端 → 房主"""
         if room.host and not room.host.is_closing():
-            packet = struct.pack("<H", len(body)) + body
+            packet = struct.pack("<I", len(body)) + body
             room.host.write(packet)
             await self.flush(room.host)
 
     async def _broadcast_except(self, room: Room, body: bytes, exclude):
         """广播给房间所有人（除 exclude 外）"""
-        packet = struct.pack("<H", len(body)) + body
+        packet = struct.pack("<I", len(body)) + body
         tasks = []
         if room.host and room.host is not exclude:
             room.host.write(packet)
@@ -446,10 +446,12 @@ class Relay:
                     if self._handle_cmd(writer, room, role, cid, txt):
                         await self.flush(writer)
                         continue
-                    # 普通聊天 → "名称: xxx"（已包含名字前缀则跳过）
-                    already = any(txt.startswith(n + ": ") for n in room.used_names())
-                    if not already:
-                        txt = name + ": " + txt
+                    # 系统消息不加名前缀
+                    if not txt.startswith("[系统]"):
+                        # 普通聊天 → "名称: xxx"（已包含名字前缀则跳过）
+                        already = any(txt.startswith(n + ": ") for n in room.used_names())
+                        if not already:
+                            txt = name + ": " + txt
                     body = struct.pack("<i", msg_id) + txt.encode() + NUL
 
                 # 监控关键消息，更新房间状态

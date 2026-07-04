@@ -67,6 +67,19 @@ function on_create_room() {
     global.level_data = _level_data
     global.level_id = self.state.custom_stage.id
     global.level_file = _parse_result.data
+    if (global.network.mode == "server") {
+        var _json = json_stringify({
+            target_level_id: global.level_id,
+            level_index: 0,
+            map_id: global.map_id,
+            level_data: global.level_data,
+            level_file: global.level_file
+        });
+        var _list = global.network.connected_clients;
+        for (var _i = 0; _i < array_length(_list); _i++) {
+            send_message(_list[_i], MSG_ENTER_ROOM_READY, _json);
+        }
+    }
     global.gui_stack.to(room_ready)
     window_set_cursor(cr_arrow)
 }

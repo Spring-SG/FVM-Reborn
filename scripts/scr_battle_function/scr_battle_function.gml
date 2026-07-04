@@ -29,6 +29,7 @@
 #macro MSG_DESTROY              21  // S→C: 广播销毁实例
 #macro MSG_CAT_ATTACK           22  // S→C: 猫撞击敌人(row, sprite_name, image_index)
 #macro MSG_PUB_INFO             23  // M→A: 中继器到所有人发消息
+#macro MSG_MUSIC_SYNC           24  // S→C: 广播音乐切换
 
 /// @function add_net_id(ins_id, net_id)
 /// @description 为实例产生一个 net_id
@@ -346,6 +347,16 @@ function parse_network_message(buf) {
             var subwave = buffer_read(buf, buffer_u8);
             obj_battle.current_wave = wave;
             obj_battle.current_subwave = subwave;
+            break;
+        }
+
+        case MSG_MUSIC_SYNC:
+        {
+            var _music = buffer_read(buf, buffer_s32);
+            with (obj_battle_music_controller) {
+                new_battle_music = _music;
+                event_user(0);
+            }
             break;
         }
 
@@ -720,6 +731,9 @@ function send_message(socket, msg_id) {
         case MSG_EVENT_ACTIONS:         // 参数: json(string)
             buffer_write(buf, buffer_string, argument[2]);
             break;
+        case MSG_MUSIC_SYNC:               // 参数: music_asset(s32)
+            buffer_write(buf, buffer_s32, argument[2]);
+            break;
         default:
             show_debug_message("[警告] 未知消息ID: " + string(msg_id));
             return;
@@ -728,17 +742,20 @@ function send_message(socket, msg_id) {
     // ---- 发送数据包（长度头 + 消息ID + 负载） ----
     var payload_size = buffer_tell(buf);
     var body_size = 4 + payload_size;   // msg_id占4字节
-    var packet = buffer_create(body_size + 2, buffer_grow, 1);
+    // 限制最大4MB-4，超出截断
+    var max_body = 4194300;
+    if (body_size > max_body) { body_size = max_body; }
+    var packet = buffer_create(body_size + 4, buffer_grow, 1);
 	
-    buffer_write(packet, buffer_u16, 0);          // 占位
+    buffer_write(packet, buffer_u32, 0);          // 占位
     buffer_write(packet, buffer_s32, msg_id);     // 写入ID
 	
     buffer_copy(buf, 0, payload_size, packet, buffer_tell(packet));
     
-    buffer_poke(packet, 0, buffer_u16, body_size);
+    buffer_poke(packet, 0, buffer_u32, body_size);
 	
 	var total_size = buffer_get_size(packet);
 	
-    network_send_raw(socket, packet, 2+body_size);
+    network_send_raw(socket, packet, 4+body_size);
 	
 }

@@ -215,6 +215,13 @@ if wave_data.boss_wave && level_stage != "boss" && global.save_data.unlocked_ite
 		new_battle_music = global.level_data.boss_music
 		event_user(0)
 	}
+	// 服务端同步boss音乐给客户端
+	if (global.network.mode == "server") {
+		var _cl = global.network.connected_clients;
+		for (var _j = 0; _j < array_length(_cl); _j++) {
+			send_message(_cl[_j], MSG_MUSIC_SYNC, global.level_data.boss_music);
+		}
+	}
 
 	// 服务端广播boss生成给所有客户端
 	if (global.network.mode == "server") {
