@@ -7,18 +7,40 @@ function spawn_plant(col, row, plant_obj, props) {
         return -1;
     }
     
-    // 计算世界坐标
+
+    
+	var _pid = props[$ "platform_id"] ?? -1;
+	var add_x = 0;
+	var add_y = 0;
+	if _pid != undefined && _pid != -1 {
+		var _plat_inst = global.network.map_net_id_instance_id[? _pid];
+		if instance_exists(_plat_inst) {
+			if _plat_inst.move_axis == "x"{
+			   col += _plat_inst.current_offset -  props[$ "platform_offset"]
+			   add_x += _plat_inst.visual_x_shift;
+			}else{
+			   row += _plat_inst.current_offset - props[$ "platform_offset"]
+			   add_y += _plat_inst.visual_y_shift;
+			}
+		}
+	}
+	
+	
+	
+	    // 计算世界坐标
     var _world_x = global.grid_offset_x + col * global.grid_cell_size_x;
     var _world_y = global.grid_offset_y + row * global.grid_cell_size_y;
     var _grid_pos = get_grid_position_from_world(_world_x, _world_y);
-    
+	
+	
     // 创建实例
-    var _plant = instance_create_depth(_grid_pos.x, _grid_pos.y, 0, plant_obj);
+    var _plant = instance_create_depth(_grid_pos.x+add_x, _grid_pos.y+add_y, 0, plant_obj);
     if (_plant < 0) {
         show_debug_message("[spawn_plant] 实例创建失败");
         return -1;
     }
-    
+
+	
     // 计算深度
     var _depth = calculate_plant_depth(col, row, _plant.plant_type);
     _plant.depth = _depth;
@@ -48,19 +70,14 @@ function spawn_plant(col, row, plant_obj, props) {
 			if true{
 				_plant.is_placed = true
 
-				_plant.x = global.grid_offset_x + col * global.grid_cell_size_x + global.grid_cell_size_x / 2 ;
-				_plant.y = global.grid_offset_y + row * global.grid_cell_size_y + global.grid_cell_size_y / 2 + 10;
-				var plat = instance_position(_plant.x, _plant.y, obj_platform);
-				if (plat != noone) {
-					_plant.x = _plant.x + plat.visual_x_shift;
-					_plant.y = _plant.y + plat.visual_y_shift;
-				}
-				
+				_plant.x = _grid_pos.x + add_x;
+				_plant.y = _grid_pos.y + 10 + add_y;
+
 				grid_row =row;
 				grid_col =col;
 				_plant.grid_row =row;
 				_plant.grid_col =col;
-				card_created(_plant.id,grid_col,grid_row)
+				//card_created(_plant.id,grid_col,grid_row)
 				audio_play_sound(snd_place1,0,0)
 				instance_create_depth(_plant.x,_plant.y,-2,obj_place_effect)
 				var plany_list = ds_grid_get(global.grid_plants,grid_col,grid_row)

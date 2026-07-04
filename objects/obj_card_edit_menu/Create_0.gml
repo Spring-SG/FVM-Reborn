@@ -4,6 +4,7 @@ image_yscale = 1.8
 target_card_index = -1
 target_current_info = ds_map_create()
 info_got = 0
+info_index = 0
 view_max_shape = 0
 
 //target_current_level = 9

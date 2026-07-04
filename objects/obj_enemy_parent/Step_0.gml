@@ -374,7 +374,7 @@ depth = base_depth; // 僵尸比植物稍微靠后一点（在护罩外侧和咖
 grid_col = zombie_grid.col;
 grid_row = zombie_grid.row;
 
-if x < global.grid_offset_x-150 && hp > 0 && not place_meeting(x,y,obj_cat){
+if x < global.grid_offset_x-150 && hp > 0 && not place_meeting(x,y,obj_cat) && array_get_index(block_mouse_id_list,mouse_id) == -1{
 	if global.network.mode == "server"{
 		var _clients = global.network.connected_clients;
 		for (var i = 0; i < array_length(_clients); i++) {

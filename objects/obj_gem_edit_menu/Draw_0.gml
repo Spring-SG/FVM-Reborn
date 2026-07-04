@@ -19,7 +19,10 @@ for(var i = 0 ; i< 1 ; i++){
 if not info_got{
 	var card_id = global.save_data.unlocked_gems[target_card_index].id
 	target_current_info = get_gem_level(card_id)
+	target_max_info = get_gem_max_level(card_id)
 	view_max_shape = global.save_data.unlocked_items.max_gem_level
 	info_got = 1
 }
-draw_text(x,y-70,string(target_current_info))
+draw_set_font(font_number);
+draw_text(x,y-70,$"{target_current_info}/{target_max_info}")
+draw_set_font(font_yuan);

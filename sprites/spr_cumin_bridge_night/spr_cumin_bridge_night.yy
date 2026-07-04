@@ -12,14 +12,14 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"v1","%Name":"4fcf9dad-3d9e-479b-bc78-ed8b6c4bb9ce","name":"4fcf9dad-3d9e-479b-bc78-ed8b6c4bb9ce","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"af613875-a890-42df-b3e7-b828af01fdc3","name":"af613875-a890-42df-b3e7-b828af01fdc3","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,
   "height":1080,
   "HTile":false,
   "layers":[
-    {"$GMImageLayer":"","%Name":"d54a4b5b-d7a6-4cd0-b4a8-c2ad368388b0","blendMode":0,"displayName":"default","isLocked":false,"name":"d54a4b5b-d7a6-4cd0-b4a8-c2ad368388b0","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
+    {"$GMImageLayer":"","%Name":"67cabace-4b6b-40d7-8a76-6ba2f8407d15","blendMode":0,"displayName":"default","isLocked":false,"name":"67cabace-4b6b-40d7-8a76-6ba2f8407d15","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
   "name":"spr_cumin_bridge_night",
   "nineSlice":null,
@@ -69,8 +69,8 @@
     "tracks":[
       {"$GMSpriteFramesTrack":"","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"$KeyframeStore<SpriteFrameKeyframe>":"","Keyframes":[
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"4fcf9dad-3d9e-479b-bc78-ed8b6c4bb9ce","path":"sprites/spr_cumin_bridge_night/spr_cumin_bridge_night.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"fe624784-65c3-4abe-914e-3e96e268fe12","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"af613875-a890-42df-b3e7-b828af01fdc3","path":"sprites/spr_cumin_bridge_night/spr_cumin_bridge_night.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"258473f6-8cc1-4539-ae91-45561699cfac","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange":null,

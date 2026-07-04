@@ -16,7 +16,7 @@ function card_created(plant_inst, col, row) {
 		if (plant_inst.object_index == obj_magic_chicken) {
 			var _target = variable_instance_get(plant_inst, "target_card") ?? "";
 			if _target == ""{
-				_meta = "{\"target_card\":\"\"}"
+				_meta = {target_card:""}
 			}else{
 				var target_card_info ={
 					skill:get_card_info(_target)[$ "skill"],
@@ -24,12 +24,26 @@ function card_created(plant_inst, col, row) {
 					level:get_card_info(_target)[$ "level"],
 					sprite_index:global.prev_place_id_shape
 				}
-				_meta = json_stringify({target_card:_target,target_card_info:target_card_info});
+				_meta = {target_card:_target,target_card_info:target_card_info};
 			}
 		}
+		
+		var _plat = get_platform_at_grid(col, row)
+		if (_plat != noone) {
+		      _plat_id = ds_map_exists(global.network.map_instance_id_net_id, _plat.id) ? global.network.map_instance_id_net_id[? _plat.id] : -1;
+			  if(_plat_id!=-1)
+			  {
+				  _meta[$ "platform_id"]  = _plat_id;
+				  _meta[$ "platform_offset"]  = _plat.current_offset;
+			  }
+		}
+		
+		_meta = json_stringify(_meta);
 		send_message(global.network.server_socket, MSG_UNIT_REQUEST, level, col, row, skill, shape, object_get_name(plant_inst.object_index), _meta, _sprite_name);
 		return;
 	}
+
+
 
     // 获取该网格的植物列表
     var plant_list = ds_grid_get(global.grid_plants, col, row);
@@ -57,16 +71,13 @@ function card_created(plant_inst, col, row) {
 		var _target = variable_instance_get(plant_inst, "target_card") ?? "";
 		var object_name = object_get_name(plant_inst.object_index);
 
-		
-		
-		var _meta = "";
+		var _meta = {};
 
 		if (variable_instance_exists(plant_inst, "player") && is_struct(plant_inst.player)) {
-			_meta = json_stringify({ player: plant_inst.player });
+			_meta = { player: plant_inst.player };
 		} else if (plant_inst.object_index == obj_magic_chicken ) {
-			
 			if (variable_instance_exists(plant_inst, "target_card_info")){
-				_meta = json_stringify({ target_card: plant_inst.target_card,target_card_info:plant_inst.target_card_info });
+				_meta = { target_card: plant_inst.target_card,target_card_info:plant_inst.target_card_info };
 			}else if _target!=""{
 				var target_card_info ={
 					skill:get_card_info(_target)[$ "skill"],
@@ -74,13 +85,25 @@ function card_created(plant_inst, col, row) {
 					level:get_card_info(_target)[$ "level"],
 					sprite_index:global.prev_place_id_shape
 				}
-				_meta = json_stringify({target_card:_target,target_card_info:target_card_info});
+				_meta = {target_card:_target,target_card_info:target_card_info};
 			}else
-				_meta = "{\"target_card\":\"\"}"
+				_meta = {target_card:""}
 		} else {
 			_meta = package_character(plant_inst);
 		}
-  
+		
+		
+		var _plat = get_platform_at_grid(col, row)
+		if (_plat != noone) {
+		      _plat_id = ds_map_exists(global.network.map_instance_id_net_id, _plat.id) ? global.network.map_instance_id_net_id[? _plat.id] : -1;
+			  if(_plat_id!=-1)
+			  {
+				  _meta[$ "platform_id"]  = _plat_id;
+				  _meta[$ "platform_offset"]  = _plat.current_offset;
+			  }
+		}
+		
+		_meta = json_stringify(_meta);
 		var _list = global.network.connected_clients;
 		var _size = array_length(_list);
 		for (var i = 0; i < _size; i++) {
@@ -135,7 +158,7 @@ function package_character(plant_inst){
 		if get_gem_index("transform_gem")!= -1{ _eq.transform_gem_level = get_gem_level("transform_gem"); }
 			
 		
-		return json_stringify({ player: _eq });
+		return { player: _eq };
 	}
-	return "{}"
+	return {}
 }

@@ -3,6 +3,7 @@ if not is_placed{
 	var logical_y = mouse_y;
 	var platform_shift_x = 0;
 	var platform_shift_y = 0;
+
 	var plat = instance_position(mouse_x, mouse_y, obj_platform);
 	if (plat != noone) {
 		platform_shift_x = plat.visual_x_shift;

@@ -11,6 +11,7 @@
 import asyncio
 import random
 import struct
+import time
 
 HOST = "0.0.0.0"
 PORT = 27085
@@ -38,6 +39,10 @@ class Room:
         self.clients = {}         # cid(int) → writer
         self.nicks = {}           # writer_id → 昵称
         self.next_cid = 1
+        self.state = "lobby"      # "lobby" / "battle"
+        self.data = ""            # MSG_ENTER_ROOM_READY 的 JSON
+        self.created_at = time.time()         # 房间创建时间戳
+        self.battle_started_at = 0.0          # 战斗开始时间戳，0 表示未开始
 
     @property
     def member_count(self):
@@ -146,7 +151,7 @@ class Relay:
             if room.host:
                 self.write_str(room.host, MSG_CHAT, f"[系统] {name} 离开")
                 asyncio.ensure_future(self.flush(room.host))
-            print(f"[{room.id}] {name} 离开 (剩余 {len(room.clients)} 人)")
+            print(f"[{room.id}] {name} 离开 (剩余 {room.member_count} 人)")
 
         self._close(writer)
 
@@ -204,6 +209,12 @@ class Relay:
 
         if cmd == "\\connectroom":
             return False
+
+        # ---- \\syncroom <json> — 房主同步房间数据 ----
+        if cmd == "\\syncroom" and role == 0:
+            room.data = text.split(" ", 1)[1] if " " in text else ""
+            room.state = "lobby"
+            return True
 
         # ---- \\list ----
         if cmd == "\\list":
@@ -301,6 +312,53 @@ class Relay:
         return True
 
     # ================================================================
+    #  4. 定时清理过期房间
+    # ================================================================
+    async def cleanup_loop(self):
+        """每 30 分钟检查一次，清理超时房间"""
+        MAX_IDLE_HOURS  = 2.0   # 创建后超过此时间未开战 → 清理
+        MAX_BATTLE_HOURS = 2.0  # 战斗持续超过此时间 → 清理
+        INTERVAL = 30 * 60      # 检查间隔 30 分钟
+
+        while True:
+            await asyncio.sleep(INTERVAL)
+            now = time.time()
+            to_remove = []
+
+            for rid, room in self.rooms.items():
+                idle_hours = (now - room.created_at) / 3600.0
+
+                if room.state == "battle" and room.battle_started_at > 0:
+                    battle_hours = (now - room.battle_started_at) / 3600.0
+                    if battle_hours > MAX_BATTLE_HOURS:
+                        print(f"[清理] 房间 {rid} 战斗持续 {battle_hours:.1f}h，强制关闭")
+                        to_remove.append(rid)
+                elif room.state != "battle":
+                    if idle_hours > MAX_IDLE_HOURS:
+                        print(f"[清理] 房间 {rid} 闲置 {idle_hours:.1f}h 未开战，强制关闭")
+                        to_remove.append(rid)
+
+            for rid in to_remove:
+                room = self.rooms.pop(rid, None)
+                if room is None:
+                    continue
+                # 踢所有人
+                if room.host:
+                    self.write_pkt(room.host, MSG_PUB_INFO, b"\\kicked" + NUL)
+                    self._close(room.host)
+                    self.sessions.pop(id(room.host), None)
+                for cw in list(room.clients.values()):
+                    self.write_pkt(cw, MSG_PUB_INFO, b"\\kicked" + NUL)
+                    self._close(cw)
+                    self.sessions.pop(id(cw), None)
+                room.clients.clear()
+                room.nicks.clear()
+                room.host = None
+
+            if to_remove:
+                print(f"[清理] 本轮清理了 {len(to_remove)} 个房间")
+
+    # ================================================================
     #  总入口
     # ================================================================
     async def handle(self, reader, writer):
@@ -331,6 +389,15 @@ class Relay:
         if room_id not in self.rooms:
             self.rooms[room_id] = Room(room_id)
         room = self.rooms[room_id]
+
+        # 如果房间已有房主（客户端加入），检查状态
+        if room.host is not None and room.state == "battle":
+            self.write_str(writer, MSG_CHAT, "[系统] 房间战斗中，无法加入")
+            self.write_pkt(writer, MSG_PUB_INFO, b"\\kicked" + NUL)
+            await self.flush(writer)
+            self._close(writer)
+            return
+
         role, cid, name = self._add_to_room(room, writer)
         self.sessions[id(writer)] = (room, role, cid, name)
 
@@ -346,7 +413,12 @@ class Relay:
             self.write_str(writer, MSG_CHAT,
                 f"[系统] 你已加入房间 {room.id}\n"
                 f"[系统] 你的名字是 {name}，可使用 \\listcommand 查看命令，或等待房主操作")
+            # 同步房间状态给新客户端
+            if room.data:
+                msg_id = 13  # MSG_ENTER_ROOM_READY
+                self.write_pkt(writer, msg_id, room.data.encode() + NUL)
         self.write_str(writer, MSG_CHAT, f"[系统] 输入文字即可聊天")
+        await self.flush(writer)
 
         print(f"  [{room.id}] {name} 加入 ({room.member_count} 人)")
 
@@ -380,6 +452,18 @@ class Relay:
                         txt = name + ": " + txt
                     body = struct.pack("<i", msg_id) + txt.encode() + NUL
 
+                # 监控关键消息，更新房间状态
+                if msg_id == 13 and role == 0:  # MSG_ENTER_ROOM_READY
+                    room.data = payload.decode("utf-8").rstrip("\x00")
+                    room.state = "lobby"
+                elif msg_id == 12:   # MSG_START_BATTLE
+                    room.state = "battle"
+                    room.battle_started_at = time.time()
+                elif msg_id == 19:  # MSG_SERVER_ACTION
+                    act = payload[0] if payload else 0
+                    if act == 4:    # 回房
+                        room.state = "lobby"
+
                 if role == 0:
                     await self._broadcast(room, body)
                 else:
@@ -394,6 +478,7 @@ async def main():
     relay = Relay()
     srv = await asyncio.start_server(relay.handle, HOST, PORT)
     print(f"中继启动: {HOST}:{PORT}")
+    asyncio.create_task(relay.cleanup_loop())
     async with srv:
         await srv.serve_forever()
 

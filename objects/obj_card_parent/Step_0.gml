@@ -100,7 +100,7 @@ if timer < current_flash_speed - 1 {
             break;
             
         case CARD_STATE.ATTACK:
-            if (image_index >= (idle_anim+1) && image_index <= (idle_anim+1) + attack_anim) image_index++;
+            if (image_index >= (idle_anim+1) && image_index <= (idle_anim) + attack_anim) image_index++;
             else image_index = (idle_anim+1);
             break;
 		

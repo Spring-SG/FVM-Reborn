@@ -201,7 +201,9 @@ function can_place_at_position(x, y, plant_type,feature_type,target_card) {
 	                for (var i = 0; i < ds_list_size(plant_list); i++) {
 	                    var plant = ds_list_find_value(plant_list, i);
                     	if (!instance_exists(plant)) continue;
-	                    if (plant.plant_type == "normal") {
+	                    if (plant.plant_type == "normal" 
+						&& !((feature_type=="bun"&&plant.feature_type=="king_bun")||(feature_type=="king_bun"&&plant.feature_type=="king_bun"))
+						&& !((feature_type=="tbun"&&plant.feature_type=="king_tbun")||(feature_type=="king_tbun"&&plant.feature_type=="king_tbun"))) {
 	                        return false;
 	                    }
 	                }

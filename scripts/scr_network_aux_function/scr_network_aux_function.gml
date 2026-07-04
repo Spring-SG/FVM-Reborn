@@ -4,8 +4,54 @@
 /// @param {real} net_id       植物网络ID，-1表示无植物
 /// @param {real} flame_rate   回收火苗比例
 /// @description 执行铲除操作：查找植物、播放动画、返还火苗、销毁植物
-function network_shovel_remove(col, row, net_id, flame_rate) {
-    var target_plant = noone;
+function network_shovel_remove(col, row, net_id, flame_amount) {
+	
+	    // 3. 获取本地铲子精灵
+    var shovel_spr_to_use = spr_shovel;
+    if (instance_exists(obj_shovel_slot)) {
+        shovel_spr_to_use = obj_shovel_slot.shovel_spr;
+    }
+    var logical_world = get_world_position_from_grid(col, row);
+
+	
+	if global.network.mode == "client"{
+		if(flame_amount>=0){
+            var shovel_effect = instance_create_depth(x+10, y-55, depth, obj_shovel);
+            shovel_effect.sprite_index = shovel_spr_to_use;
+
+            // 返还火苗
+            if (flame_amount > 0) {
+                var flame_inst = instance_create_depth(x, y-30, -2000, obj_flame);
+                flame_inst.value = flame_amount;
+            }
+
+            // 地形特效和音效
+            if (global.grid_terrains[row][col].type == "normal") {
+                instance_create_depth(logical_world.x, logical_world.y, -2, obj_place_effect);
+                audio_play_sound(snd_place2, 1, false);
+            } else if (global.grid_terrains[row][col].type == "water") {
+                var inst = instance_create_depth(logical_world.x, logical_world.y+20, -2500, obj_place_effect);
+                inst.sprite_index = spr_enter_water_effect;
+                audio_play_sound(snd_enter_water, 0, 0);
+            }
+		}else {
+	        // 没找到植物：空铲动画
+	        var shovel_effect = instance_create_depth(logical_world.x, logical_world.y-55, depth, obj_shovel);
+	        shovel_effect.sprite_index = shovel_spr_to_use;
+
+	        if (global.grid_terrains[row][col].type == "normal") {
+	            instance_create_depth(logical_world.x, logical_world.y, -2, obj_place_effect);
+	            audio_play_sound(snd_place2, 1, false);
+	        } else if (global.grid_terrains[row][col].type == "water") {
+	            var inst = instance_create_depth(logical_world.x, logical_world.y+20, -2500, obj_place_effect);
+	            inst.sprite_index = spr_enter_water_effect;
+	            audio_play_sound(snd_enter_water, 0, 0);
+	        }
+	    }
+		exit;
+	}
+	
+	var target_plant = noone;
 
     // 1. 优先通过网络ID查找植物
     if (net_id != -1 && ds_map_exists(global.network.map_net_id_instance_id, net_id)) {
@@ -31,13 +77,7 @@ function network_shovel_remove(col, row, net_id, flame_rate) {
         }
     }
 
-    // 3. 获取本地铲子精灵
-    var shovel_spr_to_use = spr_shovel;
-    if (instance_exists(obj_shovel_slot)) {
-        shovel_spr_to_use = obj_shovel_slot.shovel_spr;
-    }
 
-    var logical_world = get_world_position_from_grid(col, row);
 
     if (target_plant != noone) {
         // 找到植物：执行铲除
@@ -46,10 +86,9 @@ function network_shovel_remove(col, row, net_id, flame_rate) {
             shovel_effect.sprite_index = shovel_spr_to_use;
 
             // 返还火苗
-            if (flame_rate > 0) {
-                var flame_cost = get_plant_data_with_skill(plant_id, shape, current_level, skill)[? "cost"];
+            if (flame_amount > 0) {
                 var flame_inst = instance_create_depth(x, y-30, -2000, obj_flame);
-                flame_inst.value = round(flame_cost * flame_rate);
+                flame_inst.value = flame_amount;
             }
 
             // 地形特效和音效
@@ -88,14 +127,14 @@ function network_shovel_remove(col, row, net_id, flame_rate) {
 /// @param {real} net_id       植物网络ID，-1表示无植物
 /// @param {real} flame_rate   回收火苗比例
 /// @description 服务端广播铲除操作给所有客户端
-function network_broadcast_shovel_remove(col, row, net_id, flame_rate) {
+function network_broadcast_shovel_remove(col, row, net_id, flame_amount) {
     if (global.network.mode != "server") return;
 
     var _list = global.network.connected_clients;
     var _size = array_length(_list);
     for (var _i = 0; _i < _size; _i++) {
         var _socket = _list[_i];
-        send_message(_socket, MSG_REMOVE_UNIT, net_id, col, row, flame_rate);
+        send_message(_socket, MSG_REMOVE_UNIT, net_id, col, row, flame_amount);
     }
 }
 
@@ -165,7 +204,6 @@ function network_broadcast_enemy_steal(col, row, net_id) {
 /// @param {real} shape        形态
 /// @description 用网络同步的星级/技能/形态重新初始化植物属性，覆盖本地存档
 function network_apply_plant_level(_plant) {
-	
 	if(_plant.object_index == obj_player_character){
 		exit;
 	}
@@ -236,7 +274,7 @@ function network_spawn_enemy(_x, _y, _inst) {
 
 /// @function network_active_skill(type, col, row, level)
 /// @description 释放主动宝石技能
-function network_active_skill(_type, _col, _row, _level) {
+function network_active_skill(_type, _col, _row, _level, _coords = "") {
     var _gi = get_gem_info(_type);
     var _range = (variable_struct_exists(_gi, "range") ? _gi.range[_level] : 7);
 
@@ -247,6 +285,7 @@ function network_active_skill(_type, _col, _row, _level) {
         case "bomb_gem": _text.sprite_index = spr_bomb_gem_text; break;
         case "freeze_gem": _text.sprite_index = spr_freeze_gem_text; break;
         case "cateye_gem": _text.sprite_index = spr_cateye_gem_text; break;
+        case "starlight_gem": _text.sprite_index = spr_starlight_gem_text; break;
     }
 
     switch (_type) {
@@ -281,14 +320,58 @@ function network_active_skill(_type, _col, _row, _level) {
             for (var i = 1; i <= up; i++) { p = get_world_position_from_grid(-1, sr-i); inst = instance_create_depth(p.x-10, p.y+10, -500, obj_cat); inst.row = sr-i; inst.state = "attack"; inst.can_loss = false; }
             for (var i = 1; i <= dn; i++) { p = get_world_position_from_grid(-1, sr+i); inst = instance_create_depth(p.x-10, p.y+10, -500, obj_cat); inst.row = sr+i; inst.state = "attack"; inst.can_loss = false; }
             break;
+
+        case "starlight_gem":
+            var _arr;
+            if (_coords != "") {
+                _arr = json_parse(_coords);
+            } else {
+                _arr = [];
+                var _star_amount = (variable_struct_exists(_gi, "star_amount") ? _gi.star_amount[_level] : 1);
+                while (array_length(_arr) < _star_amount) {
+                    var _rx = irandom_range(6, 8);
+                    var _ry = irandom_range(0, global.grid_rows - 1);
+                    var _nc = [_rx, _ry];
+                    var _exists = false;
+                    for (var _j = 0; _j < array_length(_arr); _j++) {
+                        if (_arr[_j][0] == _nc[0] && _arr[_j][1] == _nc[1]) { _exists = true; break; }
+                    }
+                    if (!_exists) array_push(_arr, _nc);
+                }
+                _coords = json_stringify(_arr);
+            }
+            for (var i = 0; i < array_length(_arr); i++) {
+                var _gpos = get_world_position_from_grid(_arr[i][0], _arr[i][1]);
+                var _inst = instance_create_depth(_gpos.x+8, _gpos.y+10, -500, obj_starlight_gem_effect);
+                _inst.row = _arr[i][1];
+            }
+            return _coords;
     }
+    return "";
 }
 
 /// @function network_broadcast_active_skill(type, col, row, level)
-function network_broadcast_active_skill(_type, _col, _row, _level) {
+function network_broadcast_active_skill(_type, _col, _row, _level, _coords = "") {
     if (global.network.mode != "server") return;
     var _cl = global.network.connected_clients;
     for (var i = 0; i < array_length(_cl); i++) {
-        send_message(_cl[i], MSG_ACTIVE_SKILL, _type, _col, _row, _level);
+        send_message(_cl[i], MSG_ACTIVE_SKILL, _type, _col, _row, _level, _coords);
     }
+}
+
+
+
+function get_platform_at_grid(col, row) {
+    with (obj_platform) {
+        var is_x  = (move_axis == "x");
+        var col_start = start_col + (is_x ? current_offset : 0);
+        var row_start = start_row + (is_x ? 0 : current_offset);
+
+        if (col >= col_start && col < col_start + width &&
+            row >= row_start && row < row_start + length) {
+            return id;
+        }
+    }
+
+    return noone;
 }

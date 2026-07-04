@@ -119,33 +119,30 @@ function parse_network_message(buf) {
         
         case MSG_REMOVE_UNIT_REQUEST:
         {
-            // 字段：net_id(s32), col(u8), row(u8), flame_rate(f32)
+            // 字段：net_id(s32), col(u8), row(u8), flame_amount(s32)
             var net_id = buffer_read(buf, buffer_s32);
             var col = buffer_read(buf, buffer_u8);
             var row = buffer_read(buf, buffer_u8);
-            var flame_rate = buffer_read(buf, buffer_f32);
+            var flame_amount = buffer_read(buf, buffer_s32);
 
-            // 服务端执行铲除
-            network_shovel_remove(col, row, net_id, flame_rate);
+            network_shovel_remove(col, row, net_id, flame_amount);
+            network_broadcast_shovel_remove(col, row, net_id, flame_amount);
 
-            // 广播给所有客户端
-            network_broadcast_shovel_remove(col, row, net_id, flame_rate);
-
-            show_debug_message("[解析] 收到 MSG_REMOVE_UNIT_REQUEST: ID=" + string(net_id) + " col=" + string(col) + " row=" + string(row));
+            show_debug_message("[解析] 收到 MSG_REMOVE_UNIT_REQUEST: ID=" + string(net_id) + " col=" + string(col) + " row=" + string(row) + " flame=" + string(flame_amount));
             break;
         }
 
         case MSG_REMOVE_UNIT:
         {
-            // 字段：net_id(s32), col(u8), row(u8), flame_rate(f32)
+            // 字段：net_id(s32), col(u8), row(u8), flame_amount(s32)
             var net_id = buffer_read(buf, buffer_s32);
             var col = buffer_read(buf, buffer_u8);
             var row = buffer_read(buf, buffer_u8);
-            var flame_rate = buffer_read(buf, buffer_f32);
+            var flame_amount = buffer_read(buf, buffer_s32);
 
             // 客户端执行铲除（放行 instance_destroy）
             global.network.client_able = true;
-            network_shovel_remove(col, row, net_id, flame_rate);
+            network_shovel_remove(col, row, net_id, flame_amount);
             global.network.client_able = false;
 
             show_debug_message("[解析] 收到 MSG_REMOVE_UNIT: ID=" + string(net_id) + " col=" + string(col) + " row=" + string(row));
@@ -281,7 +278,7 @@ function parse_network_message(buf) {
         
         case MSG_UNIT_HP:
         {
-            // 字段：网络ID(s32), 当前血量(s32), 最大血量(s32)
+            // 字段：net_id(s32), hp(s32), max_hp(s32)
             var net_id = buffer_read(buf, buffer_s32);
             var hp_val = buffer_read(buf, buffer_s32);
             var max_hp = buffer_read(buf, buffer_s32);
@@ -290,9 +287,9 @@ function parse_network_message(buf) {
                 _inst.hp = hp_val;
                 _inst.max_hp = max_hp;
             }
-            //show_debug_message("[解析] 收到 MSG_UNIT_HP: ID=" + string(net_id) + " HP=" + string(hp_val) + "/" + string(max_hp));
             break;
-        }
+		}
+
 
         case MSG_DESTROY:
         {
@@ -351,9 +348,9 @@ function parse_network_message(buf) {
             var _col = buffer_read(buf, buffer_u8);
             var _row = buffer_read(buf, buffer_u8);
             var _level = buffer_read(buf, buffer_u8);
-            // 服务端执行并广播
-            network_active_skill(_type, _col, _row, _level);
-            network_broadcast_active_skill(_type, _col, _row, _level);
+            var _coords = buffer_read(buf, buffer_string);
+            _coords = network_active_skill(_type, _col, _row, _level, _coords);
+            network_broadcast_active_skill(_type, _col, _row, _level, _coords);
             break;
         }
 
@@ -363,8 +360,8 @@ function parse_network_message(buf) {
             var _col = buffer_read(buf, buffer_u8);
             var _row = buffer_read(buf, buffer_u8);
             var _level = buffer_read(buf, buffer_u8);
-            // 客户端执行
-            network_active_skill(_type, _col, _row, _level);
+            var _coords = buffer_read(buf, buffer_string);
+            network_active_skill(_type, _col, _row, _level, _coords);
             break;
 		}
 
@@ -508,9 +505,15 @@ function parse_network_message(buf) {
 			var target_level_file = json_data[$ "target_level_file"] ?? "";
 			var target_level_file_hard = json_data[$ "target_level_file_hard"] ?? "";
 			var level_index = json_data[$ "level_index"] ?? 0;
+			
 			global.map_id = json_data[$ "map_id"] ?? "";
 			global.level_index=level_index;
+			global.level_data.hard_level_file = target_level_file_hard;
+			global.level_data.level_file = target_level_file;
+			global.level_id =target_level_id;
 			
+
+				
 			audio_play_sound(snd_button, 0, 0);
 			texture_prefetch("cards")
 			if target_level_id != "tower_cake"{
@@ -567,6 +570,17 @@ function parse_network_message(buf) {
 				    global.network.mode = "server";
 				    global.network.connected_clients = [global.network.server_socket];
 				    global.network.server_port = global.network.target_port;
+				    // 同步房间信息给中继
+				    if (room_exists(room_ready) && room == room_ready) {
+				        var _json = json_stringify({
+				            target_level_id: global.level_id,
+				            target_level_file: global.level_data.level_file,
+				            target_level_file_hard: global.level_data.hard_level_file,
+				            level_index: global.level_data_index,
+				            map_id: global.map_id
+				        });
+				        send_message(global.network.server_socket, MSG_CHAT, "\\syncroom " + _json);
+				    }
 				    break;
 				case "\\modclient":
 				    break;
@@ -621,18 +635,18 @@ function send_message(socket, msg_id) {
             buffer_write(buf, buffer_string, argument[9]);
             break;
             
-		case MSG_REMOVE_UNIT_REQUEST:      // 参数: net_id(s32), col(u8), row(u8), flame_rate(f32)
+		case MSG_REMOVE_UNIT_REQUEST:      // 参数: net_id(s32), col(u8), row(u8), flame_amount(s32)
 			buffer_write(buf, buffer_s32, argument[2]);
 			buffer_write(buf, buffer_u8, argument[3]);
 			buffer_write(buf, buffer_u8, argument[4]);
-			buffer_write(buf, buffer_f32, argument[5]);
+			buffer_write(buf, buffer_s32, argument[5]);
 			break;
 
-		case MSG_REMOVE_UNIT:           // 参数: net_id(s32), col(u8), row(u8), flame_rate(f32)
+		case MSG_REMOVE_UNIT:           // 参数: net_id(s32), col(u8), row(u8), flame_amount(s32)
 			buffer_write(buf, buffer_s32, argument[2]);
 			buffer_write(buf, buffer_u8, argument[3]);
 			buffer_write(buf, buffer_u8, argument[4]);
-			buffer_write(buf, buffer_f32, argument[5]);
+			buffer_write(buf, buffer_s32, argument[5]);
 		case MSG_ENEMY_STEAL:           // 参数: net_id(s32), col(u8), row(u8)
 			buffer_write(buf, buffer_s32, argument[2]);
 			buffer_write(buf, buffer_u8, argument[3]);
@@ -644,12 +658,13 @@ function send_message(socket, msg_id) {
 			buffer_write(buf, buffer_u8, argument[3]);
 			break;
 
-		case MSG_ACTIVE_SKILL_REQUEST:  // 参数: skill_type(string), col(u8), row(u8), level(u8)
-		case MSG_ACTIVE_SKILL:          // 参数: skill_type(string), col(u8), row(u8), level(u8)
+		case MSG_ACTIVE_SKILL_REQUEST:  // 参数: skill_type(string), col(u8), row(u8), level(u8), coords_json(string)
+		case MSG_ACTIVE_SKILL:          // 参数: skill_type(string), col(u8), row(u8), level(u8), coords_json(string)
 			buffer_write(buf, buffer_string, argument[2]);
 			buffer_write(buf, buffer_u8, argument[3]);
 			buffer_write(buf, buffer_u8, argument[4]);
 			buffer_write(buf, buffer_u8, argument[5]);
+			buffer_write(buf, buffer_string, argument_count > 6 ? argument[6] : "");
 			break;
 
 		case MSG_SERVER_ACTION:         // 参数: action(u8)
@@ -716,13 +731,12 @@ function send_message(socket, msg_id) {
             buffer_write(buf, buffer_u8, argument[2]);
             break;
 
-        case MSG_UNIT_HP:               // 参数: net_id(s32), hp(s32), max_hp(s32)
+        case MSG_UNIT_HP:               // 参数: net_id(s32), hp(s32), max_hp(s32), x(f32), y(f32)
             buffer_write(buf, buffer_s32, argument[2]);
             buffer_write(buf, buffer_s32, argument[3]);
             buffer_write(buf, buffer_s32, argument[4]);
             break;
-            
-            
+
         case MSG_GAME_OVER:             // 参数: result(u8)
             buffer_write(buf, buffer_u8, argument[2]);
             break;

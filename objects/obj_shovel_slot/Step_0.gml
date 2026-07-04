@@ -92,10 +92,12 @@ if ((is_selected && mouse_check_button_pressed(mb_left)) or (is_selected && glob
         // 从上层开始查找（列表最后）
         for (var j = ds_list_size(plant_list) - 1; j >= 0; j--) {
             var plant = ds_list_find_value(plant_list, j);
-            if (plant.plant_type == target_type and plant.can_shovel_remove) {
-                plant_to_remove = plant;
-                break;
-            }
+			if instance_exists(plant){
+	            if (plant.plant_type == target_type and plant.can_shovel_remove) {
+	                plant_to_remove = plant;
+	                break;
+	            }
+			}
         }
         
         if (plant_to_remove != noone) break;
@@ -104,22 +106,28 @@ if ((is_selected && mouse_check_button_pressed(mb_left)) or (is_selected && glob
     // 获取网络同步所需参数
     var _net_id = (plant_to_remove != noone && ds_map_exists(global.network.map_instance_id_net_id, plant_to_remove))
         ? global.network.map_instance_id_net_id[? plant_to_remove] : -1;
-    var _flame_rate = instance_exists(obj_shovel_slot) ? obj_shovel_slot.flame_rate : 0;
+    var _flame_amount = -1;
+    if (plant_to_remove != noone && instance_exists(obj_shovel_slot)) {
+        var _rate = obj_shovel_slot.flame_rate;
+        if (_rate > 0) {
+            var _cost = get_plant_data_with_skill(plant_to_remove.plant_id, plant_to_remove.shape, plant_to_remove.current_level, plant_to_remove.skill)[? "cost"];
+            _flame_amount = round(_cost * _rate);
+        }
+    }
 
     // 客户端：拦截本地执行，发送请求给服务端，等待广播回来再执行
     if (global.network.mode == "client") {
         deselect_shovel();
-        send_message(global.network.server_socket, MSG_REMOVE_UNIT_REQUEST, _net_id, logical_col, logical_row, _flame_rate);
+        send_message(global.network.server_socket, MSG_REMOVE_UNIT_REQUEST, _net_id, logical_col, logical_row, _flame_amount);
     } else {
         // 服务端或单机：直接执行铲除逻辑
         if (plant_to_remove != noone) {
             with (plant_to_remove) {
                 var shovel_effect = instance_create_depth(x+10, y-55, depth, obj_shovel);
                 shovel_effect.sprite_index = other.shovel_spr
-                if other.flame_rate > 0{
-                    var flame_cost = get_plant_data_with_skill(plant_id,shape,current_level,skill)[? "cost"]
+                if _flame_amount > 0{
                     var flame_inst = instance_create_depth(x,y-30,-2000,obj_flame)
-                    flame_inst.value = round(flame_cost * other.flame_rate)
+                    flame_inst.value = _flame_amount
                 }
                 if global.grid_terrains[logical_row][logical_col].type == "normal"{
                     instance_create_depth(logical_world.x + platform_shift_x,logical_world.y + platform_shift_y,-2,obj_place_effect)
@@ -151,7 +159,7 @@ if ((is_selected && mouse_check_button_pressed(mb_left)) or (is_selected && glob
 
         // 服务端广播给所有客户端
         if (global.network.mode == "server") {
-            network_broadcast_shovel_remove(logical_col, logical_row, _net_id, _flame_rate);
+            network_broadcast_shovel_remove(logical_col, logical_row, _net_id, _flame_amount);
         }
     }
     hotkey_pressed = false

@@ -62,3 +62,5 @@ hit_sound = snd_hit1
 
 water_effect_timer = 0
 hp_modified = false
+
+block_mouse_id_list = ["mouse_train_1"]
