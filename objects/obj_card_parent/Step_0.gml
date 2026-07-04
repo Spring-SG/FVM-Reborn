@@ -42,6 +42,11 @@ if state == CARD_STATE.SLEEP && !instance_exists(banding_sleep_obj) && awake_ani
 	banding_sleep_obj = instance_create_depth(x-15,y-20,depth-1,obj_sleep_effect)
 	banding_sleep_obj.banding_card_obj = id
 }
+if instance_exists(banding_sleep_obj){
+	banding_sleep_obj.x = x-15
+	banding_sleep_obj.y = y-20
+	banding_sleep_obj.depth = depth-1
+}
 if state != CARD_STATE.SLEEP && instance_exists(banding_sleep_obj){
 	instance_destroy(banding_sleep_obj)
 }
