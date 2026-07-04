@@ -6,10 +6,20 @@ var result = async_load[? "result"]; // 返回的内容（JSON字符串）
 // 检查是否是我们的更新请求
 if (event_id == update_request_id) {
 	
-    if (gms_stat == 0) {
+    if (gms_stat == 0 && (string_length(result) > 0)) {
         // 解析 JSON
         // GMS2 2.3+ 使用 json_parse 返回一个 struct
         var json_data = json_parse(result);
+		
+		if json_data == -1{
+			show_notice("网络连接失败，错误码：" + string(status),60)
+			exit
+		}
+		
+		if !struct_exists(json_data,"tag_name"){
+			show_notice("网络连接失败，错误码：" + string(status),60)
+			exit
+		}
         
         if (json_data != undefined) {
             // 获取 tag_name (例如 "v1.0.1")
