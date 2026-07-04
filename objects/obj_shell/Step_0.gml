@@ -1,3 +1,24 @@
+
+
+
+var q = global._destroy_queue;
+var i = 0;
+while (i < ds_list_size(q)) {
+    var entry = ds_list_find_value(q, i);
+    entry.timer--;
+    if (entry.timer <= 0 || !instance_exists(entry.inst)) {
+        if (instance_exists(entry.inst)) {
+			global.network.client_able = true;
+            instance_destroy(entry.inst);
+			global.network.client_able = false;
+        }
+        ds_list_delete(q, i);
+    } else {
+        i++;
+    }
+}
+  
+
 // feather disable all
 // feather ignore all
 if (saveHistory) {

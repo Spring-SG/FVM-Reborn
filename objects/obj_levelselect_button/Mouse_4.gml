@@ -43,9 +43,11 @@ if on_click && obj_player_info_ui.menu_type == 0 && unlock{
 			    "target_level_file": target_level_file,
 			    "target_level_file_hard": target_level_file_hard,
 			    "level_index": level_index,
-				"map_id":global.map_id
+				"map_id":global.map_id,
+				"level_data": global.level_data,
+				"level_file": global.level_file
 			};
-			
+
 			var json_str = json_stringify(json_struct);
 			var _list = global.network.connected_clients;
 			var _size = array_length(_list);

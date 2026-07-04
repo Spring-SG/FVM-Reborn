@@ -295,11 +295,18 @@ function parse_network_message(buf) {
         {
             var _net_id = buffer_read(buf, buffer_s32);
             var _inst = global.network.map_net_id_instance_id[? _net_id];
+			// 延迟销毁，避免销毁后野指针访问
+			if (instance_exists(_inst)) {
+				_inst.pending_destroy = true;
+				_inst.visible = false;  
+				ds_list_add(global._destroy_queue, {inst: _inst, timer: 60});
+			}
+			/*
             if (instance_exists(_inst)) {
 				global.network.client_able = true;
                 instance_destroy(_inst);
 				global.network.client_able = false;
-            }
+            }*/
             break;
 		}
         case MSG_CAT_ATTACK:
@@ -387,6 +394,8 @@ function parse_network_message(buf) {
                 var _act = _actions[_i];
                 switch (_act.op) {
                     case "spawn":
+                        // BOSS血条由BOSS自身Create事件创建，不需要网络同步
+                        if (_act.obj == "obj_boss_hpbar") break;
                         var _inst = instance_create_depth(_act.x, _act.y, _act.depth, asset_get_index(_act.obj));
                         set_net_id(_inst.id, _act.net_id);
                         with (_inst) {
@@ -487,7 +496,7 @@ function parse_network_message(buf) {
 		
 		case MSG_ENTER_ROOM_READY:
 		{
-            show_debug_message("[解析] 收到 MSG_ENTER_ROOM_READY: 进入房间");
+		    show_debug_message("[解析] 收到 MSG_ENTER_ROOM_READY: 进入房间");
 			
 			var json_text = buffer_read(buf, buffer_string);
 			var json_data;
@@ -501,63 +510,20 @@ function parse_network_message(buf) {
 			    return;
 			}
 
-			var target_level_id = json_data[$ "target_level_id"] ?? "";
-			var target_level_file = json_data[$ "target_level_file"] ?? "";
-			var target_level_file_hard = json_data[$ "target_level_file_hard"] ?? "";
-			var level_index = json_data[$ "level_index"] ?? 0;
-			
-			global.map_id = json_data[$ "map_id"] ?? "";
-			global.level_index=level_index;
-			global.level_data.hard_level_file = target_level_file_hard;
-			global.level_data.level_file = target_level_file;
-			global.level_id =target_level_id;
-			
+			global.map_id      = json_data[$ "map_id"] ?? "";
+			global.level_index = json_data[$ "level_index"] ?? 0;
+			global.level_id    = json_data[$ "target_level_id"] ?? "";
+			global.level_data  = json_data[$ "level_data"];
+			global.level_file  = json_data[$ "level_file"];
 
-				
 			audio_play_sound(snd_button, 0, 0);
-			texture_prefetch("cards")
-			if target_level_id != "tower_cake"{
-			    global.gui_stack.to(room_ready)
-	
-				// 这是文件在 datafiles 目录下的相对路径
-				global.level_id = target_level_id;
-				var _file_path = "level_data/" + target_level_file; 
-				if global.difficulty >= 2{
-					_file_path = "level_data/" + target_level_file_hard; 
-				}
+			texture_prefetch("cards");
 
+			global.gui_stack.to(room_ready);
 
-				//使用 load_buffer 和 buffer_read 加载文件内容
-				var _buffer = buffer_load(_file_path);
-				if (!buffer_exists(_buffer)) {
-				    show_debug_message("错误：无法加载关卡文件到缓冲区: " + _file_path);
-				} else {
-				    var _json_string = buffer_read(_buffer, buffer_string);
-				    buffer_delete(_buffer); // 释放缓冲区内存
-
-				    // 解析JSON字符串
-				    global.level_file = json_parse(_json_string);
-    
-				    // 检查解析是否成功
-				    if (global.level_file == -1) {
-				        show_debug_message("错误：JSON 解析失败！");
-				    } else {
-				        show_debug_message("关卡文件加载并解析成功！");
-				        show_debug_message(global.level_file);
-				    }
-				}
-				var map_button_array = struct_get(ds_map_find_value(global.maps_map,global.map_id),"levels_data")
-				global.level_data = map_button_array[level_index]
-				show_debug_message(global.level_data)
-		
-			}
-			else{
-				global.gui_stack.to(room_tower_cake)
-			}
 			break;
-		
 		}
-        
+		
 		
 		case MSG_PUB_INFO:
 		{

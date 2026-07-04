@@ -56,6 +56,19 @@ function spawn_plant(col, row, plant_obj, props) {
         }
     }
 	
+	
+	if(global.network.mode="server"){
+		// 替换逻辑：如果格子中有同类型植物，先销毁旧的
+		var _plant_list = ds_grid_get(global.grid_plants, col, row);
+		for (var _i = 0; _i < ds_list_size(_plant_list); _i++) {
+			var _old = ds_list_find_value(_plant_list, _i);
+			if (instance_exists(_old) && _old.plant_type == _plant.plant_type && _old.plant_id != "player") {
+				card_destroyed(_old);
+				instance_destroy(_old);
+			}
+		}
+	}
+	
 	card_created(_plant, col, row);
     
     // 放置特效（注意：如果不需要特效可跳过）

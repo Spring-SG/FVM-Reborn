@@ -27,7 +27,9 @@ switch (_type) {
 					target_level_file: global.level_data.level_file,
 					target_level_file_hard: global.level_data.hard_level_file,
 					level_index: global.level_data_index,
-					map_id: global.map_id
+					map_id: global.map_id,
+					level_data: global.level_data,
+					level_file: global.level_file
 				});
 				send_message(_sock, MSG_ENTER_ROOM_READY, _json);
 			}
