@@ -408,7 +408,8 @@ function maps_init(){
 					"boss_music":mus_volcanic_tower_boss,
 					"pre_level":"tower_cake_13_2",
 					"rewards":[
-						{"card_id":"wine_bottle_bomb","target_shape":1}
+						{"card_id":"wine_bottle_bomb","target_shape":1},
+						{"card_id":"xinjiang_fried_noodles","target_shape":1}
 					]
 				},
 				{
@@ -437,7 +438,8 @@ function maps_init(){
 					"boss_music":mus_volcanic_tower_boss,
 					"pre_level":"tower_cake_14_2",
 					"rewards":[
-						{"card_id":"ice_bucket_bomb","target_shape":1}
+						{"card_id":"ice_bucket_bomb","target_shape":1},
+						{"card_id":"king_long_bao","target_shape":1}
 					]
 				},
 				{
@@ -451,7 +453,8 @@ function maps_init(){
 					"boss_music":mus_volcanic_tower_boss,
 					"pre_level":"tower_cake_15_1",
 					"rewards":[
-						{"card_id":"kettle_bomb","target_shape":1}
+						{"card_id":"kettle_bomb","target_shape":1},
+						{"card_id":"king_triple_long_bao","target_shape":1}
 					]
 				},
 				{
