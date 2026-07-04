@@ -42,7 +42,7 @@ function instance_log_disable(){
 
 function instance_create_depth_define(_x, _y, _depth, _obj) {
 	// boss产物：客户端拦截，服务端延迟广播(等属性设完)
-	var _is_boss = (object_is_ancestor(obj_enemy_parent, _obj) || ds_list_find_index(global.boss_spawn_sync_list, _obj) != -1);
+	var _is_boss = (ds_list_find_index(global.boss_spawn_sync_list, _obj) != -1);
 	if (_is_boss && global.network.mode == "client" && !global.network.client_able) {
 		var _inst = instance_create_depth_origfunc(_x, _y, _depth, _obj);
 		_inst.visible = false;

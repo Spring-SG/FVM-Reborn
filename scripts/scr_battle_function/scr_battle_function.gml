@@ -213,8 +213,10 @@ function parse_network_message(buf) {
             var px = buffer_read(buf, buffer_f32);
             var py = buffer_read(buf, buffer_f32);
             var object_name = buffer_read(buf, buffer_string);
-
+			
+			global.network.client_able = true;
             var new_enemy = instance_create_depth(px, py, 0, asset_get_index(object_name));
+			global.network.client_able = false;
             set_net_id(new_enemy.id, net_id);
 
             show_debug_message("[解析] MSG_SPAWN_ENEMY: ID=" + string(net_id) + " type=" + object_name);
@@ -231,13 +233,16 @@ function parse_network_message(buf) {
             var hp_val = buffer_read(buf, buffer_s32);
             var maxhp_val = buffer_read(buf, buffer_s32);
             var boss_row = buffer_read(buf, buffer_u8);
-
+	
+			global.network.client_able = true;
             var new_boss = instance_create_depth(px, py, -200, asset_get_index(object_name));
+			global.network.client_able = false;
             set_net_id(new_boss.id, net_id);
             new_boss.hp = hp_val;
             new_boss.maxhp = maxhp_val;
             new_boss.grid_row = boss_row;
             obj_battle.boss_count++;
+			
 
             show_debug_message("[解析] MSG_SPAWN_BOSS: ID=" + string(net_id) + " type=" + object_name + " HP=" + string(hp_val) + "/" + string(maxhp_val));
             break;
@@ -399,6 +404,7 @@ function parse_network_message(buf) {
 
         case MSG_EVENT_ACTIONS:
         {
+			global.network.client_able = true;
             var _json = buffer_read(buf, buffer_string);
             var _actions = json_parse(_json);
             for (var _i = 0; _i < array_length(_actions); _i++) {
@@ -427,6 +433,8 @@ function parse_network_message(buf) {
 						break;
                 }
             }
+			
+			global.network.client_able = false;
             break;
         }
         
@@ -526,11 +534,12 @@ function parse_network_message(buf) {
 			global.level_id    = json_data[$ "target_level_id"] ?? "";
 			global.level_data  = json_data[$ "level_data"];
 			global.level_file  = json_data[$ "level_file"];
-
-			audio_play_sound(snd_button, 0, 0);
-			texture_prefetch("cards");
-
-			global.gui_stack.to(room_ready);
+			
+			if( global.level_file!= undefined&& global.level_file!= undefined){
+				audio_play_sound(snd_button, 0, 0);
+				texture_prefetch("cards");
+				global.gui_stack.to(room_ready);
+			}
 
 			break;
 		}
