@@ -41,6 +41,23 @@ if shape == 1{
 	inst_middle2.move_speed = 8;
 	inst_middle2.row = grid_row;
 	inst_middle2.target_row = grid_row; // 目标行（中间行不变）
+	if card_equipped_attire_id(plant_id) == "wine_rack_sagittarius"{
+		inst_middle2.sprite_index = spr_wine_rack_sagittarius_bullet
+		if shape >= 2{
+			inst_middle2.sprite_index = spr_wine_rack_sagittarius_bullet_1
+		}
+	}
+}
+
+if card_equipped_attire_id(plant_id) == "wine_rack_sagittarius"{
+	inst_up.sprite_index = spr_wine_rack_sagittarius_bullet
+	inst_middle.sprite_index = spr_wine_rack_sagittarius_bullet
+	inst_down.sprite_index = spr_wine_rack_sagittarius_bullet
+	if shape >= 2{
+		inst_up.sprite_index = spr_wine_rack_sagittarius_bullet_1
+		inst_middle.sprite_index = spr_wine_rack_sagittarius_bullet_1
+		inst_down.sprite_index = spr_wine_rack_sagittarius_bullet_1
+	}
 }
 
 audio_play_sound(snd_shot, 0, 0);

@@ -3781,16 +3781,42 @@
     ],
     "rewards": [
         {
-            "gold": 0.0,
-            "items": []
+            "gold": 7000.0,
+            "items": [
+                {
+                    "id": "secret_spices",
+                    "amount": 400.0
+                },
+                {
+                    "id": "middle_crystal",
+                    "amount": 300.0
+                },
+                {
+                    "id": "clover_2",
+                    "amount": 1.0
+                }
+            ]
         },
         {
-            "gold": 0.0,
-            "items": [],
-            "card_unlock": [],
+            "gold": 7000.0,
+            "items": [
+                {
+                    "id": "secret_spices",
+                    "amount": 400.0
+                },
+                {
+                    "id": "middle_crystal",
+                    "amount": 300.0
+                },
+                {
+                    "id": "clover_2",
+                    "amount": 1.0
+                }
+            ],
+            "card_unlock": ["king_triple_long_bao"],
             "weapon_unlock": [],
             "gem_unlock": [],
-            "player_level": 0.0,
+            "player_level": 44.0,
             "skill_level": 0.0
         }
     ],

@@ -114,7 +114,7 @@ switch state{
 				timer = 0
 				move_time = 250
 				image_angle = 180
-				var enemy_pos = get_world_position_from_grid(1,-3)
+				var enemy_pos = get_world_position_from_grid(2,-3)
 				x = enemy_pos.x - 90
 				y = enemy_pos.y + 30
 				y += (global.grid_cell_size_y * 0.5 + 15)
@@ -198,7 +198,7 @@ switch state{
 			else{
 				for(var i = 0 ; i < 4 ; i++){
 					jump_times = 0 + 2 * i
-					var mouse_pos1 = get_world_position_from_grid(1,jump_times)
+					var mouse_pos1 = get_world_position_from_grid(2,jump_times)
 					var inst1 = instance_create_depth(mouse_pos1.x-25,mouse_pos1.y+33,-800,obj_machine_iron_pan_mouse)
 					inst1.grid_row = jump_times
 					inst1.move_speed *= -1
