@@ -16,6 +16,7 @@ draw_set_halign(fa_left);
 draw_text(x - 320, y - 175, "角色名:");
 draw_text(x - 320, y - 95, "存档槽位:");
 draw_text(x - 320, y + 15, "角色时装");
+draw_text(x - 320, y + 175, "检查更新");
 
 if selected_attire_index != -1{
 	selected_attire_id = player_attire_id_list[selected_attire_index]

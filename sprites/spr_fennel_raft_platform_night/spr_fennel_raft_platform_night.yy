@@ -12,21 +12,21 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"v1","%Name":"d31542cd-61fe-443b-80ab-3e0d6f553bff","name":"d31542cd-61fe-443b-80ab-3e0d6f553bff","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"1ee27a1f-3fe1-45e8-8118-83a98d79c010","name":"1ee27a1f-3fe1-45e8-8118-83a98d79c010","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,
   "height":571,
   "HTile":false,
   "layers":[
-    {"$GMImageLayer":"","%Name":"7c8afd30-e855-4957-904a-fa0c18f333d0","blendMode":0,"displayName":"default","isLocked":false,"name":"7c8afd30-e855-4957-904a-fa0c18f333d0","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
+    {"$GMImageLayer":"","%Name":"9c288d7a-4a41-48ac-b6ee-488c0decce30","blendMode":0,"displayName":"default","isLocked":false,"name":"9c288d7a-4a41-48ac-b6ee-488c0decce30","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
   "name":"spr_fennel_raft_platform_night",
   "nineSlice":null,
   "origin":0,
   "parent":{
-    "name":"Map Object",
-    "path":"folders/精灵/Map Object.yy",
+    "name":"platform",
+    "path":"folders/精灵/Map Object/platform.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",
@@ -69,8 +69,8 @@
     "tracks":[
       {"$GMSpriteFramesTrack":"","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"$KeyframeStore<SpriteFrameKeyframe>":"","Keyframes":[
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"d31542cd-61fe-443b-80ab-3e0d6f553bff","path":"sprites/spr_fennel_raft_platform_night/spr_fennel_raft_platform_night.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"59ff7ffc-a622-4aab-ab8b-86fdc4fed20c","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"1ee27a1f-3fe1-45e8-8118-83a98d79c010","path":"sprites/spr_fennel_raft_platform_night/spr_fennel_raft_platform_night.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"7a3e6db4-992f-4963-94a3-9e5de85a9abd","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange":null,

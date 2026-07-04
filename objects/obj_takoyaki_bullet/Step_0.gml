@@ -75,7 +75,7 @@ if (instance_exists(target_enemy) && target_enemy.hp > 0) {
     var right_range = 80;
     
     with (obj_enemy_parent) {
-        if (hp > 0 && can_hit(other.target_type,target_type)) {
+        if (hp > 0 && can_hit(other.target_type,target_type) && y > 0) {
             // 检查是否在子弹右边一格内
 			if instance_exists(other.banding_card_obj){
 	            if (x >= other.banding_card_obj.x && x <= other.banding_card_obj.x + right_range && grid_row == other.row) {

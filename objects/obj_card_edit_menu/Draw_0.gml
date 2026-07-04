@@ -21,7 +21,6 @@ for(var i = 0 ; i< 3 ; i++){
 if not info_got{
 	var card_id = global.player_deck[| target_card_index*2];
 	var length = array_length(global.save_data.unlocked_cards)
-	var info_index = 0
 	for (var i = 0;i < length;i++){
 		if global.save_data.unlocked_cards[i].id == card_id{
 			info_index = i
@@ -37,6 +36,8 @@ if not info_got{
 	}
 	info_got = 1
 }
-draw_text(x,y-70,string(target_current_info[? "level"]))
-draw_text(x,y-70+80*1,string(target_current_info[? "shape"]))
-draw_text(x,y-70+80*2,string(target_current_info[? "skill"]))
+draw_set_font(font_number);
+draw_text(x,y-70,$"{target_current_info[? "level"]}/{global.save_data.unlocked_cards[info_index].max_level}")
+draw_text(x,y-70+80*1,$"{target_current_info[? "shape"]}/{global.save_data.unlocked_cards[info_index].max_shape}")
+draw_text(x,y-70+80*2,$"{target_current_info[? "skill"]}/{global.save_data.unlocked_items.max_skill_level}")
+draw_set_font(font_yuan);

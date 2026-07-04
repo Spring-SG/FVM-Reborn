@@ -12,21 +12,21 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"v1","%Name":"b1a53a8b-a831-4733-9833-93eb28cb538a","name":"b1a53a8b-a831-4733-9833-93eb28cb538a","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"b03c44eb-5d12-4217-bea8-59f690c63d48","name":"b03c44eb-5d12-4217-bea8-59f690c63d48","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,
   "height":235,
   "HTile":false,
   "layers":[
-    {"$GMImageLayer":"","%Name":"b8b9d0c6-27b9-4b42-b477-7c3c4077f8b1","blendMode":0,"displayName":"default","isLocked":false,"name":"b8b9d0c6-27b9-4b42-b477-7c3c4077f8b1","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
+    {"$GMImageLayer":"","%Name":"c053e5ff-b6e7-48c8-a17d-da1b7070b343","blendMode":0,"displayName":"default","isLocked":false,"name":"c053e5ff-b6e7-48c8-a17d-da1b7070b343","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
   "name":"spr_laurel_sky_platform_night",
   "nineSlice":null,
   "origin":9,
   "parent":{
-    "name":"Map Object",
-    "path":"folders/精灵/Map Object.yy",
+    "name":"platform",
+    "path":"folders/精灵/Map Object/platform.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",
@@ -69,13 +69,13 @@
     "tracks":[
       {"$GMSpriteFramesTrack":"","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"$KeyframeStore<SpriteFrameKeyframe>":"","Keyframes":[
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"b1a53a8b-a831-4733-9833-93eb28cb538a","path":"sprites/spr_laurel_sky_platform_night/spr_laurel_sky_platform_night.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"6f293b33-1b31-410b-93fe-f40aef4cdc07","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"b03c44eb-5d12-4217-bea8-59f690c63d48","path":"sprites/spr_laurel_sky_platform_night/spr_laurel_sky_platform_night.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"9ca1cfaa-4115-4432-be46-0849a968f4a2","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange":null,
     "volume":1.0,
-    "xorigin":5,
+    "xorigin":4,
     "yorigin":0,
   },
   "swatchColours":null,

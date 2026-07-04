@@ -92,10 +92,12 @@ if ((is_selected && mouse_check_button_pressed(mb_left)) or (is_selected && glob
         // 从上层开始查找（列表最后）
         for (var j = ds_list_size(plant_list) - 1; j >= 0; j--) {
             var plant = ds_list_find_value(plant_list, j);
-            if (plant.plant_type == target_type and plant.can_shovel_remove) {
-                plant_to_remove = plant;
-                break;
-            }
+			if instance_exists(plant){
+	            if (plant.plant_type == target_type and plant.can_shovel_remove) {
+	                plant_to_remove = plant;
+	                break;
+	            }
+			}
         }
         
         if (plant_to_remove != noone) break;
