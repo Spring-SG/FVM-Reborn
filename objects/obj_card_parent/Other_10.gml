@@ -88,8 +88,8 @@ if global.network.mode=="client"{
 	if target_card != "none"{
 		for (var i = 0; i < ds_list_size(plant_list); i++) {
 	        var plant = ds_list_find_value(plant_list, i);
-	        show_debug_message(plant.plant_id)
-			if (plant.plant_id == target_card) {
+			
+			if instance_exists(plant)&&(plant.plant_id == target_card) {
 				
 				if feature_type == "upgrade"{
 					instance_destroy(plant)
