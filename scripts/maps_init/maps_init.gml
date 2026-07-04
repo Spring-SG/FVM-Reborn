@@ -966,7 +966,7 @@ function maps_init(){
 					"pre_music":mus_floating_island_daytime_pre,
 					"elite_music":mus_floating_island_daytime_elite,
 					"boss_music":mus_floating_island_daytime_boss,
-					"player_level_require":46,
+					"player_level_require":99,
 					"pre_level_require":[]
 				},
 				{
@@ -982,7 +982,7 @@ function maps_init(){
 					"pre_music":mus_floating_island_night_pre,
 					"elite_music":mus_floating_island_night_elite,
 					"boss_music":mus_floating_island_night_boss,
-					"player_level_require":47,
+					"player_level_require":99,
 					"pre_level_require":[]
 				},
 				{
@@ -998,7 +998,7 @@ function maps_init(){
 					"pre_music":mus_floating_island_daytime_pre,
 					"elite_music":mus_floating_island_daytime_elite,
 					"boss_music":mus_floating_island_daytime_boss,
-					"player_level_require":48,
+					"player_level_require":99,
 					"pre_level_require":[]
 				},
 				{
@@ -1014,7 +1014,7 @@ function maps_init(){
 					"pre_music":mus_floating_island_night_pre,
 					"elite_music":mus_floating_island_night_elite,
 					"boss_music":mus_floating_island_night_boss,
-					"player_level_require":49,
+					"player_level_require":99,
 					"pre_level_require":[]
 				},
 				{
@@ -1030,7 +1030,7 @@ function maps_init(){
 					"pre_music":mus_floating_island_crown_pre,
 					"elite_music":mus_floating_island_crown_elite,
 					"boss_music":mus_floating_island_night_boss,
-					"player_level_require":50,
+					"player_level_require":99,
 					"pre_level_require":[]
 				},
 				{

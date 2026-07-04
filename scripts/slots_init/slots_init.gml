@@ -289,9 +289,9 @@ function slots_init(){
 		{"shape":2, "sprite":spr_king_long_bao_2_0, "cost":125, "cooldown":5*60, "description":"黑心国王小笼包：发射包子，可填充5张包子类卡片","plant_type":"normal","feature_type":"king_bun","target_card":"none"}
 	])
 	register_card("king_triple_long_bao",obj_king_triple_long_bao,[
-	    {"shape":0, "sprite":spr_king_triple_long_bao_0_0, "cost":175, "cooldown":5*60, "description":"三向国王小笼包：发射包子，可填充2张三向包子类卡片","plant_type":"normal","feature_type":"king_tbun","target_card":"none"},
-	    {"shape":1, "sprite":spr_king_triple_long_bao_1_0, "cost":175, "cooldown":5*60, "description":"红心三向国王小笼包：发射包子，可填充3张三向包子类卡片","plant_type":"normal","feature_type":"king_tbun","target_card":"none"},
-		{"shape":2, "sprite":spr_king_triple_long_bao_2_0, "cost":175, "cooldown":5*60, "description":"黑心三向国王小笼包：发射包子，可填充5张三向包子类卡片","plant_type":"normal","feature_type":"king_tbun","target_card":"none"}
+	    {"shape":0, "sprite":spr_king_triple_long_bao_0_0, "cost":175, "cooldown":5*60, "description":"三向国王小笼包：向三个方向发射包子，可填充2张三向包子类卡片","plant_type":"normal","feature_type":"king_tbun","target_card":"none"},
+	    {"shape":1, "sprite":spr_king_triple_long_bao_1_0, "cost":175, "cooldown":5*60, "description":"红心三向国王小笼包：向三个方向发射包子，可填充3张三向包子类卡片","plant_type":"normal","feature_type":"king_tbun","target_card":"none"},
+		{"shape":2, "sprite":spr_king_triple_long_bao_2_0, "cost":175, "cooldown":5*60, "description":"黑心三向国王小笼包：向三个方向发射包子，可填充5张三向包子类卡片","plant_type":"normal","feature_type":"king_tbun","target_card":"none"}
 	])
 	
 }

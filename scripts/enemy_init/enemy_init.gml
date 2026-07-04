@@ -94,5 +94,5 @@ function enemy_init(){
 	register_enemy("trumpeter_mouse",{"name":"小号手鼠","_obj":obj_trumpeter_mouse,"hp":560,"shield":0,"description":"小号手鼠：将相邻行老鼠聚集至本行","speed":0.30,"atk":10,"cycle":36,"range":90,"ash_proof":false,"spr":spr_trumpeter_mouse,"feature":"land"})
 	register_enemy("huang_xiaoming",{"name":"酷帅小明","_obj":obj_huang_xiaoming,"hp":60000,"shield":0,"description":"酷帅小明：浮空岛BOSS","speed":0.3,"atk":10,"cycle":36,"range":90,"ash_proof":true,"spr":spr_huang_xiaoming_idle,"feature":"land"})
 	register_enemy("angelababy",{"name":"闪亮Baby","_obj":obj_angelababy,"hp":60000,"shield":0,"description":"闪亮Baby：浮空岛BOSS","speed":0.3,"atk":10,"cycle":36,"range":90,"ash_proof":true,"spr":spr_angelababy_idle,"feature":"land"})
-	register_enemy("mouse_train_1",{"name":"列车初级","_obj":obj_mouse_train_1_head,"hp":200000,"shield":0,"description":"列车初级：卤料花园BOSS","speed":0.3,"atk":10,"cycle":36,"range":90,"ash_proof":true,"spr":spr_mouse_train_1_head_idle,"feature":"land"})
+	register_enemy("mouse_train_1",{"name":"鼠国列车一态","_obj":obj_mouse_train_1_head,"hp":200000,"shield":0,"description":"鼠国列车一态：卤料花园BOSS","speed":0.3,"atk":10,"cycle":36,"range":90,"ash_proof":true,"spr":spr_mouse_train_1_head_idle,"feature":"land"})
 }
