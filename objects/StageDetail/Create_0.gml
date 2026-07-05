@@ -92,11 +92,11 @@ function on_create_room() {
             }
         }
         // 自定义音乐（相对路径）替换为本地内置音乐，不传输音频文件
-        var _check_custom_music = function(_field) {
+        var _check_custom_music = function(_raw_json,_field) {
             var _path = variable_struct_get(_raw_json, _field)
             return !is_undefined(_path) && laboratory_path_is_relative(string(_path))
         }
-        if (_check_custom_music("pre_music") || _check_custom_music("elite_music") || _check_custom_music("boss_music")) {
+        if (_check_custom_music(_raw_json,"pre_music") || _check_custom_music(_raw_json,"elite_music") || _check_custom_music(_raw_json,"boss_music")) {
             var _ld = _json_struct[$ "level_data"]
             var _save_pre   = _ld[$ "pre_music"]
             var _save_elite = _ld[$ "elite_music"]
