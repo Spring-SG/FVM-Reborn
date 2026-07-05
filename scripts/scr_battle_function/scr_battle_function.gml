@@ -337,10 +337,6 @@ function parse_network_message(buf) {
             // 执行偷取
             network_enemy_steal(col, row, net_id);
 
-            // 服务端收到客户端请求后广播给所有客户端
-            if (global.network.mode == "server") {
-                network_broadcast_enemy_steal(col, row, net_id);
-            }
 
             show_debug_message("[解析] 收到 MSG_ENEMY_STEAL: ID=" + string(net_id) + " col=" + string(col) + " row=" + string(row));
             break;
@@ -535,10 +531,63 @@ function parse_network_message(buf) {
 			global.level_data  = json_data[$ "level_data"];
 			global.level_file  = json_data[$ "level_file"];
 			
+			// 来着服务端的新地图图像资源
+			var _sprite_base64 = variable_struct_get(json_data, "map_sprite_base64")
+			if (!is_undefined(_sprite_base64) && string_length(_sprite_base64) > 0) {
+			    var _buf = buffer_base64_decode(_sprite_base64)
+			    if (buffer_exists(_buf)) {
+			        var _safe_name = string_replace_all(string_replace_all(string_replace_all(string(global.level_id), "/", "_"), "\\", "_"), " ", "_")
+					var _temp_path = "fvm_temp_map_sprite_" + _safe_name + ".png"
+			        buffer_save(_buf, _temp_path)
+			        buffer_delete(_buf)
+			        var _spr = sprite_add(_temp_path, 1, false, false, 0, 0)
+			        if (_spr != -1) {
+			            global.level_data[$ "level_sprite"] = _spr
+			            show_debug_message("[客户端] map_sprite 已从 base64 还原，精灵索引: " + string(_spr))
+			        } else {
+			            global.level_data[$ "level_sprite"] = spr_cookie_island
+			            show_debug_message("[客户端] map_sprite 还原失败，使用默认精灵")
+			        }
+			        file_delete(_temp_path)
+			    }
+			}
+			
 			if( global.level_file!= undefined&& global.level_file!= undefined){
 				audio_play_sound(snd_button, 0, 0);
 				texture_prefetch("cards");
-				global.gui_stack.to(room_ready);
+				
+				if global.gui_stack.get_top() == room_ready{
+
+					//统计敌人和BOSS类型
+					with (obj_readyroom_manager){
+						enemy_type_list = []
+						boss_type_list = []
+						for(var i = 0;i < global.level_file.total_waves;i ++){
+							if global.level_file.waves[i].boss_wave{
+								if array_get_index(boss_type_list,global.level_file.waves[i].boss) == -1{
+									array_push(boss_type_list,global.level_file.waves[i].boss)
+								}
+								if is_real(global.level_file.version){
+									if array_get_index(boss_type_list,global.level_file.waves[i].boss2) == -1 && global.level_file.waves[i].boss2 != ""{
+										array_push(boss_type_list,global.level_file.waves[i].boss2)
+									}
+								}
+							}
+							var subwave = global.level_file.waves[i].subwaves
+							for(var j = 0 ; j <array_length(subwave);j++){
+								var enemy_list = subwave[j].enemy_list
+								for(var k = 0 ; k < array_length(enemy_list);k++){
+									if array_get_index(enemy_type_list,enemy_list[k].type) == -1{
+										array_push(enemy_type_list,enemy_list[k].type)
+									}
+								}
+							}
+						}
+					}
+					
+				}else{
+					global.gui_stack.to(room_ready);
+				}
 			}
 
 			break;

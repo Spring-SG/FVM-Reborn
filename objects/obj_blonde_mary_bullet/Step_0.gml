@@ -2,6 +2,12 @@ if global.is_paused{
 	exit
 }
 
+
+if(timer>136){
+	//客户端强制目标不死，需要加跳过
+	exit
+}
+
 timer++
 
 image_angle -= 5

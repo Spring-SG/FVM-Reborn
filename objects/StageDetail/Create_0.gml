@@ -68,13 +68,51 @@ function on_create_room() {
     global.level_id = self.state.custom_stage.id
     global.level_file = _parse_result.data
     if (global.network.mode == "server") {
-        var _json = json_stringify({
+        var _json_struct = {
             target_level_id: global.level_id,
             level_index: 0,
             map_id: global.map_id,
             level_data: global.level_data,
             level_file: global.level_file
-        });
+        }
+        // 判断 map_sprite 是否为相对路径（非内置图像），是则转为 base64
+        var _raw_json = _parse_result.data
+        var _sprite_path_raw = variable_struct_get(_raw_json, "map_sprite")
+        if (!is_undefined(_sprite_path_raw) && string_length(string(_sprite_path_raw)) > 0) {
+            if (laboratory_path_is_relative(string(_sprite_path_raw))) {
+                var _full_path = laboratory_resolve_datafile_path(string(_sprite_path_raw), self.state.custom_stage.json_path)
+                if (file_exists(_full_path)) {
+                    var _buf = buffer_load(_full_path)
+                    if (buffer_exists(_buf)) {
+                        variable_struct_set(_json_struct, "map_sprite_base64", buffer_base64_encode(_buf, 0, buffer_get_size(_buf)))
+                        variable_struct_set(_json_struct, "map_sprite_path", string(_sprite_path_raw))
+                        buffer_delete(_buf)
+                    }
+                }
+            }
+        }
+        // 自定义音乐（相对路径）替换为本地内置音乐，不传输音频文件
+        var _check_custom_music = function(_field) {
+            var _path = variable_struct_get(_raw_json, _field)
+            return !is_undefined(_path) && laboratory_path_is_relative(string(_path))
+        }
+        if (_check_custom_music("pre_music") || _check_custom_music("elite_music") || _check_custom_music("boss_music")) {
+            var _ld = _json_struct[$ "level_data"]
+            var _save_pre   = _ld[$ "pre_music"]
+            var _save_elite = _ld[$ "elite_music"]
+            var _save_boss  = _ld[$ "boss_music"]
+            _ld[$ "pre_music"]   = mus_delicious_island_daytime_pre
+            _ld[$ "elite_music"] = mus_delicious_island_daytime_elite
+            _ld[$ "boss_music"]  = mus_delicious_island_daytime_boss
+            var _json = json_stringify(_json_struct)
+            _ld[$ "pre_music"]   = _save_pre
+            _ld[$ "elite_music"] = _save_elite
+            _ld[$ "boss_music"]  = _save_boss
+        } else {
+            var _json = json_stringify(_json_struct)
+        }
+		
+		
         var _list = global.network.connected_clients;
         for (var _i = 0; _i < array_length(_list); _i++) {
             send_message(_list[_i], MSG_ENTER_ROOM_READY, _json);
