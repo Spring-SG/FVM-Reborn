@@ -103,6 +103,11 @@ function card_created(plant_inst, col, row) {
 			  }
 		}
 		
+		// 同步 sprite_list
+		if (variable_instance_exists(plant_inst, "sprite_list")) {
+		    _meta[$ "sprite_list"] = plant_inst.sprite_list;
+		}
+
 		_meta = json_stringify(_meta);
 		var _list = global.network.connected_clients;
 		var _size = array_length(_list);

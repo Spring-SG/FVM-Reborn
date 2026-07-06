@@ -262,3 +262,52 @@ if (isOpen) {
 	
 	draw_surface(shellSurface, 0, 0);
 }
+
+// ========== 右上角信息框（房间成员 + 最新消息预览，联机时显示） ==========
+if (global.network.mode != "offline") {
+	var _pad = 8;
+	var _box_w = 260;
+	var _gui_w = display_get_gui_width();
+
+	draw_set_font(consoleFont);
+	draw_set_halign(fa_left);
+	draw_set_valign(fa_top);
+	var _lh = string_height("M") + 2;
+
+	// 收集房间成员信息
+	var _lines = [];
+	if (variable_global_exists("room_name")) {
+		array_push(_lines, "房间: " + global.room_name);
+	}
+	if (variable_global_exists("room_members")) {
+		var _names = ds_map_keys_to_array(global.room_members);
+		for (var _i = 0; _i < array_length(_names); _i++) {
+			var _n = _names[_i];
+			var _prev = global.room_members[? _n];
+			array_push(_lines, _n + " : " + _prev);
+		}
+	}
+	if (array_length(_lines) == 0) {
+		array_push(_lines, "等待...");
+	}
+
+	var _box_h = array_length(_lines) * _lh + _pad * 2;
+	var _x1 = _gui_w - _box_w - _pad;
+	var _y1 = _pad;
+
+	draw_set_alpha(0.6);
+	draw_set_color(c_black);
+	draw_roundrect_ext(_x1, _y1, _x1 + _box_w, _y1 + _box_h, 6, 6, false);
+	draw_set_alpha(0.5);
+	draw_set_color(c_white);
+	draw_roundrect_ext(_x1, _y1, _x1 + _box_w, _y1 + _box_h, 6, 6, true);
+
+	draw_set_color(c_white);
+	for (var _i = 0; _i < array_length(_lines); _i++) {
+		draw_text(_x1 + _pad, _y1 + _pad + _i * _lh, _lines[_i]);
+	}
+
+	draw_set_color(c_white);
+	draw_set_alpha(1);
+	draw_set_font(-1);
+}

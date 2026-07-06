@@ -49,3 +49,18 @@ with obj_lava{
 		other.move_speed_modify = 1
 	}
 }
+
+	// Boss状态切换到技能时广播给客户端
+	if (global.network.mode == "server" && is_boss && state != _state_prev) {
+		if (state >= BOSS_STATE.SKILL1 && state <= BOSS_STATE.SKILL4) {
+			if (ds_map_exists(global.network.map_instance_id_net_id, id)) {
+				var _net_id = global.network.map_instance_id_net_id[? id];
+				var _props = json_stringify({ state: state, timer: timer, x: x, y: y });
+				var _list = global.network.connected_clients;
+				for (var _i = 0; _i < array_length(_list); _i++) {
+					send_message(_list[_i], MSG_MODIFY_PROP, _net_id, _props);
+				}
+			}
+		}
+	}
+	_state_prev = state;

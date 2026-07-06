@@ -9,22 +9,35 @@
 """
 
 import asyncio
+import datetime
+import json
 import random
 import struct
+import sys
 import time
+
+# 所有 print 自动加时间前缀
+_orig_print = print
+def print(*args, **kwargs):
+    ts = datetime.datetime.now().strftime("[%H:%M:%S]")
+    _orig_print(ts, *args, **kwargs)
+    sys.stdout.flush()
 
 HOST = "0.0.0.0"
 PORT = 27085
+MAX_MEMBERS = 8
 
 # 消息ID (与 GM 端 #macro 一致)
 MSG_CHAT          = 3
 MSG_PUB_INFO      = 23
+MSG_REQUEST_FILE  = 26
+MSG_TRANSFER_FILE = 27
 
 # 随机名字池
 NAMES = [
-    "小笼包", "烧麦", "虾饺", "春卷", "汤圆", "粽子", "月饼",
+    "小笼包", "烧麦",  "春卷", "汤圆", "月饼",
     "火锅", "麻辣烫", "烤串", "炸鸡", "汉堡", "薯条", "可乐",
-    "奶茶", "布丁", "果冻", "蛋糕", "饼干", "冰淇淋", "巧克力",
+    "奶茶", "布丁", "果冻", "蛋糕", "饼干",  "巧克力",
     "爆米花", "甜甜圈", "马卡龙", "提拉米苏", "芒果", "草莓", "西瓜",
     "菠萝", "葡萄", "柠檬", "樱桃", "蜜桃", "椰子", "榴莲",
     "年糕", "麻薯", "蛋挞", "松饼", "可颂", "吐司", "饭团",
@@ -40,9 +53,12 @@ class Room:
         self.nicks = {}           # writer_id → 昵称
         self.next_cid = 1
         self.state = "lobby"      # "lobby" / "battle"
-        self.data = ""            # MSG_ENTER_ROOM_READY 的 JSON
-        self.created_at = time.time()         # 房间创建时间戳
-        self.battle_started_at = 0.0          # 战斗开始时间戳，0 表示未开始
+        self.data = ""
+        self.created_at = time.time()
+        self.battle_started_at = 0.0
+        self.file_cache = {}       # filename → bytes
+        self.file_pending = {}     # filename → [(writer, purpose), ...]
+        self.msgs = {}             # name → 最新聊天内容 (≤20字)
 
     @property
     def member_count(self):
@@ -53,7 +69,8 @@ class Room:
 
 
 class Relay:
-    def __init__(self):
+    def __init__(self, max_members: int = MAX_MEMBERS):
+        self.max_members = max_members
         self.rooms: dict[str, Room] = {}
         self.sessions: dict[int, tuple[Room, int, int, str]] = {}
         # sessions: writer_id → (room, role, cid, name)
@@ -102,6 +119,31 @@ class Relay:
     # ================================================================
     #  1. 管理客户端
     # ================================================================
+    def _build_room_info(self, room: Room) -> bytes:
+        """构建 \\roominfo JSON: {room, members: {名称: 最新消息}}，房主排最前"""
+        members = {}
+        if room.host:
+            host_name = room.nicks.get(id(room.host), "???")
+            members[host_name[:20]] = room.msgs.get(host_name, "")
+        for cw in room.clients.values():
+            name = room.nicks.get(id(cw), "???")
+            members[name[:20]] = room.msgs.get(name, "")
+        info = {"room": room.id, "members": members}
+        return f"\\roominfo {json.dumps(info, ensure_ascii=False)}".encode() + NUL
+
+    async def _sync_room_info(self, room: Room):
+        """名单变化时广播给房间所有人"""
+        payload = self._build_room_info(room)
+        if room.host:
+            self.write_pkt(room.host, MSG_PUB_INFO, payload)
+        for c in list(room.clients.values()):
+            self.write_pkt(c, MSG_PUB_INFO, payload)
+        tasks = [self.flush(room.host)] if room.host else []
+        for c in room.clients.values():
+            tasks.append(self.flush(c))
+        if tasks:
+            await asyncio.gather(*tasks, return_exceptions=True)
+
     def _pick_name(self, room: Room, preferred: str = "") -> str:
         used = room.used_names()
         if not preferred:
@@ -152,6 +194,7 @@ class Relay:
                 self.write_str(room.host, MSG_CHAT, f"[系统] {name} 离开")
                 asyncio.ensure_future(self.flush(room.host))
             print(f"[{room.id}] {name} 离开 (剩余 {room.member_count} 人)")
+            asyncio.ensure_future(self._sync_room_info(room))
 
         self._close(writer)
 
@@ -160,6 +203,60 @@ class Relay:
             writer.close()
         except Exception:
             pass
+
+    # ================================================================
+    #  GM buffer_string 工具
+    # ================================================================
+    @staticmethod
+    def _read_str(data: bytes, offset: int = 0):
+        end = data.find(b"\x00", offset)
+        if end == -1: return data[offset:].decode(errors="replace"), len(data)
+        return data[offset:end].decode(errors="replace"), end + 1
+
+    @staticmethod
+    def _build_str(*ss: str):
+        return b"".join(s.encode() + NUL for s in ss)
+
+    # ================================================================
+    #  文件缓存与转发
+    # ================================================================
+    async def _handle_request_file(self, room: Room, writer, payload: bytes):
+        filename, off = self._read_str(payload, 0)
+        purpose, _    = self._read_str(payload, off)
+        name = room.nicks.get(id(writer), "???")
+        if filename in room.file_cache:
+            data = room.file_cache[filename]
+            print(f"[文件] 缓存命中 → {name}: [{filename}] purpose=[{purpose}] ({len(data)} bytes)")
+            body = struct.pack("<i", MSG_TRANSFER_FILE) + self._build_str(filename, purpose) + struct.pack("<i", len(data)) + data
+            writer.write(struct.pack("<I", len(body)) + body)
+            await self.flush(writer)
+            return
+        if filename in room.file_pending:
+            print(f"[文件] 排队等待 → {name}: [{filename}] purpose=[{purpose}] (已有 {len(room.file_pending[filename])} 人在等)")
+            room.file_pending[filename].append((writer, purpose))
+            return
+        print(f"[文件] 向房主请求 → {name}: [{filename}] purpose=[{purpose}]")
+        room.file_pending[filename] = [(writer, purpose)]
+        body = struct.pack("<i", MSG_REQUEST_FILE) + payload
+        if room.host and not room.host.is_closing():
+            room.host.write(struct.pack("<I", len(body)) + body)
+            await self.flush(room.host)
+
+    async def _handle_transfer_file(self, room: Room, payload: bytes):
+        filename, off = self._read_str(payload, 0)
+        purpose, off  = self._read_str(payload, off)
+        size = struct.unpack_from("<i", payload, off)[0]
+        off += 4
+        data = payload[off:off + size]
+        room.file_cache[filename] = data
+        waiters = room.file_pending.pop(filename, [])
+        info = [(room.nicks.get(id(w), "???"), purp) for w, purp in waiters]
+        print(f"[文件] 房主返回 → [{filename}] ({size} bytes) → 发给 {info}")
+        for w, purp in waiters:
+            if w.is_closing(): continue
+            body = struct.pack("<i", MSG_TRANSFER_FILE) + self._build_str(filename, purp) + struct.pack("<i", len(data)) + data
+            w.write(struct.pack("<I", len(body)) + body)
+            await self.flush(w)
 
     # ================================================================
     #  2. 转发消息
@@ -256,6 +353,7 @@ class Relay:
             else:
                 if room.host:
                     self.write_str(room.host, MSG_CHAT, notice)
+            asyncio.ensure_future(self._sync_room_info(room))
             return True
 
         # ---- \\kick <玩家名> ----
@@ -287,6 +385,7 @@ class Relay:
             notice = f"[系统] {target_name} 被房主踢出"
             for cw in room.clients.values():
                 self.write_str(cw, MSG_CHAT, notice)
+            asyncio.ensure_future(self._sync_room_info(room))
             return True
 
         # ---- \\listroom ----
@@ -398,6 +497,15 @@ class Relay:
             self._close(writer)
             return
 
+        # 房间已满
+        if room.host is not None and room.member_count >= self.max_members:
+            print(f"  [{room.id}] 房间已满 ({room.member_count}/{self.max_members})，拒绝加入")
+            self.write_str(writer, MSG_CHAT, f"[系统] 房间已满 ({self.max_members}人)，无法加入")
+            self.write_pkt(writer, MSG_PUB_INFO, b"\\kicked" + NUL)
+            await self.flush(writer)
+            self._close(writer)
+            return
+
         role, cid, name = self._add_to_room(room, writer)
         self.sessions[id(writer)] = (room, role, cid, name)
 
@@ -426,6 +534,8 @@ class Relay:
             self.write_str(room.host, MSG_CHAT, f"[系统] {name} 加入")
             await self.flush(room.host)
 
+        await self._sync_room_info(room)
+
         try:
             while True:
                 pkt = await self.read_pkt(reader)
@@ -448,9 +558,11 @@ class Relay:
                         continue
                     # 系统消息不加名前缀
                     if not txt.startswith("[系统]"):
-                        # 普通聊天 → "名称: xxx"（已包含名字前缀则跳过）
+                        # 通讯录 
                         already = any(txt.startswith(n + ": ") for n in room.used_names())
                         if not already:
+                            room.msgs[name] = txt[:20]
+                            asyncio.ensure_future(self._sync_room_info(room))
                             txt = name + ": " + txt
                     body = struct.pack("<i", msg_id) + txt.encode() + NUL
 
@@ -458,6 +570,8 @@ class Relay:
                 if msg_id == 13 and role == 0:  # MSG_ENTER_ROOM_READY
                     room.data = payload.decode("utf-8").rstrip("\x00")
                     room.state = "lobby"
+                    room.file_cache.clear()
+                    room.file_pending.clear()
                 elif msg_id == 12:   # MSG_START_BATTLE
                     room.state = "battle"
                     room.battle_started_at = time.time()
@@ -465,6 +579,13 @@ class Relay:
                     act = payload[0] if payload else 0
                     if act == 4:    # 回房
                         room.state = "lobby"
+
+                if msg_id == MSG_REQUEST_FILE and role == 1:
+                    await self._handle_request_file(room, writer, payload)
+                    continue
+                if msg_id == MSG_TRANSFER_FILE and role == 0:
+                    await self._handle_transfer_file(room, payload)
+                    continue
 
                 if role == 0:
                     await self._broadcast(room, body)
@@ -477,9 +598,23 @@ class Relay:
 
 
 async def main():
-    relay = Relay()
-    srv = await asyncio.start_server(relay.handle, HOST, PORT)
-    print(f"中继启动: {HOST}:{PORT}")
+    import sys
+    port = PORT
+    max_members = MAX_MEMBERS
+    if len(sys.argv) > 1:
+        port = int(sys.argv[1])
+    if len(sys.argv) > 2:
+        max_members = int(sys.argv[2])
+    if port <= 0 or port > 65535:
+        print(f"端口无效: {port}")
+        return
+    if max_members < 2:
+        print(f"人数上限至少为2: {max_members}")
+        return
+
+    relay = Relay(max_members=max_members)
+    srv = await asyncio.start_server(relay.handle, HOST, port)
+    print(f"中继启动: {HOST}:{port}  最大人数: {max_members}")
     asyncio.create_task(relay.cleanup_loop())
     async with srv:
         await srv.serve_forever()

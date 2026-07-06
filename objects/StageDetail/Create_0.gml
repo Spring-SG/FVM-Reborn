@@ -75,42 +75,62 @@ function on_create_room() {
             level_data: global.level_data,
             level_file: global.level_file
         }
-        // 判断 map_sprite 是否为相对路径（非内置图像），是则转为 base64
+        // 自定义资源：发送文件名和指纹，客户端指纹一致则跳过传输
+        // 只发原始相对路径，不泄露房主本地完整路径
         var _raw_json = _parse_result.data
+        var _resource_fingerprints = {}
+        var _json_dir = self.state.custom_stage.json_path
+        global._file_cache_json_path = _json_dir
+
+        var _sprite_rel = ""
         var _sprite_path_raw = variable_struct_get(_raw_json, "map_sprite")
         if (!is_undefined(_sprite_path_raw) && string_length(string(_sprite_path_raw)) > 0) {
             if (laboratory_path_is_relative(string(_sprite_path_raw))) {
-                var _full_path = laboratory_resolve_datafile_path(string(_sprite_path_raw), self.state.custom_stage.json_path)
-                if (file_exists(_full_path)) {
-                    var _buf = buffer_load(_full_path)
-                    if (buffer_exists(_buf)) {
-                        variable_struct_set(_json_struct, "map_sprite_base64", buffer_base64_encode(_buf, 0, buffer_get_size(_buf)))
-                        variable_struct_set(_json_struct, "map_sprite_path", string(_sprite_path_raw))
-                        buffer_delete(_buf)
-                    }
-                }
+                _sprite_rel = string(_sprite_path_raw)
+                variable_struct_set(_json_struct, "map_sprite_name", _sprite_rel)
+                _resource_fingerprints[$ "map_sprite"] = file_cache_compute_fingerprint(
+                    laboratory_resolve_datafile_path(_sprite_rel, _json_dir))
             }
         }
-        // 自定义音乐（相对路径）替换为本地内置音乐，不传输音频文件
+
         var _check_custom_music = function(_raw_json,_field) {
             var _path = variable_struct_get(_raw_json, _field)
             return !is_undefined(_path) && laboratory_path_is_relative(string(_path))
         }
+        var _custom_music_names = {}
         if (_check_custom_music(_raw_json,"pre_music") || _check_custom_music(_raw_json,"elite_music") || _check_custom_music(_raw_json,"boss_music")) {
             var _ld = _json_struct[$ "level_data"]
-            var _save_pre   = _ld[$ "pre_music"]
-            var _save_elite = _ld[$ "elite_music"]
-            var _save_boss  = _ld[$ "boss_music"]
             _ld[$ "pre_music"]   = mus_delicious_island_daytime_pre
             _ld[$ "elite_music"] = mus_delicious_island_daytime_elite
             _ld[$ "boss_music"]  = mus_delicious_island_daytime_boss
-            var _json = json_stringify(_json_struct)
-            _ld[$ "pre_music"]   = _save_pre
-            _ld[$ "elite_music"] = _save_elite
-            _ld[$ "boss_music"]  = _save_boss
-        } else {
-            var _json = json_stringify(_json_struct)
+            if (_check_custom_music(_raw_json,"pre_music")) {
+                var _rel = string(variable_struct_get(_raw_json, "pre_music"))
+                _custom_music_names[$ "pre_music"] = _rel
+                _resource_fingerprints[$ "pre_music"] = file_cache_compute_fingerprint(
+                    laboratory_resolve_datafile_path(_rel, _json_dir))
+            }
+            if (_check_custom_music(_raw_json,"elite_music")) {
+                var _rel = string(variable_struct_get(_raw_json, "elite_music"))
+                _custom_music_names[$ "elite_music"] = _rel
+                _resource_fingerprints[$ "elite_music"] = file_cache_compute_fingerprint(
+                    laboratory_resolve_datafile_path(_rel, _json_dir))
+            }
+            if (_check_custom_music(_raw_json,"boss_music")) {
+                var _rel = string(variable_struct_get(_raw_json, "boss_music"))
+                _custom_music_names[$ "boss_music"] = _rel
+                _resource_fingerprints[$ "boss_music"] = file_cache_compute_fingerprint(
+                    laboratory_resolve_datafile_path(_rel, _json_dir))
+            }
+            variable_struct_set(_json_struct, "custom_music_names", _custom_music_names)
         }
+        variable_struct_set(_json_struct, "resource_fingerprints", _resource_fingerprints)
+
+        // 存全局，供 obj_shell 新客户端重发同步
+        global._sync_map_sprite_name = _sprite_rel;
+        global._sync_custom_music_names = _custom_music_names;
+        global._sync_resource_fingerprints = _resource_fingerprints;
+
+        var _json = json_stringify(_json_struct)
 		
 		
         var _list = global.network.connected_clients;

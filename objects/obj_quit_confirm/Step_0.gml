@@ -39,6 +39,10 @@ for (var i = 0; i < array_length(buttons); i++) {
 							send_message(_cl[i], MSG_SERVER_ACTION, 4);
 						}
 					}
+					// 客户端在准备房间断开连接
+					if (global.network.mode == "client") {
+						sh_disconnect();
+					}
 					if instance_exists(obj_player_info_ui){
 						obj_player_info_ui.menu_type = 0
 					}

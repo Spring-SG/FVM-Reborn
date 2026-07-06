@@ -2,6 +2,8 @@
 	if global.is_paused{
 		exit
 	}
+	// 记录本帧初始状态，用于检测技能切换
+	_state_prev = state;
 	// 客户端：直接死亡，不等待服务端
 	if (hp <= 0 && state != ENEMY_STATE.DEAD) {
 		timer = 0;

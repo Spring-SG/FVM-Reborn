@@ -23,10 +23,40 @@ global.network = {
 // ============================================================
 
 function sh_makeserver(args) {
+    // 如果在 room_ready 界面，先清理再退出（对齐 obj_quit_confirm 逻辑）
+    if (global.gui_stack.get_top() == room_ready) {
+        // 通知所有客户端离开
+        if (global.network.mode == "server") {
+            var _cl = global.network.connected_clients;
+            for (var i = 0; i < array_length(_cl); i++) {
+                send_message(_cl[i], MSG_SERVER_ACTION, 4);
+            }
+            sh_closeserver();
+        }
+        // 客户端断开连接
+        if (global.network.mode == "client") {
+            sh_disconnect();
+        }
+        // 重置 UI 状态
+        if (instance_exists(obj_player_info_ui)) {
+            obj_player_info_ui.menu_type = 0;
+        }
+        if (instance_exists(obj_world_map_button)) {
+            obj_world_map_button.world_map = 0;
+        }
+        // 重置全局状态
+        global.menu_screen = true;
+        if (global.map_id == "tower_cake" || global.map_id == "delicious_town") {
+            global.map_id = "delicious_island";
+            global.map_name = "美味岛";
+        }
+        global.gui_stack.pop();
+    }
+
     if (global.network.mode != "offline") {
         return "[网络] 已有网络连接，请先关闭";
     }
-    
+
     var _port = global.network.server_port;
     if (array_length(args) > 1) {
         _port = real(args[1]);
@@ -75,10 +105,40 @@ function sh_closeserver() {
 
 
 function sh_connectserver(args) {
+    // 如果在 room_ready 界面，先清理再退出（对齐 obj_quit_confirm 逻辑）
+    if (global.gui_stack.get_top() == room_ready) {
+        // 通知所有客户端离开
+        if (global.network.mode == "server") {
+            var _cl = global.network.connected_clients;
+            for (var i = 0; i < array_length(_cl); i++) {
+                send_message(_cl[i], MSG_SERVER_ACTION, 4);
+            }
+            sh_closeserver();
+        }
+        // 客户端断开连接
+        if (global.network.mode == "client") {
+            sh_disconnect();
+        }
+        // 重置 UI 状态
+        if (instance_exists(obj_player_info_ui)) {
+            obj_player_info_ui.menu_type = 0;
+        }
+        if (instance_exists(obj_world_map_button)) {
+            obj_world_map_button.world_map = 0;
+        }
+        // 重置全局状态
+        global.menu_screen = true;
+        if (global.map_id == "tower_cake" || global.map_id == "delicious_town") {
+            global.map_id = "delicious_island";
+            global.map_name = "美味岛";
+        }
+        global.gui_stack.pop();
+    }
+
     if (global.network.mode != "offline") {
         return "[网络] 已有网络连接，请先断开";
     }
-	
+
     if (array_length(args) < 2) {
         return "[网络] 用法: connectserver <IP> <端口>";
     }
@@ -117,6 +177,12 @@ function sh_disconnect() {
     if (global.network.mode != "client") {
         return "[网络] 当前不是客户端模式";
     }
+    file_cache_clear();
+    if (variable_global_exists("room_members")) {
+        ds_map_clear(global.room_members);
+    }
+    global.room_name = "";
+    show_notice("你已经退出房间", 120);
     if (global.network.server_socket != -1) {
         network_destroy(global.network.server_socket);
     }
@@ -185,6 +251,36 @@ function sh_say(args){
 }
 
 function sh_connectpubserver(args) {
+    // 如果在 room_ready 界面，先清理再退出（对齐 obj_quit_confirm 逻辑）
+    if (global.gui_stack.get_top() == room_ready) {
+        // 通知所有客户端离开
+        if (global.network.mode == "server") {
+            var _cl = global.network.connected_clients;
+            for (var i = 0; i < array_length(_cl); i++) {
+                send_message(_cl[i], MSG_SERVER_ACTION, 4);
+            }
+            sh_closeserver();
+        }
+        // 客户端断开连接
+        if (global.network.mode == "client") {
+            sh_disconnect();
+        }
+        // 重置 UI 状态
+        if (instance_exists(obj_player_info_ui)) {
+            obj_player_info_ui.menu_type = 0;
+        }
+        if (instance_exists(obj_world_map_button)) {
+            obj_world_map_button.world_map = 0;
+        }
+        // 重置全局状态
+        global.menu_screen = true;
+        if (global.map_id == "tower_cake" || global.map_id == "delicious_town") {
+            global.map_id = "delicious_island";
+            global.map_name = "美味岛";
+        }
+        global.gui_stack.pop();
+    }
+
     if (global.network.mode != "offline") {
         return "[网络] 已有网络连接，请先断开";
     }

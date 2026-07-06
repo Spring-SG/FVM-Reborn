@@ -2,6 +2,9 @@ var _type = async_load[? "type"];
     
 switch (_type) {
     case network_type_connect:
+        // 客户端连入新房间时清空旧缓存
+        if (global.network.mode == "client") {
+        }
         // 服务器收到新客户端连接
         if (global.network.mode == "server") {
             var _sock = async_load[? "socket"];
@@ -22,7 +25,7 @@ switch (_type) {
 
 			// 同步当前房间
 			if (room_exists(room_ready) && room == room_ready) {
-				var _json = json_stringify({
+				var _sync = {
 					target_level_id: global.level_id,
 					target_level_file: global.level_data.level_file,
 					target_level_file_hard: global.level_data.hard_level_file,
@@ -30,8 +33,17 @@ switch (_type) {
 					map_id: global.map_id,
 					level_data: global.level_data,
 					level_file: global.level_file
-				});
-				send_message(_sock, MSG_ENTER_ROOM_READY, _json);
+				};
+				if (!is_undefined(global._sync_map_sprite_name) && global._sync_map_sprite_name != "") {
+					_sync[$ "map_sprite_name"] = global._sync_map_sprite_name;
+				}
+				if (!is_undefined(global._sync_custom_music_names)) {
+					_sync[$ "custom_music_names"] = global._sync_custom_music_names;
+				}
+				if (!is_undefined(global._sync_resource_fingerprints)) {
+					_sync[$ "resource_fingerprints"] = global._sync_resource_fingerprints;
+				}
+				send_message(_sock, MSG_ENTER_ROOM_READY, json_stringify(_sync));
 			}
         }
         break;
@@ -72,6 +84,7 @@ switch (_type) {
 	    break;
             
     case network_type_data:
+		var _sock = async_load[? "id"];
 		var _buf = async_load[? "buffer"];
 		var _len = buffer_get_size(_buf);
 		if (_len <= 0) break;
@@ -88,7 +101,11 @@ switch (_type) {
 		    if (read_ptr + full_pkt > global.recv_size) break;
 		    var body = buffer_create(len, buffer_fixed, 1);
 		    buffer_copy(global.recv_buf, read_ptr + 4, len, body, 0);
-		    parse_network_message(body);
+		    try {
+		        parse_network_message(body, _sock);
+		    } catch (_err) {
+		        show_message("[网络错误] " + string(_err));
+		    }
 		    buffer_delete(body);
 		    read_ptr += full_pkt;
 		}

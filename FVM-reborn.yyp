@@ -1149,6 +1149,7 @@
     {"id":{"name":"show_notice","path":"scripts/show_notice/show_notice.yy",},},
     {"id":{"name":"skill_init","path":"scripts/skill_init/skill_init.yy",},},
     {"id":{"name":"slots_init","path":"scripts/slots_init/slots_init.yy",},},
+    {"id":{"name":"src_file_cache","path":"scripts/src_file_cache/src_file_cache.yy",},},
     {"id":{"name":"src_hook_function","path":"scripts/src_hook_function/src_hook_function.yy",},},
     {"id":{"name":"string_height_scribble_ext","path":"scripts/string_height_scribble_ext/string_height_scribble_ext.yy",},},
     {"id":{"name":"string_height_scribble","path":"scripts/string_height_scribble/string_height_scribble.yy",},},
