@@ -76,9 +76,8 @@
 
 - 直接输入文字即可聊天
 - 输入help 可查看可使用的命令
-- 局域网连接使用 makeserver port 创建服务器，使用 connectserver ip port 连接服务器，
-- 互联网联机需先通过 `connectpubserver` 连接中继服务器（需要在云端先运行relay_server.py）
-- 互联网联机后输入 `\listcommand` 查看房间内可用命令
+- 联机需先通过 `connectpubserver ip [port] 房间名称` 连接中继服务器
+- 需要在本地或者云端运行 relay_server.exe 或relay_server.py 启动中继服务器
 
 ## 问题反馈
 

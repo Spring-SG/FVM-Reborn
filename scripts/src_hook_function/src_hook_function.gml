@@ -18,7 +18,7 @@ ds_list_add(global.boss_spawn_sync_list,
 	obj_baron_needle, obj_baron_bats, obj_baron_blade,
 	obj_arno_bullet_effect, obj_card_inhale_effect, obj_card_heal_effect,
 	obj_huge_wave_text,obj_barrier,obj_paratrooper_mouse_shield,
-	obj_ladder,obj_lava,obj_boss_hpbar
+	obj_ladder,obj_lava
 	
 );
 

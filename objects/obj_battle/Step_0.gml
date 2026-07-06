@@ -314,8 +314,8 @@ if (global.network.mode == "server" && battle_time mod 60 == 0) {
 	}
 }
 
-
-	// 每300帧同步所有卡牌状态（位置/格子/平台进度）
+/*
+	// 每300帧同步所有卡牌状态（位置/格子/平台进度,(人物武器没有跟随移动，平台参数也不足)）
 	if (global.network.mode == "server" && battle_time mod 300 == 0 && instance_number(obj_platform) > 0) {
 		var _cards = [];
 		var _clist = global.network.connected_clients;
@@ -342,7 +342,7 @@ if (global.network.mode == "server" && battle_time mod 60 == 0) {
 			}
 		}
 	}
-
+*/
 if global.debug{
 	if keyboard_check_pressed(ord("V")){
 		if level_stage == "ready"{

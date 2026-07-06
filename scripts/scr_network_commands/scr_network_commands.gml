@@ -22,7 +22,7 @@ global.network = {
 // 网络命令函数 (rt-shell)
 // ============================================================
 
-function sh_makeserver(args) {
+function makeserver(args) {
     // 如果在 room_ready 界面，先清理再退出（对齐 obj_quit_confirm 逻辑）
     if (global.gui_stack.get_top() == room_ready) {
         // 通知所有客户端离开
@@ -79,7 +79,7 @@ function sh_makeserver(args) {
 }
 
 
-function sh_closeserver() {
+function closeserver() {
     if (global.network.mode != "server") {
         return "[网络] 当前不是服务器模式";
     }
@@ -104,7 +104,7 @@ function sh_closeserver() {
 }
 
 
-function sh_connectserver(args) {
+function connectserver(args) {
     // 如果在 room_ready 界面，先清理再退出（对齐 obj_quit_confirm 逻辑）
     if (global.gui_stack.get_top() == room_ready) {
         // 通知所有客户端离开
@@ -173,7 +173,7 @@ function sh_connectserver(args) {
     }
 }
 
-function sh_disconnect() {
+function disconnect() {
     if (global.network.mode != "client") {
         return "[网络] 当前不是客户端模式";
     }
@@ -196,6 +196,19 @@ function sh_disconnect() {
 		global.gui_stack.pop(); 
     return "[网络] 已断开连接";
 	
+}
+
+
+
+function sh_disconnect(){
+   if (global.network.mode == "client") {
+	   disconnect();
+    }else
+	if (global.network.mode == "server"){
+		closeserver();
+	}else{
+		return "当前并无连接"
+	}
 }
 
 function sh_status() {
@@ -324,7 +337,7 @@ function sh_connectpubserver(args) {
 // ============================================================
 // rt-shell 元数据定义（为网络命令提供自动补全与帮助信息）
 // ============================================================
-
+/*
 function meta_makeserver() {
     return {
         description: "启动 TCP 服务器（默认端口 27085）",
@@ -375,6 +388,19 @@ function meta_disconnect() {
         deferred: false
     };
 }
+*/
+
+function meta_disconnect() {
+    return {
+        description: "断开当前连接",
+        arguments: [],
+        suggestions: [],
+        argumentDescriptions: [],
+        hidden: false,
+        deferred: false
+    };
+}
+
 
 function meta_status() {
     return {

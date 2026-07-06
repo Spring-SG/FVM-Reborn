@@ -452,8 +452,6 @@ function parse_network_message(buf, _sock) {
                 var _act = _actions[_i];
                 switch (_act.op) {
                     case "spawn":
-                        // BOSS血条由BOSS自身Create事件创建，不需要网络同步
-                        if (_act.obj == "obj_boss_hpbar") break;
                         var _inst = instance_create_depth(_act.x, _act.y, _act.depth, asset_get_index(_act.obj));
                         set_net_id(_inst.id, _act.net_id);
                         with (_inst) {
