@@ -1,3 +1,4 @@
 instance_destroy(obj_card_edit_select_btn)
 instance_destroy(obj_card_edit_btn)
 instance_destroy(obj_card_attire_menu)
+ds_map_destroy(target_current_info)

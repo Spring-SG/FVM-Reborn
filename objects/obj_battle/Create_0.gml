@@ -43,6 +43,28 @@ timer_pause = false
 ds_list_add(chomp_sound_list,snd_chomp1)
 ds_list_add(chomp_sound_list,snd_chomp2)
 ds_list_add(chomp_sound_list,snd_chomp3)
+// 释放上一场战斗遗留的全局数据结构（重新创建前先销毁旧的），防止跨局累积泄漏
+if (variable_global_exists("grid_plants") && ds_exists(global.grid_plants, ds_type_grid)) {
+	for (var _c = 0; _c < ds_grid_width(global.grid_plants); _c++) {
+		for (var _r = 0; _r < ds_grid_height(global.grid_plants); _r++) {
+			var _old_list = ds_grid_get(global.grid_plants, _c, _r);
+			if (ds_exists(_old_list, ds_type_list)) {
+				ds_list_destroy(_old_list);
+			}
+		}
+	}
+	ds_grid_destroy(global.grid_plants);
+}
+if (variable_global_exists("plant_layers") && ds_exists(global.plant_layers, ds_type_map)) {
+	ds_map_destroy(global.plant_layers);
+}
+if (variable_global_exists("shovel_order") && ds_exists(global.shovel_order, ds_type_list)) {
+	ds_list_destroy(global.shovel_order);
+}
+if (variable_global_exists("eat_order") && ds_exists(global.eat_order, ds_type_list)) {
+	ds_list_destroy(global.eat_order);
+}
+
 // 植物层级定义
 global.plant_layers = ds_map_create();
 ds_map_add(global.plant_layers, "normal", 0);      // 普通植物
