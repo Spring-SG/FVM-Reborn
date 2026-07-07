@@ -3,8 +3,13 @@ if (keyboard_check_pressed(vk_space)) {
     //if global.selected_slot == noone {
         if (!global.is_paused) {
             // 空格暂停：只暂停不显示菜单
+		if(global.network.mode != "client")
             global.is_paused = true;
-		if (global.network.mode == "server") { var _cl = global.network.connected_clients; for (var i = 0; i < array_length(_cl); i++) { send_message(_cl[i], MSG_SERVER_ACTION, 2); } }
+		if (global.network.mode == "server") { 
+			var _cl = global.network.connected_clients; 
+			for (var i = 0; i < array_length(_cl); i++) 
+			{ send_message(_cl[i], MSG_SERVER_ACTION, 2); } 
+		}
             global.show_menu = false;
         }
         else if (global.is_paused && !global.show_menu) {
@@ -111,9 +116,15 @@ if (keyboard_check_pressed(vk_space)) {
 				
 			}
 			if obj_battle.battle_time != 0 && !global.game_over{
+				if(global.network.mode !="client")
 				global.is_paused = false;
 			}
-				if (global.network.mode == "server") { var _cl = global.network.connected_clients; for (var i = 0; i < array_length(_cl); i++) { send_message(_cl[i], MSG_SERVER_ACTION, 3); } }
+			if (global.network.mode == "server") { 
+				var _cl = global.network.connected_clients; 
+				for (var i = 0; i < array_length(_cl); i++) { 
+					send_message(_cl[i], MSG_SERVER_ACTION, 3); 
+				}
+			}
         }
     //}
 }

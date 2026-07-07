@@ -239,16 +239,14 @@ function parse_network_message(buf, _sock) {
             var maxhp_val = buffer_read(buf, buffer_s32);
             var boss_row = buffer_read(buf, buffer_u8);
 	
-			global.network.client_able = true;
+            global.network.client_able = true;
             var new_boss = instance_create_depth(px, py, -200, asset_get_index(object_name));
-			global.network.client_able = false;
+            global.network.client_able = false;
             set_net_id(new_boss.id, net_id);
             new_boss.hp = hp_val;
             new_boss.maxhp = maxhp_val;
             new_boss.grid_row = boss_row;
             obj_battle.boss_count++;
-			
-
             show_debug_message("[解析] MSG_SPAWN_BOSS: ID=" + string(net_id) + " type=" + object_name + " HP=" + string(hp_val) + "/" + string(maxhp_val));
             break;
         }
@@ -263,8 +261,20 @@ function parse_network_message(buf, _sock) {
             var max_hp = buffer_read(buf, buffer_s32);
             var _inst = global.network.map_net_id_instance_id[? net_id];
             if (instance_exists(_inst)) {
-                // 客户端已判定死亡但未收到确认时不覆盖（防止复活）
-                if (!(_inst.hp <= 0 && _inst.state != ENEMY_STATE.DEAD)) {
+                // Boss：HP 完全由服务端权威，避免客户端本地攻击提前把 boss 打进 DEATH
+                var _is_boss = (variable_instance_exists(_inst, "is_boss") && _inst.is_boss);
+                if (_is_boss) {
+                    _inst.hp = hp_val;
+                    _inst.maxhp = max_hp;
+                    // 服务端说没死但客户端 boss 已进入死亡状态：复活
+                    if (hp_val > 0 && _inst.state == BOSS_STATE.DEATH) {
+                        _inst.state = BOSS_STATE.IDLE;
+                        _inst.timer = 0;
+                        _inst.image_alpha = 1;
+                    }
+                }
+                // 普通敌人：客户端已判定死亡但未收到确认时不覆盖（防止复活）
+                else if (!(_inst.hp <= 0 && _inst.state != ENEMY_STATE.DEAD)) {
                     _inst.hp = hp_val;
                     _inst.maxhp = max_hp;
                 }
@@ -472,8 +482,8 @@ function parse_network_message(buf, _sock) {
 						break;
 					}
             }
-			
 			global.network.client_able = false;
+			
             break;
         }
         
@@ -638,8 +648,6 @@ function parse_network_message(buf, _sock) {
 			global.level_id    = json_data[$ "target_level_id"] ?? "";
 			global.level_data  = json_data[$ "level_data"];
 			global.level_file  = json_data[$ "level_file"];
-			
-
 			// 存到全局，供 file_cache 内部使用
 			global._expected_fps = variable_struct_get(json_data, "resource_fingerprints")
 			if (is_undefined(global._expected_fps)) global._expected_fps = {};
@@ -813,7 +821,8 @@ function parse_network_message(buf, _sock) {
                     if (!is_undefined(_c[$ "offs"])) _inst.current_offset = _c[$ "offs"];
                     if (!is_undefined(_c[$ "prog"])) _inst.move_progress = _c[$ "prog"];
                 }
-            }
+			}
+            
             show_debug_message("[解析] 收到 MSG_SYNC_CARD_STATES: " + string(array_length(_cards)) + " cards");
             break;
         }

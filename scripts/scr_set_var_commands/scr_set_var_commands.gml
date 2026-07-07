@@ -107,8 +107,11 @@ function spawn_plant(col, row, plant_obj, props) {
 					if (_mw_name_id != "") {
 						var main_info = get_weapon_info(_mw_name_id) 
 						var main_weapon_inst = instance_create_depth(_plant.x-10, _plant.y-100, _plant.depth-1, main_info.obj);
-						main_weapon_inst.parent_player = _plant.id; 
-						main_weapon_inst.grid_row = grid_row; 
+						main_weapon_inst.parent_player = _plant.id;
+						if (global.network.mode == "server" || global.network.mode == "client") {
+							with (obj_platform) { platform_register_child(main_weapon_inst, _plant) }
+						}
+						main_weapon_inst.grid_row = grid_row;
 						main_weapon_inst.grid_col = grid_col;
 						_plant.cycle =  main_info.cycle;
 						main_weapon_inst.atk =  _eq[$ "main_weapon_atk"];
@@ -132,6 +135,9 @@ function spawn_plant(col, row, plant_obj, props) {
 					if (_sw_name_id != "") {
 						var s_inst = instance_create_depth(_plant.x,_plant.y,_plant.depth,obj_player_shield)
 						s_inst.parent_player = _plant.id
+							if (global.network.mode == "server" || global.network.mode == "client") {
+								with (obj_platform) { platform_register_child(s_inst, _plant) }
+							}
 						s_inst.grid_row = grid_row
 						s_inst.grid_col = grid_col
 						var main_info = get_weapon_info(_sw_name_id)
@@ -189,6 +195,9 @@ function spawn_plant(col, row, plant_obj, props) {
 						var main_info = get_weapon_info(_sup_name_id);
 						var main_weapon_inst = instance_create_depth(_plant.x-10,_plant.y-100,_plant.depth-1,main_info.obj)
 						main_weapon_inst.parent_player = _plant.id
+						if (global.network.mode == "server" || global.network.mode == "client") {
+							with (obj_platform) { platform_register_child(main_weapon_inst, _plant) }
+						}
 						main_weapon_inst.grid_row = grid_row
 						main_weapon_inst.grid_col = grid_col
 					}
@@ -202,7 +211,6 @@ function spawn_plant(col, row, plant_obj, props) {
     return _plant;
 }
 
-/*
 
 /// @description 命令行：生成植物
 /// 用法: spawn <列> <行> <植物对象名> [属性=值...]
@@ -282,33 +290,6 @@ function sh_spawn(args) {
     return "[spawn] 成功生成 " + string(_count) + " 个 " + _obj_name;
 }
 
-/// @description rt-shell 元数据：spawn
-/// @description 命令行：伪造游戏结束，测试客户端接收
-function sh_win(args) {
-    if (global.network.mode == "server") {
-        var _cl = global.network.connected_clients;
-        for (var i = 0; i < array_length(_cl); i++) {
-            send_message(_cl[i], MSG_GAME_OVER, 1);
-            show_debug_message("[WIN DEBUG] sent to " + string(_cl[i]));
-        }
-        return "[WIN] sent to " + string(array_length(_cl)) + " clients";
-    }
-    if (global.network.mode == "client") {
-        send_message(global.network.server_socket, MSG_GAME_OVER, 1);
-        return "[WIN] sent to server";
-    }
-    return "[WIN] no network";
-}
-
-function meta_win() {
-    return {
-        description: "伪造游戏胜利消息，测试客户端是否收到",
-        arguments: [],
-        suggestions: [],
-        hidden: false,
-        deferred: false
-    };
-}
 
 /// @description 命令行：测试主动技能
 function sh_skill(args) {
@@ -353,4 +334,44 @@ function meta_spawn() {
         deferred: false
     };
 }
-*/
+
+/// @description 命令行：重置所有卡片冷却和费用
+/// 用法: reset_cd
+/// 效果: 所有卡片槽位最大冷却改为0、种植消耗改为0，场上植物的攻击冷却和debuff时间清零
+function sh_reset_cd(args) {
+    var _slot_count = 0;
+    var _card_count = 0;
+
+    // 重置卡片槽位：最大冷却清零，种植火苗消耗清零
+    with (obj_card_slot) {
+        cooldown = 0;
+        cooldown_timer = 0;
+        cost = 0;
+        current_cost = 0;
+        _slot_count++;
+    }
+
+    // 重置场上植物的攻击冷却和负面效果
+    with (obj_card_parent) {
+        cooldown = 0;
+        attack_timer = 0;
+        timer = 0;
+        cycle = 0;
+        ice_timer = 0;
+        frozen_timer = 0;
+        awake_buff_timer = 0;
+        _card_count++;
+    }
+
+    return "[reset_cd] 已重置 " + string(_slot_count) + " 个卡片槽位(冷却/费用=0), " + string(_card_count) + " 个场上植物";
+}
+
+function meta_reset_cd() {
+    return {
+        description: "所有卡片冷却和火苗消耗改为0，植物攻击冷却清零",
+        arguments: [],
+        suggestions: [],
+        hidden: false,
+        deferred: false
+    };
+}

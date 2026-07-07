@@ -39,6 +39,7 @@ if obj_battle.boss_count > 0{
 
 ///@desc 按方向创建新的车厢
 function create_train_body(amount,dir){
+	if (global.network.mode == "client") return;  // 客户端通过 MSG_EVENT_ACTIONS 同步创建
 	for(var i = 0 ; i < amount ; i++){
 		if dir == 0{
 			var inst = instance_create_depth(x,y+228*(i+1),depth,obj_mouse_train_1_body)

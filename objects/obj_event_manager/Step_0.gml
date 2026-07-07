@@ -1166,7 +1166,11 @@ if (global.network.mode == "server") {
 		"start_col", "start_row", "width", "length",
 		"move_distance", "move_direction", "move_axis",
 		"boundary_idle_duration", "move_speed",
-		"initial_offset", "initial_idle_duration","sprite_index"
+		"initial_offset", "initial_idle_duration","sprite_index",
+		"cvspeed", "center_x", "center_y",
+		"state", "timer", "skill_timer", "jump_times",
+		"skill_choose", "skill_change_style", "move_time", "is_reversed",
+		"max_time", "interval", "col", "row", "dir", "type", "is_parent"
 	];
 
 	// 新创建的实例（统一分配 net_id + 采集属性）
@@ -1184,7 +1188,7 @@ if (global.network.mode == "server") {
 						_props[$ _key] = variable_instance_get(id, _key);
 					}
 				}
-				array_push(_actions, {
+array_push(_actions, {
 					op: "spawn",
 					obj: object_get_name(object_index),
 					x: x, y: y, depth: depth,
@@ -1207,7 +1211,7 @@ if (global.network.mode == "server") {
 						_props[$ _key] = variable_instance_get(id, _key);
 					}
 				}
-				array_push(_actions, {
+array_push(_actions, {
 					op: "spawn",
 					obj: object_get_name(object_index),
 					x: x, y: y, depth: depth,

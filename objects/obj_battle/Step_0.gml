@@ -125,7 +125,8 @@ if keyboard_check_pressed(vk_shift) || keyboard_check_pressed(vk_lshift){
 			send_message(_cl[i], MSG_SERVER_ACTION, speed_up ? 0 : 1);
 		}
 	}
-	speed_up = not speed_up
+	if (global.network.mode != "client") 
+		speed_up = not speed_up
 	if speed_up{
 		game_set_speed(120,gamespeed_fps)
 	}

@@ -8,18 +8,20 @@ global._boss_client_cleanup = []
 // boss产物白名单
 global.boss_spawn_sync_list = ds_list_create();
 ds_list_add(global.boss_spawn_sync_list,
-	obj_angelababy_summon, obj_angelababy_star, obj_angelababy_target,
-	obj_paul_bullet, obj_blonde_mary_bullet,
-	obj_pete_spike, obj_pete_claw, obj_pete_missile,
+	obj_angelababy_summon, obj_angelababy_star, obj_angelababy_target, obj_angelababy_diamond,
+	obj_paul_bullet, obj_paul_bullet_effect, obj_blonde_mary_bullet,obj_mario_pipeline, obj_pink_paul_tentacle_drop,
+	obj_pete_spike, obj_pete_claw, obj_pete_claw_effect, obj_pete_missile,
 	obj_pharaoh_bandage, obj_pharaoh_coffin, obj_pharaoh_hole,
 	obj_messenger_ignis_fatuus, obj_messenger_poop, obj_messenger_mace,
-	obj_fog, obj_julie_missile,
-	obj_buzz_wind,
-	obj_baron_needle, obj_baron_bats, obj_baron_blade,
-	obj_arno_bullet_effect, obj_card_inhale_effect, obj_card_heal_effect,
-	obj_huge_wave_text,obj_barrier,obj_paratrooper_mouse_shield,
-	obj_ladder,obj_lava
-	
+	obj_fog, obj_julie_missile, obj_mouse_train_1_bullet, obj_machine_iron_pan_mouse, obj_xiaoming_text, obj_coke_bomb_explode, obj_vajra_lava_effect,obj_vajra_lava, obj_vajra_spike, obj_vajra_lightning,
+	obj_buzz_wind,obj_paratrooper_mouse,obj_irritable_jack_fire_mouse,obj_irritable_jack_fire, obj_irritable_jack_rock_skill_3, obj_irritable_jack_rock_skill_4,
+	obj_baron_needle, obj_baron_bats, obj_baron_blade, obj_rumble_missile, obj_rumble_laser, obj_ice_residue_ball, obj_ice_residue_bullet,
+	obj_arno_bullet, obj_arno_bullet_effect, obj_engineer_bullet_effect,
+	obj_card_inhale_effect, obj_card_heal_effect,
+	obj_huge_wave_text,obj_barrier,obj_paratrooper_mouse_shield,obj_lava_burn_effect,
+	obj_ladder,obj_lava,obj_ghost_mouse,obj_in_water_effect, obj_mummy_mouse, obj_apple_football_fan_mouse,
+	obj_mouse_train_1_body,
+	//obj_wine_bottle_bomb_explode
 );
 
 

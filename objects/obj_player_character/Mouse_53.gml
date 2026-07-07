@@ -51,6 +51,9 @@ if not is_placed{
 			var main_info = get_weapon_info(global.save_data.equipped_items.main_weapon.id)
 			var main_weapon_inst = instance_create_depth(x-10,y-100,depth-1,main_info.obj)
 			main_weapon_inst.parent_player = id
+				if (global.network.mode == "server" || global.network.mode == "client") {
+					with (obj_platform) { platform_register_child(main_weapon_inst, other.id) }
+				}
 			main_weapon_inst.grid_row = grid_row
 			main_weapon_inst.grid_col = grid_col
 			cycle = main_info.cycle
@@ -67,6 +70,9 @@ if not is_placed{
 		if global.save_data.equipped_items.secondary_weapon.id != ""{
 			var s_inst = instance_create_depth(x,y,depth,obj_player_shield)
 			s_inst.parent_player = id
+				if (global.network.mode == "server" || global.network.mode == "client") {
+					with (obj_platform) { platform_register_child(s_inst, other.id) }
+				}
 			s_inst.grid_row = grid_row
 			s_inst.grid_col = grid_col
 			var main_info = get_weapon_info(global.save_data.equipped_items.secondary_weapon.id)
@@ -81,6 +87,9 @@ if not is_placed{
 			var main_info = get_weapon_info(global.save_data.equipped_items.super_weapon.id)
 			var main_weapon_inst = instance_create_depth(x-10,y-100,depth-1,main_info.obj)
 			main_weapon_inst.parent_player = id
+				if (global.network.mode == "server" || global.network.mode == "client") {
+					with (obj_platform) { platform_register_child(main_weapon_inst, other.id) }
+				}
 			main_weapon_inst.grid_row = grid_row
 			main_weapon_inst.grid_col = grid_col
 		}
