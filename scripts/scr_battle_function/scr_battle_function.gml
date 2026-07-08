@@ -485,12 +485,16 @@ function parse_network_message(buf, _sock) {
                                 var _key = _keys[_k];
                                 variable_instance_set(id, _key, _props[$ _key]);
                             }
-                            var _target_ids = _act.target_ids;
-                            var _ids_keys = struct_get_names(_target_ids);
-                            for (var _k = 0; _k < array_length(_ids_keys); _k++) {
-                                var _key = _ids_keys[_k];
-								var _val = global.network.map_net_id_instance_id[? _target_ids[$ _key] ];
-                                variable_instance_set(id, _key, _val);
+                            if (variable_struct_exists(_act, "target_ids")) {
+                                var _target_ids = _act.target_ids;
+                                var _ids_keys = variable_struct_get_names(_target_ids);
+                                for (var _k = 0; _k < array_length(_ids_keys); _k++) {
+                                    var _key = _ids_keys[_k];
+									if ds_map_exists(global.network.map_net_id_instance_id,_target_ids[$ _key]){
+										var _val = global.network.map_net_id_instance_id[? _target_ids[$ _key] ];
+										variable_instance_set(id, _key, _val);
+									}
+                                }
                             }
                         }
                         break;
