@@ -4,9 +4,26 @@ global._evt_log_enabled = false;
 global._destroy_queue = ds_list_create()  
 global._boss_spawn_queue = []
 global._boss_client_cleanup = []
-global._move_insance_pre_arr = []
-global._move_insance_arr = []
+global._move_instance_pre_arr = []
+global._move_instance_map = ds_map_create()
 
+
+
+// 属性白名单
+global._sync_keys = [
+	"target_col", "target_row", "grid_col", "grid_row",
+	"col", "row", "is_hole",
+	"image_index", "image_alpha", "image_speed",
+	"start_col", "start_row", "width", "length",
+	"move_distance", "move_direction", "move_axis",
+	"boundary_idle_duration", "move_speed",
+	"initial_offset", "initial_idle_duration","sprite_index",
+	"cvspeed", "center_x", "center_y",
+	"state", "timer", "skill_timer", "jump_times",
+	"skill_choose", "skill_change_style", "move_time", "is_reversed",
+	"max_time", "interval", "col", "row", "dir", "type", "is_parent"
+];
+	
 // boss产物白名单
 global.boss_spawn_sync_list = ds_list_create();
 ds_list_add(global.boss_spawn_sync_list,
@@ -22,7 +39,7 @@ ds_list_add(global.boss_spawn_sync_list,
 	obj_card_inhale_effect, obj_card_heal_effect,
 	obj_huge_wave_text,obj_barrier,obj_paratrooper_mouse_shield,obj_lava_burn_effect,
 	obj_ladder,obj_lava,obj_ghost_mouse,obj_in_water_effect, obj_mummy_mouse, obj_apple_football_fan_mouse,
-	//obj_mouse_train_1_body,
+	obj_mouse_train_1_body,
 	//obj_wine_bottle_bomb_explode
 );
 
@@ -57,7 +74,7 @@ function instance_create_depth_define(_x, _y, _depth, _obj) {
 	}
 
 	var _inst = instance_create_depth_origfunc(_x, _y, _depth, _obj);
-	array_push(global._move_insance_pre_arr,_inst);
+	array_push(global._move_instance_pre_arr,_inst);
 
 
 

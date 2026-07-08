@@ -113,9 +113,15 @@ function parse_network_message(buf, _sock) {
 					_props[$ _key] = _st[$ _key];
 				}
 			}
-			if (_sprite_name != "") { _props[$ "sprite_index"] = asset_get_index(_sprite_name); }
+			if (_sprite_name != "") { 
+				if 	asset_get_index(_sprite_name)!=-1{
+					_props[$ "sprite_index"] = asset_get_index(_sprite_name);
+				}
+			}
 			
-            var _plant = spawn_plant(col, row, asset_get_index(object_name), _props);
+			var obj_index = asset_get_index(object_name);
+			if (obj_index==-1)obj_index = obj_xiao_long_bao;
+            var _plant = spawn_plant(col, row, obj_index, _props);
 			network_apply_plant_level(_plant);
             add_net_id(_plant.id);
 
@@ -200,7 +206,8 @@ function parse_network_message(buf, _sock) {
 			}
 
             global.network.client_able = true;
-            var _plant = spawn_plant(col, row, asset_get_index(object_name), _props);
+			var obj_name =  asset_get_index(object_name);
+            var _plant = spawn_plant(col, row, obj_name, _props);
             global.network.client_able = false;
 			
 			network_apply_plant_level(_plant);
@@ -220,6 +227,8 @@ function parse_network_message(buf, _sock) {
             var object_name = buffer_read(buf, buffer_string);
 			
 			global.network.client_able = true;
+			var obj_index = asset_get_index(object_name);
+			if (obj_index==-1){obj_index=obj_iron_pan_mouse;}
             var new_enemy = instance_create_depth(px, py, 0, asset_get_index(object_name));
 			global.network.client_able = false;
             set_net_id(new_enemy.id, net_id);
@@ -240,7 +249,9 @@ function parse_network_message(buf, _sock) {
             var boss_row = buffer_read(buf, buffer_u8);
 	
             global.network.client_able = true;
-            var new_boss = instance_create_depth(px, py, -200, asset_get_index(object_name));
+			var boss_index = asset_get_index(object_name);
+			if(boss_index==-1)boss_index = obj_abyss_pharaoh;
+            var new_boss = instance_create_depth(px, py, -200, boss_index);
             global.network.client_able = false;
             set_net_id(new_boss.id, net_id);
             new_boss.hp = hp_val;
@@ -462,14 +473,24 @@ function parse_network_message(buf, _sock) {
                 var _act = _actions[_i];
                 switch (_act.op) {
                     case "spawn":
-                        var _inst = instance_create_depth(_act.x, _act.y, _act.depth, asset_get_index(_act.obj));
+						var obj_index = asset_get_index(_act.obj);
+						if(obj_index==-1){obj_index=obj_paratrooper_mouse_shield;}
+                        var _inst = instance_create_depth(_act.x, _act.y, _act.depth, obj_index);
                         set_net_id(_inst.id, _act.net_id);
+						
                         with (_inst) {
                             var _props = _act.props;
                             var _keys = struct_get_names(_props);
                             for (var _k = 0; _k < array_length(_keys); _k++) {
                                 var _key = _keys[_k];
                                 variable_instance_set(id, _key, _props[$ _key]);
+                            }
+                            var _target_ids = _act.target_ids;
+                            var _ids_keys = struct_get_names(_target_ids);
+                            for (var _k = 0; _k < array_length(_ids_keys); _k++) {
+                                var _key = _ids_keys[_k];
+								var _val = global.network.map_net_id_instance_id[? _target_ids[$ _key] ];
+                                variable_instance_set(id, _key, _val);
                             }
                         }
                         break;

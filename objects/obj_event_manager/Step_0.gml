@@ -1154,24 +1154,12 @@ if is_real(global.level_file.version){
 }
 
 
+
+
 // ====== 服务端：发送操作日志 ======
 if (global.network.mode == "server") {
 	var _actions = [];
 
-	// 属性白名单
-	var _sync_keys = [
-		"target_col", "target_row", "grid_col", "grid_row",
-		"col", "row", "is_hole",
-		"image_index", "image_alpha", "image_speed",
-		"start_col", "start_row", "width", "length",
-		"move_distance", "move_direction", "move_axis",
-		"boundary_idle_duration", "move_speed",
-		"initial_offset", "initial_idle_duration","sprite_index",
-		"cvspeed", "center_x", "center_y",
-		"state", "timer", "skill_timer", "jump_times",
-		"skill_choose", "skill_change_style", "move_time", "is_reversed",
-		"max_time", "interval", "col", "row", "dir", "type", "is_parent"
-	];
 
 	// 新创建的实例（统一分配 net_id + 采集属性）
 	for (var _i = 0; _i < array_length(global._evt_created); _i++) {
@@ -1182,46 +1170,23 @@ if (global.network.mode == "server") {
 					add_net_id(id);
 				}
 				var _props = {};
-				for (var _k = 0; _k < array_length(_sync_keys); _k++) {
-					var _key = _sync_keys[_k];
+				for (var _k = 0; _k < array_length(global._sync_keys); _k++) {
+					var _key = global._sync_keys[_k];
 					if (variable_instance_exists(id, _key)) {
 						_props[$ _key] = variable_instance_get(id, _key);
 					}
 				}
-array_push(_actions, {
-					op: "spawn",
-					obj: object_get_name(object_index),
-					x: x, y: y, depth: depth,
-					net_id: global.network.map_instance_id_net_id[? id],
-					props: _props
-				});
+				array_push(_actions, {
+									op: "spawn",
+									obj: object_get_name(object_index),
+									x: x, y: y, depth: depth,
+									net_id: global.network.map_instance_id_net_id[? id],
+									props: _props
+								});
 			}
 		}
 	}
 
-	// boss产物延迟队列：boss技能跑完后属性齐全，补发spawn
-	for (var _i = 0; _i < array_length(global._boss_spawn_queue); _i++) {
-		var _id = global._boss_spawn_queue[_i];
-		if (instance_exists(_id)) {
-			with (_id) {
-				var _props = {};
-				for (var _k = 0; _k < array_length(_sync_keys); _k++) {
-					var _key = _sync_keys[_k];
-					if (variable_instance_exists(id, _key)) {
-						_props[$ _key] = variable_instance_get(id, _key);
-					}
-				}
-array_push(_actions, {
-					op: "spawn",
-					obj: object_get_name(object_index),
-					x: x, y: y, depth: depth,
-					net_id: global.network.map_instance_id_net_id[? id],
-					props: _props
-				});
-			}
-		}
-	}
-	global._boss_spawn_queue = [];
 
 	// 销毁的实例
 	for (var _i = 0; _i < array_length(global._evt_destroyed); _i++) {

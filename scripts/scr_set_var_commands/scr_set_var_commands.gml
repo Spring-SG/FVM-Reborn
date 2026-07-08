@@ -201,7 +201,7 @@ function spawn_plant(col, row, plant_obj, props) {
     return _plant;
 }
 
-
+/*
 /// @description 命令行：生成植物
 /// 用法: spawn <列> <行> <植物对象名> [属性=值...]
 /// 示例: spawn 2 3 obj_small_fire
@@ -365,3 +365,4 @@ function meta_reset_cd() {
         deferred: false
     };
 }
+*/
