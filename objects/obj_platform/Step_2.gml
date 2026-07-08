@@ -223,8 +223,32 @@ else if (state == "moving") {
                         if (variable_instance_exists(plant, "banding_star_obj") && instance_exists(plant.banding_star_obj)) {
                             plant.banding_star_obj.x += visual_delta_x;
                             plant.banding_star_obj.y += visual_delta_y;
-                        }
-                        
+                        }            
+						for(var _i=array_length(global._move_insance_arr)-1;_i>=0;_i--){
+							var _ins = global._move_insance_arr[_i];
+							if(instance_exists(_ins)){
+								with (_ins){
+									if ((variable_instance_exists(id, "parent_plant") && parent_plant == plant) || 
+		                                (variable_instance_exists(id, "parent_player") && parent_player == plant)) {
+										if (id != plant) {
+											x += visual_delta_x;
+		                                    y += visual_delta_y;
+		                                    if (variable_instance_exists(id, "target_x")) target_x += visual_delta_x;
+		                                    if (variable_instance_exists(id, "target_y")) target_y += visual_delta_y;
+                                    
+		                                    if (object_index == obj_melon_shield_inner && instance_exists(parent_plant)) {
+		                                        depth = calculate_plant_depth(parent_plant.grid_col, parent_plant.grid_row, "shield_inner");
+		                                    }
+										}
+									}
+								}
+							}else{
+								array_delete(global._move_insance_arr,_i,1)
+							}
+						}
+						
+						
+						/*
                         with (all) {
                             if ((variable_instance_exists(id, "parent_plant") && parent_plant == plant) || 
                                 (variable_instance_exists(id, "parent_player") && parent_player == plant)) {
@@ -239,7 +263,7 @@ else if (state == "moving") {
                                     }
                                 }
                             }
-                        }
+                        }*/
                     }
                 }
             }

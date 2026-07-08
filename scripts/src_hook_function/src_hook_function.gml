@@ -4,6 +4,8 @@ global._evt_log_enabled = false;
 global._destroy_queue = ds_list_create()  
 global._boss_spawn_queue = []
 global._boss_client_cleanup = []
+global._move_insance_pre_arr = []
+global._move_insance_arr = []
 
 // boss产物白名单
 global.boss_spawn_sync_list = ds_list_create();
@@ -55,6 +57,9 @@ function instance_create_depth_define(_x, _y, _depth, _obj) {
 	}
 
 	var _inst = instance_create_depth_origfunc(_x, _y, _depth, _obj);
+	array_push(global._move_insance_pre_arr,_inst);
+
+
 
 	if (_inst >= 0 && _is_boss && global.network.mode == "server") {
 		add_net_id(_inst.id);

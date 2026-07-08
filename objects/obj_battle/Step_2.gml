@@ -13,6 +13,26 @@ if (global.network.mode == "client") {
 	global.network.client_able = false;
 }
 
+
+for (var _i = 0; _i < array_length(global._move_insance_pre_arr); _i++) {
+    var _inst = global._move_insance_pre_arr[_i];
+    with (_inst) {
+        // 判断是否拥有 parent_plant 或 parent_player 变量，且它们的值（对象索引）继承自 obj_card_parent
+        var _hasPlant = variable_instance_exists(id, "parent_plant")  && object_is_ancestor(parent_plant.object_index, obj_card_parent);
+        var _hasPlayer = variable_instance_exists(id, "parent_player") && object_is_ancestor(parent_player.object_index, obj_card_parent);
+        if (_hasPlant || _hasPlayer) {
+            array_push(global._move_insance_arr, id);
+        }
+    }
+}
+
+global._move_insance_pre_arr = [];
+
+
+	
+
+
+
 current_wave_hp = 0
 with obj_enemy_parent{
 	if target_type != "obstacle"{

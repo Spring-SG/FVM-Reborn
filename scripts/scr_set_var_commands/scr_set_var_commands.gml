@@ -108,15 +108,11 @@ function spawn_plant(col, row, plant_obj, props) {
 						var main_info = get_weapon_info(_mw_name_id) 
 						var main_weapon_inst = instance_create_depth(_plant.x-10, _plant.y-100, _plant.depth-1, main_info.obj);
 						main_weapon_inst.parent_player = _plant.id;
-						if (global.network.mode == "server" || global.network.mode == "client") {
-							with (obj_platform) { platform_register_child(main_weapon_inst, _plant) }
-						}
+
 						main_weapon_inst.grid_row = grid_row;
 						main_weapon_inst.grid_col = grid_col;
 						_plant.cycle =  main_info.cycle;
 						main_weapon_inst.atk =  _eq[$ "main_weapon_atk"];
-						
-						
 						var gem_level = _eq[$ "power_gem_level"] ?? -1;
 						if (gem_level >= 0) {
 						    main_weapon_inst.atk = get_weapon_info(_mw_name_id).atk_impact[gem_level];
@@ -135,9 +131,6 @@ function spawn_plant(col, row, plant_obj, props) {
 					if (_sw_name_id != "") {
 						var s_inst = instance_create_depth(_plant.x,_plant.y,_plant.depth,obj_player_shield)
 						s_inst.parent_player = _plant.id
-							if (global.network.mode == "server" || global.network.mode == "client") {
-								with (obj_platform) { platform_register_child(s_inst, _plant) }
-							}
 						s_inst.grid_row = grid_row
 						s_inst.grid_col = grid_col
 						var main_info = get_weapon_info(_sw_name_id)
@@ -195,9 +188,6 @@ function spawn_plant(col, row, plant_obj, props) {
 						var main_info = get_weapon_info(_sup_name_id);
 						var main_weapon_inst = instance_create_depth(_plant.x-10,_plant.y-100,_plant.depth-1,main_info.obj)
 						main_weapon_inst.parent_player = _plant.id
-						if (global.network.mode == "server" || global.network.mode == "client") {
-							with (obj_platform) { platform_register_child(main_weapon_inst, _plant) }
-						}
 						main_weapon_inst.grid_row = grid_row
 						main_weapon_inst.grid_col = grid_col
 					}
