@@ -21,7 +21,8 @@ for (var _i = 0; _i < array_length(global._move_insance_pre_arr); _i++) {
         var _hasPlant = variable_instance_exists(id, "parent_plant")  && object_is_ancestor(parent_plant.object_index, obj_card_parent);
         var _hasPlayer = variable_instance_exists(id, "parent_player") && object_is_ancestor(parent_player.object_index, obj_card_parent);
         if (_hasPlant || _hasPlayer) {
-            array_push(global._move_insance_arr, id);
+			if(!object_is_ancestor(object_index,obj_card_parent))
+	            array_push(global._move_insance_arr, id); 
         }
     }
 }
