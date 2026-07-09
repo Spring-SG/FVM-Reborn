@@ -3,7 +3,7 @@ if global.is_paused{
 }
 timer++;
 // 子弹追踪逻辑
-if (instance_exists(target_enemy) && target_enemy.hp > 0) {
+if (instance_exists(target_enemy) && target_enemy.hp > 0  && can_hit(target_type,target_enemy.target_type)) {
     // 目标存在且存活，继续追踪
     var target_x = target_enemy.x;
     var target_y = target_enemy.y-75;

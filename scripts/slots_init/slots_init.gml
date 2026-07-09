@@ -293,5 +293,14 @@ function slots_init(){
 	    {"shape":1, "sprite":spr_king_triple_long_bao_1_0, "cost":175, "cooldown":5*60, "description":"红心三向国王小笼包：向三个方向发射包子，可填充3张三向包子类卡片","plant_type":"normal","feature_type":"king_tbun","target_card":"none"},
 		{"shape":2, "sprite":spr_king_triple_long_bao_2_0, "cost":175, "cooldown":5*60, "description":"黑心三向国王小笼包：向三个方向发射包子，可填充5张三向包子类卡片","plant_type":"normal","feature_type":"king_tbun","target_card":"none"}
 	])
-	
+	register_card("chili_powder",obj_chili_powder,[
+	    {"shape":0, "sprite":spr_chili_powder, "cost":10, "cooldown":30*60, "description":"辣椒粉：接触敌人后产生十字范围爆炸并产生2朵火苗","plant_type":"normal","feature_type":"normal","target_card":"none"},
+	    {"shape":1, "sprite":spr_chili_powder_1, "cost":10, "cooldown":30*60, "description":"火爆辣椒粉：接触敌人后产生十字范围爆炸并产生4朵火苗","plant_type":"normal","feature_type":"normal","target_card":"none"},
+		{"shape":2, "sprite":spr_chili_powder_2, "cost":10, "cooldown":30*60, "description":"魔鬼辣椒粉：接触敌人后产生3*3范围爆炸并产生4朵火苗","plant_type":"normal","feature_type":"normal","target_card":"none"}
+	])
+	register_card("tang_hu_lu", obj_tang_hu_lu, [
+	    {"shape":0, "sprite":spr_tang_hu_lu_icon, "cost":175, "cooldown":7*60, "description":"糖葫芦炮弹：发射追踪空中敌人的糖葫芦炮弹","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_tang_hu_lu},
+	    {"shape":1, "sprite":spr_tang_hu_lu_icon_1, "cost":200, "cooldown":7*60, "description":"水果糖葫芦弹：发射追踪空中敌人的糖葫芦炮弹","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_tang_hu_lu_1},
+		{"shape":2, "sprite":spr_tang_hu_lu_icon_2, "cost":250, "cooldown":7*60, "description":"七彩糖葫芦弹：发射两个追踪空中敌人的糖葫芦炮弹","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_tang_hu_lu_2}
+	]);
 }
