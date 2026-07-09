@@ -824,8 +824,6 @@ function parse_network_message(buf, _sock) {
                 var _c = _cards[_i];
                 var _inst = global.network.map_net_id_instance_id[? _c[$ "n"]];
                 if (instance_exists(_inst)) {
-                    _inst.x = _c[$ "x"];
-                    _inst.y = _c[$ "y"];
                     // 卡牌：位置+格子
                     if (!is_undefined(_c[$ "c"]) && !is_undefined(_c[$ "r"])) {
                         var _old_c = _inst.grid_col;
@@ -841,7 +839,19 @@ function parse_network_message(buf, _sock) {
                         }
                         _inst.grid_col = _c[$ "c"];
                         _inst.grid_row = _c[$ "r"];
+						if ds_map_exists( global._move_instance_map, _inst.id){
+							var _list = global._move_instance_map[? _inst.id];
+							for(var _j=ds_list_size(_list)-1;_j>=0;_j--){
+								var _ins = _list[| _j]; 
+								if(instance_exists(_ins)){
+									_ins.x +=_c[$ "x"] - _inst.x;
+									_ins.y +=_c[$ "y"] - _inst.y;
+								}
+							}
+						}
                     }
+					_inst.x = _c[$ "x"];
+                    _inst.y = _c[$ "y"];
                     // 平台：进度
                     if (!is_undefined(_c[$ "offs"])) _inst.current_offset = _c[$ "offs"];
                     if (!is_undefined(_c[$ "prog"])) _inst.move_progress = _c[$ "prog"];

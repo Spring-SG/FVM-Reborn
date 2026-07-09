@@ -315,35 +315,35 @@ if (global.network.mode == "server" && battle_time mod 60 == 0) {
 	}
 }
 
-/*
-	// 每300帧同步所有卡牌状态（位置/格子/平台进度,(人物武器没有跟随移动，平台参数也不足)）
-	if (global.network.mode == "server" && battle_time mod 300 == 0 && instance_number(obj_platform) > 0) {
-		var _cards = [];
-		var _clist = global.network.connected_clients;
-		var _csize = array_length(_clist);
-		with (obj_card_parent) {
-			if (hp > 0) {
-				var _nid = (ds_map_exists(global.network.map_instance_id_net_id, id)) ? global.network.map_instance_id_net_id[? id] : -1;
-				if (_nid != -1) {
-					var _entry = { n: _nid, x: x, y: y, c: grid_col, r: grid_row };
-					array_push(_cards, _entry);
-				}
-			}
-		}
-		with (obj_platform) {
-			var _pnid = (ds_map_exists(global.network.map_instance_id_net_id, id)) ? global.network.map_instance_id_net_id[? id] : -1;
-			if (_pnid != -1) {
-				array_push(_cards, { n: _pnid, x: x, y: y, offs: current_offset, prog: move_progress });
-			}
-		}
-		if (array_length(_cards) > 0) {
-			var _json = json_stringify(_cards);
-			for (var _si = 0; _si < _csize; _si++) {
-				send_message(_clist[_si], MSG_SYNC_CARD_STATES, _json);
+
+// 每300帧同步所有卡牌状态（位置/格子/平台进度,(人物武器没有跟随移动，平台参数也不足)）
+if (global.network.mode == "server" && battle_time mod 300 == 0 && instance_number(obj_platform) > 0) {
+	var _cards = [];
+	var _clist = global.network.connected_clients;
+	var _csize = array_length(_clist);
+	with (obj_card_parent) {
+		if (hp > 0) {
+			var _nid = (ds_map_exists(global.network.map_instance_id_net_id, id)) ? global.network.map_instance_id_net_id[? id] : -1;
+			if (_nid != -1) {
+				var _entry = { n: _nid, x: x, y: y, c: grid_col, r: grid_row };
+				array_push(_cards, _entry);
 			}
 		}
 	}
-*/
+	with (obj_platform) {
+		var _pnid = (ds_map_exists(global.network.map_instance_id_net_id, id)) ? global.network.map_instance_id_net_id[? id] : -1;
+		if (_pnid != -1) {
+			array_push(_cards, { n: _pnid, x: x, y: y, offs: current_offset, prog: move_progress });
+		}
+	}
+	if (array_length(_cards) > 0) {
+		var _json = json_stringify(_cards);
+		for (var _si = 0; _si < _csize; _si++) {
+			send_message(_clist[_si], MSG_SYNC_CARD_STATES, _json);
+		}
+	}
+}
+
 if global.debug{
 	if keyboard_check_pressed(ord("V")){
 		if level_stage == "ready"{

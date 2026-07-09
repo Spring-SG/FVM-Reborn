@@ -39,7 +39,7 @@ ds_list_add(global.boss_spawn_sync_list,
 	obj_card_inhale_effect, obj_card_heal_effect,
 	obj_huge_wave_text,obj_barrier,obj_paratrooper_mouse_shield,obj_lava_burn_effect,
 	obj_ladder,obj_lava,obj_ghost_mouse,obj_in_water_effect, obj_mummy_mouse, obj_apple_football_fan_mouse,
-	obj_mouse_train_1_body,
+	obj_mouse_train_1_body 
 	//obj_wine_bottle_bomb_explode
 );
 
