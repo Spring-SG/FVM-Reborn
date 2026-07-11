@@ -57,10 +57,12 @@ if state != CARD_STATE.SLEEP && instance_exists(banding_sleep_obj){
 
 var grid_pos = get_grid_position_from_world(x,y)
 
-grid_col = grid_pos.col
-grid_row = grid_pos.row
+if !(variable_instance_exists(id, "platform_grid_lock") && platform_grid_lock) {
+    grid_col = grid_pos.col
+    grid_row = grid_pos.row
+}
 
-depth = calculate_plant_depth(grid_col, grid_row, plant_type)
+depth = calculate_plant_depth(grid_pos.col, grid_pos.row, plant_type)
 if instance_exists(banding_star_obj){
 banding_star_obj.depth = depth - 1
 }
