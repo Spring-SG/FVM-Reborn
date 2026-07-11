@@ -1,7 +1,7 @@
 damage = 0
 move_speed = 0
 row = 0
-hitted_enemy = ds_list_create()
+
 shape = 0
 attack_timer = 0
 damage_type = "pierce"

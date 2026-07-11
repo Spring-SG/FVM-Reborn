@@ -12,14 +12,14 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"v1","%Name":"fde0a87b-e020-4ff9-a97e-998ef744b185","name":"fde0a87b-e020-4ff9-a97e-998ef744b185","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"e1688679-0899-4910-b528-6c3050e840c7","name":"e1688679-0899-4910-b528-6c3050e840c7","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,
   "height":1080,
   "HTile":false,
   "layers":[
-    {"$GMImageLayer":"","%Name":"9af4dc3c-2fcf-4004-97f1-2dc75257efd7","blendMode":0,"displayName":"default","isLocked":false,"name":"9af4dc3c-2fcf-4004-97f1-2dc75257efd7","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
+    {"$GMImageLayer":"","%Name":"a8319e05-a2af-49fd-aff8-4467281e00c7","blendMode":0,"displayName":"default","isLocked":false,"name":"a8319e05-a2af-49fd-aff8-4467281e00c7","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
   "name":"spr_fennel_raft_night",
   "nineSlice":null,
@@ -69,8 +69,8 @@
     "tracks":[
       {"$GMSpriteFramesTrack":"","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"$KeyframeStore<SpriteFrameKeyframe>":"","Keyframes":[
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"fde0a87b-e020-4ff9-a97e-998ef744b185","path":"sprites/spr_fennel_raft_night/spr_fennel_raft_night.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"e9a6351a-9f71-46a9-89a3-1d8d1041f9b1","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"e1688679-0899-4910-b528-6c3050e840c7","path":"sprites/spr_fennel_raft_night/spr_fennel_raft_night.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"72027c8a-e83e-472a-abb5-d89cb214552e","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange":null,

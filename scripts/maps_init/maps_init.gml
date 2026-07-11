@@ -408,7 +408,8 @@ function maps_init(){
 					"boss_music":mus_volcanic_tower_boss,
 					"pre_level":"tower_cake_13_2",
 					"rewards":[
-						{"card_id":"wine_bottle_bomb","target_shape":1}
+						{"card_id":"wine_bottle_bomb","target_shape":1},
+						{"card_id":"xinjiang_fried_noodles","target_shape":1}
 					]
 				},
 				{
@@ -437,7 +438,8 @@ function maps_init(){
 					"boss_music":mus_volcanic_tower_boss,
 					"pre_level":"tower_cake_14_2",
 					"rewards":[
-						{"card_id":"ice_bucket_bomb","target_shape":1}
+						{"card_id":"ice_bucket_bomb","target_shape":1},
+						{"card_id":"king_long_bao","target_shape":1}
 					]
 				},
 				{
@@ -451,7 +453,8 @@ function maps_init(){
 					"boss_music":mus_volcanic_tower_boss,
 					"pre_level":"tower_cake_15_1",
 					"rewards":[
-						{"card_id":"kettle_bomb","target_shape":1}
+						{"card_id":"kettle_bomb","target_shape":1},
+						{"card_id":"king_triple_long_bao","target_shape":1}
 					]
 				},
 				{
@@ -886,7 +889,7 @@ function maps_init(){
 					"pre_music":mus_floating_island_daytime_pre,
 					"elite_music":mus_floating_island_daytime_elite,
 					"boss_music":mus_floating_island_daytime_boss,
-					"player_level_require":35,
+					"player_level_require":41,
 					"pre_level_require":[]
 				},					
 				{
@@ -902,7 +905,7 @@ function maps_init(){
 					"pre_music":mus_floating_island_night_pre,
 					"elite_music":mus_floating_island_night_elite,
 					"boss_music":mus_floating_island_night_boss,
-					"player_level_require":35,
+					"player_level_require":42,
 					"pre_level_require":[]
 				},							
 				{
@@ -918,7 +921,7 @@ function maps_init(){
 					"pre_music":mus_floating_island_daytime_pre,
 					"elite_music":mus_floating_island_daytime_elite,
 					"boss_music":mus_floating_island_daytime_boss,
-					"player_level_require":35,
+					"player_level_require":43,
 					"pre_level_require":[]
 				},			
 				{
@@ -934,7 +937,7 @@ function maps_init(){
 					"pre_music":mus_floating_island_night_pre,
 					"elite_music":mus_floating_island_night_elite,
 					"boss_music":mus_floating_island_night_boss,
-					"player_level_require":35,
+					"player_level_require":44,
 					"pre_level_require":[]
 				},
 				{
@@ -950,7 +953,7 @@ function maps_init(){
 					"pre_music":mus_floating_island_crown_pre,
 					"elite_music":mus_floating_island_crown_elite,
 					"boss_music":mus_floating_island_daytime_boss,
-					"player_level_require":35,
+					"player_level_require":45,
 					"pre_level_require":[]
 				},
 				{
@@ -966,7 +969,7 @@ function maps_init(){
 					"pre_music":mus_floating_island_daytime_pre,
 					"elite_music":mus_floating_island_daytime_elite,
 					"boss_music":mus_floating_island_daytime_boss,
-					"player_level_require":35,
+					"player_level_require":46,
 					"pre_level_require":[]
 				},
 				{
@@ -982,7 +985,7 @@ function maps_init(){
 					"pre_music":mus_floating_island_night_pre,
 					"elite_music":mus_floating_island_night_elite,
 					"boss_music":mus_floating_island_night_boss,
-					"player_level_require":35,
+					"player_level_require":47,
 					"pre_level_require":[]
 				},
 				{
@@ -998,7 +1001,7 @@ function maps_init(){
 					"pre_music":mus_floating_island_daytime_pre,
 					"elite_music":mus_floating_island_daytime_elite,
 					"boss_music":mus_floating_island_daytime_boss,
-					"player_level_require":35,
+					"player_level_require":48,
 					"pre_level_require":[]
 				},
 				{
@@ -1014,7 +1017,7 @@ function maps_init(){
 					"pre_music":mus_floating_island_night_pre,
 					"elite_music":mus_floating_island_night_elite,
 					"boss_music":mus_floating_island_night_boss,
-					"player_level_require":35,
+					"player_level_require":49,
 					"pre_level_require":[]
 				},
 				{
@@ -1030,7 +1033,7 @@ function maps_init(){
 					"pre_music":mus_floating_island_crown_pre,
 					"elite_music":mus_floating_island_crown_elite,
 					"boss_music":mus_floating_island_night_boss,
-					"player_level_require":35,
+					"player_level_require":50,
 					"pre_level_require":[]
 				},
 				{
@@ -1043,10 +1046,10 @@ function maps_init(){
 					"level_file":"floating/pepper_floating_isle_daytime.json",
 					"hard_level_file":"floating/pepper_floating_isle_daytime_hard.json",
 					"level_sprite":spr_pepper_floating_isle_daytime,
-					"pre_music":mus_volcanic_island_daytime_pre,
-					"elite_music":mus_volcanic_island_daytime_elite,
-					"boss_music":mus_volcanic_island_daytime_boss,
-					"player_level_require":35,
+					"pre_music":mus_floating_island_daytime_pre,
+					"elite_music":mus_floating_island_daytime_elite,
+					"boss_music":mus_floating_island_daytime_boss,
+					"player_level_require":99,
 					"pre_level_require":[]
 				},
 				{
@@ -1059,10 +1062,10 @@ function maps_init(){
 					"level_file":"floating/pepper_floating_isle_night.json",
 					"hard_level_file":"floating/pepper_floating_isle_night_hard.json",
 					"level_sprite":spr_pepper_floating_isle_night,
-					"pre_music":mus_volcanic_island_night_pre,
-					"elite_music":mus_volcanic_island_night_elite,
-					"boss_music":mus_volcanic_island_night_boss,
-					"player_level_require":35,
+					"pre_music":mus_floating_island_night_pre,
+					"elite_music":mus_floating_island_night_elite,
+					"boss_music":mus_floating_island_night_boss,
+					"player_level_require":99,
 					"pre_level_require":[]
 				},
 				{
@@ -1075,10 +1078,10 @@ function maps_init(){
 					"level_file":"floating/lilac_rainbow_daytime.json",
 					"hard_level_file":"floating/lilac_rainbow_daytime_hard.json",
 					"level_sprite":spr_lilac_rainbow_daytime,
-					"pre_music":mus_volcanic_island_daytime_pre,
-					"elite_music":mus_volcanic_island_daytime_elite,
-					"boss_music":mus_volcanic_island_daytime_boss,
-					"player_level_require":35,
+					"pre_music":mus_floating_island_daytime_pre,
+					"elite_music":mus_floating_island_daytime_elite,
+					"boss_music":mus_floating_island_daytime_boss,
+					"player_level_require":99,
 					"pre_level_require":[]
 				},
 				{
@@ -1091,10 +1094,10 @@ function maps_init(){
 					"level_file":"floating/lilac_rainbow_night.json",
 					"hard_level_file":"floating/lilac_rainbow_night_hard.json",
 					"level_sprite":spr_lilac_rainbow_night,
-					"pre_music":mus_volcanic_island_night_pre,
-					"elite_music":mus_volcanic_island_night_elite,
-					"boss_music":mus_volcanic_island_night_boss,
-					"player_level_require":35,
+					"pre_music":mus_floating_island_night_pre,
+					"elite_music":mus_floating_island_night_elite,
+					"boss_music":mus_floating_island_night_boss,
+					"player_level_require":99,
 					"pre_level_require":[]
 				},
 				{
@@ -1107,10 +1110,26 @@ function maps_init(){
 					"level_file":"floating/spices_central_isle.json",
 					"hard_level_file":"floating/spices_central_isle_hard.json",
 					"level_sprite":spr_spices_central_isle,
+					"pre_music":mus_floating_island_crown_pre,
+					"elite_music":mus_floating_island_crown_elite,
+					"boss_music":mus_floating_island_daytime_boss,
+					"player_level_require":99,
+					"pre_level_require":[]
+				},
+				{
+					"id":"tower_cake",
+					"name":"魔塔蛋糕",
+					"button_spr":spr_levelselect_button,
+					"button_index":14,
+					"button_x":1228,
+					"button_y":330,
+					"level_file":"volcanic/cheese_castle.json",
+					"hard_level_file":"volcanic/cheese_castle_hard.json",
+					"level_sprite":spr_cheese_castle,
 					"pre_music":mus_volcanic_island_crown_pre,
 					"elite_music":mus_volcanic_island_crown_elite,
-					"boss_music":mus_volcanic_island_daytime_boss,
-					"player_level_require":35,
+					"boss_music":mus_volcanic_island_night_boss,
+					"player_level_require":8,
 					"pre_level_require":[]
 				},
 			]

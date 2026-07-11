@@ -12,14 +12,14 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"v1","%Name":"5b1262e5-7722-439f-8fbf-8f009d15e046","name":"5b1262e5-7722-439f-8fbf-8f009d15e046","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"f943c115-d40b-4f91-8b05-09cbce79c4bb","name":"f943c115-d40b-4f91-8b05-09cbce79c4bb","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,
   "height":118,
   "HTile":false,
   "layers":[
-    {"$GMImageLayer":"","%Name":"67ddbfa4-0281-43db-a662-a410bde565e9","blendMode":0,"displayName":"default","isLocked":false,"name":"67ddbfa4-0281-43db-a662-a410bde565e9","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
+    {"$GMImageLayer":"","%Name":"26ac949d-b57b-4e71-b10e-544a121d6e08","blendMode":0,"displayName":"default","isLocked":false,"name":"26ac949d-b57b-4e71-b10e-544a121d6e08","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
   "name":"spr_lilac_rainbow_platform_night_4",
   "nineSlice":null,
@@ -69,8 +69,8 @@
     "tracks":[
       {"$GMSpriteFramesTrack":"","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"$KeyframeStore<SpriteFrameKeyframe>":"","Keyframes":[
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"5b1262e5-7722-439f-8fbf-8f009d15e046","path":"sprites/spr_lilac_rainbow_platform_night_4/spr_lilac_rainbow_platform_night_4.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"0d9283b0-cf9c-41f2-9d4d-40647fe240ae","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"f943c115-d40b-4f91-8b05-09cbce79c4bb","path":"sprites/spr_lilac_rainbow_platform_night_4/spr_lilac_rainbow_platform_night_4.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"c9edaacf-b373-44d5-9e74-3056fda0672b","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange":null,

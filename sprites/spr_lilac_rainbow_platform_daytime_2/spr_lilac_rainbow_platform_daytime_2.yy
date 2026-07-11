@@ -12,14 +12,14 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"v1","%Name":"1cc09ba6-dd05-480e-89b7-90cd44d7fb24","name":"1cc09ba6-dd05-480e-89b7-90cd44d7fb24","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"d9a65082-7d29-4fd7-9607-cc00f1990562","name":"d9a65082-7d29-4fd7-9607-cc00f1990562","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,
   "height":120,
   "HTile":false,
   "layers":[
-    {"$GMImageLayer":"","%Name":"549286fd-2391-4a4f-9f46-e8dad5b864ea","blendMode":0,"displayName":"default","isLocked":false,"name":"549286fd-2391-4a4f-9f46-e8dad5b864ea","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
+    {"$GMImageLayer":"","%Name":"ab3ba4a1-e7a3-43e1-a77e-69f4665764c5","blendMode":0,"displayName":"default","isLocked":false,"name":"ab3ba4a1-e7a3-43e1-a77e-69f4665764c5","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
   "name":"spr_lilac_rainbow_platform_daytime_2",
   "nineSlice":null,
@@ -69,8 +69,8 @@
     "tracks":[
       {"$GMSpriteFramesTrack":"","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"$KeyframeStore<SpriteFrameKeyframe>":"","Keyframes":[
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"1cc09ba6-dd05-480e-89b7-90cd44d7fb24","path":"sprites/spr_lilac_rainbow_platform_daytime_2/spr_lilac_rainbow_platform_daytime_2.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"8559bdfb-ab1a-4ed4-baf3-aced3cd4665c","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"d9a65082-7d29-4fd7-9607-cc00f1990562","path":"sprites/spr_lilac_rainbow_platform_daytime_2/spr_lilac_rainbow_platform_daytime_2.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"868b8d1b-c0ba-4c70-ab28-ef2e37167917","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange":null,

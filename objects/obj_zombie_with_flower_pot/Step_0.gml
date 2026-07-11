@@ -30,7 +30,7 @@ event_inherited();
 if global.is_paused or is_frozen{
 	exit
 }
-if dropped && state = ENEMY_STATE.ACTING{
+if dropped && state == ENEMY_STATE.ACTING{
 	if hp > maxhp * hurt_rate{
 		image_index = floor(timer/flash_speed) mod 10
 	}

@@ -12,14 +12,14 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"v1","%Name":"07d26725-03a0-44df-a1f3-7e832e792a73","name":"07d26725-03a0-44df-a1f3-7e832e792a73","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"96e57bfb-515a-4f1e-85e8-e3381760e1eb","name":"96e57bfb-515a-4f1e-85e8-e3381760e1eb","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,
   "height":344,
   "HTile":false,
   "layers":[
-    {"$GMImageLayer":"","%Name":"b4adfcf1-a353-424c-8cff-a91037b01a74","blendMode":0,"displayName":"default","isLocked":false,"name":"b4adfcf1-a353-424c-8cff-a91037b01a74","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
+    {"$GMImageLayer":"","%Name":"4e4cf457-f8c3-4805-a0f9-289ed12faffc","blendMode":0,"displayName":"default","isLocked":false,"name":"4e4cf457-f8c3-4805-a0f9-289ed12faffc","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
   "name":"spr_pepper_floating_isle_platform_night_2",
   "nineSlice":null,
@@ -69,14 +69,14 @@
     "tracks":[
       {"$GMSpriteFramesTrack":"","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"$KeyframeStore<SpriteFrameKeyframe>":"","Keyframes":[
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"07d26725-03a0-44df-a1f3-7e832e792a73","path":"sprites/spr_pepper_floating_isle_platform_night_2/spr_pepper_floating_isle_platform_night_2.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"73d9338d-80b1-4e7a-a849-e2ede1ee908e","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"96e57bfb-515a-4f1e-85e8-e3381760e1eb","path":"sprites/spr_pepper_floating_isle_platform_night_2/spr_pepper_floating_isle_platform_night_2.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"6784f1f0-ee49-4cbe-acf0-6b31ed0beb9a","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange":null,
     "volume":1.0,
     "xorigin":0,
-    "yorigin":-2,
+    "yorigin":-1,
   },
   "swatchColours":null,
   "swfPrecision":0.5,

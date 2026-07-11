@@ -43,6 +43,7 @@ if hp > 0 && state != ENEMY_STATE.DEAD{
 			sprite_index = spr_airbrone_explosive_mouse_land
 			move_speed = 0.36
 			anim_timer = 0
+			helmet_hp = 0
 		}
 	}
 }

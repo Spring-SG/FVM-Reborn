@@ -61,4 +61,9 @@ function skill_init(){
 	register_card_skill("lightning_baguette","cooldown",[60*60,57*60,54*60,51*60,47*60,43*60,38*60,33*60,28*60])
 	register_card_skill("bull_firework","atk",[900,950,1000,1050,1100,1150,1200,1250,1300])
 	register_card_skill("magic_chicken","atk",[0,0,0,0,0,0,0,0,0])
+	register_card_skill("xinjiang_fried_noodles","cycle",[1*60,0.95*60,0.9*60,0.85*60,0.8*60,0.75*60,0.7*60,0.65*60,0.6*60])
+	register_card_skill("king_long_bao","cycle",[1.3*60,1.25*60,1.2*60,1.15*60,1.1*60,1.05*60,1*60,0.95*60,0.9*60])
+	register_card_skill("king_triple_long_bao","cycle",[1.3*60,1.25*60,1.2*60,1.15*60,1.1*60,1.05*60,1*60,0.95*60,0.9*60])
+	register_card_skill("chili_powder","cooldown",[30*60,28*60,26*60,24*60,22*60,20*60,18*60,16*60,14*60])
+	register_card_skill("tang_hu_lu","cycle",[3*60,2.8*60,2.6*60,2.4*60,2.2*60,2*60,1.8*60,1.6*60,1.4*60])
 }

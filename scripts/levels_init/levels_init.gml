@@ -29,4 +29,9 @@ function level_info_island_init(){
 	register_level_info_island("jam_tribe_daytime",{"name":"果酱部落（日）","icon":spr_levelselect_button_volcanic,"spr":spr_jam_tribe_daytime,"description":"岩浆会让老鼠速度变为两倍，如果没有覆盖棉花糖，还会每秒对本格卡片造\n成10点伤害。","spr_index":12})
 	register_level_info_island("jam_tribe_night",{"name":"果酱部落（夜）","icon":spr_levelselect_button_volcanic,"spr":spr_jam_tribe_night,"description":"暴躁杰克的滚石技能需要每一行都有足够输出，需要注意布阵。","spr_index":13})
 	register_level_info_island("snowcap_volcano",{"name":"雪顶火山","icon":spr_levelselect_button_volcanic,"spr":spr_snowcap_volcano,"description":"火山岛的最后一个关卡，会接连出现5个BOSS，流程很长。","spr_index":14})
+	register_level_info_island("fennel_raft_daytime",{"name":"茴香竹筏（日）","icon":spr_levelselect_button_floating,"spr":spr_fennel_raft_daytime,"description":"浮空岛的所有地图都有移动板块，其上的卡片会随着板块移动。\n使用三线卡或多向卡也许会有奇效。","spr_index":0})
+	register_level_info_island("fennel_raft_night",{"name":"茴香竹筏（夜）","icon":spr_levelselect_button_floating,"spr":spr_fennel_raft_night,"description":"魔镜鼠会吸走你的火苗，一定要尽快击杀。\n酷帅小明的技能较为简单，防范旋风即可。","spr_index":1})
+	register_level_info_island("cumin_bridge_daytime",{"name":"孜然断桥（日）","icon":spr_levelselect_button_floating,"spr":spr_cumin_bridge_daytime,"description":"前后移动的板块让卡片更容易受伤，记得及时套上瓜皮。","spr_index":2})
+	register_level_info_island("cumin_bridge_night",{"name":"孜然断桥（夜）","icon":spr_levelselect_button_floating,"spr":spr_cumin_bridge_night,"description":"小号手鼠会让相邻行的鼠军聚集，需要优先处理。\n可以给第一列卡片套上瓜皮来防范闪亮Baby。","spr_index":3})
+	register_level_info_island("marinade_garden",{"name":"卤料花园","icon":spr_levelselect_button_floating,"spr":spr_marinade_garden,"description":"尽量多套瓜皮来防范列车释放的机器铁锅鼠。","spr_index":4})
 }

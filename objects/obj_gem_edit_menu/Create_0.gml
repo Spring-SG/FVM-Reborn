@@ -3,6 +3,7 @@ image_yscale = 1.8
 
 target_card_index = -1
 target_current_info = 0
+target_max_info = 0
 info_got = 0
 view_max_shape = global.save_data.unlocked_items.max_gem_level
 

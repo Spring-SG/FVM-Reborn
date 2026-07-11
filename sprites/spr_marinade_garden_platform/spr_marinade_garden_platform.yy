@@ -2,7 +2,7 @@
   "$GMSprite":"v2",
   "%Name":"spr_marinade_garden_platform",
   "bboxMode":0,
-  "bbox_bottom":817,
+  "bbox_bottom":818,
   "bbox_left":0,
   "bbox_right":659,
   "bbox_top":0,
@@ -12,14 +12,14 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"v1","%Name":"34ecaccf-2cb4-4353-9eee-e5d8030fb6a8","name":"34ecaccf-2cb4-4353-9eee-e5d8030fb6a8","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"da6a90b8-6df8-4a00-ba59-ffbaf65dd3ea","name":"da6a90b8-6df8-4a00-ba59-ffbaf65dd3ea","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,
-  "height":818,
+  "height":819,
   "HTile":false,
   "layers":[
-    {"$GMImageLayer":"","%Name":"e671b862-8981-4797-a332-c3e5555b8e33","blendMode":0,"displayName":"default","isLocked":false,"name":"e671b862-8981-4797-a332-c3e5555b8e33","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
+    {"$GMImageLayer":"","%Name":"4087ec45-218b-45b5-bc60-96ae02d95f8f","blendMode":0,"displayName":"default","isLocked":false,"name":"4087ec45-218b-45b5-bc60-96ae02d95f8f","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
   "name":"spr_marinade_garden_platform",
   "nineSlice":null,
@@ -69,13 +69,13 @@
     "tracks":[
       {"$GMSpriteFramesTrack":"","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"$KeyframeStore<SpriteFrameKeyframe>":"","Keyframes":[
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"34ecaccf-2cb4-4353-9eee-e5d8030fb6a8","path":"sprites/spr_marinade_garden_platform/spr_marinade_garden_platform.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"40a6cb21-b5b1-471e-98df-97ca818e5180","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"da6a90b8-6df8-4a00-ba59-ffbaf65dd3ea","path":"sprites/spr_marinade_garden_platform/spr_marinade_garden_platform.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"1f67b414-5783-4ffe-84c0-0872284ccdbc","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange":null,
     "volume":1.0,
-    "xorigin":10,
+    "xorigin":9,
     "yorigin":0,
   },
   "swatchColours":null,

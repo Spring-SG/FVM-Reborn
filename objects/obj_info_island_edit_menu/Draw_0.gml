@@ -24,6 +24,8 @@ if not info_got{
 	ds_map_add(target_current_info,"skill",obj_info_island_bg.view_card_skill)
 	info_got = 1
 }
+draw_set_font(font_number)
 draw_text(x,y-70,string(target_current_info[? "level"]))
 draw_text(x,y-70+80*1,string(target_current_info[? "shape"]))
 draw_text(x,y-70+80*2,string(target_current_info[? "skill"]))
+draw_set_font(font_yuan)
