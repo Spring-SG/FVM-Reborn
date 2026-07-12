@@ -116,6 +116,7 @@ else if (state == "moving") {
 	                        ds_list_add(new_list, plant);
 	                        if (instance_exists(plant)) {
 	                            plant.grid_row = target_r;
+	                            plant.platform_grid_lock = true;
 	                        }
 	                    }
 	                    ds_list_clear(old_list);
@@ -142,6 +143,7 @@ else if (state == "moving") {
 	                        ds_list_add(new_list, plant);
 	                        if (instance_exists(plant)) {
 	                            plant.grid_col = target_c;
+	                            plant.platform_grid_lock = true;
 	                        }
 	                    }
 	                    ds_list_clear(old_list);
@@ -213,11 +215,10 @@ else if (state == "moving") {
                         if (variable_instance_exists(plant, "target_x")) plant.target_x += visual_delta_x;
                         if (variable_instance_exists(plant, "target_y")) plant.target_y += visual_delta_y;
                         
-                        var grid_pos = get_grid_position_from_world(plant.x, plant.y);
-                        plant.grid_col = grid_pos.col;
-                        plant.grid_row = grid_pos.row;
+                        // depth从视觉位置计算，但不覆盖grid_col/grid_row（保持逻辑位置）
                         if (variable_instance_exists(plant, "plant_type")) {
-                            plant.depth = calculate_plant_depth(plant.grid_col, plant.grid_row, plant.plant_type);
+                            var vis_grid_pos = get_grid_position_from_world(plant.x, plant.y);
+                            plant.depth = calculate_plant_depth(vis_grid_pos.col, vis_grid_pos.row, plant.plant_type);
                         }
                         
                         if (variable_instance_exists(plant, "banding_star_obj") && instance_exists(plant.banding_star_obj)) {
@@ -235,7 +236,8 @@ else if (state == "moving") {
                                     if (variable_instance_exists(id, "target_y")) target_y += visual_delta_y;
                                     
                                     if (object_index == obj_melon_shield_inner && instance_exists(parent_plant)) {
-                                        depth = calculate_plant_depth(parent_plant.grid_col, parent_plant.grid_row, "shield_inner");
+                                        var inner_vis_pos = get_grid_position_from_world(x, y);
+                                        depth = calculate_plant_depth(inner_vis_pos.col, inner_vis_pos.row, "shield_inner");
                                     }
                                 }
                             }
@@ -250,6 +252,26 @@ else if (state == "moving") {
         move_progress = 0;
         visual_x_shift = 0;
         visual_y_shift = 0;
+        
+        // 清除platform_grid_lock，让grid_col/grid_row恢复由obj_card_parent管理
+        var fin_c_offset = is_axis_x ? current_offset : 0;
+        var fin_r_offset = (!is_axis_x) ? current_offset : 0;
+        var fin_cur_start_c = start_col + fin_c_offset;
+        var fin_cur_start_r = start_row + fin_r_offset;
+        
+        for (var c = fin_cur_start_c; c < fin_cur_start_c + width; c++) {
+            for (var r = fin_cur_start_r; r < fin_cur_start_r + length; r++) {
+                if (r >= 0 && r < global.grid_rows && c >= 0 && c < global.grid_cols) {
+                    var fin_plant_list = ds_grid_get(global.grid_plants, c, r);
+                    for (var i = 0; i < ds_list_size(fin_plant_list); i++) {
+                        var fin_plant = ds_list_find_value(fin_plant_list, i);
+                        if (instance_exists(fin_plant)) {
+                            fin_plant.platform_grid_lock = false;
+                        }
+                    }
+                }
+            }
+        }
         
         if (abs(current_offset) >= move_distance || current_offset == 0) {
             state = "idle";
