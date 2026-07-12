@@ -65,3 +65,66 @@ for(var i = 0;i < global.level_file.total_waves;i ++){
 		}
 	}
 }
+
+  function _get_needed_sprites() {
+      var _list = [];
+      var _seen = ds_map_create();
+
+      // 1. 卡组
+      for (var i = 0; i < ds_list_size(global.selected_deck); i++) {
+          var _cid = ds_list_find_value(global.selected_deck, i);
+          // player_deck 是 [key0,val0,key1,val1,...]
+          var _card = undefined;
+          for (var j = 0; j < ds_list_size(global.player_deck); j += 2) {
+              if (global.player_deck[| j] == _cid) {
+                  _card = global.player_deck[| j + 1];
+                  break;
+              }
+          }
+          if (is_undefined(_card)) continue;
+          var _shapes = _card[? "shapes"];
+          for (var j = 0; j < ds_list_size(_shapes); j++) {
+              var _shape = ds_list_find_value(_shapes, j);
+              var _pid = _shape[? "sprite"];
+              if (!is_undefined(_pid) && _pid >= 100000) {
+                  var _name = sprite_name_from_pid(_pid);
+                  if (!is_undefined(_name) && !ds_map_exists(_seen, _name)) {
+                      ds_map_add(_seen, _name, true);
+                      array_push(_list, _name);
+                  }
+              }
+          }
+      }
+
+      // 2. 敌人
+      var _all_enemies = [];
+      array_copy(_all_enemies, 0, enemy_type_list, 0, array_length(enemy_type_list));
+      for (var i = 0; i < array_length(boss_type_list); i++)
+          array_push(_all_enemies, boss_type_list[i]);
+
+      for (var i = 0; i < array_length(_all_enemies); i++) {
+          var _info = global.enemy_map[? _all_enemies[i]];
+          if (is_undefined(_info)) continue;
+          var _pid = _info[$ "spr"];
+          if (!is_undefined(_pid) && _pid >= 100000) {
+              var _name = sprite_name_from_pid(_pid);
+              if (!is_undefined(_name) && !ds_map_exists(_seen, _name)) {
+                  ds_map_add(_seen, _name, true);
+                  array_push(_list, _name);
+              }
+          }
+      }
+
+      ds_map_destroy(_seen);
+      return _list;
+  }
+
+  function sprite_name_from_pid(_pid) {
+      if (is_undefined(global._pid_map)) return undefined;
+      var _k = ds_map_find_first(global._pid_map);
+      while (!is_undefined(_k)) {
+          if (global._pid_map[? _k] == _pid) return _k;
+          _k = ds_map_find_next(global._pid_map, _k);
+      }
+      return undefined;
+  }

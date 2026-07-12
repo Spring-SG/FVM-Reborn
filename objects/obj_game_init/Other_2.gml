@@ -1,3 +1,6 @@
+// 精灵预览加载（第一帧，异步逐帧处理）
+sprite_manager_preview_init()
+
 Enum_Init()
 deck_init()
 slots_init()

@@ -1,6 +1,18 @@
 
 
 
+// ── 精灵异步加载：每帧处理一个 ──
+var _loader_q = global._loader_sprite_queue;
+if (_loader_q != undefined && ds_list_size(_loader_q) > 0) {
+    var _queue = ds_list_find_value(_loader_q, 0);
+    if (!_queue.done) {
+        sprite_manager_async_process_one(_queue);
+    }
+    if (_queue.done) {
+        ds_list_delete(_loader_q, 0);
+    }
+}
+
 var q = global._destroy_queue;
 var i = 0;
 while (i < ds_list_size(q)) {

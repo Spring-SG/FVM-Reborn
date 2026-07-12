@@ -63,6 +63,8 @@ function instance_log_disable(){
 #macro instance_destroy_origfunc      instance_destroy
 #macro instance_destroy               instance_destroy_define
 
+
+
 function instance_create_depth_define(_x, _y, _depth, _obj) {
 	// boss产物：客户端拦截，服务端延迟广播(等属性设完)
 	var _is_boss = (ds_list_find_index(global.boss_spawn_sync_list, _obj) != -1);
@@ -116,3 +118,137 @@ function instance_destroy_define() {
 		case 2:  return instance_destroy_origfunc(argument[0], argument[1]);
 	}
 }
+
+
+
+
+#macro draw_self_origfunc				draw_self
+#macro draw_self						draw_self_define
+
+#macro draw_sprite_origfunc				draw_sprite
+#macro draw_sprite						draw_sprite_define
+
+#macro draw_sprite_ext_origfunc			draw_sprite_ext
+#macro draw_sprite_ext					draw_sprite_ext_define
+
+#macro draw_sprite_part_origfunc		draw_sprite_part
+#macro draw_sprite_part					draw_sprite_part_define
+
+#macro draw_sprite_part_ext_origfunc	draw_sprite_part_ext
+#macro draw_sprite_part_ext				draw_sprite_part_ext_define
+
+#macro draw_sprite_stretched_origfunc	draw_sprite_stretched
+#macro draw_sprite_stretched			draw_sprite_stretched_define
+
+#macro draw_sprite_stretched_ext_origfunc	draw_sprite_stretched_ext
+#macro draw_sprite_stretched_ext			draw_sprite_stretched_ext_define
+
+#macro draw_sprite_general_origfunc		draw_sprite_general
+#macro draw_sprite_general				draw_sprite_general_define
+
+#macro draw_sprite_pos_origfunc			draw_sprite_pos
+#macro draw_sprite_pos					draw_sprite_pos_define
+
+#macro draw_sprite_tiled_origfunc		draw_sprite_tiled
+#macro draw_sprite_tiled				draw_sprite_tiled_define
+
+#macro draw_sprite_tiled_ext_origfunc	draw_sprite_tiled_ext
+#macro draw_sprite_tiled_ext			draw_sprite_tiled_ext_define
+
+
+function __sprite_resolve(_spr){
+	if is_string(_spr){
+		_spr = get_load_sprite(_spr);
+	}
+	if(_spr>=100000){
+		if(_spr==100003)
+			var t = 1+1;
+		var _name = global._pid_reverse[? _spr];
+		if (!is_undefined(_name)) {
+			var _real = global._sprite_cache[? _name];
+			if (!is_undefined(_real)) {
+				return _real;
+			}
+		}
+	}
+	else{
+		return _spr;
+	}
+	return spr_cloud_daytime;
+/*	if (is_string(_spr)) return get_load_sprite(_spr);
+	// 占位 ID → 查重定向表，未加载返回云朵
+	if (_spr >= 100000) {
+		
+		var _ = global._pid_reverse[? _spr];
+		var _real = ds_map_find_first(_name);
+		if _real>0:
+		
+		if (!is_undefined(_name)) {
+			var _real = global._sprite_cache[? _name];
+			if (!is_undefined(_real) && sprite_exists(_real))
+				return _real;
+		}
+		return spr_cloud_daytime;
+	}
+	if (!sprite_exists(_spr)) return spr_cloud_daytime;
+	return _spr;*/
+}
+
+function draw_self_define(){
+	var _bak = sprite_index;
+	var _resolved = __sprite_resolve(_bak);
+	// 兜底：仅当确实是云朵默认时才反查绑定
+	if (_resolved == spr_cloud_daytime && !is_undefined(global._object_map)) {
+		var _obj_name = object_get_name(object_index);
+		if (!is_undefined(_obj_name)) {
+			var _spr_name = global._object_map[$ _obj_name];
+			if (!is_undefined(_spr_name)) {
+				_resolved = __sprite_resolve(get_load_sprite(_spr_name));
+			}
+		}
+	}
+	sprite_index = _resolved;
+	draw_self_origfunc();
+	sprite_index = _bak;
+}
+
+function draw_sprite_define(_spr, _subimg, _x, _y){
+	draw_sprite_origfunc(__sprite_resolve(_spr), _subimg, _x, _y);
+}
+
+function draw_sprite_ext_define(_spr, _subimg, _x, _y, _xscale, _yscale, _rot, _colour, _alpha){
+	draw_sprite_ext_origfunc(__sprite_resolve(_spr), _subimg, _x, _y, _xscale, _yscale, _rot, _colour, _alpha);
+}
+
+function draw_sprite_part_define(_spr, _subimg, _left, _top, _w, _h, _x, _y){
+	draw_sprite_part_origfunc(__sprite_resolve(_spr), _subimg, _left, _top, _w, _h, _x, _y);
+}
+
+function draw_sprite_part_ext_define(_spr, _subimg, _left, _top, _w, _h, _x, _y, _xscale, _yscale, _colour, _alpha){
+	draw_sprite_part_ext_origfunc(__sprite_resolve(_spr), _subimg, _left, _top, _w, _h, _x, _y, _xscale, _yscale, _colour, _alpha);
+}
+
+function draw_sprite_stretched_define(_spr, _subimg, _x, _y, _w, _h){
+	draw_sprite_stretched_origfunc(__sprite_resolve(_spr), _subimg, _x, _y, _w, _h);
+}
+
+function draw_sprite_stretched_ext_define(_spr, _subimg, _x, _y, _w, _h, _colour, _alpha){
+	draw_sprite_stretched_ext_origfunc(__sprite_resolve(_spr), _subimg, _x, _y, _w, _h, _colour, _alpha);
+}
+
+function draw_sprite_general_define(_spr, _subimg, _left, _top, _w, _h, _x, _y, _xscale, _yscale, _rot, _c1, _c2, _c3, _c4, _alpha){
+	draw_sprite_general_origfunc(__sprite_resolve(_spr), _subimg, _left, _top, _w, _h, _x, _y, _xscale, _yscale, _rot, _c1, _c2, _c3, _c4, _alpha);
+}
+
+function draw_sprite_pos_define(_spr, _subimg, _x1, _y1, _x2, _y2, _x3, _y3, _x4, _y4, _alpha){
+	draw_sprite_pos_origfunc(__sprite_resolve(_spr), _subimg, _x1, _y1, _x2, _y2, _x3, _y3, _x4, _y4, _alpha);
+}
+
+function draw_sprite_tiled_define(_spr, _subimg, _x, _y){
+	draw_sprite_tiled_origfunc(__sprite_resolve(_spr), _subimg, _x, _y);
+}
+
+function draw_sprite_tiled_ext_define(_spr, _subimg, _x, _y, _xscale, _yscale, _colour, _alpha){
+	draw_sprite_tiled_ext_origfunc(__sprite_resolve(_spr), _subimg, _x, _y, _xscale, _yscale, _colour, _alpha);
+}
+
