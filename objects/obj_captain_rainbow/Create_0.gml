@@ -10,4 +10,4 @@ image_alpha = 1
 state = "appear"
 special_ash = true
 mouse_id = "captain_rainbow"
-target_type = "normal"
+target_type = "air"

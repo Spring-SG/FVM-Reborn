@@ -38,7 +38,7 @@ if effect_timer == 4 * current_flash_speed{
 		}
 		if other.shape >= 2{
 			if target_type == "air" && array_get_index(other.ignore_list,mouse_id) == -1{
-				hp -= other.atk
+				//hp -= other.atk
 			}
 			else if grid_row == other.grid_row{
 				hp -= other.atk * 0.5
@@ -53,7 +53,7 @@ if effect_timer >= 4 * current_flash_speed && effect_timer <= 12 * current_flash
 			if x < get_world_position_from_grid(9,0).x{
 				x += 6
 				if other.shape >= 2{
-					x += 6
+					//x += 6
 				}
 			}
 		}

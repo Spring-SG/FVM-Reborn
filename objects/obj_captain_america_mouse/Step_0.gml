@@ -9,7 +9,7 @@ if flash_value > 0 {
 if !appear{
 	var enemy_row = irandom_range(0,global.grid_rows-1)
 	var enemy_pos = {}
-	skill_choose = irandom_range(2,2)
+	skill_choose = irandom_range(0,0)
 	skill_change_style = irandom_range(0,1)
 	if skill_choose == 2{
 		enemy_pos = get_world_position_from_grid(9,enemy_row)

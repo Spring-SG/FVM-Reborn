@@ -29,6 +29,7 @@ global.plant_registry = ds_map_create();
 cards_init()
 
 global.player_name = "Player";
+global.total_time = 0
 global.player_sprite = noone;
 
 load_file(global.save_slot)
@@ -105,7 +106,7 @@ load_file(global.save_slot)
 	
 	global.save_data.player.gold = 20000000
 	global.save_data.player.level = 55
-	global.save_data.unlocked_items.max_card_level = 10
+	global.save_data.unlocked_items.max_card_level = 11
 	global.save_data.unlocked_items.max_skill_level = 7
 	global.save_data.unlocked_items.max_gem_level = 10
 	global.save_data.unlocked_items.max_slot = 21
@@ -147,6 +148,8 @@ load_file(global.save_slot)
 	set_material_amount("clover_3",999999999)
 	set_material_amount("advanced_crystal",999999999)
 	global.save_data.unlocked_items.elite_unlocked = true
+	
+	complete_level("tower_cake_20_2")
 }
 global.player_name = global.save_data.player.name
 global.total_time = global.save_data.player.total_time

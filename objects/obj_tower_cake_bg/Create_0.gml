@@ -10,7 +10,7 @@ instance_create_depth(x+810,y-472,depth-1,obj_closetowercake_btn)
 
 is_submenu_opened = false
 current_page = 1
-total_page = 3
+total_page = 4
 level_select = -1
 real_level_index = -1
 menu_music = mus_menu
