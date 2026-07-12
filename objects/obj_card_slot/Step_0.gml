@@ -221,6 +221,10 @@ if (is_selected) {
 			var depth_value = calculate_plant_depth(logical_col, logical_row, new_plant.plant_type);
 			card_created(new_plant, logical_col, logical_row);
 			new_plant.depth = depth_value
+			// 平台移动期间放置时锁定逻辑网格位置，防止视觉位置覆盖grid_col/grid_row
+			if (found_plat != noone && variable_instance_exists(found_plat, "state") && found_plat.state == "moving") {
+				new_plant.platform_grid_lock = true;
+			}
 			if global.grid_terrains[logical_row][logical_col].type == "normal"{
 				instance_create_depth(logical_world.x + platform_shift_x, logical_world.y + platform_shift_y,-2,obj_place_effect)
 			}
