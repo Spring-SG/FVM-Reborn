@@ -401,6 +401,55 @@ else if info_button_select == 3 {
 }
 
 
+// ===== 滚动条参数 =====
+var sb_x       = x - 1388 + surface_width + 10;  // 起始位置 x（左边界）
+var sb_y_start = y - 352;                          // 起始位置 y（顶部）
+var sb_y_end   = y - 384 + surface_height;         // 结束位置 y（底部）
+var sb_w       = 2.2;                              // 宽度缩放
+var sb_h       = 2.2;                              // 长度缩放
+// ====================
+
+// 绘制滚动条
+var content_height = 142 * 1.5 * info_rows;
+var scroll_max = content_height - surface_height;
+
+if (scroll_max > 0) {
+    var track_h = sb_y_end - sb_y_start;
+    var spr_w = sprite_get_width(spr_info_island_scroll_bar);
+    var spr_h = sprite_get_height(spr_info_island_scroll_bar);
+
+    var bar_height = spr_h * sb_h;
+    var bar_y = sb_y_start + (y_offset / scroll_max) * (track_h - bar_height);
+
+    draw_sprite_ext(spr_info_island_scroll_bar, 0, sb_x, bar_y, sb_w, sb_h, 0, c_white, 1);
+
+    // 记录滑块区域
+    scrollbar_x = sb_x;
+    scrollbar_y = bar_y;
+    scrollbar_w = spr_w * sb_w;
+    scrollbar_h = bar_height;
+
+    // 拖拽逻辑
+    if (mouse_check_button_pressed(mb_left)) {
+        if (point_in_rectangle(mouse_x, mouse_y, scrollbar_x, scrollbar_y,
+                               scrollbar_x + scrollbar_w, scrollbar_y + scrollbar_h)) {
+            scrollbar_dragging = true;
+            scrollbar_drag_start_y = mouse_y;
+            scrollbar_drag_start_offset = y_offset;
+        }
+    }
+
+    if (scrollbar_dragging && mouse_check_button(mb_left)) {
+        var dy = mouse_y - scrollbar_drag_start_y;
+        y_offset = scrollbar_drag_start_offset + dy * (scroll_max / (track_h - bar_height));
+        y_offset = clamp(y_offset, 0, scroll_max);
+    }
+
+    if (mouse_check_button_released(mb_left)) {
+        scrollbar_dragging = false;
+    }
+}
+
 // 重置绘制设置
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);

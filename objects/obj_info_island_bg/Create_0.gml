@@ -32,3 +32,12 @@ surface_width = 900
 surface_height = 780
 
 y_offset = 0
+
+// 滚动条状态
+scrollbar_dragging = false
+scrollbar_drag_start_y = 0
+scrollbar_drag_start_offset = 0
+scrollbar_x = 0
+scrollbar_y = 0
+scrollbar_w = 17
+scrollbar_h = 0
