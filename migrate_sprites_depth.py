@@ -110,7 +110,6 @@ for res in yyp_data['resources']:
 
 # 第二遍：构建详细信息
 removed_sprites: dict[str, dict] = {}
-oversize_skip: set[str] = set()
 for name in sorted(target_sprites):
     path = sprite_paths[name]
     info = parse_gm_json(Path(path))
@@ -138,21 +137,22 @@ for name in sorted(target_sprites):
                 if len(ordered) == len(frames_list):
                     frames_list = ordered
 
-    # 跳过 strip 宽度超出 GPU 纹理上限的精灵（sprite_add 单行条带限制）
+    # 计算每行最多帧数，超出则拆多段条带
     _w = info.get('width', 0)
     _fc = info.get('frameCount', len(frames_list) or 1)
-    if _w * _fc > MAX_STRIP_WIDTH:
-        oversize_skip.add(name)
-        continue
+    _fps = max(1, MAX_STRIP_WIDTH // _w)  # 每段最多帧数
+    _strip_count = (_fc + _fps - 1) // _fps  # 需要几段
+    _strip_paths = [f'{SPRITES_JOIN}/{name}_{i}.png' for i in range(_strip_count)]
 
     seq = info.get('sequence', {}) or {}
 
     # 以 .yy 原始数据为底，删掉无用的 meta 键，再覆盖 GML 需要的计算字段
     sprite_data = {k: v for k, v in info.items()
                    if k not in ('$GMSprite', '%Name', 'resourceType', 'resourceVersion', 'name')}
-    sprite_data['path']       = dir_path  # 原始帧 PNG 所在目录
-    sprite_data['strip_path'] = f'{SPRITES_JOIN}/{name}.png'
-    sprite_data['first_path'] = f'{SPRITES_JOIN}/{name}_first.png'
+    sprite_data['path']             = dir_path  # 原始帧 PNG 所在目录
+    sprite_data['strip_paths']      = _strip_paths
+    sprite_data['frames_per_strip'] = _fps
+    sprite_data['first_path']       = f'{SPRITES_JOIN}/{name}_first.png'
     sprite_data['frames']     = frames_list
     sprite_data['frameCount'] = info.get('frameCount', len(frames_list) or 1)
     sprite_data['xorigin']    = info['xorigin'] if 'xorigin' in info else seq.get('xorigin', 0)
@@ -170,13 +170,6 @@ for name in sorted(target_sprites):
                                   if isinstance(info.get('textureGroupId'), dict) else ''
 
     removed_sprites[name] = sprite_data
-
-# 剔除超出纹理上限的精灵（sprite_add 单行条带限制）
-if oversize_skip:
-    target_sprites -= oversize_skip
-    print(f'  跳过(超宽): {len(oversize_skip)} 个')
-    for n in sorted(oversize_skip):
-        print(f'    - {n}')
 
 print(f'  Enemy:  {cat_counts.get("Enemy", 0)} 个')
 print(f'  Cards:  {cat_counts.get("Cards", 0)} 个')
@@ -217,16 +210,18 @@ for name, data in removed_sprites.items():
         frames_img.append(Image.open(png))
     else:
         if len(frames_img) == _fc:
-            # ─ 水平条带 ─
-            strip = Image.new('RGBA', (_w * _fc, _h))
-            for i, img in enumerate(frames_img):
-                strip.paste(img, (i * _w, 0))
-            strip_path = f'{SPRITES_JOIN}/{name}.png'
-            strip.save(strip_path)
+            # ─ 水平条带（多段）──
+            _fps = data['frames_per_strip']
+            for _si in range(_strip_count):
+                _start = _si * _fps
+                _end   = min(_start + _fps, _fc)
+                _seg_fc = _end - _start
+                strip = Image.new('RGBA', (_w * _seg_fc, _h))
+                for j in range(_seg_fc):
+                    strip.paste(frames_img[_start + j], (j * _w, 0))
+                strip.save(data['strip_paths'][_si])
             # ─ 第一帧 ─
-            first = frames_img[0]
-            first_path = f'{SPRITES_JOIN}/{name}_first.png'
-            first.save(first_path)
+            frames_img[0].save(data['first_path'])
             strip_count += 1
         else:
             print(f'  [skip]  {name}  帧数不匹配 ({len(frames_img)} != {_fc})')
@@ -460,6 +455,48 @@ with open('datafiles/object_sprite_map.json', 'w', encoding='utf-8') as f:
 # 统计精灵引用总数
 _total_refs = sum(len(v) for v in object_sprite_map.values())
 print(f'  {len(object_sprite_map)} 个对象, {_total_refs} 条精灵引用')
+print()
+
+# ── 第 5.5 步：构建 object 依赖图（谁创建谁）──
+
+print('=' * 60)
+print('第 5.5 步：构建 object_deps.json（递归精灵依赖）')
+print('=' * 60)
+
+INST_RE = re.compile(r'instance_create_depth\s*\([^,]*,[^,]*,[^,]*,\s*(obj_\w+)')
+object_creates: dict[str, set[str]] = {}
+
+for gml_file in sorted(Path('objects').glob('**/*.gml')):
+    with open(gml_file, 'r', encoding='utf-8') as f:
+        content = f.read()
+    for m in INST_RE.finditer(content):
+        target = m.group(1)
+        owner = gml_file.parent.name
+        if owner not in object_creates:
+            object_creates[owner] = set()
+        object_creates[owner].add(target)
+
+# 递归展开：从 object_sprite_map 出发，合并所有被创建 object 的精灵
+object_deps: dict[str, list[str]] = {}
+
+def _collect_sprites(oname: str, visited: set[str]) -> set[str]:
+    if oname in visited:
+        return set()
+    visited.add(oname)
+    sprites = set(object_sprite_map.get(oname, []))
+    for child in object_creates.get(oname, []):
+        sprites |= _collect_sprites(child, visited)
+    return sprites
+
+for oname in sorted(set(list(object_sprite_map.keys()) + list(object_creates.keys()))):
+    object_deps[oname] = sorted(_collect_sprites(oname, set()))
+
+with open('datafiles/object_deps.json', 'w', encoding='utf-8') as f:
+    json.dump(object_deps, f, indent=2, ensure_ascii=False)
+_dep_objs = len(object_deps)
+_dep_refs = sum(len(v) for v in object_deps.values())
+print(f'  {_dep_objs} 个对象, {_dep_refs} 条精灵引用（含递归）')
+print()
 
 # 被移除精灵的详细信息，供后期重建
 removed_sprites['_project_root'] = str(PROJECT_ROOT.resolve()) + '\\'

@@ -4,6 +4,7 @@ global._loader_sprite_queue = ds_list_create();
 // 全局精灵缓存：name → sprite_index
 global._sprite_cache = ds_map_create();		// name → real id
 global._sprite_is_first = ds_map_create();  // name → bool，标记是否仅加载了第一帧
+global._sprite_strips = ds_map_create();    // name → {sprites: [...], fps: N}
 global._pid_map = ds_map_create();          // name → placeholder sprite
 global._pid_reverse = ds_map_create();      // placeholder sprite → name
 
@@ -325,6 +326,29 @@ function __sprite_manager_build(_name, _info) {
 
     var _dir = string_replace_all(_path, "/", "\\");
 
+    // ── 优先用预合并条带 PNG（depth 版）──
+    var _strip_paths = _info[$ "strip_paths"];
+    if (!is_undefined(_strip_paths)) {
+        var _fps = _info[$ "frames_per_strip"];
+        var _total = array_length(_strip_paths);
+        var _strips = array_create(_total);
+        var _ok = true;
+        for (var _si = 0; _si < _total; _si++) {
+            var _strip_file = __sprite_manager_find_png(string_replace_all(_strip_paths[_si], "/", "\\"));
+            if (!file_exists(_strip_file)) { _ok = false; break; }
+            var _seg_fc = (_si == _total - 1) ? _fc - _si * _fps : _fps;
+            var _s = sprite_add(_strip_file, _seg_fc, _rmback, _smooth, _xorigin, _yorigin);
+            if (_s == -1) { _ok = false; break; }
+            _strips[_si] = _s;
+        }
+        if (_ok) {
+            ds_map_add(global._sprite_strips, _name, {sprites: _strips, fps: _fps});
+            // 返回第一段作为"主精灵"，单段时正常，多段时 draw_self hook 切段
+            __sprite_manager_apply_props(_strips[0], _info);
+            return _strips[0];
+        }
+    }
+
     // ── 单帧：直接加载 ──
     if (_fc == 1) {
         var _png = __sprite_manager_find_png(_dir + "\\" + _frames[0] + ".png");
@@ -418,13 +442,38 @@ function __sprite_manager_build(_name, _info) {
 /// @param {Struct} _info  精灵信息
 /// @returns {Real} sprite_index，失败返回 -1
 function __sprite_manager_build_first_frame(_name, _info) {
-    var _path      = _info.path;
-    var _frames    = _info.frames;
     var _xorigin   = _info.xorigin;
     var _yorigin   = _info.yorigin;
     var _smooth    = false;
     var _rmback    = false;
 
+    // ── 优先用预存第一帧 PNG（depth 版）──
+    var _first = _info[$ "first_path"];
+    if (!is_undefined(_first)) {
+        var _first_file = __sprite_manager_find_png(string_replace_all(_first, "/", "\\"));
+        if (file_exists(_first_file)) {
+            var _spr = sprite_add(_first_file, 1, _rmback, _smooth, _xorigin, _yorigin);
+            if (_spr != -1) {
+                // 多段条带情况：也初始化 _sprite_strips 以便 draw_self 切段
+                var _strip_paths = _info[$ "strip_paths"];
+                if (!is_undefined(_strip_paths)) {
+                    var _total = array_length(_strip_paths);
+                    if (_total > 1) {
+                        ds_map_add(global._sprite_strips, _name, {
+                            sprites: [_spr],  // 只有第一段
+                            fps: _info[$ "frames_per_strip"]
+                        });
+                    }
+                }
+                __sprite_manager_apply_props(_spr, _info);
+                return _spr;
+            }
+        }
+    }
+
+    // ── 回退：从原始帧目录加载 ──
+    var _path      = _info.path;
+    var _frames    = _info.frames;
     var _dir = string_replace_all(_path, "/", "\\");
     var _png = __sprite_manager_find_png(_dir + "\\" + _frames[0] + ".png");
 

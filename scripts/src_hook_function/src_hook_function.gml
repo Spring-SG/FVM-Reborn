@@ -172,16 +172,29 @@ function __sprite_resolve(_spr){
 }
 
 function draw_self_define(){
-	var _bak = sprite_index;
-	if (ds_map_exists(global._pid_reverse, _bak)) {
-		var _name = global._pid_reverse[? _bak];
-		var _real = global._sprite_cache[? _name];
-		if (!is_undefined(_real)) {
-			sprite_index = _real;
+	var _bak_spr = sprite_index;
+	var _bak_img = image_index;
+	if (ds_map_exists(global._pid_reverse, _bak_spr)) {
+		var _name = global._pid_reverse[? _bak_spr];
+		var _strips_info = global._sprite_strips[? _name];
+		if (!is_undefined(_strips_info)) {
+			// 多段条带：根据 image_index 切到正确段和子帧
+			var _fps = _strips_info.fps;
+			var _arr = _strips_info.sprites;
+			var _si = floor(image_index) div _fps;
+			var _sub = floor(image_index) mod _fps;
+			sprite_index = _arr[clamp(_si, 0, array_length(_arr) - 1)];
+			image_index = _sub;
+		} else {
+			var _real = global._sprite_cache[? _name];
+			if (!is_undefined(_real)) {
+				sprite_index = _real;
+			}
 		}
 	}
 	draw_self_origfunc();
-	sprite_index = _bak;
+	sprite_index = _bak_spr;
+	image_index = _bak_img;
 }
 
 function draw_sprite_define(_spr, _subimg, _x, _y){

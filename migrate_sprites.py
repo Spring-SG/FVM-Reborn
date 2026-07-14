@@ -404,6 +404,48 @@ with open('datafiles/object_sprite_map.json', 'w', encoding='utf-8') as f:
 # 统计精灵引用总数
 _total_refs = sum(len(v) for v in object_sprite_map.values())
 print(f'  {len(object_sprite_map)} 个对象, {_total_refs} 条精灵引用')
+print()
+
+# ── 第 5.5 步：构建 object 依赖图（谁创建谁）──
+
+print('=' * 60)
+print('第 5.5 步：构建 object_deps.json（递归精灵依赖）')
+print('=' * 60)
+
+INST_RE = re.compile(r'instance_create_depth\s*\([^,]*,[^,]*,[^,]*,\s*(obj_\w+)')
+object_creates: dict[str, set[str]] = {}
+
+for gml_file in sorted(Path('objects').glob('**/*.gml')):
+    with open(gml_file, 'r', encoding='utf-8') as f:
+        content = f.read()
+    for m in INST_RE.finditer(content):
+        target = m.group(1)
+        owner = gml_file.parent.name
+        if owner not in object_creates:
+            object_creates[owner] = set()
+        object_creates[owner].add(target)
+
+# 递归展开：从 object_sprite_map 出发，合并所有被创建 object 的精灵
+object_deps: dict[str, list[str]] = {}
+
+def _collect_sprites(oname: str, visited: set[str]) -> set[str]:
+    if oname in visited:
+        return set()
+    visited.add(oname)
+    sprites = set(object_sprite_map.get(oname, []))
+    for child in object_creates.get(oname, []):
+        sprites |= _collect_sprites(child, visited)
+    return sprites
+
+for oname in sorted(set(list(object_sprite_map.keys()) + list(object_creates.keys()))):
+    object_deps[oname] = sorted(_collect_sprites(oname, set()))
+
+with open('datafiles/object_deps.json', 'w', encoding='utf-8') as f:
+    json.dump(object_deps, f, indent=2, ensure_ascii=False)
+_dep_objs = len(object_deps)
+_dep_refs = sum(len(v) for v in object_deps.values())
+print(f'  {_dep_objs} 个对象, {_dep_refs} 条精灵引用（含递归）')
+print()
 
 # 被移除精灵的详细信息，供后期重建
 removed_sprites['_project_root'] = str(PROJECT_ROOT.resolve()) + '\\'
