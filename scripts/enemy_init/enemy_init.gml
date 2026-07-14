@@ -101,4 +101,5 @@ function enemy_init(){
 	register_enemy("kamikaze_glider_mouse",{"name":"神风滑翔鼠","_obj":obj_kamikaze_glider_mouse,"hp":2340,"shield":1,"description":"神风滑翔鼠：受伤后使用自杀式俯冲摧毁卡片","speed":0.6,"atk":10,"cycle":36,"range":90,"ash_proof":true,"spr":spr_kamikaze_glider_mouse_air,"feature":"land"})
 	register_enemy("captain_america_mouse",{"name":"鼠国队长","_obj":obj_captain_america_mouse,"hp":90000,"shield":0,"description":"鼠国队长：浮空岛BOSS","speed":0.3,"atk":10,"cycle":36,"range":90,"ash_proof":true,"spr":spr_captain_america_mouse_idle,"feature":"land"})
 	register_enemy("iron_man_mouse",{"name":"钢铁侠鼠","_obj":obj_iron_man_mouse,"hp":90000,"shield":0,"description":"钢铁侠鼠：浮空岛BOSS","speed":0.3,"atk":10,"cycle":36,"range":90,"ash_proof":true,"spr":spr_iron_man_mouse_idle,"feature":"land"})
+	register_enemy("mouse_train_2",{"name":"鼠国列车二态","_obj":obj_mouse_train_2_head,"hp":200000,"shield":0,"description":"鼠国列车二态：香料飞船BOSS","speed":0.3,"atk":10,"cycle":36,"range":90,"ash_proof":true,"spr":spr_mouse_train_2_head_idle,"feature":"land"})
 }

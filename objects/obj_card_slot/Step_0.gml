@@ -2,8 +2,9 @@
 if global.is_paused{
 	exit
 }
-current_cost = cost
+
 if card_id != "magic_chicken"{
+	current_cost = cost
 	if ds_map_find_value(global.plus_card_map,card_id) != undefined{
 		var plus_info = ds_map_find_value(global.plus_card_map,card_id)
 		with plus_info[0]{

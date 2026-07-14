@@ -11,8 +11,8 @@ if card_id == "magic_chicken"{
 				cooldown_timer = cooldown
 			}
 			cost = prev_card_info[? "cost"]
+			current_cost = cost
 			if ds_map_find_value(global.plus_card_map,global.prev_place_id) != undefined{
-				current_cost = cost
 				var plus_info = ds_map_find_value(global.plus_card_map,global.prev_place_id)
 				with plus_info[0]{
 					if card_save_data.shape < plus_info[1]{
