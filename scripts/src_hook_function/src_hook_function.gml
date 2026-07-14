@@ -160,54 +160,26 @@ function __sprite_resolve(_spr){
 	if is_string(_spr){
 		_spr = get_load_sprite(_spr);
 	}
-	if(_spr>=100000){
-		if(_spr==100003)
-			var t = 1+1;
+
+	if (ds_map_exists(global._pid_reverse, _spr)) {
 		var _name = global._pid_reverse[? _spr];
-		if (!is_undefined(_name)) {
-			var _real = global._sprite_cache[? _name];
-			if (!is_undefined(_real)) {
-				return _real;
-			}
+		var _real = global._sprite_cache[? _name];
+		if (!is_undefined(_real)) {
+			return _real;
 		}
 	}
-	else{
-		return _spr;
-	}
-	return spr_cloud_daytime;
-/*	if (is_string(_spr)) return get_load_sprite(_spr);
-	// 占位 ID → 查重定向表，未加载返回云朵
-	if (_spr >= 100000) {
-		
-		var _ = global._pid_reverse[? _spr];
-		var _real = ds_map_find_first(_name);
-		if _real>0:
-		
-		if (!is_undefined(_name)) {
-			var _real = global._sprite_cache[? _name];
-			if (!is_undefined(_real) && sprite_exists(_real))
-				return _real;
-		}
-		return spr_cloud_daytime;
-	}
-	if (!sprite_exists(_spr)) return spr_cloud_daytime;
-	return _spr;*/
+	return _spr;
 }
 
 function draw_self_define(){
 	var _bak = sprite_index;
-	var _resolved = __sprite_resolve(_bak);
-	// 兜底：仅当确实是云朵默认时才反查绑定
-	if (_resolved == spr_cloud_daytime && !is_undefined(global._object_map)) {
-		var _obj_name = object_get_name(object_index);
-		if (!is_undefined(_obj_name)) {
-			var _spr_name = global._object_map[$ _obj_name];
-			if (!is_undefined(_spr_name)) {
-				_resolved = __sprite_resolve(get_load_sprite(_spr_name));
-			}
+	if (ds_map_exists(global._pid_reverse, _bak)) {
+		var _name = global._pid_reverse[? _bak];
+		var _real = global._sprite_cache[? _name];
+		if (!is_undefined(_real)) {
+			sprite_index = _real;
 		}
 	}
-	sprite_index = _resolved;
 	draw_self_origfunc();
 	sprite_index = _bak;
 }

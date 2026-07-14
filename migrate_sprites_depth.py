@@ -1,9 +1,8 @@
 """
-精灵 & 音乐迁移脚本
---------------------
-精灵：Enemy/Cards/Maps 目录下的精灵 → 删 .yyp、替换 object .yy spriteId、替换 .gml 常量
-音乐：所有 mus_* 音乐 → 删 .yyp、替换 .gml 常量
-所有改动先存 .bak，白名单内的跳过。
+精灵 & 音乐迁移脚本（深度版）
+--------------------------
+精灵帧 PNG → 预合并水平条带 → sprites_join/，运行时 sprite_add 直达，无需 surface 合成。
+其余操作与原版一致：删 .yyp、替换 object .yy、替换 .gml。
 """
 
 import json
@@ -11,6 +10,7 @@ import re
 import os
 import shutil
 from pathlib import Path
+from PIL import Image
 
 PROJECT_ROOT = Path(__file__).parent
 os.chdir(PROJECT_ROOT)
@@ -42,6 +42,7 @@ SKIP_AUDIO = {
 }
 
 MAX_STRIP_WIDTH = 16384  # GPU 纹理上限，超出则不迁移（sprite_add 单行条带限制）
+SPRITES_JOIN = 'sprites_join'            # 合并后 PNG 输出目录
 
 
 # ── 工具函数 ──────────────────────────────────────────
@@ -149,7 +150,9 @@ for name in sorted(target_sprites):
     # 以 .yy 原始数据为底，删掉无用的 meta 键，再覆盖 GML 需要的计算字段
     sprite_data = {k: v for k, v in info.items()
                    if k not in ('$GMSprite', '%Name', 'resourceType', 'resourceVersion', 'name')}
-    sprite_data['path']       = dir_path
+    sprite_data['path']       = dir_path  # 原始帧 PNG 所在目录
+    sprite_data['strip_path'] = f'{SPRITES_JOIN}/{name}.png'
+    sprite_data['first_path'] = f'{SPRITES_JOIN}/{name}_first.png'
     sprite_data['frames']     = frames_list
     sprite_data['frameCount'] = info.get('frameCount', len(frames_list) or 1)
     sprite_data['xorigin']    = info['xorigin'] if 'xorigin' in info else seq.get('xorigin', 0)
@@ -180,6 +183,59 @@ print(f'  Cards:  {cat_counts.get("Cards", 0)} 个')
 print(f'  Maps:   {cat_counts.get("Maps", 0)} 个')
 print(f'  白名单: {len(SKIP_SPRITES)} 个')
 print(f'  精灵合计: {len(target_sprites)} 个')
+
+# ── 第 1.5 步：生成合并条带 PNG ────────────────────────
+
+print('=' * 60)
+print('第 1.5 步：生成 sprites_join 合并条带')
+print('=' * 60)
+
+os.makedirs(SPRITES_JOIN, exist_ok=True)
+strip_count = 0
+
+for name, data in removed_sprites.items():
+    _dir   = data.get('path', '')
+    _fnames = data.get('frames', [])
+    _w     = data.get('width', 0)
+    _h     = data.get('height', 0)
+    _fc    = data.get('frameCount', len(_fnames) or 1)
+
+    if not _fnames or _w <= 0 or _h <= 0:
+        print(f'  [skip]  {name}  无帧数据')
+        continue
+
+    # ─ 加载每帧 PNG ─
+    frames_img: list[Image.Image] = []
+    for fn in _fnames:
+        png = Path(f'{_dir}/{fn}.png').resolve()
+        if not png.exists():
+            # 有时 _dir 是相对路径，试绝对
+            png = Path(PROJECT_ROOT) / f'{_dir}/{fn}.png'
+        if not png.exists():
+            print(f'  [miss]  {name}/{fn}.png')
+            break
+        frames_img.append(Image.open(png))
+    else:
+        if len(frames_img) == _fc:
+            # ─ 水平条带 ─
+            strip = Image.new('RGBA', (_w * _fc, _h))
+            for i, img in enumerate(frames_img):
+                strip.paste(img, (i * _w, 0))
+            strip_path = f'{SPRITES_JOIN}/{name}.png'
+            strip.save(strip_path)
+            # ─ 第一帧 ─
+            first = frames_img[0]
+            first_path = f'{SPRITES_JOIN}/{name}_first.png'
+            first.save(first_path)
+            strip_count += 1
+        else:
+            print(f'  [skip]  {name}  帧数不匹配 ({len(frames_img)} != {_fc})')
+    # 关图
+    for img in frames_img:
+        img.close()
+
+print(f'  生成 {strip_count} 个条带 (共 {len(removed_sprites)} 个精灵)')
+print()
 
 # ── 音乐：从 .yyp 收集所有 mus_* ──────────────────────
 

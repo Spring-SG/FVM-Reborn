@@ -4,24 +4,66 @@ global._loader_sprite_queue = ds_list_create();
 // 全局精灵缓存：name → sprite_index
 global._sprite_cache = ds_map_create();		// name → real id
 global._sprite_is_first = ds_map_create();  // name → bool，标记是否仅加载了第一帧
-global._pid_next = 100000;                  // 占位 ID 计数器
-global._pid_map = ds_map_create();          // name → pid
-global._pid_reverse = ds_map_create();      // pid → name
+global._pid_map = ds_map_create();          // name → placeholder sprite
+global._pid_reverse = ds_map_create();      // placeholder sprite → name
 
 /// @function get_load_sprite(_name)
-/// @desc 从缓存中查找已加载的精灵，未加载则返回默认占位精灵
+/// @desc 返回占位精灵（空白条带，帧数匹配原精灵），引擎可正常推进 image_index
 /// @param {String} _name  精灵名称，如 "spr_blonde_mary_idle"
 /// @returns {Real} sprite_index
 function get_load_sprite(_name) {
-    // 永远返回 pid（str ↔ pid 绑定，永不变）
-    var _pid = global._pid_map[? _name];
-    if (is_undefined(_pid)) {
-        _pid = global._pid_next;
-        global._pid_next++;
-        ds_map_add(global._pid_map, _name, _pid);
-        ds_map_add(global._pid_reverse, _pid, _name);
+    var _placeholder = global._pid_map[? _name];
+    if (is_undefined(_placeholder)) {
+        // 从 sprite_data 取帧数，未加载则默认 1
+        var _fc = 1;
+        if (!is_undefined(global._sprite_data)) {
+            var _info = global._sprite_data[$ _name];
+            if (!is_undefined(_info)) { _fc = _info.frameCount; }
+        }
+        // 创建 _fc×1 空白条带精灵
+        var _surf = surface_create(_fc, 1);
+        surface_set_target(_surf);
+        draw_clear_alpha(c_black, 0);
+        surface_reset_target();
+        var _tmp = working_directory + "_ph_" + _name + ".png";
+        surface_save(_surf, _tmp);
+        surface_free(_surf);
+        _placeholder = sprite_add(_tmp, _fc, false, false, 0, 0);
+        file_delete(_tmp);
+        ds_map_add(global._pid_map, _name, _placeholder);
+        ds_map_add(global._pid_reverse, _placeholder, _name);
+        // 同步速度和碰撞盒到占位精灵
+        if (!is_undefined(global._sprite_data)) {
+            var _info = global._sprite_data[$ _name];
+            if (!is_undefined(_info)) {
+                // 播放速度
+                var _seq = _info[$ "sequence"];
+                if (!is_undefined(_seq)) {
+                    var _spd = _seq[$ "playbackSpeed"];
+                    var _pst = _seq[$ "playbackSpeedType"];
+                    if (is_undefined(_spd)) { _spd = _info[$ "fps"]; }
+                    if (is_undefined(_pst)) { _pst = 0; }
+                    if (!is_undefined(_spd)) {
+                        var _speed_type = spritespeed_framespersecond;
+                        if (_pst == 1) { _speed_type = spritespeed_secondsperframe; }
+                        sprite_set_speed(_placeholder, _spd, _speed_type);
+                    }
+                }
+                // 碰撞遮罩
+                var _kind = _info.collisionKind;
+                var _bbox = _info.bbox;
+                var _tol  = _info[$ "collisionTolerance"];
+                if (is_undefined(_tol)) { _tol = 255; }
+                var _rtkind = 0;
+                switch (_kind) {
+                    case 4: _rtkind = 2; break;
+                    case 5: _rtkind = 3; break;
+                }
+                sprite_collision_mask(_placeholder, false, 2, _bbox[0], _bbox[1], _bbox[2], _bbox[3], _rtkind, _tol);
+            }
+        }
     }
-    return _pid;
+    return _placeholder;
 }
 
 /// @function sprite_manager_init()
@@ -359,11 +401,14 @@ function __sprite_manager_build(_name, _info) {
         sprite_delete(_temp_sprites[t]);
     }
     if (file_exists(_tmp_file)) {
-        file_delete(_tmp_file);
+       // file_delete(_tmp_file);
+       // file_delete(_tmp_file);
     }
 
     if (_spr == -1) return -1;
-
+	if _name=="spr_small_fire"{
+		var t=0;
+	}
     __sprite_manager_apply_props(_spr, _info);
     return _spr;
 }
@@ -395,29 +440,78 @@ function __sprite_manager_build_first_frame(_name, _info) {
     return _spr;
 }
 
-/// @desc 设置碰撞模式和播放速度
+/// @desc 根据 .yy 完整数据设置精灵属性：速度、碰撞、九宫格
+/// .yy collisionKind → runtime kind 映射:
+///   0=自动矩形 → 0(rect)   1=手动矩形 → 0(rect)
+///   4=椭圆     → 2(ellipse) 5=菱形    → 3(diamond)
 function __sprite_manager_apply_props(_spr, _info) {
-    var _fps = _info.fps;
-    if (_fps > 0) {
-        sprite_set_speed(_spr, _fps, spritespeed_framespersecond);
-    }
+    // ── 播放速度（直接从 .yy 原始序列数据读取）──
+	_names = global._pid_reverse[? _spr];
+	if _spr=="spr_small_fire" or global._pid_reverse[? _spr]=="spr_small_fire"{
+		var t=0;
+	}
+    var _seq = _info[$ "sequence"];
 
-    var _kind = _info.collisionKind;
-    var _bbox = _info.bbox;
-    var _tol = _info[$ "collisionTolerance"];
+    if (!is_undefined(_seq)) {
+        var _spd = _seq[$ "playbackSpeed"];
+        var _pst = _seq[$ "playbackSpeedType"];
+        if (is_undefined(_spd)) { _spd = _info[$ "fps"]; }
+        if (is_undefined(_pst)) { _pst = 0; }
+        if (!is_undefined(_spd)) {
+            sprite_set_speed(_spr, _spd, _pst);
+        }
+    }
+	
+    		
+    // ── 碰撞遮罩 ──
+    var _kind  = _info.collisionKind;
+    var _bbox  = _info.bbox;
+    var _bmode = _info[$ "bboxMode"];
+    if (is_undefined(_bmode)) _bmode = 0;
+    var _tol   = _info[$ "collisionTolerance"];
     if (is_undefined(_tol)) _tol = 255;
 
     switch (_kind) {
-        case 1: // 矩形
-            sprite_collision_mask(_spr, false, 2, _bbox[0], _bbox[1], _bbox[2], _bbox[3], _kind, _tol);
+        case 0: // 自动矩形 → runtime rect (kind=0), 沿用 .yy 的 bboxMode
+            sprite_collision_mask(_spr, false, _bmode, _bbox[0], _bbox[1], _bbox[2], _bbox[3], 0, _tol);
             break;
-        case 3: // 精确
-            sprite_collision_mask(_spr, true, 0, 0, 0, 0, 0, _kind, _tol);
+        case 1: // 手动矩形 → runtime rect (kind=0), bboxMode=2 手动
+            sprite_collision_mask(_spr, false, 2, _bbox[0], _bbox[1], _bbox[2], _bbox[3], 0, _tol);
             break;
-        default: // 0=自动 或其他
-            sprite_collision_mask(_spr, false, 0, 0, 0, 0, 0, _kind, _tol);
+        case 4: // 椭圆 → runtime ellipse (kind=2), bboxMode=2 手动使用 .yy bbox 值
+            sprite_collision_mask(_spr, false, 2, _bbox[0], _bbox[1], _bbox[2], _bbox[3], 2, _tol);
+            break;
+        case 5: // 菱形 → runtime diamond (kind=3), bboxMode=2 手动使用 .yy bbox 值
+            sprite_collision_mask(_spr, false, 2, _bbox[0], _bbox[1], _bbox[2], _bbox[3], 3, _tol);
+            break;
+        default:
+            sprite_collision_mask(_spr, false, _bmode, _bbox[0], _bbox[1], _bbox[2], _bbox[3], 0, _tol);
             break;
     }
+    // ── 九宫格 ──
+    // 当前 GMS2 版本 NineSlice struct / sprite_set_nineslice 不可用，暂注释
+    /*
+    var _nine = _info[$ "nineSlice"];
+    if (!is_undefined(_nine) && _nine != undefined) {
+        if (is_struct(_nine) || is_method(_nine)) {
+            var _nl = _nine[$ "left"];
+            if (!is_undefined(_nl)) {
+                var _nt = _nine[$ "top"];
+                var _nr = _nine[$ "right"];
+                var _nb = _nine[$ "bottom"];
+                var _ne = _nine[$ "enabled"];
+                sprite_set_nineslice(_spr, _nl, _nt, _nr, _nb, _ne != false);
+            }
+        }
+    }
+    */
+
+    // ── 预乘 Alpha ──
+    // 当前 GMS2 版本无 sprite_set_premultiplied API，暂跳过
+    // var _pma = _info[$ "preMultiplyAlpha"];
+    // if (!is_undefined(_pma)) {
+    //     sprite_set_premultiplied(_spr, _pma);
+    // }
 }
 
 /// @desc 先试相对路径，失败拼绝对路径兜底

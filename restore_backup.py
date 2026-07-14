@@ -65,12 +65,22 @@ for bak_file in sorted(Path('objects').glob('**/*.gml.bak')):
 
 # ── 4. 清理映射文件 ──────────────────────────────────
 
-for fname in ['object_sprite_map.json', 'removed_sprites.json']:
+for fname in ['datafiles/object_sprite_map.json', 'datafiles/removed_sprites.json']:
     f = Path(fname)
     if f.exists():
         f.unlink()
         print(f'  [del]  {fname}')
         removed += 1
+
+# ── 5. 清理 sprites_join ──────────────────────────────
+
+join_dir = Path('sprites_join')
+if join_dir.exists():
+    for png in join_dir.glob('*.png'):
+        png.unlink()
+        removed += 1
+    join_dir.rmdir()
+    print(f'  [del]  sprites_join/  ({removed} 文件)')
 
 print()
 

@@ -507,8 +507,6 @@
     {"$GMIncludedFile":"","%Name":"snowcap_volcano.json","CopyToMask":-1,"filePath":"datafiles/level_data/volcanic","name":"snowcap_volcano.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"请不要修改这个文件夹中的文件","CopyToMask":-1,"filePath":"datafiles/level_data","name":"请不要修改这个文件夹中的文件","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"FvmNativeSupport.dll","CopyToMask":-1,"filePath":"datafiles/native","name":"FvmNativeSupport.dll","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
-    {"$GMIncludedFile":"","%Name":"object_sprite_map.json","CopyToMask":-1,"filePath":"datafiles","name":"object_sprite_map.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
-    {"$GMIncludedFile":"","%Name":"removed_sprites.json","CopyToMask":-1,"filePath":"datafiles","name":"removed_sprites.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"scribble_license.txt","CopyToMask":-1,"filePath":"datafiles","name":"scribble_license.txt","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
   ],
   "isEcma":false,
