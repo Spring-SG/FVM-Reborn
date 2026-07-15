@@ -49,3 +49,13 @@ with obj_lava{
 		other.move_speed_modify = 1
 	}
 }
+with obj_mucus{
+	if other.grid_row == row && other.grid_col == col &&
+	(other.target_type == "normal" || other.target_type == "dance" || other.target_type == "air" || other.target_type == "obstacle"){
+		other.move_speed_modify = 2
+		break
+	}
+	else{
+		other.move_speed_modify = 1
+	}
+}
