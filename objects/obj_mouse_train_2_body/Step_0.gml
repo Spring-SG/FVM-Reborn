@@ -56,7 +56,7 @@ switch state{
 					sprite_index = spr_mouse_train_2_body_appear4
 				}
 			}
-			if hp > maxhp * hurt_rate{
+			if train_head.hp > maxhp * hurt_rate{
 				image_index = floor(timer/5) mod 9
 			}
 			else{
@@ -70,7 +70,7 @@ switch state{
 			else{
 				sprite_index = spr_mouse_train_2_body_idle2
 			}
-			if hp > maxhp * hurt_rate{
+			if train_head.hp > maxhp * hurt_rate{
 				image_index = floor(timer/5) mod 4
 			}
 			else{
@@ -98,14 +98,32 @@ switch state{
 		else{
 			sprite_index = spr_mouse_train_2_body_skill_1_1
 		}
-		if train_head.hp > maxhp * hurt_rate{
-			image_index = floor(timer/5) mod 40
+		if timer <= 10 * 5 - 1{
+			if train_head.hp > maxhp * hurt_rate{
+				image_index = floor(timer/5) mod 10
+			}
+			else{
+				image_index = floor(timer/5) mod 10 + 40
+			}
+		}
+		else if timer <= 62 * 5 - 1{
+			if train_head.hp > maxhp * hurt_rate{
+				image_index = floor((timer-10*5)/5) mod 12 + 10
+			}
+			else{
+				image_index = floor((timer-10*5)/5) mod 12 + 50
+			}
 		}
 		else{
-			image_index = floor(timer/5) mod 40 + 40
+			if train_head.hp > maxhp * hurt_rate{
+				image_index = floor((timer-62*5)/5) mod 18 + 22
+			}
+			else{
+				image_index = floor((timer-62*5)/5) mod 18 + 62
+			}
 		}
 		
-		if timer >= 40*5 -1{
+		if timer >= 80*5 -1{
 			move_time = 250 - move_time + 45
 			jump_times = 0
 			timer = 0
@@ -217,7 +235,7 @@ switch state{
 			else{
 				sprite_index = spr_mouse_train_2_body_idle2
 			}
-			if hp > maxhp * hurt_rate{
+			if train_head.hp > maxhp * hurt_rate{
 				image_index = floor(timer/5) mod 2
 			}
 			else{
@@ -241,7 +259,7 @@ switch state{
 					sprite_index = spr_mouse_train_2_body_disappear4
 				}
 			}
-			if hp > maxhp * hurt_rate{
+			if train_head.hp > maxhp * hurt_rate{
 				image_index = floor((timer+5*9-move_time)/5) mod 9
 			}
 			else{

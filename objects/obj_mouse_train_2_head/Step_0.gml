@@ -10,7 +10,7 @@ if !appear{
 	image_angle = 0
 	var enemy_row = irandom_range(0,global.grid_rows-1)
 	var enemy_pos = {}
-	skill_choose = irandom_range(2,2)
+	skill_choose = irandom_range(0,0)
 	skill_change_style = irandom_range(0,1)
 	if skill_choose == 0{
 		enemy_row = 0
@@ -209,41 +209,48 @@ switch state{
 			}
 		}
 		
-		if timer == 11 * 5 + 2{
+		if timer == 46 * 5 + 2{
 			for(var i = 0 ; i < 4 ; i++){
-				var laser_pos = get_world_position_from_grid(2*i+1,0)
-				var laser_inst = instance_create_depth(laser_pos.x,laser_pos.y+90,-800,obj_coke_bomb_explode)
-				laser_inst.sprite_index = spr_mouse_train_2_laser
+				if max(skill_1_damage[i],skill_1_damage[7-i]) < 0.015*maxhp{
+					var laser_pos = get_world_position_from_grid(2*i+1,0)
+					var laser_inst = instance_create_depth(laser_pos.x,laser_pos.y+90,-800,obj_coke_bomb_explode)
+					laser_inst.sprite_index = spr_mouse_train_2_laser
+				}
 			}
 		}
-		if timer == 29 * 5 + 2{
+		if timer == 64 * 5 + 2{
 			for(var i = 0 ; i < 4 ; i++){
-				var laser_pos = get_world_position_from_grid(2*i+1,global.grid_rows-2)
-				var laser_inst = instance_create_depth(laser_pos.x,laser_pos.y-40,-801,obj_coke_bomb_explode)
-				laser_inst.sprite_index = spr_mouse_train_2_laser_target
-				laser_inst.image_yscale = -1.8
+				if max(skill_1_damage[i],skill_1_damage[7-i]) < 0.015*maxhp{
+					var laser_pos = get_world_position_from_grid(2*i+1,global.grid_rows-2)
+					var laser_inst = instance_create_depth(laser_pos.x,laser_pos.y-40,-801,obj_coke_bomb_explode)
+					laser_inst.sprite_index = spr_mouse_train_2_laser_target
+					laser_inst.image_yscale = -1.8
+				}
 			}
 		}
-		if timer == 30 * 5 + 2{
+		if timer == 65 * 5 + 2{
 			for(var i = 0 ; i < 4 ; i++){
-				with obj_card_parent{
-					if grid_col == (i*2+1) && grid_row != 0 && grid_row != global.grid_rows-1 &&
-					plant_id != "player" && plant_type != "coffee" && !invincible && plant_id != "cotton_candy"{
-						if hp >= max_hp{
-							obj_task_manager.card_loss++
+				if max(skill_1_damage[i],skill_1_damage[7-i]) < 0.015*maxhp{
+					with obj_card_parent{
+						if grid_col == (i*2+1) && grid_row != 0 && grid_row != global.grid_rows-1 &&
+						plant_id != "player" && plant_type != "coffee" && !invincible && plant_id != "cotton_candy"{
+							if hp >= max_hp{
+								obj_task_manager.card_loss++
+							}
+							instance_destroy()
 						}
-						instance_destroy()
 					}
 				}
 			}
 		}
 		
-		if timer >= 40*5 -1{
+		if timer >= 80*5 -1{
+			skill_1_damage = [0,0,0,0,0,0,0,0]
 			move_time = 50
 			jump_times = 0
 			timer = 0
 			state = BOSS_STATE.DISAPPEAR
-			disappear_time = 180
+			disappear_time = 300
 		}
 		break
 	
@@ -310,7 +317,7 @@ switch state{
 			jump_times = 0
 			timer = 0
 			state = BOSS_STATE.DISAPPEAR
-			disappear_time = 180
+			disappear_time = 300
 		}
 		break
 		
@@ -347,7 +354,7 @@ switch state{
 			jump_times = 0
 			timer = 0
 			state = BOSS_STATE.DISAPPEAR
-			disappear_time = 540
+			disappear_time = 660
 		}
 		break
 		

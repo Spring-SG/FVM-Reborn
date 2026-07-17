@@ -29,9 +29,9 @@ if (instance_exists(target_enemy) && target_enemy.hp > 0 && can_hit(target_type,
 			
             // 检查是否比当前目标更靠左
             if (x < other.target_enemy.x) {
-                if (closest_left_enemy == noone || x < min_x || (x == min_x && hp > max_hp)){
+                if (closest_left_enemy == noone || x < min_x || (x == min_x && maxhp > max_hp)){
                     min_x = x;
-                    max_hp = hp;
+                    max_hp = maxhp;
                     closest_left_enemy = id;
                 }
             }

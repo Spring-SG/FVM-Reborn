@@ -35,6 +35,7 @@ hpbar_inst.target_boss = id
 hpbar_inst.boss_id = mouse_id
 
 train_body_list = []
+skill_1_damage = [0,0,0,0,0,0,0,0]
 is_reversed = false
 
 if obj_battle.boss_count > 0{

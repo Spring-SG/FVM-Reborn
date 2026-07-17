@@ -10,6 +10,14 @@ else{
 	}
 	if hp < maxhp && train_head.hp > 0{
 		train_head.hp -= (maxhp-hp)
+		
+		if state == BOSS_STATE.SKILL1 && timer >= 10 * 5 && timer <= 46*5{
+			var train_index = array_get_index(train_head.train_body_list,id)
+			if train_index != -1{
+				train_head.skill_1_damage[train_index] += (maxhp-hp)
+			}
+		}
+		
 		hp = maxhp
 	}
 }

@@ -1886,7 +1886,7 @@ function task_init(){
 		register_task("card_upgrade_12",
 			{
 				"type":"side_task",
-				"title":"增强实力-11",
+				"title":"增强实力-12",
 				"desc":"只有拥有更高级的卡片才能抵御越来越多的敌人。",
 				"single_game":false,//非单局完成
 				"oneshot":false,//非一命完成
@@ -2581,8 +2581,8 @@ function task_init(){
 					},
 					{
 						"type":"time_limit",
-						"desc":"通关时间不超过450秒",
-						"require":450,
+						"desc":"通关时间不超过540秒",
+						"require":540,
 					},
 				],
 				"rewards":[
