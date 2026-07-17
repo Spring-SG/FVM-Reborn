@@ -224,28 +224,46 @@ else if (state == "moving") {
                             plant.banding_star_obj.x += visual_delta_x;
                             plant.banding_star_obj.y += visual_delta_y;
                         }
-                        
-                        with (all) {
-                            if ((variable_instance_exists(id, "parent_plant") && parent_plant == plant) || 
-                                (variable_instance_exists(id, "parent_player") && parent_player == plant)) {
-                                if (id != plant) {
-                                    x += visual_delta_x;
-                                    y += visual_delta_y;
-                                    if (variable_instance_exists(id, "target_x")) target_x += visual_delta_x;
-                                    if (variable_instance_exists(id, "target_y")) target_y += visual_delta_y;
-                                    
-                                    if (object_index == obj_melon_shield_inner && instance_exists(parent_plant)) {
-                                        depth = calculate_plant_depth(parent_plant.grid_col, parent_plant.grid_row, "shield_inner");
-                                    }
-                                }
-                            }
-                        }
+						
+						if (ds_map_exists(global._move_instance_map,plant.id)){
+							var _list = global._move_instance_map[? plant.id];
+							for(var _i=ds_list_size(_list)-1;_i>=0;_i--){
+								var _ins = _list[| _i]; 
+								if(instance_exists(_ins)){
+									with (_ins){
+										x += visual_delta_x;
+			                            y += visual_delta_y;
+			                            if (variable_instance_exists(id, "target_x")) target_x += visual_delta_x;
+			                            if (variable_instance_exists(id, "target_y")) target_y += visual_delta_y;
+			                            if (object_index == obj_melon_shield_inner && instance_exists(parent_plant)) {
+			                                depth = calculate_plant_depth(parent_plant.grid_col, parent_plant.grid_row, "shield_inner");
+			                            }
+									}
+								}else{
+									ds_list_delete(_list,_i);
+								}
+							}
+						}
+						
                     }
                 }
             }
         }
     }
-    
+	
+    // 删除不存在的实例id，并清理对应的 list
+	var _keys = ds_map_keys_to_array(global._move_instance_map);
+	for (var _i = 0; _i < array_length(_keys); _i++) {
+	    var _key = _keys[_i];
+	    if (!instance_exists(_key)) {
+	        var _list = global._move_instance_map[? _key];
+	        if (ds_exists(_list, ds_type_list)) {
+	            ds_list_destroy(_list);
+	        }
+	        ds_map_delete(global._move_instance_map, _key);
+	    }
+	}
+	
     if (is_finish) {
         move_progress = 0;
         visual_x_shift = 0;
