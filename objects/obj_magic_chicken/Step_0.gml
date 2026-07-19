@@ -49,8 +49,8 @@ if attack_timer == 15 * current_flash_speed - 1{
 		    if (grid_pos_dir.col >= p_start_c && grid_pos_dir.col < p_start_c + width &&
 		        grid_pos_dir.row >= p_start_r && grid_pos_dir.row < p_start_r + length) {
 		        found_plat = id;
-		        logical_col = grid_pos_dir.col;
-		        logical_row = grid_pos_dir.row;
+		        logical_col = grid_pos_adj.col;
+		        logical_row = grid_pos_adj.row;
 		        platform_shift_x = shift_x;
 		        platform_shift_y = shift_y;
 		        break;
