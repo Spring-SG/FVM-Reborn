@@ -37,14 +37,18 @@ with obj_card_parent{
 		if grid_row == other.grid_row && grid_col == other.grid_col{
 			for(var i = 0 ; i < array_length(other.bun_card_info) ; i++){
 				if plant_id == other.bun_card_info[i].card_id{
+					var can_absorb = false
 					for(var j = 0 ; j < other.bun_card_info[i].bun_amount ; j++){
 						if other.bun_count < other.max_bun{
 							other.bun_count++
 							array_push(other.bullet_list,{"bullet_type":other.bun_card_info[i].bullet_type,"damage":atk})
+							can_absorb = true
 						}
 					}
-					other.state = CARD_STATE.GROW
-					instance_destroy()
+					if can_absorb{
+						other.state = CARD_STATE.GROW
+						instance_destroy()
+					}
 					break
 				}
 			}
