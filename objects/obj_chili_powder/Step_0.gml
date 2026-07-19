@@ -12,7 +12,7 @@ var has_enemy = false
 var _range = 121
 
 with obj_enemy_parent{
-	if x - other.x > -40 && x - other.x <= _range && grid_row == other.grid_row{
+	if abs(x - other.x) <= _range && grid_row == other.grid_row{
 		has_enemy = true
 		other.enemy_encounted = true
 	}

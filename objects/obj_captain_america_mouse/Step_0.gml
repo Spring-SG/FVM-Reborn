@@ -198,13 +198,22 @@ switch state{
 				image_index = floor((skill_timer-55) /5) mod 11 + 11
 			}
 		}
-		else{
+		else if skill_timer <= 43* 5 - 1{
 			sprite_index = spr_captain_america_mouse_skill_3
 			if hp > maxhp * hurt_rate{
 				image_index = floor((skill_timer-110) /5) mod 21
 			}
 			else{
 				image_index = floor((skill_timer-110) /5) mod 21 + 21
+			}
+		}
+		else{
+			sprite_index = spr_captain_america_mouse_idle
+			if hp > maxhp * hurt_rate{
+				image_index = floor((skill_timer-215) /5) mod 11
+			}
+			else{
+				image_index = floor((skill_timer-215) /5) mod 11 + 11
 			}
 		}
 		
@@ -237,7 +246,7 @@ switch state{
 			target_coord = selected_coords
 		}
 		
-		if timer mod 215 == 55{
+		if timer mod 335 == 55{
 			if jump_times < 3{
 				var target_pos_array = target_coord[jump_times]
 				var target_pos = get_world_position_from_grid(target_pos_array[0],target_pos_array[1])
@@ -246,10 +255,10 @@ switch state{
 				jump_times ++
 			}
 		}
-		if timer mod 215 == 0{
+		if timer mod 335 == 0{
 			skill_timer = 0
 		}
-		if timer mod 215 == 167{
+		if timer mod 335 == 167{
 			with obj_card_parent{
 				if grid_col <= other.grid_col-1 && grid_col >= other.grid_col-2 && grid_row == other.grid_row &&
 				plant_id != "player" && plant_type != "coffee" && !invincible && plant_id != "cotton_candy"{
@@ -263,7 +272,7 @@ switch state{
 			effect.sprite_index = spr_captain_america_mouse_effect
 		}
 		
-		if timer >= 3*215-1{
+		if timer >= 3*335-1{
 			jump_times = 0
 			skill_timer = 0
 			timer = 0

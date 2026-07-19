@@ -656,7 +656,8 @@ function maps_init(){
 					"boss_music":mus_floating_island_night_boss,
 					"pre_level":"tower_cake_22_1",
 					"rewards":[
-						{"card_id":"salad_pult","target_shape":2}
+						{"card_id":"salad_pult","target_shape":2},
+						{"card_id":"flour_sack","target_shape":2}
 					]
 				},
 				{
@@ -828,7 +829,8 @@ function maps_init(){
 					"boss_music":mus_floating_island_daytime_boss,
 					"pre_level":"tower_cake_28_1",
 					"rewards":[
-						{"card_id":"kettle_bomb","target_shape":2}
+						{"card_id":"kettle_bomb","target_shape":2},
+						{"card_id":"chili_powder","target_shape":2}
 					]
 				},
 				{

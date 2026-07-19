@@ -236,10 +236,10 @@ switch state{
 				sprite_index = spr_mouse_train_2_body_idle2
 			}
 			if train_head.hp > maxhp * hurt_rate{
-				image_index = floor(timer/5) mod 2
+				image_index = floor(timer/5) mod 4
 			}
 			else{
-				image_index = floor(timer/5) mod 2 + 2
+				image_index = floor(timer/5) mod 4 + 4
 			}
 		}
 		else{

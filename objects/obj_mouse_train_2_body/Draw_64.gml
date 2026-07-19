@@ -10,7 +10,7 @@ if instance_exists(train_head){
 		var train_index = array_get_index(train_head.train_body_list,id)
 		if train_index != -1{
 			draw_set_colour(c_white)
-			draw_text(x,y,$"{train_head.skill_1_damage[train_index]}/{0.015*maxhp}")
+			draw_text(x,y,$"{train_head.skill_1_damage[train_index]}/{0.01*maxhp}")
 		}
 	}
 }

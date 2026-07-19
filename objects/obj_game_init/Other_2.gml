@@ -103,6 +103,7 @@ load_file(global.save_slot)
 	unlock_card("king_triple_long_bao",12,1,7)
 	unlock_card("chili_powder",12,1,7)
 	unlock_card("tang_hu_lu",12,1,7)
+	//unlock_card("beef_hotpot",12,2,8)
 	
 	global.save_data.player.gold = 20000000
 	global.save_data.player.level = 55

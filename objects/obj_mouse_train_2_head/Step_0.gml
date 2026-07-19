@@ -10,7 +10,7 @@ if !appear{
 	image_angle = 0
 	var enemy_row = irandom_range(0,global.grid_rows-1)
 	var enemy_pos = {}
-	skill_choose = irandom_range(0,0)
+	skill_choose = irandom_range(0,2)
 	skill_change_style = irandom_range(0,1)
 	if skill_choose == 0{
 		enemy_row = 0
@@ -211,7 +211,7 @@ switch state{
 		
 		if timer == 46 * 5 + 2{
 			for(var i = 0 ; i < 4 ; i++){
-				if max(skill_1_damage[i],skill_1_damage[7-i]) < 0.015*maxhp{
+				if max(skill_1_damage[i],skill_1_damage[7-i]) < 0.01*maxhp{
 					var laser_pos = get_world_position_from_grid(2*i+1,0)
 					var laser_inst = instance_create_depth(laser_pos.x,laser_pos.y+90,-800,obj_coke_bomb_explode)
 					laser_inst.sprite_index = spr_mouse_train_2_laser
@@ -220,7 +220,7 @@ switch state{
 		}
 		if timer == 64 * 5 + 2{
 			for(var i = 0 ; i < 4 ; i++){
-				if max(skill_1_damage[i],skill_1_damage[7-i]) < 0.015*maxhp{
+				if max(skill_1_damage[i],skill_1_damage[7-i]) < 0.01*maxhp{
 					var laser_pos = get_world_position_from_grid(2*i+1,global.grid_rows-2)
 					var laser_inst = instance_create_depth(laser_pos.x,laser_pos.y-40,-801,obj_coke_bomb_explode)
 					laser_inst.sprite_index = spr_mouse_train_2_laser_target
@@ -230,7 +230,7 @@ switch state{
 		}
 		if timer == 65 * 5 + 2{
 			for(var i = 0 ; i < 4 ; i++){
-				if max(skill_1_damage[i],skill_1_damage[7-i]) < 0.015*maxhp{
+				if max(skill_1_damage[i],skill_1_damage[7-i]) < 0.01*maxhp{
 					with obj_card_parent{
 						if grid_col == (i*2+1) && grid_row != 0 && grid_row != global.grid_rows-1 &&
 						plant_id != "player" && plant_type != "coffee" && !invincible && plant_id != "cotton_candy"{
