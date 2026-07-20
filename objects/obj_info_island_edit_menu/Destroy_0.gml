@@ -1,2 +1,3 @@
 instance_destroy(obj_info_island_card_edit_select_btn)
 instance_destroy(obj_info_island_edit_menu_btn)
+ds_map_destroy(target_current_info)

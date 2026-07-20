@@ -43,3 +43,4 @@ if get_gem_index("transform_gem")!= -1{
 	var f_inst = instance_create_depth(x,y,-2000,obj_flame)
 	f_inst.value = f_value
 }
+ds_list_destroy(brazier_list)

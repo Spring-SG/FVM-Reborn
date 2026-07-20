@@ -28,4 +28,5 @@ if global.save_data.unlocked_items.mario_mouse_killed && global.save_data.player
 	global.save_data.player.level = 7
 	show_notice("神殿已解锁",60)
 }
+ds_list_destroy(avaliable_pos)
 instance_destroy(hpbar_inst)

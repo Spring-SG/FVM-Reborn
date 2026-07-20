@@ -10,8 +10,8 @@ function calculate_plant_depth(col, row, plant_type) {
     // 根据植物类型设置层级偏移
     var layer_offset = 0;
     
-    // 定义层级顺序（从大到小，即从前面到后面）
-    var layer_order = ["lilypad", "shield_inner", "normal", "shield_outer", "coffee"];
+    // 定义层级顺序（从大到小，即从前面到后面）；static避免每次调用重新分配数组（内容只读）
+    static layer_order = ["lilypad", "shield_inner", "normal", "shield_outer", "coffee"];
     
     // 查找植物类型在层级顺序中的位置
     var layer_index = array_index_of(layer_order, plant_type);
