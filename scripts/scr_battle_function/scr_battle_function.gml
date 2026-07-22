@@ -102,8 +102,8 @@ function parse_network_message(buf, _sock) {
             var object_name = buffer_read(buf, buffer_string);
             var meta = buffer_read(buf, buffer_string);
 			var _sprite_name = buffer_read(buf, buffer_string);
-			
-			
+
+
 			var _props = { "current_level": level, "skill": skill, "shape": shape };
 			if (meta != "") {
 				var _st = json_parse(meta);
@@ -113,10 +113,9 @@ function parse_network_message(buf, _sock) {
 					_props[$ _key] = _st[$ _key];
 				}
 			}
-			if (_sprite_name != "") { 
-				if 	asset_get_index(_sprite_name)!=-1{
-					_props[$ "sprite_index"] = asset_get_index(_sprite_name);
-				}
+			
+			if (_sprite_name != "") {
+				_props[$ "sprite_index"] =get_load_sprite( _sprite_name);
 			}
 			
 			var obj_index = asset_get_index(object_name);
@@ -201,8 +200,18 @@ function parse_network_message(buf, _sock) {
 			        _props[$ _key] = _st[$ _key];
 			    }
 			}
+			
+			// sprite_list 字符串名还原为本地ID
+			if (variable_struct_exists(_props, "sprite_list")) {
+			    var _sl = _props[$ "sprite_list"];
+			    for (var _si = 0; _si < array_length(_sl); _si++) {
+			        if (is_string(_sl[_si])) {
+			           _sl[_si] = get_load_sprite(_sl[_si]);		            
+			        }
+			    }
+			}
 			if (_sprite_name != "") {
-			    _props[$ "sprite_index"] = asset_get_index(_sprite_name);
+				_props[$ "sprite_index"] = get_load_sprite(_sprite_name);
 			}
 
             global.network.client_able = true;
@@ -397,7 +406,11 @@ function parse_network_message(buf, _sock) {
                 var _keys = struct_get_names(_props);
                 for (var _k = 0; _k < array_length(_keys); _k++) {
                     var _key = _keys[_k];
-                    variable_instance_set(_inst, _key, _props[$ _key]);
+                    var _val = _props[$ _key];
+                    if (_key == "sprite_index" && is_string(_val)) {
+                        _val = get_load_sprite(_val);
+                    }
+                    variable_instance_set(_inst, _key, _val);
                 }
             }
             break;
@@ -483,7 +496,11 @@ function parse_network_message(buf, _sock) {
                             var _keys = struct_get_names(_props);
                             for (var _k = 0; _k < array_length(_keys); _k++) {
                                 var _key = _keys[_k];
-                                variable_instance_set(id, _key, _props[$ _key]);
+                                var _val = _props[$ _key];
+                                if (_key == "sprite_index" && is_string(_val)) {
+                                    _val = get_load_sprite(_val);
+                                }
+                                variable_instance_set(id, _key, _val);
                             }
                             if (variable_struct_exists(_act, "target_ids")) {
                                 var _target_ids = _act.target_ids;
@@ -497,6 +514,33 @@ function parse_network_message(buf, _sock) {
                                 }
                             }
                         }
+                        break;
+                   case "modify":
+						_inst = global.network.map_net_id_instance_id[? _act.net_id];
+						_inst.visible=true;
+						with (_inst) {
+							var _props = _act.props;
+							var _keys = struct_get_names(_props);
+							for (var _k = 0; _k < array_length(_keys); _k++) {
+							    var _key = _keys[_k];
+							    var _val = _props[$ _key];
+							    if (_key == "sprite_index" && is_string(_val)) {
+							        _val = get_load_sprite(_val);
+							    }
+							    variable_instance_set(id, _key, _val);
+							}
+							if (variable_struct_exists(_act, "target_ids")) {
+							    var _target_ids = _act.target_ids;
+							    var _ids_keys = variable_struct_get_names(_target_ids);
+							    for (var _k = 0; _k < array_length(_ids_keys); _k++) {
+							        var _key = _ids_keys[_k];
+									if ds_map_exists(global.network.map_net_id_instance_id,_target_ids[$ _key]){
+										var _val = global.network.map_net_id_instance_id[? _target_ids[$ _key] ];
+										variable_instance_set(id, _key, _val);
+									}
+							    }
+							}
+						}
                         break;
                     case "destroy":
                         if (instance_exists(_act.id)) instance_destroy(_act.id);
@@ -643,12 +687,17 @@ function parse_network_message(buf, _sock) {
 		case MSG_START_BATTLE:
 		{
             show_debug_message("[解析] 收到 MSG_START_BATTLE: 开始战斗");
-			global.gui_stack.to(room_battle)
 			ds_map_clear(global.network.map_instance_id_net_id)
 			ds_map_clear(global.network.map_net_id_instance_id)
 			global.network.net_instance_count=0
 			texture_prefetch("bullet")
 			texture_prefetch("effects")
+			if instance_exists(obj_readyroom_manager) {
+				var _needed = obj_readyroom_manager._get_needed_sprites();
+				sprite_manager_load_battle(_needed);
+			}
+			global.wait_sprite_load = true;
+			global.gui_stack.to(room_battle)
 			break;
 		}
 		
@@ -684,7 +733,7 @@ function parse_network_message(buf, _sock) {
 				var _fp = variable_struct_get(global._expected_fps, "map_sprite");
 				global.level_data[$ "level_sprite"] = file_cache_load_sprite(
 					_sprite_name,
-					spr_cookie_island,
+					get_load_sprite("spr_cookie_island"),
 					is_undefined(_fp) ? "" : _fp
 				);
 			}
@@ -823,45 +872,124 @@ function parse_network_message(buf, _sock) {
             for (var _i = 0; _i < array_length(_cards); _i++) {
                 var _c = _cards[_i];
                 var _inst = global.network.map_net_id_instance_id[? _c[$ "n"]];
-                if (instance_exists(_inst)) {
-                    // 卡牌：位置+格子
-                    if (!is_undefined(_c[$ "c"]) && !is_undefined(_c[$ "r"])) {
-                        var _old_c = _inst.grid_col;
-                        var _old_r = _inst.grid_row;
-                        if (_old_c != _c[$ "c"] || _old_r != _c[$ "r"]) {
-                            var _old_list = ds_grid_get(global.grid_plants, _old_c, _old_r);
-                            var _pos = ds_list_find_index(_old_list, _inst);
-                            if (_pos != -1) ds_list_delete(_old_list, _pos);
-                            var _new_list = ds_grid_get(global.grid_plants, _c[$ "c"], _c[$ "r"]);
-                            ds_list_add(_new_list, _inst);
-                            sort_plants_in_grid(_old_c, _old_r);
-                            sort_plants_in_grid(_c[$ "c"], _c[$ "r"]);
-                        }
-                        _inst.grid_col = _c[$ "c"];
-                        _inst.grid_row = _c[$ "r"];
-						if ds_map_exists( global._move_instance_map, _inst.id){
-							var _list = global._move_instance_map[? _inst.id];
-							for(var _j=ds_list_size(_list)-1;_j>=0;_j--){
-								var _ins = _list[| _j]; 
-								if(instance_exists(_ins)){
-									_ins.x +=_c[$ "x"] - _inst.x;
-									_ins.y +=_c[$ "y"] - _inst.y;
-								}
-							}
-						}
-                    }
-					_inst.x = _c[$ "x"];
+                if (!instance_exists(_inst)) continue;
+
+                // 平台：算差值，模拟挪动来带动卡片
+                if (!is_undefined(_c[$ "offs"])) {
+                    var _dx = _c[$ "x"] - _inst.x;
+                    var _dy = _c[$ "y"] - _inst.y;
+                    var _ax = (_inst.move_axis == "x");
+
+                    // 记录旧 offset，用于 grid_plants 迁移
+                    var _old_offs = _inst.current_offset;
+
+                    // 校准平台状态
+                    _inst.current_offset = _c[$ "offs"];
+                    _inst.move_progress  = _c[$ "prog"];
+                    _inst.state          = _c[$ "state"];
+                    _inst.move_direction = _c[$ "dir"];
+                    if (!is_undefined(_c[$ "itimer"])) _inst.idle_timer = _c[$ "itimer"];
+                    if (!is_undefined(_c[$ "vx"])) _inst.visual_x_shift = _c[$ "vx"];
+                    if (!is_undefined(_c[$ "vy"])) _inst.visual_y_shift = _c[$ "vy"];
+                    // 防止客户端重复做格子迁移
+                    if (_c[$ "state"] == "moving") _inst.step_migrated = true;
+
+                    // 平台自身位移
+                    _inst.x = _c[$ "x"];
                     _inst.y = _c[$ "y"];
-                    // 平台：进度
-                    if (!is_undefined(_c[$ "offs"])) _inst.current_offset = _c[$ "offs"];
-                    if (!is_undefined(_c[$ "prog"])) _inst.move_progress = _c[$ "prog"];
+
+                    // current_offset 变了 → 先把 grid_plants 里的植物从旧格子迁移到新格子
+                    if (_old_offs != _inst.current_offset) {
+                        var _dc = _ax ? (_inst.current_offset - _old_offs) : 0;
+                        var _dr = _ax ? 0 : (_inst.current_offset - _old_offs);
+
+                        var _old_cs = _ax ? _inst.start_col + _old_offs : _inst.start_col;
+                        var _old_rs = _ax ? _inst.start_row : _inst.start_row + _old_offs;
+
+                        for (var _gc = _old_cs; _gc < _old_cs + _inst.width; _gc++) {
+                            for (var _gr = _old_rs; _gr < _old_rs + _inst.length; _gr++) {
+                                if (_gr < 0 || _gr >= global.grid_rows || _gc < 0 || _gc >= global.grid_cols) continue;
+                                var _tgt_c = _gc + _dc;
+                                var _tgt_r = _gr + _dr;
+                                if (_tgt_r < 0 || _tgt_r >= global.grid_rows || _tgt_c < 0 || _tgt_c >= global.grid_cols) continue;
+
+                                var _old_list = ds_grid_get(global.grid_plants, _gc, _gr);
+                                var _new_list = ds_grid_get(global.grid_plants, _tgt_c, _tgt_r);
+                                if (!ds_exists(_old_list, ds_type_list) || !ds_exists(_new_list, ds_type_list)) continue;
+
+                                for (var _j = ds_list_size(_old_list) - 1; _j >= 0; _j--) {
+                                    var _plant = ds_list_find_value(_old_list, _j);
+                                    if (instance_exists(_plant)) {
+                                        ds_list_add(_new_list, _plant);
+                                        ds_list_delete(_old_list, _j);
+                                        _plant.grid_col = _tgt_c;
+                                        _plant.grid_row = _tgt_r;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    // 视觉位移：遍历新格子里的植物，统一加 dx/dy
+                    if (_dx != 0 || _dy != 0) {
+                        var _new_cs = _ax ? _inst.start_col + _inst.current_offset : _inst.start_col;
+                        var _new_rs = _ax ? _inst.start_row : _inst.start_row + _inst.current_offset;
+
+                        for (var _gc = _new_cs; _gc < _new_cs + _inst.width; _gc++) {
+                            for (var _gr = _new_rs; _gr < _new_rs + _inst.length; _gr++) {
+                                if (_gr < 0 || _gr >= global.grid_rows || _gc < 0 || _gc >= global.grid_cols) continue;
+                                var _plist = ds_grid_get(global.grid_plants, _gc, _gr);
+                                if (!ds_exists(_plist, ds_type_list)) continue;
+                                for (var _j = 0; _j < ds_list_size(_plist); _j++) {
+                                    var _plant = ds_list_find_value(_plist, _j);
+                                    if (!instance_exists(_plant)) continue;
+                                    _plant.x += _dx;
+                                    _plant.y += _dy;
+                                    if (variable_instance_exists(_plant, "target_x")) _plant.target_x += _dx;
+                                    if (variable_instance_exists(_plant, "target_y")) _plant.target_y += _dy;
+                                    var _gp = get_grid_position_from_world(_plant.x, _plant.y);
+                                    _plant.grid_col = _gp.col;
+                                    _plant.grid_row = _gp.row;
+                                    if (variable_instance_exists(_plant, "plant_type")) {
+                                        _plant.depth = calculate_plant_depth(_plant.grid_col, _plant.grid_row, _plant.plant_type);
+                                    }
+                                    // 附属对象
+                                    if (variable_instance_exists(_plant, "banding_star_obj") && instance_exists(_plant.banding_star_obj)) {
+                                        _plant.banding_star_obj.x += _dx;
+                                        _plant.banding_star_obj.y += _dy;
+                                    }
+                                    if (variable_instance_exists(_plant, "banding_water_obj") && instance_exists(_plant.banding_water_obj)) {
+                                        _plant.banding_water_obj.x += _dx;
+                                        _plant.banding_water_obj.y += _dy;
+                                    }
+                                    if (variable_instance_exists(_plant, "banding_sleep_obj") && instance_exists(_plant.banding_sleep_obj)) {
+                                        _plant.banding_sleep_obj.x += _dx;
+                                        _plant.banding_sleep_obj.y += _dy;
+                                    }
+                                    // _move_instance_map 里的关联对象（武器/人物/护盾等）
+                                    if (ds_map_exists(global._move_instance_map, _plant.id)) {
+                                        var _mlist = global._move_instance_map[? _plant.id];
+                                        if (ds_exists(_mlist, ds_type_list)) {
+                                            for (var _k = 0; _k < ds_list_size(_mlist); _k++) {
+                                                var _mobj = _mlist[| _k];
+                                                if (instance_exists(_mobj)) {
+                                                    _mobj.x += _dx;
+                                                    _mobj.y += _dy;
+                                                    if (variable_instance_exists(_mobj, "target_x")) _mobj.target_x += _dx;
+                                                    if (variable_instance_exists(_mobj, "target_y")) _mobj.target_y += _dy;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
-			}
-            
-            show_debug_message("[解析] 收到 MSG_SYNC_CARD_STATES: " + string(array_length(_cards)) + " cards");
+            }
             break;
         }
-        
+
         default:
         {
             show_debug_message("[解析] 警告：未知消息ID " + string(msg_id) + "，跳过该消息");

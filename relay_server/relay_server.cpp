@@ -563,7 +563,7 @@ void handle_client(SOCKET sock) {
         close_sock(sock); return;
     }
 
-    std::string room_id = text.substr(14);
+    std::string room_id = text.substr(13);
     // 去掉首尾空格
     while (!room_id.empty() && room_id[0] == ' ') room_id.erase(0, 1);
     while (!room_id.empty() && room_id.back() == ' ') room_id.pop_back();

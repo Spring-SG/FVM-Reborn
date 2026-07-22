@@ -14,7 +14,7 @@ if (global.network.mode == "client") {
 }
 if(global.network.mode=="server"){
 	var _actions = [];
-	// boss产物延迟队列：boss技能跑完后属性齐全，补发spawn
+	// boss产物属性延迟队列：boss技能跑完后属性齐全，补发spawn
 	for (var _i = 0; _i < array_length(global._boss_spawn_queue); _i++) {
 		var _id = global._boss_spawn_queue[_i];
 		if (instance_exists(_id)) {
@@ -27,9 +27,24 @@ if(global.network.mode=="server"){
 						_props[$ _key] = variable_instance_get(id, _key);
 					}
 				}
-				if variable_instance_exists(id, "train_head"){
-					_target_ids[$ "train_head"] = global.network.map_instance_id_net_id[? id.train_head.id]
+				// sprite_index 转为字符串名，跨客户端兼容懒加载
+				if (variable_struct_exists(_props, "sprite_index")) {
+					var _sid = _props[$ "sprite_index"];
+					if (ds_map_exists(global._pid_reverse, _sid)) {
+						_props[$ "sprite_index"] = global._pid_reverse[? _sid];
+					} else {
+						_props[$ "sprite_index"] = sprite_get_name(_sid);
+					}
 				}
+				for (var _k = 0; _k < array_length(global._sync_ref_keys); _k++) {
+				      var _key = global._sync_ref_keys[_k];
+				      if (variable_instance_exists(id, _key)) {
+				          var _ref_inst = variable_instance_get(id, _key);
+				          if instance_exists(_ref_inst) && ds_map_exists(global.network.map_instance_id_net_id, _ref_inst.id) {
+				              _target_ids[$ _key] = global.network.map_instance_id_net_id[? _ref_inst.id];
+				          }
+				      }
+				 }
 				array_push(_actions, {
 									op: "spawn",
 									obj: object_get_name(object_index),
@@ -49,8 +64,17 @@ if(global.network.mode=="server"){
 			send_message(_list[_j], MSG_EVENT_ACTIONS, _json);
 		}
 	}
-
-
+	// 帧末批量发送销毁消息（在创建之后）
+	if (array_length(global._server_destroy_queue) > 0) {
+		var _list = global.network.connected_clients;
+		var _arr = global._server_destroy_queue;
+		for (var _i = 0; _i < array_length(_arr); _i++) {
+			for (var _j = 0; _j < array_length(_list); _j++) {
+				send_message(_list[_j], MSG_DESTROY, _arr[_i]);
+			}
+		}
+		global._server_destroy_queue = [];
+	}
 }
 
 

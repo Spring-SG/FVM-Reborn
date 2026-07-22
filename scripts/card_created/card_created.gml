@@ -11,8 +11,9 @@ function card_created(plant_inst, col, row) {
 		var shape = variable_instance_get(plant_inst, "shape") ?? 0;
 		var level = variable_instance_get(plant_inst, "current_level") ?? 0;
 		var _meta = package_character(plant_inst);
-		var _sprite_name = sprite_get_name(plant_inst.sprite_index);
-		
+		var _sid = plant_inst.sprite_index;
+	var _sprite_name = ds_map_exists(global._pid_reverse, _sid) ? global._pid_reverse[? _sid] : sprite_get_name(_sid);
+
 		if (plant_inst.object_index == obj_magic_chicken) {
 			var _target = variable_instance_get(plant_inst, "target_card") ?? "";
 			if _target == ""{
@@ -22,12 +23,12 @@ function card_created(plant_inst, col, row) {
 					skill:get_card_info(_target)[$ "skill"],
 					shape:get_card_info(_target)[$ "shape"],
 					level:get_card_info(_target)[$ "level"],
-					sprite_index:global.prev_place_id_shape
+					sprite_index: ds_map_exists(global._pid_reverse, global.prev_place_id_shape) ? global._pid_reverse[? global.prev_place_id_shape] : sprite_get_name(global.prev_place_id_shape)
 				}
 				_meta = {target_card:_target,target_card_info:target_card_info};
 			}
 		}
-		
+
 		var _plat = get_platform_at_grid(col, row)
 		if (_plat != noone) {
 		      _plat_id = ds_map_exists(global.network.map_instance_id_net_id, _plat.id) ? global.network.map_instance_id_net_id[? _plat.id] : -1;
@@ -37,7 +38,7 @@ function card_created(plant_inst, col, row) {
 				  _meta[$ "platform_offset"]  = _plat.current_offset;
 			  }
 		}
-		
+
 		_meta = json_stringify(_meta);
 		send_message(global.network.server_socket, MSG_UNIT_REQUEST, level, col, row, skill, shape, object_get_name(plant_inst.object_index), _meta, _sprite_name);
 		return;
@@ -66,7 +67,8 @@ function card_created(plant_inst, col, row) {
 		var level = variable_instance_get(plant_inst, "current_level") ?? 0;
 		var skill = variable_instance_get(plant_inst, "skill") ?? 0;
 		var shape = variable_instance_get(plant_inst, "shape") ?? 0;
-		var _sprite_name = sprite_get_name(plant_inst.sprite_index);
+		var _sid = plant_inst.sprite_index;
+		var _sprite_name = ds_map_exists(global._pid_reverse, _sid) ? global._pid_reverse[? _sid] : sprite_get_name(_sid);
 		
 		var _target = variable_instance_get(plant_inst, "target_card") ?? "";
 		var object_name = object_get_name(plant_inst.object_index);
@@ -77,13 +79,24 @@ function card_created(plant_inst, col, row) {
 			_meta = { player: plant_inst.player };
 		} else if (plant_inst.object_index == obj_magic_chicken ) {
 			if (variable_instance_exists(plant_inst, "target_card_info")){
-				_meta = { target_card: plant_inst.target_card,target_card_info:plant_inst.target_card_info };
+				var _tci = plant_inst.target_card_info;
+				var _tci_sid = _tci[$ "sprite_index"];
+				if (!is_string(_tci_sid)) {
+					_tci_sid = ds_map_exists(global._pid_reverse, _tci_sid) ? global._pid_reverse[? _tci_sid] : sprite_get_name(_tci_sid);
+				}
+				var _tci_copy = {
+					skill: _tci[$ "skill"],
+					shape: _tci[$ "shape"],
+					level: _tci[$ "level"],
+					sprite_index: _tci_sid
+				};
+				_meta = { target_card: plant_inst.target_card, target_card_info: _tci_copy };
 			}else if _target!=""{
 				var target_card_info ={
 					skill:get_card_info(_target)[$ "skill"],
 					shape:get_card_info(_target)[$ "shape"],
 					level:get_card_info(_target)[$ "level"],
-					sprite_index:global.prev_place_id_shape
+					sprite_index: ds_map_exists(global._pid_reverse, global.prev_place_id_shape) ? global._pid_reverse[? global.prev_place_id_shape] : sprite_get_name(global.prev_place_id_shape)
 				}
 				_meta = {target_card:_target,target_card_info:target_card_info};
 			}else
@@ -103,9 +116,15 @@ function card_created(plant_inst, col, row) {
 			  }
 		}
 		
-		// 同步 sprite_list
+		// 同步 sprite_list（转为字符串名）
 		if (variable_instance_exists(plant_inst, "sprite_list")) {
-		    _meta[$ "sprite_list"] = plant_inst.sprite_list;
+		    var _sl = plant_inst.sprite_list;
+		    var _sl_names = [];
+		    for (var _si = 0; _si < array_length(_sl); _si++) {
+		        var _sid = _sl[_si];
+		        _sl_names[_si] = ds_map_exists(global._pid_reverse, _sid) ? global._pid_reverse[? _sid] : sprite_get_name(_sid);
+		    }
+		    _meta[$ "sprite_list"] = _sl_names;
 		}
 
 		_meta = json_stringify(_meta);
@@ -113,7 +132,7 @@ function card_created(plant_inst, col, row) {
 		var _size = array_length(_list);
 		for (var i = 0; i < _size; i++) {
 			var _socket = _list[i];
-			send_message(_socket, MSG_SPAWN_UNIT, global.network.net_instance_count, level, col, row, skill, shape,_sprite_name, object_name, _meta);
+			send_message(_socket, MSG_SPAWN_UNIT, global.network.net_instance_count, level, col, row, skill, shape, _sprite_name, object_name, _meta);
 		}
 		add_net_id(plant_inst.id);
 	}

@@ -25,13 +25,24 @@ switch (_type) {
 
 			// 同步当前房间
 			if (room_exists(room_ready) && room == room_ready) {
+				// 复制 level_data，把音乐 ID 翻成字符串名发给客户端
+				var _ld_send = variable_clone(global.level_data);
+				var _rev = global._audio_reverse;
+				var _fields = ["pre_music", "elite_music", "boss_music"];
+				for (var _fi = 0; _fi < 3; _fi++) {
+					var _f = _fields[_fi];
+					var _v = _ld_send[$ _f];
+					if (!is_string(_v) && ds_map_exists(_rev, _v)) {
+						_ld_send[$ _f] = _rev[? _v];
+					}
+				}
 				var _sync = {
 					target_level_id: global.level_id,
 					target_level_file: global.level_data.level_file,
 					target_level_file_hard: global.level_data.hard_level_file,
 					level_index: global.level_data_index,
 					map_id: global.map_id,
-					level_data: global.level_data,
+					level_data: _ld_send,
 					level_file: global.level_file
 				};
 				if (!is_undefined(global._sync_map_sprite_name) && global._sync_map_sprite_name != "") {

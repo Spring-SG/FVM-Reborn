@@ -1,3 +1,5 @@
+if (!audio_exists(battle_music)) exit;
+
 if audio_is_paused(battle_music) and not global.is_paused{
 	audio_resume_sound(battle_music)
 }

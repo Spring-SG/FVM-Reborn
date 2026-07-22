@@ -9,11 +9,24 @@ import json
 import re
 import os
 import shutil
+import subprocess
 from pathlib import Path
 from PIL import Image
 
 PROJECT_ROOT = Path(__file__).parent
 os.chdir(PROJECT_ROOT)
+
+# ── 迁移模式互斥检查 ──────────────────────────
+_MODE_FILE = PROJECT_ROOT / ".migration_mode"
+if _MODE_FILE.exists():
+    _prev = _MODE_FILE.read_text(encoding='utf-8').strip()
+    if _prev != "depth":
+        import ctypes
+        ctypes.windll.user32.MessageBoxW(0,
+            f"项目已用 {_prev} 模式迁移过，请先运行 lazyloading_restore_backup.py 还原后再试。",
+            "迁移模式冲突", 0x30)
+        print(f"[错误] 项目已用 {_prev} 模式迁移过，请先 lazyloading_restore_backup.py 还原")
+        exit(1)
 
 # ── 配置 ──────────────────────────────────────────────
 
@@ -24,8 +37,9 @@ SPRITE_FOLDERS = [
     'folders/精灵/Enemy/',
     'folders/精灵/Cards/',
     'folders/精灵/Maps/',
-    'folders/精灵/UI/Attire/',
+    'folders/精灵/UI/Attire/'
 ]
+
 
 # 白名单：这些精灵/音乐跳过不处理
 SKIP_SPRITES = {
@@ -35,11 +49,7 @@ SKIP_SPRITES = {
     'spr_salad_island_land',
 }
 
-SKIP_AUDIO = {
-    'mus_menu',
-    'mus_readyroom',
-    'mus_town',
-}
+SKIP_AUDIO = set()
 
 MAX_STRIP_WIDTH = 16384  # GPU 纹理上限，超出则不迁移（sprite_add 单行条带限制）
 SPRITES_JOIN = 'sprites_join'            # 合并后 PNG 输出目录
@@ -65,8 +75,8 @@ def backup_if_needed(filepath: Path) -> bool:
     return True
 
 
-# 清理上次生成的映射文件
-for _f in ('datafiles/object_sprite_map.json', 'datafiles/removed_sprites.json'):
+# 清理上次生成的映射文件（removed_sprites.json 保留，多次运行合并）
+for _f in ('datafiles/object_sprite_map.json',):
     if os.path.exists(_f):
         os.remove(_f)
 
@@ -120,6 +130,7 @@ for name in sorted(target_sprites):
             raw_frames = layers[0].get('frames', [])
     frames_list = [f['name'] if isinstance(f, dict) else f for f in raw_frames]
     dir_path = '/'.join(path.replace('\\', '/').split('/')[:-1]) if '/' in path else path
+    seq = info.get('sequence', {}) or {}
 
     # 按 sequence tracks 的关键帧顺序重排帧列表
     if len(frames_list) > 1:
@@ -144,7 +155,6 @@ for name in sorted(target_sprites):
     _strip_count = (_fc + _fps - 1) // _fps  # 需要几段
     _strip_paths = [f'{SPRITES_JOIN}/{name}_{i}.png' for i in range(_strip_count)]
 
-    seq = info.get('sequence', {}) or {}
 
     # 以 .yy 原始数据为底，删掉无用的 meta 键，再覆盖 GML 需要的计算字段
     sprite_data = {k: v for k, v in info.items()
@@ -184,9 +194,16 @@ print('第 1.5 步：生成 sprites_join 合并条带')
 print('=' * 60)
 
 os.makedirs(SPRITES_JOIN, exist_ok=True)
-strip_count = 0
 
-for name, data in removed_sprites.items():
+_strips_exist = os.path.isdir(SPRITES_JOIN) and os.listdir(SPRITES_JOIN)
+if _strips_exist:
+    print(f'  [skip] {SPRITES_JOIN}/ 已存在，跳过条带生成')
+
+strip_count = 0
+failed_sprites: set[str] = set()   # 收集生成失败的精灵，后续从 target 和 JSON 中剔除
+
+_strips_src = [] if _strips_exist else removed_sprites.items()
+for name, data in _strips_src:
     _dir   = data.get('path', '')
     _fnames = data.get('frames', [])
     _w     = data.get('width', 0)
@@ -195,10 +212,12 @@ for name, data in removed_sprites.items():
 
     if not _fnames or _w <= 0 or _h <= 0:
         print(f'  [skip]  {name}  无帧数据')
+        failed_sprites.add(name)
         continue
 
     # ─ 加载每帧 PNG ─
     frames_img: list[Image.Image] = []
+    frame_miss = False
     for fn in _fnames:
         png = Path(f'{_dir}/{fn}.png').resolve()
         if not png.exists():
@@ -206,38 +225,66 @@ for name, data in removed_sprites.items():
             png = Path(PROJECT_ROOT) / f'{_dir}/{fn}.png'
         if not png.exists():
             print(f'  [miss]  {name}/{fn}.png')
+            frame_miss = True
             break
         frames_img.append(Image.open(png))
+
+    if frame_miss:
+        failed_sprites.add(name)
+    elif len(frames_img) == _fc:
+        # ─ 水平条带（多段）──
+        _fps = data['frames_per_strip']
+        _strip_count = (_fc + _fps - 1) // _fps
+        for _si in range(_strip_count):
+            _start = _si * _fps
+            _end   = min(_start + _fps, _fc)
+            _seg_fc = _end - _start
+            strip = Image.new('RGBA', (_w * _seg_fc, _h))
+            for j in range(_seg_fc):
+                strip.paste(frames_img[_start + j], (j * _w, 0))
+            strip.save(data['strip_paths'][_si])
+        # ─ 第一帧 ─
+        frames_img[0].save(data['first_path'])
+        strip_count += 1
     else:
-        if len(frames_img) == _fc:
-            # ─ 水平条带（多段）──
-            _fps = data['frames_per_strip']
-            for _si in range(_strip_count):
-                _start = _si * _fps
-                _end   = min(_start + _fps, _fc)
-                _seg_fc = _end - _start
-                strip = Image.new('RGBA', (_w * _seg_fc, _h))
-                for j in range(_seg_fc):
-                    strip.paste(frames_img[_start + j], (j * _w, 0))
-                strip.save(data['strip_paths'][_si])
-            # ─ 第一帧 ─
-            frames_img[0].save(data['first_path'])
-            strip_count += 1
-        else:
-            print(f'  [skip]  {name}  帧数不匹配 ({len(frames_img)} != {_fc})')
+        print(f'  [skip]  {name}  帧数不匹配 ({len(frames_img)} != {_fc})')
+        failed_sprites.add(name)
     # 关图
     for img in frames_img:
         img.close()
 
-print(f'  生成 {strip_count} 个条带 (共 {len(removed_sprites)} 个精灵)')
+# 从 target_sprites 和 removed_sprites 中剔除生成失败的精灵
+for name in failed_sprites:
+    del removed_sprites[name]
+    target_sprites.discard(name)
+
+print(f'  生成 {strip_count} 个条带, 失败 {len(failed_sprites)} 个 (剩余 {len(removed_sprites)} 个精灵)')
 print()
 
-# ── 音乐：从 .yyp 收集所有 mus_* ──────────────────────
+# ── 音乐：收集目标 & ffmpeg 检测 ────────────────────────
 
-print('-' * 40)
-print('音乐资源:')
-print('-' * 40)
+# ffmpeg 检测（① ffmpeg/ffmpeg.exe  ② 项目根 ffmpeg.exe  ③ 系统 PATH  ④ pydub）
+_ffmpeg_path = None
+_ffmpeg_method = ""
+for _check in [PROJECT_ROOT / "ffmpeg" / "ffmpeg.exe", PROJECT_ROOT / "ffmpeg.exe"]:
+    if _check.exists():
+        _ffmpeg_path = str(_check)
+        _ffmpeg_method = f"本地 {_check.relative_to(PROJECT_ROOT)}"
+        break
+if not _ffmpeg_path:
+    _result = subprocess.run(["where", "ffmpeg"], capture_output=True, text=True, shell=True)
+    if _result.returncode == 0 and _result.stdout.strip():
+        _ffmpeg_path = "ffmpeg"
+        _ffmpeg_method = "系统 PATH"
+if not _ffmpeg_path:
+    try:
+        from pydub import AudioSegment as _AudioSegment
+        _ffmpeg_path = "pydub"
+        _ffmpeg_method = "pydub"
+    except ImportError:
+        pass
 
+# 收集所有音乐资源（排除白名单）
 target_audio: set[str] = set()
 for res in yyp_data['resources']:
     rid = res.get('id', {})
@@ -246,8 +293,62 @@ for res in yyp_data['resources']:
     if path.startswith('sounds/') and name.startswith('mus_') and name not in SKIP_AUDIO:
         target_audio.add(name)
 
-print(f'  音乐: {len(target_audio)} 个')
-print(f'  白名单: {len(SKIP_AUDIO)} 个')
+# 转换为 OGG → backgroundmusic/
+_bgm_dir = PROJECT_ROOT / 'backgroundmusic'
+_bgm_dir.mkdir(exist_ok=True)
+_conv_count = 0
+_conv_skip = 0
+_conv_fail = 0
+
+if not _ffmpeg_path:
+    print(f'[音频] ✗ 未找到 ffmpeg，跳过 OGG 转换（{len(target_audio)} 首音乐将从 .yyp 移除，运行时回退缺省）')
+elif not target_audio:
+    print('[音频] 所有音乐在白名单中，无需转换')
+else:
+    print(f'[音频] 使用 {_ffmpeg_method} 转换 {len(target_audio)} 首 → backgroundmusic/ ...')
+    for _name in sorted(target_audio):
+        _src_dir = PROJECT_ROOT / 'sounds' / _name
+        _src_path = None
+        _src_fmt = None
+        for _ext in ('.mp3', '.MP3', '.wav', '.WAV', '.ogg', '.OGG'):
+            _c = _src_dir / f'{_name}{_ext}'
+            if _c.exists():
+                _src_path = _c
+                _src_fmt = _ext.lower()
+                break
+        if not _src_path:
+            _conv_skip += 1
+            continue
+        _dst = _bgm_dir / f'{_name}.ogg'
+        if _dst.exists():
+            _conv_skip += 1
+            continue
+        try:
+            if _ffmpeg_path == "pydub":
+                from pydub import AudioSegment
+                if _src_fmt == '.mp3':
+                    AudioSegment.from_mp3(_src_path).export(_dst, format='ogg')
+                elif _src_fmt == '.wav':
+                    AudioSegment.from_wav(_src_path).export(_dst, format='ogg')
+                else:
+                    shutil.copy2(_src_path, _dst)
+            else:
+                if _src_fmt == '.ogg':
+                    shutil.copy2(_src_path, _dst)
+                else:
+                    subprocess.run([_ffmpeg_path, '-y', '-i', str(_src_path),
+                                    '-c:a', 'libvorbis', '-q:a', '4', str(_dst)],
+                                   capture_output=True, check=True)
+            _conv_count += 1
+        except Exception as _e:
+            print(f'  [FAIL]  {_name}: {_e}')
+            _conv_fail += 1
+            target_audio.discard(_name)  # 转换失败不迁移
+
+    print(f'  转换: {_conv_count}  跳过: {_conv_skip}  失败: {_conv_fail}')
+    print(f'  输出: backgroundmusic/ ({len(list(_bgm_dir.glob("*.ogg")))} 个 OGG)')
+
+print(f'  待迁移音乐: {len(target_audio)} 首')
 print()
 
 # ── 第 2 步：处理 .yyp ────────────────────────────────
@@ -376,7 +477,7 @@ for gml_file in gml_files:
         if name in target_sprites:
             return f'get_load_sprite("{name}")'
         if name in target_audio:
-            return REPLACE_AUDIO
+            return f'get_load_audio("{name}")'
         return m.group(0)
 
     content = SPR_RE.sub(repl_cb, content)
@@ -498,12 +599,33 @@ _dep_refs = sum(len(v) for v in object_deps.values())
 print(f'  {_dep_objs} 个对象, {_dep_refs} 条精灵引用（含递归）')
 print()
 
-# 被移除精灵的详细信息，供后期重建
+# 被移除精灵的详细信息，供后期重建（合并已有数据，支持多次运行）
+_rm_path = Path('datafiles/removed_sprites.json')
+if _rm_path.exists():
+    _existing = json.loads(clean_trailing_commas(_rm_path.read_text(encoding='utf-8')))
+    _existing.pop('_project_root', None)
+    _existing.update(removed_sprites)
+    removed_sprites = _existing
 removed_sprites['_project_root'] = str(PROJECT_ROOT.resolve()) + '\\'
-with open('datafiles/removed_sprites.json', 'w', encoding='utf-8') as f:
+with open(_rm_path, 'w', encoding='utf-8') as f:
     json.dump(removed_sprites, f, indent=2, ensure_ascii=False)
 print(f'  removed_sprites.json: {len(removed_sprites) - 1} 个精灵 + 项目根路径')
 print()
+
+# 生成音频预加载列表，写入 removed_sprites.json
+_audio_list = []
+_snds = PROJECT_ROOT / 'sounds'
+if _snds.exists():
+    for _d in sorted(_snds.iterdir()):
+        if _d.is_dir() and _d.name.startswith('mus_'):
+            _audio_list.append(_d.name)
+removed_sprites['_music_list'] = _audio_list
+print(f'  _music_list: {len(_audio_list)} 首音乐')
+print()
+
+# 写入迁移模式标记
+_MODE_FILE = PROJECT_ROOT / ".migration_mode"
+_MODE_FILE.write_text("depth", encoding="utf-8")
 
 # ── 汇总 ──────────────────────────────────────────────
 
@@ -514,5 +636,5 @@ print(f'  object: {obj_mod} 个 spriteId 替换')
 print(f'  .gml:   {gml_mod} 个文件, {total_repl} 处替换')
 print(f'  映射:   {len(object_sprite_map)} 个对象, {sum(len(v) for v in object_sprite_map.values())} 条精灵引用')
 print()
-print('用 restore_backup.py 可还原')
+print('用 lazyloading_restore_backup.py 可还原')
 print('=' * 60)

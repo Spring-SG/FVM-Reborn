@@ -17,7 +17,7 @@ if obj_battle.current_wave >= elite_wave && obj_battle.wave_timer <= 1{
 				if (global.network.mode == "server") {
 					var _cl = global.network.connected_clients;
 					for (var _j = 0; _j < array_length(_cl); _j++) {
-						send_message(_cl[_j], MSG_MUSIC_SYNC, global.level_data.elite_music);
+						send_message(_cl[_j], MSG_MUSIC_SYNC, 1);
 					}
 				}
 			}

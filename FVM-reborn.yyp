@@ -1017,6 +1017,7 @@
     {"id":{"name":"Camera_Shock","path":"scripts/Camera_Shock/Camera_Shock.yy",},},
     {"id":{"name":"can_place_at_position","path":"scripts/can_place_at_position/can_place_at_position.yy",},},
     {"id":{"name":"can_target_on","path":"scripts/can_target_on/can_target_on.yy",},},
+    {"id":{"name":"config_syn","path":"scripts/config_syn/config_syn.yy",},},
     {"id":{"name":"card_created","path":"scripts/card_created/card_created.yy",},},
     {"id":{"name":"card_depth","path":"scripts/card_depth/card_depth.yy",},},
     {"id":{"name":"card_destroyed","path":"scripts/card_destroyed/card_destroyed.yy",},},

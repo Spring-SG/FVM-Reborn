@@ -191,6 +191,7 @@ else if (state == "moving") {
     
     visual_x_shift = is_axis_x ? ((move_progress - 1) * move_direction * global.grid_cell_size_x) : 0;
     visual_y_shift = (!is_axis_x) ? ((move_progress - 1) * move_direction * global.grid_cell_size_y) : 0;
+	
     
     x += visual_delta_x;
     y += visual_delta_y;
@@ -223,7 +224,8 @@ else if (state == "moving") {
                         if (variable_instance_exists(plant, "banding_star_obj") && instance_exists(plant.banding_star_obj)) {
                             plant.banding_star_obj.x += visual_delta_x;
                             plant.banding_star_obj.y += visual_delta_y;
-                        }            
+                        }
+						
 						if (ds_map_exists(global._move_instance_map,plant.id)){
 							var _list = global._move_instance_map[? plant.id];
 							for(var _i=ds_list_size(_list)-1;_i>=0;_i--){

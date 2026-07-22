@@ -5,7 +5,10 @@
 还原后自动清理所有 .bak 和 object_sprite_map.json。
 
 用法:
-    python restore_backup.py
+    python lazyloading_restore_backup.py [--keep-join]
+
+参数:
+    --keep-join  保留 sprites_join/ 和 backgroundmusic/ 目录
 """
 
 import os
@@ -15,9 +18,17 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).parent
 os.chdir(PROJECT_ROOT)
 
+import sys
+
+keep_join = '--keep-join' in sys.argv
+
 print('=' * 60)
 print('还原备份文件')
 print('=' * 60)
+
+if keep_join:
+    print('  [info] 保留 sprites_join/ 目录')
+print()
 
 restored = 0
 removed = 0
@@ -65,7 +76,7 @@ for bak_file in sorted(Path('objects').glob('**/*.gml.bak')):
 
 # ── 4. 清理映射文件 ──────────────────────────────────
 
-for fname in ['datafiles/object_sprite_map.json', 'datafiles/removed_sprites.json']:
+for fname in ['datafiles/object_deps.json','datafiles/object_sprite_map.json', 'datafiles/removed_sprites.json']:
     f = Path(fname)
     if f.exists():
         f.unlink()
@@ -74,15 +85,28 @@ for fname in ['datafiles/object_sprite_map.json', 'datafiles/removed_sprites.jso
 
 # ── 5. 清理 sprites_join ──────────────────────────────
 
-join_dir = Path('sprites_join')
-if join_dir.exists():
-    for png in join_dir.glob('*.png'):
-        png.unlink()
-        removed += 1
-    join_dir.rmdir()
-    print(f'  [del]  sprites_join/  ({removed} 文件)')
+if not keep_join:
+    for _dirname in ["sprites_join", "backgroundmusic"]:
+        _dir = Path(_dirname)
+        if _dir.exists() and _dir.is_dir():
+            _count = 0
+            for _f in _dir.iterdir():
+                _f.unlink()
+                _count += 1
+            _dir.rmdir()
+            removed += _count
+            print(f"  [del]  {_dirname}/  ({_count} files)")
+else:
+    print("  [skip] sprites_join/ kept")
+    print("  [skip] backgroundmusic/ kept")
 
 print()
+
+# 清理迁移模式标记
+_mode_marker = Path('.migration_mode')
+if _mode_marker.exists():
+    _mode_marker.unlink()
+    print('  [del]  .migration_mode')
 
 if restored == 0:
     print('没有找到任何 .bak 文件，项目可能尚未迁移。')

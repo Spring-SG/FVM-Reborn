@@ -1,70 +1,84 @@
 // Initialize sprite async loader queue
 global._loader_sprite_queue = ds_list_create();
-
 // 全局精灵缓存：name → sprite_index
 global._sprite_cache = ds_map_create();		// name → real id
-global._sprite_is_first = ds_map_create();  // name → bool，标记是否仅加载了第一帧
-global._sprite_strips = ds_map_create();    // name → {sprites: [...], fps: N}
-global._pid_map = ds_map_create();          // name → placeholder sprite
-global._pid_reverse = ds_map_create();      // placeholder sprite → name
+global._pid_reverse = ds_map_create();      // placeholder id → name
+
+#macro empty_load 0
+#macro first_load 1
+#macro full_load 2
+global._sprite_state = ds_map_create();		// name → state
+
+
+global._pending_map=ds_map_create();	// 等待队列
+global._audio_cache = ds_map_create();  // name → audio id
+global._audio_reverse = ds_map_create(); // audio id → name
 
 /// @function get_load_sprite(_name)
 /// @desc 返回占位精灵（空白条带，帧数匹配原精灵），引擎可正常推进 image_index
 /// @param {String} _name  精灵名称，如 "spr_blonde_mary_idle"
 /// @returns {Real} sprite_index
 function get_load_sprite(_name) {
-    var _placeholder = global._pid_map[? _name];
-    if (is_undefined(_placeholder)) {
-        // 从 sprite_data 取帧数，未加载则默认 1
-        var _fc = 1;
-        if (!is_undefined(global._sprite_data)) {
-            var _info = global._sprite_data[$ _name];
-            if (!is_undefined(_info)) { _fc = _info.frameCount; }
-        }
-        // 创建 _fc×1 空白条带精灵
-        var _surf = surface_create(_fc, 1);
-        surface_set_target(_surf);
-        draw_clear_alpha(c_black, 0);
-        surface_reset_target();
-        var _tmp = working_directory + "_ph_" + _name + ".png";
-        surface_save(_surf, _tmp);
-        surface_free(_surf);
-        _placeholder = sprite_add(_tmp, _fc, false, false, 0, 0);
-        file_delete(_tmp);
-        ds_map_add(global._pid_map, _name, _placeholder);
-        ds_map_add(global._pid_reverse, _placeholder, _name);
-        // 同步速度和碰撞盒到占位精灵
-        if (!is_undefined(global._sprite_data)) {
-            var _info = global._sprite_data[$ _name];
-            if (!is_undefined(_info)) {
-                // 播放速度
-                var _seq = _info[$ "sequence"];
-                if (!is_undefined(_seq)) {
-                    var _spd = _seq[$ "playbackSpeed"];
-                    var _pst = _seq[$ "playbackSpeedType"];
-                    if (is_undefined(_spd)) { _spd = _info[$ "fps"]; }
-                    if (is_undefined(_pst)) { _pst = 0; }
-                    if (!is_undefined(_spd)) {
-                        var _speed_type = spritespeed_framespersecond;
-                        if (_pst == 1) { _speed_type = spritespeed_secondsperframe; }
-                        sprite_set_speed(_placeholder, _spd, _speed_type);
-                    }
-                }
-                // 碰撞遮罩
-                var _kind = _info.collisionKind;
-                var _bbox = _info.bbox;
-                var _tol  = _info[$ "collisionTolerance"];
-                if (is_undefined(_tol)) { _tol = 255; }
-                var _rtkind = 0;
-                switch (_kind) {
-                    case 4: _rtkind = 2; break;
-                    case 5: _rtkind = 3; break;
-                }
-                sprite_collision_mask(_placeholder, false, 2, _bbox[0], _bbox[1], _bbox[2], _bbox[3], _rtkind, _tol);
-            }
-        }
+	var _native_spr = asset_get_index(_name);
+    if (_native_spr != -1 && sprite_exists(_native_spr)) {
+        return _native_spr;
     }
+	if (ds_map_exists(global._sprite_cache,_name)){
+		return global._sprite_cache[? _name];
+	}
+	var _tmp = working_directory + "_ph_empty.png";
+    var _placeholder = sprite_add(_tmp, 1, false, false, 0, 0);
+	
+	ds_map_add(global._sprite_cache, _name , _placeholder);
+    ds_map_add(global._pid_reverse, _placeholder, _name);
+	ds_map_add(global._sprite_state, _name , empty_load);
     return _placeholder;
+}
+
+/// @function get_load_audio(_name)
+/// @desc 从 backgroundmusic/ 加载 OGG，读不到则用缺省音乐
+/// @param {String} _name  音频名称，如 "mus_delicious_island_daytime_boss"
+/// @returns {Real} audio id，失败返回 -1
+function get_load_audio(_name) {
+	var _audio = global._audio_cache[? _name];
+	if (!is_undefined(_audio)) {
+		return _audio;
+	}
+	var _result = -1;
+	// ① 先查 .yyp 内置资源（白名单保留的）
+	var _idx = asset_get_index(_name);
+	if (_idx != -1 && audio_exists(_idx)) {
+		_result = _idx;
+	} else {
+		// ② 从 backgroundmusic 目录加载 OGG（优先 _project_root，回退相对路径）
+		var _rel = "backgroundmusic/" + _name + ".ogg";
+		var _ogg_path = _rel;
+		if (!is_undefined(global._project_root)) {
+			var _abs = global._project_root + _rel;
+			if (file_exists(_abs)) {
+				_ogg_path = _abs;
+			}
+		}
+		if (file_exists(_ogg_path)) {
+			_result = audio_create_stream(_ogg_path);
+			show_debug_message("[audio] loaded: " + _name + ".ogg");
+		}
+	}
+	// ③ 读不到 → 缺省音乐（防递归）
+	if (_result == -1) {
+		var _default = "mus_menu";
+		if (_name != _default) {
+			show_debug_message("[audio] not found: " + _name + " → fallback " + _default);
+			_result = get_load_audio(_default);
+		} else {
+			show_debug_message("[audio] default also not found: " + _name);
+		}
+	}
+	if (_result != -1) {
+		global._audio_cache[? _name] = _result;
+		global._audio_reverse[? _result] = _name;
+	}
+	return _result;
 }
 
 /// @function sprite_manager_init()
@@ -81,6 +95,7 @@ function sprite_manager_init() {
         }
         var _keys = variable_struct_get_names(global._sprite_data);
         show_debug_message("[sprite_manager] sprite data loaded, " + string(array_length(_keys)) + " sprites");
+
     } else {
         show_debug_message("[sprite_manager] failed to load removed_sprites.json: " + _result.message);
         global._sprite_data = undefined;
@@ -102,6 +117,25 @@ function sprite_manager_init() {
         show_debug_message("[sprite_manager] failed to load object_sprite_map.json: " + _map_result.message);
         global._object_map = undefined;
     }
+
+    // 3. 对象依赖图（递归精灵依赖），obj→[spr_names]
+    var _deps_result = FileUtil.load_json_from_path("object_deps.json");
+    if (_deps_result.is_failed() == false) {
+        global._object_deps = _deps_result.data;
+        var _dep_keys = variable_struct_get_names(global._object_deps);
+        show_debug_message("[sprite_manager] object deps loaded, " + string(array_length(_dep_keys)) + " objects");
+    } else {
+        show_debug_message("[sprite_manager] failed to load object_deps.json: " + _deps_result.message);
+        global._object_deps = undefined;
+    }
+	
+	var _surf = surface_create(1, 1);
+    surface_set_target(_surf);
+    draw_clear_alpha(c_black, 0);
+    surface_reset_target();
+    var _tmp = working_directory + "_ph_empty.png";
+    surface_save(_surf, _tmp);
+    surface_free(_surf);
 }
 
 
@@ -125,48 +159,8 @@ function sprite_manager_preview_init() {
     }
 
     // 异步加载第一帧
-    var _queue = sprite_manager_load_async(_sprite_list, global._sprite_cache, true);
+    var _queue = sprite_manager_load_async(_sprite_list, true);
     show_debug_message("[sprite_manager] preview queued: " + string(array_length(_sprite_list)) + " sprites (first frame only)");
-}
-
-
-
-/// @function sprite_manager_load_first_frame(_list, _map)
-/// @desc 遍历 _list 中的精灵名称，只加载每一帧的第一帧为单帧 sprite，将 name→sprite_index 存入 _map
-/// @param {Array} _list  精灵名称数组，如 ["spr_blonde_mary_idle", "spr_pixel"]
-/// @param {DSMap} _map   存储结果的 ds_map，key=name, value=sprite_index
-function sprite_manager_load_first_frame(_list, _map) {
-    if (is_undefined(global._sprite_data)) {
-        show_debug_message("[sprite_manager] data not loaded, call sprite_manager_init() first");
-        return;
-    }
-
-    var _sprites = global._sprite_data;
-    var _count   = array_length(_list);
-
-    for (var i = 0; i < _count; i++) {
-        var _name = _list[i];
-        var _info = _sprites[$ _name];
-
-        if (is_undefined(_info)) {
-            show_debug_message("[sprite_manager] sprite not found: " + _name);
-            continue;
-        }
-
-        if (ds_map_exists(_map, _name)) {
-            show_debug_message("[sprite_manager] already loaded: " + _name);
-            continue;
-        }
-
-        var _spr = __sprite_manager_build_first_frame(_name, _info);
-        if (_spr != -1) {
-            ds_map_add(_map, _name, _spr);
-            ds_map_add(global._sprite_cache, _name, _spr);
-            __sprite_manager_bind_object(_name, _spr);
-            ds_map_add(global._sprite_is_first, _name, true);
-            show_debug_message("[sprite_manager] loaded (first frame): " + _name + " -> " + string(_spr));
-        }
-    }
 }
 
 
@@ -178,8 +172,7 @@ function sprite_manager_load_battle(_list) {
     var _need = [];
     for (var i = 0; i < array_length(_list); i++) {
         var _name = _list[i];
-        // 已是全帧，跳过
-        if (ds_map_exists(global._sprite_is_first, _name) && !global._sprite_is_first[? _name])
+        if (ds_map_exists(global._sprite_state, _name) && global._sprite_state[? _name]==full_load)
             continue;
         array_push(_need, _name);
     }
@@ -187,35 +180,44 @@ function sprite_manager_load_battle(_list) {
         show_debug_message("[sprite_manager] battle: all already full, nothing to load");
         return undefined;
     }
-    var _queue = sprite_manager_load_async(_need, global._sprite_cache, false);
+    var _queue = sprite_manager_load_async(_need, false);
     show_debug_message("[sprite_manager] battle queued: " + string(array_length(_need)) + " sprites (full frames)");
     return _queue;
 }
 
 // ─── 异步分帧加载 ──────────────────────────────────────────────────────────
 
-/// @function sprite_manager_load_async(_list, _map, [_first_frame])
+/// @function sprite_manager_load_async(_list, [_first_frame])
 /// @desc 创建异步加载队列，每帧由 obj_shell 调用 sprite_manager_async_process_one() 处理一个精灵
 /// @param {Array}  _list        精灵名称数组
 /// @param {DSMap}  _map         存储结果的 ds_map
 /// @param {Bool}   _first_frame 是否只加载第一帧（可选，默认 false）
 /// @returns {Struct} 队列 struct，供外部查询进度
-function sprite_manager_load_async(_list, _map, _first_frame = false) {
+function sprite_manager_load_async(_list, _first_frame = false) {
     if (is_undefined(global._sprite_data)) {
         show_debug_message("[sprite_manager] data not loaded, call sprite_manager_init() first");
         return undefined;
     }
-
-    // 过滤掉已在 map 中的和不在数据中的
+	var _map = global._sprite_cache;
     var _sprites = global._sprite_data;
     var _pending  = [];
     var _count    = array_length(_list);
     for (var i = 0; i < _count; i++) {
         var _name = _list[i];
+		
+		if ( ds_map_exists(global._pending_map, _name)&& global._pending_map[? _name] == true){
+			continue;
+		}
+		
         if (ds_map_exists(_map, _name)) {
-            // 首帧的允许重新加载全帧
-            if (_first_frame || ds_map_exists(global._sprite_is_first, _name) && global._sprite_is_first[? _name] == false) {
-                show_debug_message("[sprite_manager] async skip (already loaded): " + _name);
+            if (_first_frame==true && ds_map_exists(global._sprite_state, _name) && global._sprite_state[? _name] >=first_load ) {
+				var t = global._sprite_state[? _name];
+                show_debug_message("[sprite_manager] async skip (already loaded): " + _name +" state code :"+string(global._sprite_state[? _name]));
+                continue;
+            }
+            if (_first_frame==false && ds_map_exists(global._sprite_state, _name) && global._sprite_state[? _name] >=full_load ) {
+				var t = global._sprite_state[? _name];
+                show_debug_message("[sprite_manager] async skip (already loaded): " + _name +" state code: "+string(global._sprite_state[? _name]));
                 continue;
             }
         }
@@ -224,6 +226,8 @@ function sprite_manager_load_async(_list, _map, _first_frame = false) {
             show_debug_message("[sprite_manager] async skip (not in data): " + _name);
             continue;
         }
+
+		global._pending_map[? _name] =true;
         array_push(_pending, _name);
     }
 
@@ -231,10 +235,9 @@ function sprite_manager_load_async(_list, _map, _first_frame = false) {
 
     var _queue = {
         list:        _pending,
-        map:         _map,
         index:       0,
         total:       _total,
-        first_frame: _first_frame,
+        first_frame: _first_frame==true?first_load:full_load,
         done:        (_total == 0),
         loaded:      0,
         failed:      0
@@ -245,8 +248,8 @@ function sprite_manager_load_async(_list, _map, _first_frame = false) {
         global._loader_sprite_queue = ds_list_create();
     }
     ds_list_add(global._loader_sprite_queue, _queue);
-
-    show_debug_message("[sprite_manager] async queue created, " + string(_total) + " sprites pending");
+	if(_total>0)
+	    show_debug_message("[sprite_manager] async queue created, " + string(_total) + " sprites pending");
 
     return _queue;
 }
@@ -263,21 +266,24 @@ function sprite_manager_async_process_one(_queue) {
 
 
     var _spr;
-    if (_queue.first_frame) {
+    if (_queue.first_frame==first_load) {
         _spr = __sprite_manager_build_first_frame(_name, _info);
     } else {
         _spr = __sprite_manager_build(_name, _info);
     }
 
     if (_spr != -1) {
-		_queue.map[?_name]=_spr;
-        global._sprite_is_first[? _name]= _queue.first_frame;
+        global._sprite_cache[? _name] = _spr;
+		global._sprite_state[? _name] = (_info.frameCount == 1) ? full_load : _queue.first_frame;
+		global._pid_reverse[? _spr] = _name;
         _queue.loaded++;
-
+		global._pending_map[? _name]=false;
 
         show_debug_message("[sprite_manager] async loaded (" + string(_queue.loaded) + "/" + string(_queue.total) + "): " + _name);
+	
     } else {
         _queue.failed++;
+        global._pending_map[? _name] = false;
         show_debug_message("[sprite_manager] async failed: " + _name);
     }
     _queue.index++;
@@ -293,21 +299,7 @@ function sprite_manager_async_process_one(_queue) {
 
 // ─── 内部辅助 ──────────────────────────────────────────────────────────────
 
-/// @desc 查找 sprite 对应的 object 并绑定
-/// @param {String} _sprite_name  精灵名称
-/// @param {Real}  _spr           sprite_index
-function __sprite_manager_update_object(_sprite_name) {
-    if (is_undefined(global._sprite_to_object)) return;
-    var _obj_name = global._sprite_to_object[? _sprite_name];
-    if (is_undefined(_obj_name)) return;
-    var _obj_index = asset_get_index(_obj_name);
-    if (_obj_index == -1) return;
-    var _pid = global._pid_map[? _sprite_name];
-    if (!is_undefined(_pid)) {
-        object_set_sprite(_obj_index, _pid);  // 绑占位 ID，通过 hook 解析
-		show_debug_message("[sprite_manager] bound " + _sprite_name + " -> " + _obj_name);
-    }
-}
+
 
 /// @desc 从数据创建单个 sprite
 /// @param {String} _name  精灵名称
@@ -342,8 +334,10 @@ function __sprite_manager_build(_name, _info) {
             _strips[_si] = _s;
         }
         if (_ok) {
-            ds_map_add(global._sprite_strips, _name, {sprites: _strips, fps: _fps});
-            // 返回第一段作为"主精灵"，单段时正常，多段时 draw_self hook 切段
+			for (var _si = 1; _si < _total; _si++) {
+			    sprite_merge(_strips[0], _strips[_si]);
+			    sprite_delete(_strips[_si]);
+			}
             __sprite_manager_apply_props(_strips[0], _info);
             return _strips[0];
         }
@@ -430,9 +424,6 @@ function __sprite_manager_build(_name, _info) {
     }
 
     if (_spr == -1) return -1;
-	if _name=="spr_small_fire"{
-		var t=0;
-	}
     __sprite_manager_apply_props(_spr, _info);
     return _spr;
 }
@@ -454,17 +445,6 @@ function __sprite_manager_build_first_frame(_name, _info) {
         if (file_exists(_first_file)) {
             var _spr = sprite_add(_first_file, 1, _rmback, _smooth, _xorigin, _yorigin);
             if (_spr != -1) {
-                // 多段条带情况：也初始化 _sprite_strips 以便 draw_self 切段
-                var _strip_paths = _info[$ "strip_paths"];
-                if (!is_undefined(_strip_paths)) {
-                    var _total = array_length(_strip_paths);
-                    if (_total > 1) {
-                        ds_map_add(global._sprite_strips, _name, {
-                            sprites: [_spr],  // 只有第一段
-                            fps: _info[$ "frames_per_strip"]
-                        });
-                    }
-                }
                 __sprite_manager_apply_props(_spr, _info);
                 return _spr;
             }
@@ -489,16 +469,19 @@ function __sprite_manager_build_first_frame(_name, _info) {
     return _spr;
 }
 
-/// @desc 根据 .yy 完整数据设置精灵属性：速度、碰撞、九宫格
+/// @desc 根据 .yy 完整数据设置精灵属性：速度、碰撞
 /// .yy collisionKind → runtime kind 映射:
-///   0=自动矩形 → 0(rect)   1=手动矩形 → 0(rect)
-///   4=椭圆     → 2(ellipse) 5=菱形    → 3(diamond)
+///   0=自动矩形       → 0(rect)
+///   1=手动矩形       → 0(rect)
+///   2=旋转矩形       → 1(rotated)
+///   3=椭圆           → 2(ellipse)
+///   4=菱形           → 3(diamond)
+///   5=逐像素精确     → 3(diamond)  sprite_add 不支持 precise
+///   6=逐像素逐帧精确 → 3(diamond)  同上
 function __sprite_manager_apply_props(_spr, _info) {
     // ── 播放速度（直接从 .yy 原始序列数据读取）──
 	_names = global._pid_reverse[? _spr];
-	if _spr=="spr_small_fire" or global._pid_reverse[? _spr]=="spr_small_fire"{
-		var t=0;
-	}
+
     var _seq = _info[$ "sequence"];
 
     if (!is_undefined(_seq)) {
@@ -511,8 +494,12 @@ function __sprite_manager_apply_props(_spr, _info) {
         }
     }
 	
-    		
+
     // ── 碰撞遮罩 ──
+    // Spine 骨骼精灵的 collisionKind 不适用于 sprite_add 创建的位图，跳过
+    var _type = _info[$ "type"];
+    if (is_undefined(_type)) { _type = 0; }
+    if (_type == 2) { return; }
     var _kind  = _info.collisionKind;
     var _bbox  = _info.bbox;
     var _bmode = _info[$ "bboxMode"];
@@ -520,47 +507,41 @@ function __sprite_manager_apply_props(_spr, _info) {
     var _tol   = _info[$ "collisionTolerance"];
     if (is_undefined(_tol)) _tol = 255;
 
-    switch (_kind) {
-        case 0: // 自动矩形 → runtime rect (kind=0), 沿用 .yy 的 bboxMode
-            sprite_collision_mask(_spr, false, _bmode, _bbox[0], _bbox[1], _bbox[2], _bbox[3], 0, _tol);
-            break;
-        case 1: // 手动矩形 → runtime rect (kind=0), bboxMode=2 手动
-            sprite_collision_mask(_spr, false, 2, _bbox[0], _bbox[1], _bbox[2], _bbox[3], 0, _tol);
-            break;
-        case 4: // 椭圆 → runtime ellipse (kind=2), bboxMode=2 手动使用 .yy bbox 值
-            sprite_collision_mask(_spr, false, 2, _bbox[0], _bbox[1], _bbox[2], _bbox[3], 2, _tol);
-            break;
-        case 5: // 菱形 → runtime diamond (kind=3), bboxMode=2 手动使用 .yy bbox 值
-            sprite_collision_mask(_spr, false, 2, _bbox[0], _bbox[1], _bbox[2], _bbox[3], 3, _tol);
-            break;
-        default:
-            sprite_collision_mask(_spr, false, _bmode, _bbox[0], _bbox[1], _bbox[2], _bbox[3], 0, _tol);
-            break;
-    }
-    // ── 九宫格 ──
-    // 当前 GMS2 版本 NineSlice struct / sprite_set_nineslice 不可用，暂注释
-    /*
-    var _nine = _info[$ "nineSlice"];
-    if (!is_undefined(_nine) && _nine != undefined) {
-        if (is_struct(_nine) || is_method(_nine)) {
-            var _nl = _nine[$ "left"];
-            if (!is_undefined(_nl)) {
-                var _nt = _nine[$ "top"];
-                var _nr = _nine[$ "right"];
-                var _nb = _nine[$ "bottom"];
-                var _ne = _nine[$ "enabled"];
-                sprite_set_nineslice(_spr, _nl, _nt, _nr, _nb, _ne != false);
-            }
-        }
-    }
-    */
+    // 非自动/非全图模式统一用手动 bbox
+    var _use_bbox_mode = 2;
+	/*
+    if (_kind == 0) {
+        _use_bbox_mode = _bmode;
+    } else if (_kind == 1 && _bmode == 1) {
+        _use_bbox_mode = 1;
+    }*/
 
-    // ── 预乘 Alpha ──
-    // 当前 GMS2 版本无 sprite_set_premultiplied API，暂跳过
-    // var _pma = _info[$ "preMultiplyAlpha"];
-    // if (!is_undefined(_pma)) {
-    //     sprite_set_premultiplied(_spr, _pma);
-    // }
+    // .yy collisionKind → runtime sprite_collision_mask kind
+    // 注意：sprite_add 创建的位图精灵不支持 precise(4)，上限为 diamond(3)
+    var _rt_kind = 0;
+    switch (_kind) {
+        case 0:  // 自动矩形
+        case 1:  // 手动矩形
+            _rt_kind = 0;
+            break;
+        case 2:  // 旋转矩形
+            _rt_kind = 1;
+            break;
+        case 3:  // 椭圆
+            _rt_kind = 2;
+            break;
+        case 4:  // 菱形
+            _rt_kind = 3;
+            break;
+        case 5:  // 逐像素精确 → sprite_add 不支持，退化为菱形
+        case 6:  // 逐像素逐帧精确 → sprite_add 不支持，退化为菱形
+        default:
+            _rt_kind = 3;
+            break;
+    }
+
+    sprite_collision_mask(_spr, false, _use_bbox_mode, _bbox[0], _bbox[1], _bbox[2], _bbox[3], _rt_kind, _tol);
+
 }
 
 /// @desc 先试相对路径，失败拼绝对路径兜底
@@ -572,3 +553,25 @@ function __sprite_manager_find_png(_relative) {
     }
     return _relative;
 }
+
+/// @function audio_preload_all()
+/// @desc 游戏启动时按固定顺序预加载所有音乐，确保两端流 ID 一致
+function audio_preload_all() {
+    var _result = FileUtil.load_json_from_path("removed_sprites.json");
+    if (_result.is_failed()) {
+        show_debug_message("[audio] preload: no removed_sprites.json, skip");
+        return;
+    }
+    var _list = _result.data[$ "_music_list"];
+    if (is_undefined(_list)) {
+        show_debug_message("[audio] preload: no _music_list in json, skip");
+        return;
+    }
+    var _count = 0;
+    for (var _i = 0; _i < array_length(_list); _i++) {
+        get_load_audio(string(_list[_i]));
+        _count++;
+    }
+    show_debug_message("[audio] preload complete: " + string(_count) + " tracks");
+}
+

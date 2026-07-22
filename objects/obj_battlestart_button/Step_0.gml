@@ -10,6 +10,9 @@ if button_pushed{
 		}
 		audio_pause_sound(mus_readyroom)
 		//global.gui_stack.to(room_battle)
+		var list_name = obj_readyroom_manager._get_needed_sprites();
+		sprite_manager_load_battle(list_name);
+		
 		global.gui_stack.to(room_battle)
 		texture_prefetch("bullet")
 		texture_prefetch("effects")
@@ -26,7 +29,9 @@ if button_pushed{
 			global.network.net_instance_count=0
 		}
 		
-		sprite_manager_load_async(["spr_small_fire"], global._sprite_cache);
+		
+
+		//sprite_manager_load_async(["spr_small_fire"], global._sprite_cache);
 
 	}
 }

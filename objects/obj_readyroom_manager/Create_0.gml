@@ -69,29 +69,25 @@ for(var i = 0;i < global.level_file.total_waves;i ++){
   function _get_needed_sprites() {
       var _list = [];
       var _seen = ds_map_create();
+      var _card_count = 0;
+      var _enemy_count = 0;
 
       // 1. 卡组
       for (var i = 0; i < ds_list_size(global.selected_deck); i++) {
-          var _cid = ds_list_find_value(global.selected_deck, i);
-          // player_deck 是 [key0,val0,key1,val1,...]
-          var _card = undefined;
-          for (var j = 0; j < ds_list_size(global.player_deck); j += 2) {
-              if (global.player_deck[| j] == _cid) {
-                  _card = global.player_deck[| j + 1];
-                  break;
-              }
-          }
+          var _entry = global.selected_deck[| i];
+          var _card = _entry[? "data"];
           if (is_undefined(_card)) continue;
-          var _shapes = _card[? "shapes"];
-          for (var j = 0; j < ds_list_size(_shapes); j++) {
-              var _shape = ds_list_find_value(_shapes, j);
-              var _pid = _shape[? "sprite"];
-              if (!is_undefined(_pid) && _pid >= 100000) {
-                  var _name = sprite_name_from_pid(_pid);
-                  if (!is_undefined(_name) && !ds_map_exists(_seen, _name)) {
-                      ds_map_add(_seen, _name, true);
-                      array_push(_list, _name);
-                  }
+          var _obj = _card[? "obj"];
+          if (is_undefined(_obj) || is_undefined(global._object_deps)) continue;
+          var _obj_name = object_get_name(_obj);
+          var _sprites = global._object_deps[$ _obj_name];
+          if (is_undefined(_sprites)) continue;
+          for (var k = 0; k < array_length(_sprites); k++) {
+              var _name = _sprites[k];
+              if (!ds_map_exists(_seen, _name)) {
+                  ds_map_add(_seen, _name, true);
+                  array_push(_list, _name);
+                  _card_count++;
               }
           }
       }
@@ -105,26 +101,26 @@ for(var i = 0;i < global.level_file.total_waves;i ++){
       for (var i = 0; i < array_length(_all_enemies); i++) {
           var _info = global.enemy_map[? _all_enemies[i]];
           if (is_undefined(_info)) continue;
-          var _pid = _info[$ "spr"];
-          if (!is_undefined(_pid) && _pid >= 100000) {
-              var _name = sprite_name_from_pid(_pid);
-              if (!is_undefined(_name) && !ds_map_exists(_seen, _name)) {
+          var _obj = _info[$ "_obj"];
+          if (is_undefined(_obj) || is_undefined(global._object_deps)) continue;
+          var _obj_name = object_get_name(_obj);
+          var _sprites = global._object_deps[$ _obj_name];
+          if (is_undefined(_sprites)) continue;
+          for (var k = 0; k < array_length(_sprites); k++) {
+              var _name = _sprites[k];
+              if (!ds_map_exists(_seen, _name)) {
                   ds_map_add(_seen, _name, true);
                   array_push(_list, _name);
+                  _enemy_count++;
               }
           }
       }
 
       ds_map_destroy(_seen);
+      show_debug_message("[_get_needed_sprites] cards=" + string(ds_list_size(global.selected_deck))
+          + " enemies=" + string(array_length(_all_enemies))
+          + " → card_sprites=" + string(_card_count)
+          + " enemy_sprites=" + string(_enemy_count)
+          + " list=" + string(_list));
       return _list;
-  }
-
-  function sprite_name_from_pid(_pid) {
-      if (is_undefined(global._pid_map)) return undefined;
-      var _k = ds_map_find_first(global._pid_map);
-      while (!is_undefined(_k)) {
-          if (global._pid_map[? _k] == _pid) return _k;
-          _k = ds_map_find_next(global._pid_map, _k);
-      }
-      return undefined;
   }

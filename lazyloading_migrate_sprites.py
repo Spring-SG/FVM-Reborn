@@ -15,6 +15,18 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).parent
 os.chdir(PROJECT_ROOT)
 
+# ── 迁移模式互斥检查 ──────────────────────────
+_MODE_FILE = PROJECT_ROOT / ".migration_mode"
+if _MODE_FILE.exists():
+    _prev = _MODE_FILE.read_text(encoding='utf-8').strip()
+    if _prev != "simple":
+        import ctypes
+        ctypes.windll.user32.MessageBoxW(0,
+            f"项目已用 {_prev} 模式迁移过，请先运行 lazyloading_restore_backup.py 还原后再试。",
+            "迁移模式冲突", 0x30)
+        print(f"[错误] 项目已用 {_prev} 模式迁移过，请先 lazyloading_restore_backup.py 还原")
+        exit(1)
+
 # ── 配置 ──────────────────────────────────────────────
 
 REPLACE_SPRITE = 'spr_cloud_daytime'   # object .yy spriteId 替换默认值
@@ -454,6 +466,10 @@ with open('datafiles/removed_sprites.json', 'w', encoding='utf-8') as f:
 print(f'  removed_sprites.json: {len(removed_sprites) - 1} 个精灵 + 项目根路径')
 print()
 
+# 写入迁移模式标记
+_MODE_FILE = PROJECT_ROOT / ".migration_mode"
+_MODE_FILE.write_text("simple", encoding="utf-8")
+
 # ── 汇总 ──────────────────────────────────────────────
 
 print('=' * 60)
@@ -463,5 +479,5 @@ print(f'  object: {obj_mod} 个 spriteId 替换')
 print(f'  .gml:   {gml_mod} 个文件, {total_repl} 处替换')
 print(f'  映射:   {len(object_sprite_map)} 个对象, {sum(len(v) for v in object_sprite_map.values())} 条精灵引用')
 print()
-print('用 restore_backup.py 可还原')
+print('用 lazyloading_restore_backup.py 可还原')
 print('=' * 60)

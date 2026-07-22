@@ -1,4 +1,6 @@
-
+if(global.wait_sprite_load){
+	global.is_paused=true;
+}
 
 if global.is_paused{
 	exit
@@ -222,7 +224,7 @@ if wave_data.boss_wave && level_stage != "boss" && global.save_data.unlocked_ite
 	if (global.network.mode == "server") {
 		var _cl = global.network.connected_clients;
 		for (var _j = 0; _j < array_length(_cl); _j++) {
-			send_message(_cl[_j], MSG_MUSIC_SYNC, global.level_data.boss_music);
+			send_message(_cl[_j], MSG_MUSIC_SYNC, 2);
 		}
 	}
 
@@ -318,24 +320,25 @@ if (global.network.mode == "server" && battle_time mod 60 == 0) {
 }
 
 
-// 每300帧同步所有卡牌状态（位置/格子/平台进度,(人物武器没有跟随移动，平台参数也不足)）
+// 每300帧同步平台状态，客户端收到后算差值并模拟平台挪动来带动卡片
 if (global.network.mode == "server" && battle_time mod 300 == 0 && instance_number(obj_platform) > 0) {
 	var _cards = [];
 	var _clist = global.network.connected_clients;
 	var _csize = array_length(_clist);
-	with (obj_card_parent) {
-		if (hp > 0) {
-			var _nid = (ds_map_exists(global.network.map_instance_id_net_id, id)) ? global.network.map_instance_id_net_id[? id] : -1;
-			if (_nid != -1) {
-				var _entry = { n: _nid, x: x, y: y, c: grid_col, r: grid_row };
-				array_push(_cards, _entry);
-			}
-		}
-	}
 	with (obj_platform) {
 		var _pnid = (ds_map_exists(global.network.map_instance_id_net_id, id)) ? global.network.map_instance_id_net_id[? id] : -1;
 		if (_pnid != -1) {
-			array_push(_cards, { n: _pnid, x: x, y: y, offs: current_offset, prog: move_progress });
+			array_push(_cards, {
+				n: _pnid,
+				x: x, y: y,
+				offs: current_offset,
+				prog: move_progress,
+				state: state,
+				dir: move_direction,
+				itimer: idle_timer,
+				vx: visual_x_shift,
+				vy: visual_y_shift
+			});
 		}
 	}
 	if (array_length(_cards) > 0) {
@@ -345,6 +348,7 @@ if (global.network.mode == "server" && battle_time mod 300 == 0 && instance_numb
 		}
 	}
 }
+
 
 if global.debug{
 	if keyboard_check_pressed(ord("V")){

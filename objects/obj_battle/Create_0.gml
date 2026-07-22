@@ -12,6 +12,7 @@ var mus_inst = instance_create_depth(0,0,0,obj_battle_music_controller)
 mus_inst.battle_music = global.level_data.pre_music
 
 global.game_over = false
+global.wait_sprite_load=true;
 
 instance_create_depth(0,0,0,obj_battle_pause_manager)
 instance_create_depth(0,0,-2900,obj_battle_timer_display)
@@ -320,4 +321,53 @@ function enemy_subwave_summon(){
         }
     }
     
+}
+
+function drawLoader(){
+
+	var _total = 0;
+	var _loaded = 0;
+	var _q = global._loader_sprite_queue;
+	if (_q != undefined && ds_list_size(_q) > 0) {
+		var _entry = ds_list_find_value(_q, 0);
+		_total = _entry.total;
+		_loaded = _entry.loaded;
+	}
+
+	var _bar_w = 700;
+	var _bar_h = 20;
+	var _x1 = (room_width - _bar_w) / 2;
+	var _y1 = room_height / 2 + 250;
+	var _ratio = (_total > 0) ? (_loaded / _total) : 0;
+
+	draw_set_colour(c_black);
+	draw_set_alpha(0.8);
+	draw_rectangle(0, 0, room_width, room_height, false);
+	draw_set_alpha(1);
+
+	draw_set_color(c_white);
+	draw_rectangle(_x1 - 2, _y1 - 2, _x1 + _bar_w + 2, _y1 + _bar_h + 2, false);
+
+	draw_set_color($fde98b);
+	draw_rectangle(_x1, _y1, _x1 + _bar_w * _ratio, _y1 + _bar_h, false);
+
+	draw_sprite_ext(spr_game_logo, 0, room_width / 2, room_height / 3, 1, 1, 0, c_white, 1);
+
+	draw_set_valign(fa_left)
+	draw_set_halign(fa_top)
+	draw_set_color(c_white);
+	draw_set_font(font_yuan);
+	var _text = (_total > 0 && _loaded >= _total) ? "加载完成！" : "正在加载中！ " + string(_loaded) + "/" + string(_total);
+	draw_text(_x1, _y1 - 30, _text);
+	draw_set_valign(fa_middle)
+	draw_set_halign(fa_center)
+	draw_set_colour(c_yellow)
+	draw_text(_x1 + _bar_w / 2, _y1 - 80, "本游戏为免费开源游戏，任何付费获取方式均为诈骗\n游戏作者B站名称：Spring曙光");
+			
+	var _q = global._loader_sprite_queue;
+	var _sz = (_q != undefined) ? ds_list_size(_q) : 0;
+	if (_sz == 0) {
+	    global.wait_sprite_load = false;
+	    global.is_paused = false;
+	}
 }

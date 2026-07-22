@@ -66,6 +66,8 @@ if (global.network.mode == "server" && is_boss && state != _state_prev) {
 			if (variable_instance_exists(id, "skill_change_style")){ _ps.skill_change_style = skill_change_style;}
 			if (variable_instance_exists(id, "is_reversed"))       { _ps.is_reversed       = is_reversed;       }
 			if (variable_instance_exists(id, "image_angle"))       { _ps.image_angle       = image_angle;       }
+			if (variable_instance_exists(id, "image_xscale"))      { _ps.image_xscale      = image_xscale;      }
+			if (variable_instance_exists(id, "image_alpha"))       { _ps.image_alpha       = image_alpha;       }
 			if (variable_instance_exists(id, "move_time"))         { _ps.move_time         = move_time;         }
 			if (variable_instance_exists(id, "grid_col"))          { _ps.grid_col          = grid_col;          }
 			if (variable_instance_exists(id, "grid_row"))          { _ps.grid_row          = grid_row;          }
