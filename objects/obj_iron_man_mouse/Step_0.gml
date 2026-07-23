@@ -326,12 +326,15 @@ switch state{
 		}
 		if timer == 10 * 5 - 1{
 			if !appear{
-				skill_choose = irandom_range(1,1)
+				skill_choose = irandom_range(0,1)
 				appear = true
 			}
 			else{
 				for(var i = 0 ; i < 100 ; i++){
-					var current_choose = irandom_range(0,2)
+					var current_choose = irandom_range(0,1)
+					if hp <= maxhp * hurt_rate{
+						current_choose = irandom_range(0,2)
+					}
 					if current_choose != skill_choose{
 						skill_choose = current_choose
 						break

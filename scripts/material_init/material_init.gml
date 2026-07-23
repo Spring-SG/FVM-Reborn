@@ -30,6 +30,11 @@ function material_init(){
 										"icon":5,
 										"pos_x":2,
 										"pos_y":1})
+	register_material("clover_4",{"name":"4级四叶草",
+										"description":"4级四叶草：将卡片突破至14星所需材料",
+										"icon":9,
+										"pos_x":3,
+										"pos_y":1})
 	register_material("less_crystal",{"name":"初级强化水晶",
 										"description":"初级强化水晶：强化1~5星宝石所需材料",
 										"icon":6,

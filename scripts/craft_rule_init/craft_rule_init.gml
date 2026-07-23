@@ -156,8 +156,8 @@ function craft_rule_init(){
 		{
 		"spices_require":"royal_spices",
 		"spices_amount":355,
-		"clover_require":"none",
-		"clover_amount":0,
+		"clover_require":"clover_4",
+		"clover_amount":4,
 		"gold_amount":5200
 		}
 	)

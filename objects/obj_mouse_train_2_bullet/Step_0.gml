@@ -11,7 +11,7 @@ if b_type == 0{
 			var inst = instance_create_depth(x,y-35,-800,obj_arno_bullet_effect)
 			inst.sprite_index = spr_mouse_train_1_bullet_effect
 			instance_destroy(other)
-			if plant_id != "player" && plant_type != "coffee" && !invincible && plant_id != "cotton_candy"{
+			if plant_id != "player" && plant_type != "coffee" && !invincible{
 				if hp >= max_hp{
 					obj_task_manager.card_loss++
 				}
@@ -27,7 +27,7 @@ else if b_type == 1{
 			var inst = instance_create_depth(x,y-35,-800,obj_arno_bullet_effect)
 			inst.sprite_index = spr_mouse_train_1_bullet_effect
 			instance_destroy(other)
-			if plant_id != "player" && plant_type != "coffee" && !invincible && plant_id != "cotton_candy"{
+			if plant_id != "player" && plant_type != "coffee" && !invincible{
 				if hp >= max_hp{
 					obj_task_manager.card_loss++
 				}

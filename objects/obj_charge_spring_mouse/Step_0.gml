@@ -60,6 +60,8 @@ if not placed && state = ENEMY_STATE.ACTING{
 			if shield_hp <= hurt_rate * shield_max_hp{
 				spring.sprite_index = spr_mouse_spring_2
 			}
+			spring.row = grid_row
+			//spring.col = target_plant.grid_col
 		}
 		sprite_index = spr_charge_spring_mouse
 		state = ENEMY_STATE.NORMAL

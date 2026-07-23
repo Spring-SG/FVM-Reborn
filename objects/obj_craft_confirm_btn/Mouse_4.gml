@@ -4,7 +4,7 @@ var target_id = obj_craft_bg.current_uprade_target_id
 if target_id != ""{
 	if obj_craft_bg.button_select == 0{
 		var spices_list = [0,0,0]
-		var clover_list = [0,0,0]
+		var clover_list = [0,0,0,0]
 		var card_data = get_card_info_simple(target_id)
 		var current_level = card_data.max_level
 		if array_get_index(cannot_upgrade_card_list,target_id) != -1{

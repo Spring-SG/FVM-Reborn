@@ -209,6 +209,9 @@ switch state{
 			}
 		}
 		
+		if timer == 10 * 5 - 1{
+			show_notice("造成足够伤害以阻止激光发射",180)
+		}
 		if timer == 46 * 5 + 2{
 			for(var i = 0 ; i < 4 ; i++){
 				if max(skill_1_damage[i],skill_1_damage[7-i]) < 0.01*maxhp{

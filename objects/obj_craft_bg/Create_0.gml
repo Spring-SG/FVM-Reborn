@@ -14,7 +14,7 @@ var btn2 = instance_create_depth(x-661,y+100,depth-1,obj_craft_select_btn)
 btn2.button_index = 1
 btn2.text_spr = spr_craft_gem_text
 
-card_material_id_list = ["natural_spices","secret_spices","royal_spices","clover_1","clover_2","clover_3"]
+card_material_id_list = ["natural_spices","secret_spices","royal_spices","clover_1","clover_2","clover_3","clover_4"]
 gem_material_id_list = ["less_crystal","middle_crystal","advanced_crystal"]
 
 
@@ -28,5 +28,5 @@ card_surface = -1
 current_uprade_target_id = ""
 
 spices_use_order = ["natural_spices","secret_spices","royal_spices"]
-clover_use_order = ["clover_1","clover_2","clover_3"]
+clover_use_order = ["clover_1","clover_2","clover_3","clover_4"]
 crystal_use_order = ["less_crystal","middle_crystal","advanced_crystal"]

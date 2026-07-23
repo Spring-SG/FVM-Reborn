@@ -844,7 +844,8 @@ function maps_init(){
 					"boss_music":mus_floating_island_night_boss,
 					"pre_level":"tower_cake_28_2",
 					"rewards":[
-						{"card_id":"king_triple_long_bao","target_shape":2}
+						{"card_id":"king_triple_long_bao","target_shape":2},
+						{"card_id":"tar_sprayer","target_shape":2}
 					]
 				},
 				{

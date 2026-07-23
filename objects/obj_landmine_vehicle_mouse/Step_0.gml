@@ -24,6 +24,9 @@ if state != ENEMY_STATE.DEAD && state != ENEMY_STATE.ACTING && state != ENEMY_ST
 	var target_range = clamp(grid_col,0,global.grid_cols - 1)
 	for(var i = 0 ; i < target_range;i++){
 		var plant_list = ds_grid_get(global.grid_plants,i,grid_row)
+		if is_undefined(plant_list){
+			continue
+		}
 		if ds_list_size(plant_list) > 0{
 			for(var j = 0 ; j < ds_list_size(plant_list);j++){
 				var plant_inst = plant_list[| j]

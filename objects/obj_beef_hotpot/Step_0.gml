@@ -39,7 +39,7 @@ if (has_enemy) {
 	    attack_timer = 0;
 	    state = CARD_STATE.IDLE;
 	}
-	if (attack_timer == cycle - (attack_anim-3) * current_flash_speed) && state == CARD_STATE.ATTACK{
+	if (attack_timer == cycle - (attack_anim-9) * current_flash_speed) && state == CARD_STATE.ATTACK{
 		event_user(1) //发射子弹
 	}
 } else {

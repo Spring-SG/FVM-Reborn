@@ -293,8 +293,8 @@
   "swatchColours":null,
   "swfPrecision":0.5,
   "textureGroupId":{
-    "name":"Default",
-    "path":"texturegroups/Default",
+    "name":"enemy_floating",
+    "path":"texturegroups/enemy_floating",
   },
   "type":0,
   "VTile":false,
