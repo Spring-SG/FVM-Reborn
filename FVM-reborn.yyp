@@ -328,6 +328,7 @@
     {"$GMFolder":"","%Name":"Shell","folderPath":"folders/脚本/Shell.yy","name":"Shell","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Shovel","folderPath":"folders/脚本/Shovel.yy","name":"Shovel","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Weapons","folderPath":"folders/脚本/Weapons.yy","name":"Weapons","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"shell","folderPath":"folders/脚本/shell.yy","name":"shell","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"路径","folderPath":"folders/路径.yy","name":"路径","resourceType":"GMFolder","resourceVersion":"2.0",},
   ],
   "ForcedPrefabProjectReferences":[],
