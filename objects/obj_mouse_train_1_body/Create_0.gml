@@ -28,3 +28,8 @@ y_move_speed = 0
 
 train_head = noone
 is_reversed = false
+
+
+if global.network.mode=="client"{
+	train_head = id
+}

@@ -34,7 +34,39 @@ if on_click && obj_player_info_ui.menu_type == 0 && unlock{
 		}
 		var map_button_array = struct_get(ds_map_find_value(global.maps_map,global.map_id),"levels_data")
 		global.level_data = map_button_array[level_index]
+		global.level_data_index = level_index
 		show_debug_message(global.level_data)
+		
+		if(global.network.mode == "server"){
+		var _ld_send = variable_clone(global.level_data);
+		var _rev = global._audio_reverse;
+		var _mf = ["pre_music", "elite_music", "boss_music"];
+		for (var _fi = 0; _fi < 3; _fi++) {
+			var _f = _mf[_fi];
+			var _v = _ld_send[$ _f];
+			if (!is_string(_v) && ds_map_exists(_rev, _v)) {
+				_ld_send[$ _f] = _rev[? _v];
+			}
+		}
+			var json_struct = {
+			    "target_level_id":target_level_id,
+			    "target_level_file": target_level_file,
+			    "target_level_file_hard": target_level_file_hard,
+			    "level_index": level_index,
+				"map_id":global.map_id,
+				"level_data": _ld_send,
+				"level_file": global.level_file
+			};
+
+			var json_str = json_stringify(json_struct);
+			var _list = global.network.connected_clients;
+			var _size = array_length(_list);
+			for (var i = 0; i < _size; i++) {
+				var _socket = _list[i];
+				send_message(_socket, MSG_ENTER_ROOM_READY,json_str);
+			}
+		}
+		
 	}
 	else{
 		global.gui_stack.to(room_tower_cake)

@@ -20,6 +20,12 @@ else{
 
 var target_y = get_world_position_from_grid(target_col,target_row).y - 30
 
+
+if global.network.mode == "client" && instance_exists(banding_target_inst)=false{
+	exit;
+}
+
+
 if hp > 0 && state != ENEMY_STATE.DEAD && banding_target_inst.state != "appear"{
 	if state == ENEMY_STATE.APPEAR{
 		anim_timer++
@@ -84,7 +90,10 @@ if hp > 0 && state != ENEMY_STATE.DEAD && banding_target_inst.state != "appear"{
 					break
 				}
 			}
-        
+			
+			if global.network.mode == "client"{
+				exit;
+			}
 	        // 如果找到目标植物，进入攻击状态
 	        if (plant_in_range != noone) {
 	            if instance_exists(plant_in_range){
@@ -98,6 +107,8 @@ if hp > 0 && state != ENEMY_STATE.DEAD && banding_target_inst.state != "appear"{
 					}
 				}
 	        }
+			
+			
 		}
 	}
 }

@@ -39,6 +39,9 @@ if obj_battle.boss_count > 0{
 
 ///@desc 按方向创建新的车厢
 function create_train_body(amount,dir){
+	if global.network.mode=="client"{
+		exit
+	}
 	for(var i = 0 ; i < amount ; i++){
 		if dir == 0{
 			var inst = instance_create_depth(x,y+228*(i+1),depth,obj_mouse_train_1_body)
@@ -70,6 +73,9 @@ function create_train_body(amount,dir){
 
 ///@desc 移除指定位置的车厢
 function remove_train_body(index){
+	if global.network.mode=="client"{
+		exit
+	}
 	if instance_exists(train_body_list[index]){
 		instance_destroy(train_body_list[index])
 		array_delete(train_body_list,index,1)
@@ -78,6 +84,9 @@ function remove_train_body(index){
 
 ///@desc 移除所有车厢
 function clear_train_body(){
+	if global.network.mode=="client"{
+		exit
+	}
 	for(var i = 0 ; i < array_length(train_body_list) ; i++){
 		if instance_exists(train_body_list[i]){
 			instance_destroy(train_body_list[i])

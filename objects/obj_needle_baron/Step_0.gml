@@ -127,7 +127,7 @@ switch state{
 		if timer == 120{
 			var inst = instance_create_depth(x+30,y-95,-800,obj_baron_needle)
 		}
-		if timer == 230{
+		if timer == 230 && ds_list_size(avaliable_pos) > 0{
 			var infected = false
 			with obj_card_parent{
 				if grid_col == other.t_pos.col && grid_row == other.t_pos.row && plant_type != "coffee" && !invincible{

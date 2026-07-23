@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"src_file_cache",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"src_file_cache",
+  "parent":{
+    "name":"Shell",
+    "path":"folders/脚本/Shell.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

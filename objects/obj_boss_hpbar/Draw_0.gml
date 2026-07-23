@@ -1,14 +1,17 @@
+if global.network.mode!="client"{
 if instance_exists(target_boss){
 	hp = target_boss.hp
 	if hp < 0 hp = 0
 	maxhp = target_boss.maxhp
-	hp_rate = hp/maxhp
+	hp_rate = (hp*1.0) /(maxhp*1.0)
 }
 else{
-	hp = 0
-	maxhp = 0
-	hp_rate = 0
+		hp = 0
+		maxhp = 0
+		hp_rate = 0
 }
+}
+
 if boss_id != ""{
 	icon_spr = global.boss_list[? boss_id].icon
 	boss_name = global.boss_list[? boss_id].name

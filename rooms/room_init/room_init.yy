@@ -10,10 +10,12 @@
     {"name":"inst_78019EC4","path":"rooms/room_init/room_init.yy",},
     {"name":"inst_78D70EC1","path":"rooms/room_init/room_init.yy",},
     {"name":"inst_5723097A","path":"rooms/room_init/room_init.yy",},
+    {"name":"inst_224771E1","path":"rooms/room_init/room_init.yy",},
   ],
   "isDnd":false,
   "layers":[
     {"$GMRInstanceLayer":"","%Name":"Instances","depth":0,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"instances":[
+        {"$GMRInstance":"v4","%Name":"inst_224771E1","colour":4294967295,"frozen":false,"hasCreationCode":true,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_224771E1","objectId":{"name":"obj_shell","path":"objects/obj_shell/obj_shell.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":128.0,"y":128.0,},
         {"$GMRInstance":"v4","%Name":"inst_46082EB4","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_46082EB4","objectId":{"name":"obj_game_init","path":"objects/obj_game_init/obj_game_init.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":32.0,"y":0.0,},
         {"$GMRInstance":"v4","%Name":"inst_78019EC4","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_78019EC4","objectId":{"name":"obj_file_manager","path":"objects/obj_file_manager/obj_file_manager.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":64.0,"y":0.0,},
         {"$GMRInstance":"v4","%Name":"inst_78D70EC1","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_78D70EC1","objectId":{"name":"obj_notice_controller","path":"objects/obj_notice_controller/obj_notice_controller.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":352.0,"y":224.0,},

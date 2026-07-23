@@ -169,7 +169,12 @@ function get_audio_or_create(_path, _path_prefix) {
         }
         return new Result().success(_audio)
     }
-    return new Result().success(asset_get_index(_path))
+    	// 先查 .yyp，已迁移走则走 backgroundmusic/ 懒加载
+	var _idx = asset_get_index(_path)
+	if (_idx != -1) {
+		return new Result().success(_idx)
+	}
+	return new Result().success(get_load_audio(_path))
 }
 
 /// @param {String} _path

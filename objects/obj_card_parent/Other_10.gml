@@ -70,7 +70,12 @@ target_card = card_data[? "target_card"]
 var grid_pos = get_grid_position_from_world(x, y);
     var col = grid_pos.col;
     var row = grid_pos.row;
-    
+
+
+if global.network.mode=="client"{
+	exit;
+}
+	
     // 检查是否在网格范围内
     if (col < 0 || col >= global.grid_cols || row < 0 || row >= global.grid_rows) {
         exit
@@ -83,7 +88,8 @@ var grid_pos = get_grid_position_from_world(x, y);
 	if target_card != "none"{
 		for (var i = 0; i < ds_list_size(plant_list); i++) {
 	        var plant = ds_list_find_value(plant_list, i);
-	        if (plant.plant_id == target_card) {
+			
+			if instance_exists(plant)&&(plant.plant_id == target_card) {
 				
 				if feature_type == "upgrade"{
 					instance_destroy(plant)

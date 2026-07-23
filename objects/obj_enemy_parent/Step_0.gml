@@ -1,8 +1,16 @@
-// 修改后的僵尸Step事件
-if global.is_paused{
-	exit
-}
-if ice_timer > 0{
+	// 修改后的僵尸Step事件
+	if global.is_paused{
+		exit
+	}
+	// 记录本帧初始状态，用于检测技能切换
+	_state_prev = state;
+	// 客户端：直接死亡，不等待服务端
+	if (hp <= 0 && state != ENEMY_STATE.DEAD) {
+		timer = 0;
+		state = ENEMY_STATE.DEAD;
+		target_plant = noone;
+	}
+	if ice_timer > 0{
 	ice_timer--
 	is_slowdown = true
 }
@@ -40,6 +48,7 @@ if hp <= 0{
 	scare_timer = 0
 	left_move_flashs = 0
 	stun_timer = 0
+
 }
 var current_atk_cycle = 0
 var current_move_speed = 0
@@ -335,9 +344,19 @@ switch(state) {
 
 // 死亡处理
 if (hp <= 0 && state != ENEMY_STATE.DEAD) {
-    timer = 0;
-    state = ENEMY_STATE.DEAD;
-    target_plant = noone;  // 清除攻击目标
+	//if(global.network.mode!="client"){
+	    timer = 0;
+	    state = ENEMY_STATE.DEAD;
+	    target_plant = noone;  // 清除攻击目标
+	/*}
+	else if (global.network.mode=="server"){
+		var _list = global.network.connected_clients;
+		var _size = array_length(_list);
+		for (var _i = 0; _i < _size; _i++) {
+			var _socket = _list[_i];
+			send_message(_socket, MSG_ENEMY_DESTROYED, global.network.map_instance_id_net_id[id]);
+		}
+	}*/
 }
 
 // 透明度处理
@@ -358,10 +377,18 @@ grid_col = zombie_grid.col;
 grid_row = zombie_grid.row;
 
 if x < global.grid_offset_x-150 && hp > 0 && not place_meeting(x,y,obj_cat) && array_get_index(block_mouse_id_list,mouse_id) == -1{
+	if global.network.mode == "server"{
+		var _clients = global.network.connected_clients;
+		for (var i = 0; i < array_length(_clients); i++) {
+		    send_message(_clients[i], MSG_GAME_OVER, 0);
+		}
+	}
+	if global.network.mode != "client"{
 	global.is_paused = true
 	global.game_over = true
 	instance_create_depth(room_width/2,room_height/2,-3001,obj_game_over)
 	audio_play_sound(snd_lose,0,0)
+	}
 }
 
 //破冰动画

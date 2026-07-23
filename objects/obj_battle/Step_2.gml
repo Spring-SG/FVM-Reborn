@@ -1,3 +1,83 @@
+// 客户端：帧末清理boss产物临时实例(等服务端MSG_EVENT_ACTIONS同步)
+if (global.network.mode == "client") {
+	global.network.client_able = true;
+	for (var _i = 0; _i < array_length(global._boss_client_cleanup); _i++) {
+		var _inst = global._boss_client_cleanup[_i];
+		if (instance_exists(_inst)) instance_destroy(_inst);
+	}
+	global._boss_client_cleanup = [];
+	// 清理孤儿hpbar(boss已销毁但hpbar未清理)
+	with (obj_boss_hpbar) {
+	    if (!instance_exists(target_boss)) instance_destroy();
+	}
+	global.network.client_able = false;
+}
+if(global.network.mode=="server"){
+	var _actions = [];
+	// boss产物属性延迟队列：boss技能跑完后属性齐全，补发spawn
+	for (var _i = 0; _i < array_length(global._boss_spawn_queue); _i++) {
+		var _id = global._boss_spawn_queue[_i];
+		if (instance_exists(_id)) {
+			with (_id) {
+				var _props = {};
+				var _target_ids ={};
+				for (var _k = 0; _k < array_length(global._sync_keys); _k++) {
+					var _key = global._sync_keys[_k];
+					if (variable_instance_exists(id, _key)) {
+						_props[$ _key] = variable_instance_get(id, _key);
+					}
+				}
+				// sprite_index 转为字符串名，跨客户端兼容懒加载
+				if (variable_struct_exists(_props, "sprite_index")) {
+					var _sid = _props[$ "sprite_index"];
+					if (ds_map_exists(global._pid_reverse, _sid)) {
+						_props[$ "sprite_index"] = global._pid_reverse[? _sid];
+					} else {
+						_props[$ "sprite_index"] = sprite_get_name(_sid);
+					}
+				}
+				for (var _k = 0; _k < array_length(global._sync_ref_keys); _k++) {
+				      var _key = global._sync_ref_keys[_k];
+				      if (variable_instance_exists(id, _key)) {
+				          var _ref_inst = variable_instance_get(id, _key);
+				          if instance_exists(_ref_inst) && ds_map_exists(global.network.map_instance_id_net_id, _ref_inst.id) {
+				              _target_ids[$ _key] = global.network.map_instance_id_net_id[? _ref_inst.id];
+				          }
+				      }
+				 }
+				array_push(_actions, {
+									op: "spawn",
+									obj: object_get_name(object_index),
+									x: x, y: y, depth: depth,
+									net_id: global.network.map_instance_id_net_id[? id],
+									props: _props,
+									target_ids:_target_ids
+								});
+			}
+		}
+	}
+	global._boss_spawn_queue = [];
+	if (array_length(_actions) > 0) {
+		var _list = global.network.connected_clients;
+		var _json = json_stringify(_actions);
+		for (var _j = 0; _j < array_length(_list); _j++) {
+			send_message(_list[_j], MSG_EVENT_ACTIONS, _json);
+		}
+	}
+	// 帧末批量发送销毁消息（在创建之后）
+	if (array_length(global._server_destroy_queue) > 0) {
+		var _list = global.network.connected_clients;
+		var _arr = global._server_destroy_queue;
+		for (var _i = 0; _i < array_length(_arr); _i++) {
+			for (var _j = 0; _j < array_length(_list); _j++) {
+				send_message(_list[_j], MSG_DESTROY, _arr[_i]);
+			}
+		}
+		global._server_destroy_queue = [];
+	}
+}
+
+
 for (var _i = 0; _i < array_length(global._move_instance_pre_arr); _i++) {
     var _inst = global._move_instance_pre_arr[_i];
     with (_inst) {
@@ -19,6 +99,9 @@ for (var _i = 0; _i < array_length(global._move_instance_pre_arr); _i++) {
 }
 
 global._move_instance_pre_arr = [];
+
+
+	
 
 
 
@@ -52,10 +135,18 @@ if not global.is_paused{
 }
 if (!global.save_data.unlocked_items.elite_unlocked && current_wave >= global.level_file.elite_wave)||current_wave >= global.level_file.total_waves{
 	if current_wave_hp <= 0 && !instance_exists(obj_game_over){
+		if global.network.mode == "server"{
+			var _clients = global.network.connected_clients;
+		    for (var i = 0; i < array_length(_clients); i++) {
+		        send_message(_clients[i], MSG_GAME_OVER, 1);
+		    }
+		}
+		if global.network.mode != "client"{
 		global.is_paused = true
 		global.game_over = true
 		var inst = instance_create_depth(room_width/2,room_height/2,-3001,obj_game_over)
 		inst.sprite_index = spr_win
 		audio_play_sound(snd_win,0,0)
+		}
 	}
 }

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_battle_function",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_battle_function",
+  "parent":{
+    "name":"Shell",
+    "path":"folders/脚本/Shell.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

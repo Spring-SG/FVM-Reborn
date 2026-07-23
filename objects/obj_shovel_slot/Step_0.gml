@@ -103,50 +103,64 @@ if ((is_selected && mouse_check_button_pressed(mb_left)) or (is_selected && glob
         if (plant_to_remove != noone) break;
     }
     
-    // 移除找到的植物
-    if (plant_to_remove != noone) {
-        // 播放移除效果
-        with (plant_to_remove) {
-            // 播放移除动画
-            var shovel_effect = instance_create_depth(x+10, y-55, depth, obj_shovel);
-			shovel_effect.sprite_index = other.shovel_spr
-			if other.flame_rate > 0{
-				var flame_cost = get_plant_data_with_skill(plant_id,shape,current_level,skill)[? "cost"]
-				var flame_inst = instance_create_depth(x,y-30,-2000,obj_flame)
-				flame_inst.value = round(flame_cost * other.flame_rate)
-			}
-			if global.grid_terrains[logical_row][logical_col].type == "normal"{
-				instance_create_depth(logical_world.x + platform_shift_x,logical_world.y + platform_shift_y,-2,obj_place_effect)
-				audio_play_sound(snd_place2, 1, false);
-			}
-			else if global.grid_terrains[logical_row][logical_col].type == "water"{
-				var inst = instance_create_depth(logical_world.x + platform_shift_x,logical_world.y + platform_shift_y + 20,-2500,obj_place_effect)
-				inst.sprite_index = spr_enter_water_effect
-				audio_play_sound(snd_enter_water,0,0)
-			}
-            instance_destroy();
+    // 获取网络同步所需参数
+    var _net_id = (plant_to_remove != noone && ds_map_exists(global.network.map_instance_id_net_id, plant_to_remove))
+        ? global.network.map_instance_id_net_id[? plant_to_remove] : -1;
+    var _flame_amount = -1;
+    if (plant_to_remove != noone && instance_exists(obj_shovel_slot)) {
+        var _rate = obj_shovel_slot.flame_rate;
+        if (_rate > 0) {
+            var _cost = get_plant_data_with_skill(plant_to_remove.plant_id, plant_to_remove.shape, plant_to_remove.current_level, plant_to_remove.skill)[? "cost"];
+            _flame_amount = round(_cost * _rate);
         }
-		
-		deselect_shovel()
-		
-        sort_plants_in_grid(logical_col, logical_row);
-        
-    } else {
-		// 没有找到可移除的植物
-		
-		var shovel_effect = instance_create_depth(logical_world.x + platform_shift_x, logical_world.y + platform_shift_y -55, depth, obj_shovel);
-		shovel_effect.sprite_index = shovel_spr
-		if global.grid_terrains[logical_row][logical_col].type == "normal"{
-				instance_create_depth(logical_world.x + platform_shift_x,logical_world.y + platform_shift_y,-2,obj_place_effect)
-				audio_play_sound(snd_place2, 1, false);
-			}
-			else if global.grid_terrains[logical_row][logical_col].type == "water"{
-				var inst = instance_create_depth(logical_world.x + platform_shift_x,logical_world.y + platform_shift_y + 20,-2500,obj_place_effect)
-				inst.sprite_index = spr_enter_water_effect
-				audio_play_sound(snd_enter_water,0,0)
-			}
-		deselect_shovel()
-        
     }
-	hotkey_pressed = false
+
+    // 客户端：拦截本地执行，发送请求给服务端，等待广播回来再执行
+    if (global.network.mode == "client") {
+        deselect_shovel();
+        send_message(global.network.server_socket, MSG_REMOVE_UNIT_REQUEST, _net_id, logical_col, logical_row, _flame_amount);
+    } else {
+        // 服务端或单机：直接执行铲除逻辑
+        if (plant_to_remove != noone) {
+            with (plant_to_remove) {
+                var shovel_effect = instance_create_depth(x+10, y-55, depth, obj_shovel);
+                shovel_effect.sprite_index = other.shovel_spr
+                if _flame_amount > 0{
+                    var flame_inst = instance_create_depth(x,y-30,-2000,obj_flame)
+                    flame_inst.value = _flame_amount
+                }
+                if global.grid_terrains[logical_row][logical_col].type == "normal"{
+                    instance_create_depth(logical_world.x + platform_shift_x,logical_world.y + platform_shift_y,-2,obj_place_effect)
+                    audio_play_sound(snd_place2, 1, false);
+                }
+                else if global.grid_terrains[logical_row][logical_col].type == "water"{
+                    var inst = instance_create_depth(logical_world.x + platform_shift_x,logical_world.y + platform_shift_y + 20,-2500,obj_place_effect)
+                    inst.sprite_index = spr_enter_water_effect
+                    audio_play_sound(snd_enter_water,0,0)
+                }
+                instance_destroy();
+            }
+            deselect_shovel()
+            sort_plants_in_grid(logical_col, logical_row);
+        } else {
+            var shovel_effect = instance_create_depth(logical_world.x + platform_shift_x, logical_world.y + platform_shift_y -55, depth, obj_shovel);
+            shovel_effect.sprite_index = shovel_spr
+            if global.grid_terrains[logical_row][logical_col].type == "normal"{
+                instance_create_depth(logical_world.x + platform_shift_x,logical_world.y + platform_shift_y,-2,obj_place_effect)
+                audio_play_sound(snd_place2, 1, false);
+            }
+            else if global.grid_terrains[logical_row][logical_col].type == "water"{
+                var inst = instance_create_depth(logical_world.x + platform_shift_x,logical_world.y + platform_shift_y + 20,-2500,obj_place_effect)
+                inst.sprite_index = spr_enter_water_effect
+                audio_play_sound(snd_enter_water,0,0)
+            }
+            deselect_shovel()
+        }
+
+        // 服务端广播给所有客户端
+        if (global.network.mode == "server") {
+            network_broadcast_shovel_remove(logical_col, logical_row, _net_id, _flame_amount);
+        }
+    }
+    hotkey_pressed = false
 }

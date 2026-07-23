@@ -1,0 +1,623 @@
+# -*- coding: utf-8 -*-
+"""
+中继服务器
+  1. 管理客户端 - 房间、房主/客户端角色、加入/离开
+  2. 转发消息   - 房主→广播给房间所有客户端，客户端→只转给房主
+  3. CHAT命令   - 解析 MSG_CHAT 中 /connectroom、/list 等命令
+
+包格式与 GM 端一致: [u16 body_len][i32 msg_id][payload]
+"""
+
+import asyncio
+import datetime
+import json
+import random
+import struct
+import sys
+import time
+
+# 所有 print 自动加时间前缀
+_orig_print = print
+def print(*args, **kwargs):
+    ts = datetime.datetime.now().strftime("[%H:%M:%S]")
+    _orig_print(ts, *args, **kwargs)
+    sys.stdout.flush()
+
+HOST = "0.0.0.0"
+PORT = 27085
+MAX_MEMBERS = 8
+
+# 消息ID (与 GM 端 #macro 一致)
+MSG_CHAT          = 3
+MSG_PUB_INFO      = 23
+MSG_REQUEST_FILE  = 26
+MSG_TRANSFER_FILE = 27
+
+# 随机名字池
+NAMES = [
+    "小笼包", "烧麦",  "春卷", "汤圆", "月饼",
+    "火锅", "麻辣烫", "烤串", "炸鸡", "汉堡", "薯条", "可乐",
+    "奶茶", "布丁", "果冻", "蛋糕", "饼干",  "巧克力",
+    "爆米花", "甜甜圈", "马卡龙", "提拉米苏", "芒果", "草莓", "西瓜",
+    "菠萝", "葡萄", "柠檬", "樱桃", "蜜桃", "椰子", "榴莲",
+    "年糕", "麻薯", "蛋挞", "松饼", "可颂", "吐司", "饭团",
+]
+NUL = b"\x00"  # GM buffer_string 需要的终止符
+
+
+class Room:
+    def __init__(self, rid: str):
+        self.id = rid
+        self.host = None          # writer | None
+        self.clients = {}         # cid(int) → writer
+        self.nicks = {}           # writer_id → 昵称
+        self.next_cid = 1
+        self.state = "lobby"      # "lobby" / "battle"
+        self.data = ""
+        self.created_at = time.time()
+        self.battle_started_at = 0.0
+        self.file_cache = {}       # filename → bytes
+        self.file_pending = {}     # filename → [(writer, purpose), ...]
+        self.msgs = {}             # name → 最新聊天内容 (≤20字)
+
+    @property
+    def member_count(self):
+        return 1 + len(self.clients) if self.host else len(self.clients)
+
+    def used_names(self) -> set:
+        return set(self.nicks.values())
+
+
+class Relay:
+    def __init__(self, max_members: int = MAX_MEMBERS):
+        self.max_members = max_members
+        self.rooms: dict[str, Room] = {}
+        self.sessions: dict[int, tuple[Room, int, int, str]] = {}
+        # sessions: writer_id → (room, role, cid, name)
+
+        self.commands = {
+            "\\list":        ("列出房间成员", ""),
+            "\\who":         ("显示自己是谁", ""),
+            "\\rename":      ("修改昵称", " <新名字>"),
+            "\\kick":        ("房主踢人", " <玩家名>"),
+            "\\listcommand": ("列出所有命令", ""),
+            "\\listroom":    ("列出所有房间", ""),
+        }
+
+    # ================================================================
+    #  包读写 - GM buffer_string 需要 \\0 终止符
+    # ================================================================
+    async def read_pkt(self, reader):
+        """读 [u32 len][i32 msg_id][payload]"""
+        try:
+            raw = await reader.readexactly(4)
+            body_len = struct.unpack("<I", raw)[0]
+            raw = await reader.readexactly(body_len)
+            msg_id  = struct.unpack_from("<i", raw, 0)[0]
+            payload = raw[4:]
+            return msg_id, payload
+        except asyncio.IncompleteReadError:
+            return None
+
+    def write_pkt(self, writer, msg_id: int, payload: bytes = b""):
+        if writer.is_closing():
+            return
+        body   = struct.pack("<i", msg_id) + payload
+        packet = struct.pack("<I", len(body)) + body
+        writer.write(packet)
+
+    def write_str(self, writer, msg_id: int, text: str):
+        """发字符串消息，自动加 \\0"""
+        self.write_pkt(writer, msg_id, text.encode() + NUL)
+
+    async def flush(self, writer):
+        try:
+            await writer.drain()
+        except Exception:
+            pass
+
+    # ================================================================
+    #  1. 管理客户端
+    # ================================================================
+    def _build_room_info(self, room: Room) -> bytes:
+        """构建 \\roominfo JSON: {room, members: {名称: 最新消息}}，房主排最前"""
+        members = {}
+        if room.host:
+            host_name = room.nicks.get(id(room.host), "???")
+            members[host_name[:20]] = room.msgs.get(host_name, "")
+        for cw in room.clients.values():
+            name = room.nicks.get(id(cw), "???")
+            members[name[:20]] = room.msgs.get(name, "")
+        info = {"room": room.id, "members": members}
+        return f"\\roominfo {json.dumps(info, ensure_ascii=False)}".encode() + NUL
+
+    async def _sync_room_info(self, room: Room):
+        """名单变化时广播给房间所有人"""
+        payload = self._build_room_info(room)
+        if room.host:
+            self.write_pkt(room.host, MSG_PUB_INFO, payload)
+        for c in list(room.clients.values()):
+            self.write_pkt(c, MSG_PUB_INFO, payload)
+        tasks = [self.flush(room.host)] if room.host else []
+        for c in room.clients.values():
+            tasks.append(self.flush(c))
+        if tasks:
+            await asyncio.gather(*tasks, return_exceptions=True)
+
+    def _pick_name(self, room: Room, preferred: str = "") -> str:
+        used = room.used_names()
+        if not preferred:
+            pool = [n for n in NAMES if n not in used]
+            if not pool:
+                pool = [random.choice(NAMES) + "_" + str(len(used)) for _ in range(5)]
+            preferred = random.choice(pool)
+        name = preferred
+        n = 2
+        while name in used:
+            name = f"{preferred}{n}"
+            n += 1
+        return name
+
+    def _add_to_room(self, room: Room, writer) -> tuple[int, int, str]:
+        if room.host is None:
+            room.host = writer
+            role, cid = 0, 0
+        else:
+            cid = room.next_cid
+            room.next_cid += 1
+            room.clients[cid] = writer
+            role = 1
+        name = self._pick_name(room)
+        room.nicks[id(writer)] = name
+        return role, cid, name
+
+    def remove(self, writer):
+        key = id(writer)
+        if key not in self.sessions:
+            self._close(writer)
+            return
+
+        room, role, cid, name = self.sessions.pop(key)
+        room.nicks.pop(key, None)
+
+        if role == 0:
+            for c in list(room.clients.values()):
+                self.write_pkt(c, MSG_PUB_INFO, b"\\host_left" + NUL)
+                self._close(c)
+            room.clients.clear()
+            room.host = None
+            del self.rooms[room.id]
+            print(f"[{room.id}] 房主({name}) 离开，房间关闭")
+        else:
+            room.clients.pop(cid, None)
+            if room.host:
+                self.write_str(room.host, MSG_CHAT, f"[系统] {name} 离开")
+                asyncio.ensure_future(self.flush(room.host))
+            print(f"[{room.id}] {name} 离开 (剩余 {room.member_count} 人)")
+            asyncio.ensure_future(self._sync_room_info(room))
+
+        self._close(writer)
+
+    def _close(self, writer):
+        try:
+            writer.close()
+        except Exception:
+            pass
+
+    # ================================================================
+    #  GM buffer_string 工具
+    # ================================================================
+    @staticmethod
+    def _read_str(data: bytes, offset: int = 0):
+        end = data.find(b"\x00", offset)
+        if end == -1: return data[offset:].decode(errors="replace"), len(data)
+        return data[offset:end].decode(errors="replace"), end + 1
+
+    @staticmethod
+    def _build_str(*ss: str):
+        return b"".join(s.encode() + NUL for s in ss)
+
+    # ================================================================
+    #  文件缓存与转发
+    # ================================================================
+    async def _handle_request_file(self, room: Room, writer, payload: bytes):
+        filename, off = self._read_str(payload, 0)
+        purpose, _    = self._read_str(payload, off)
+        name = room.nicks.get(id(writer), "???")
+        if filename in room.file_cache:
+            data = room.file_cache[filename]
+            print(f"[文件] 缓存命中 → {name}: [{filename}] purpose=[{purpose}] ({len(data)} bytes)")
+            body = struct.pack("<i", MSG_TRANSFER_FILE) + self._build_str(filename, purpose) + struct.pack("<i", len(data)) + data
+            writer.write(struct.pack("<I", len(body)) + body)
+            await self.flush(writer)
+            return
+        if filename in room.file_pending:
+            print(f"[文件] 排队等待 → {name}: [{filename}] purpose=[{purpose}] (已有 {len(room.file_pending[filename])} 人在等)")
+            room.file_pending[filename].append((writer, purpose))
+            return
+        print(f"[文件] 向房主请求 → {name}: [{filename}] purpose=[{purpose}]")
+        room.file_pending[filename] = [(writer, purpose)]
+        body = struct.pack("<i", MSG_REQUEST_FILE) + payload
+        if room.host and not room.host.is_closing():
+            room.host.write(struct.pack("<I", len(body)) + body)
+            await self.flush(room.host)
+
+    async def _handle_transfer_file(self, room: Room, payload: bytes):
+        filename, off = self._read_str(payload, 0)
+        purpose, off  = self._read_str(payload, off)
+        size = struct.unpack_from("<i", payload, off)[0]
+        off += 4
+        data = payload[off:off + size]
+        room.file_cache[filename] = data
+        waiters = room.file_pending.pop(filename, [])
+        info = [(room.nicks.get(id(w), "???"), purp) for w, purp in waiters]
+        print(f"[文件] 房主返回 → [{filename}] ({size} bytes) → 发给 {info}")
+        for w, purp in waiters:
+            if w.is_closing(): continue
+            body = struct.pack("<i", MSG_TRANSFER_FILE) + self._build_str(filename, purp) + struct.pack("<i", len(data)) + data
+            w.write(struct.pack("<I", len(body)) + body)
+            await self.flush(w)
+
+    # ================================================================
+    #  2. 转发消息
+    # ================================================================
+    async def _broadcast(self, room: Room, body: bytes):
+        """房主 → 所有客户端（并行 drain）"""
+        packet = struct.pack("<I", len(body)) + body
+        tasks = []
+        for c in list(room.clients.values()):
+            c.write(packet)
+            tasks.append(self.flush(c))
+        if tasks:
+            await asyncio.gather(*tasks, return_exceptions=True)
+
+    async def _to_host(self, room: Room, body: bytes):
+        """客户端 → 房主"""
+        if room.host and not room.host.is_closing():
+            packet = struct.pack("<I", len(body)) + body
+            room.host.write(packet)
+            await self.flush(room.host)
+
+    async def _broadcast_except(self, room: Room, body: bytes, exclude):
+        """广播给房间所有人（除 exclude 外）"""
+        packet = struct.pack("<I", len(body)) + body
+        tasks = []
+        if room.host and room.host is not exclude:
+            room.host.write(packet)
+            tasks.append(self.flush(room.host))
+        for c in list(room.clients.values()):
+            if c is not exclude:
+                c.write(packet)
+                tasks.append(self.flush(c))
+        if tasks:
+            await asyncio.gather(*tasks, return_exceptions=True)
+
+    # ================================================================
+    #  3. CHAT 命令处理
+    # ================================================================
+    def _handle_cmd(self, writer, room: Room, role: int, cid: int, text: str) -> bool:
+        if not text.startswith("\\"):
+            return False
+
+        parts = text.split()
+        cmd = parts[0].lower()
+        key = id(writer)
+        name = room.nicks.get(key, "???")
+
+        if cmd == "\\connectroom":
+            return False
+
+        # ---- \\syncroom <json> — 房主同步房间数据 ----
+        if cmd == "\\syncroom" and role == 0:
+            room.data = text.split(" ", 1)[1] if " " in text else ""
+            room.state = "lobby"
+            return True
+
+        # ---- \\list ----
+        if cmd == "\\list":
+            lines = [f"=== 房间 {room.id} ==="]
+            host_name = room.nicks.get(id(room.host), "???") if room.host else "(无)"
+            lines.append(f"  [房主] {host_name}")
+            for cid2, cw in sorted(room.clients.items()):
+                cn = room.nicks.get(id(cw), "???")
+                lines.append(f"  {cn}")
+            self.write_str(writer, MSG_CHAT, "\n".join(lines))
+            return True
+
+        # ---- \\who ----
+        if cmd == "\\who":
+            role_name = "房主" if role == 0 else "客户端"
+            self.write_str(writer, MSG_CHAT,
+                           f"[系统] 你是 {name} ({role_name})，房间 {room.id}")
+            return True
+
+        # ---- \\rename <新名字> ----
+        if cmd == "\\rename":
+            if len(parts) < 2 or parts[1].strip() == "":
+                self.write_str(writer, MSG_CHAT, "[系统] 用法: /rename <新名字>")
+                return True
+            new_name = parts[1].strip()
+            used = room.used_names()
+            used.discard(name)
+            if new_name in used:
+                n = 2
+                while f"{new_name}{n}" in used:
+                    n += 1
+                new_name = f"{new_name}{n}"
+            room.nicks[key] = new_name
+            self.write_str(writer, MSG_CHAT, f"[系统] 你已改名为 {new_name}")
+            notice = f"[系统] {name} 改名为 {new_name}"
+            if role == 0:
+                for c in room.clients.values():
+                    self.write_str(c, MSG_CHAT, notice)
+            else:
+                if room.host:
+                    self.write_str(room.host, MSG_CHAT, notice)
+            asyncio.ensure_future(self._sync_room_info(room))
+            return True
+
+        # ---- \\kick <玩家名> ----
+        if cmd == "\\kick":
+            if role != 0:
+                self.write_str(writer, MSG_CHAT, "[系统] 只有房主可以踢人")
+                return True
+            if len(parts) < 2 or parts[1].strip() == "":
+                self.write_str(writer, MSG_CHAT, "[系统] 用法: /kick <玩家名>")
+                return True
+            target_name = parts[1].strip()
+            found = None
+            for cid2, cw in list(room.clients.items()):
+                if room.nicks.get(id(cw), "") == target_name:
+                    found = (cid2, cw)
+                    break
+            if found is None:
+                self.write_str(writer, MSG_CHAT, f"[系统] 没有叫 {target_name} 的玩家")
+                return True
+
+            t_cid, t_writer = found
+            self.write_pkt(t_writer, MSG_PUB_INFO, b"\\kicked" + NUL)
+            self._close(t_writer)
+            room.clients.pop(t_cid, None)
+            room.nicks.pop(id(t_writer), None)
+            self.sessions.pop(id(t_writer), None)
+
+            self.write_str(writer, MSG_CHAT, f"[系统] 你踢出了 {target_name}")
+            notice = f"[系统] {target_name} 被房主踢出"
+            for cw in room.clients.values():
+                self.write_str(cw, MSG_CHAT, notice)
+            asyncio.ensure_future(self._sync_room_info(room))
+            return True
+
+        # ---- \\listroom ----
+        if cmd == "\\listroom":
+            if not self.rooms:
+                self.write_str(writer, MSG_CHAT, "[系统] 当前没有房间")
+            else:
+                lines = ["=== 房间列表 ==="]
+                for rid, r in self.rooms.items():
+                    lines.append(f"  {rid} - {r.member_count} 人")
+                self.write_str(writer, MSG_CHAT, "\n".join(lines))
+            return True
+
+        # ---- \\listcommand ----
+        if cmd == "\\listcommand":
+            lines = ["=== 可用命令 ==="]
+            for cname, (desc, usage) in self.commands.items():
+                lines.append(f"  {cname}{usage} - {desc}")
+            self.write_str(writer, MSG_CHAT, "\n".join(lines))
+            return True
+
+        self.write_str(writer, MSG_CHAT, f"[系统] 未知命令: {cmd}")
+        return True
+
+    # ================================================================
+    #  4. 定时清理过期房间
+    # ================================================================
+    async def cleanup_loop(self):
+        """每 30 分钟检查一次，清理超时房间"""
+        MAX_IDLE_HOURS  = 2.0   # 创建后超过此时间未开战 → 清理
+        MAX_BATTLE_HOURS = 2.0  # 战斗持续超过此时间 → 清理
+        INTERVAL = 30 * 60      # 检查间隔 30 分钟
+
+        while True:
+            await asyncio.sleep(INTERVAL)
+            now = time.time()
+            to_remove = []
+
+            for rid, room in self.rooms.items():
+                idle_hours = (now - room.created_at) / 3600.0
+
+                if room.state == "battle" and room.battle_started_at > 0:
+                    battle_hours = (now - room.battle_started_at) / 3600.0
+                    if battle_hours > MAX_BATTLE_HOURS:
+                        print(f"[清理] 房间 {rid} 战斗持续 {battle_hours:.1f}h，强制关闭")
+                        to_remove.append(rid)
+                elif room.state != "battle":
+                    if idle_hours > MAX_IDLE_HOURS:
+                        print(f"[清理] 房间 {rid} 闲置 {idle_hours:.1f}h 未开战，强制关闭")
+                        to_remove.append(rid)
+
+            for rid in to_remove:
+                room = self.rooms.pop(rid, None)
+                if room is None:
+                    continue
+                # 踢所有人
+                if room.host:
+                    self.write_pkt(room.host, MSG_PUB_INFO, b"\\kicked" + NUL)
+                    self._close(room.host)
+                    self.sessions.pop(id(room.host), None)
+                for cw in list(room.clients.values()):
+                    self.write_pkt(cw, MSG_PUB_INFO, b"\\kicked" + NUL)
+                    self._close(cw)
+                    self.sessions.pop(id(cw), None)
+                room.clients.clear()
+                room.nicks.clear()
+                room.host = None
+
+            if to_remove:
+                print(f"[清理] 本轮清理了 {len(to_remove)} 个房间")
+
+    # ================================================================
+    #  总入口
+    # ================================================================
+    async def handle(self, reader, writer):
+        addr = writer.get_extra_info("peername")
+        print(f"[连接] {addr[0]}:{addr[1]}")
+
+        # 首包: MSG_CHAT + /connectroom <房间ID>
+        pkt = await self.read_pkt(reader)
+        if pkt is None:
+            self._close(writer)
+            return
+        msg_id, payload = pkt
+        if msg_id != MSG_CHAT:
+            print(f"  首包不是 MSG_CHAT (msg_id={msg_id}), 断开")
+            self._close(writer)
+            return
+        try:
+            text = payload.decode("utf-8").rstrip("\x00")
+        except UnicodeDecodeError:
+            self._close(writer)
+            return
+        if not text.startswith("/connectroom "):
+            print(f"  首包不是 /connectroom: {text}")
+            self._close(writer)
+            return
+
+        room_id = text.split(" ", 1)[1].strip()
+        if room_id not in self.rooms:
+            self.rooms[room_id] = Room(room_id)
+        room = self.rooms[room_id]
+
+        # 如果房间已有房主（客户端加入），检查状态
+        if room.host is not None and room.state == "battle":
+            self.write_str(writer, MSG_CHAT, "[系统] 房间战斗中，无法加入")
+            self.write_pkt(writer, MSG_PUB_INFO, b"\\kicked" + NUL)
+            await self.flush(writer)
+            self._close(writer)
+            return
+
+        # 房间已满
+        if room.host is not None and room.member_count >= self.max_members:
+            print(f"  [{room.id}] 房间已满 ({room.member_count}/{self.max_members})，拒绝加入")
+            self.write_str(writer, MSG_CHAT, f"[系统] 房间已满 ({self.max_members}人)，无法加入")
+            self.write_pkt(writer, MSG_PUB_INFO, b"\\kicked" + NUL)
+            await self.flush(writer)
+            self._close(writer)
+            return
+
+        role, cid, name = self._add_to_room(room, writer)
+        self.sessions[id(writer)] = (room, role, cid, name)
+
+        role_str = "\\modserver" if role == 0 else "\\modclient"
+        self.write_pkt(writer, MSG_PUB_INFO, role_str.encode() + NUL)
+        await self.flush(writer)
+
+        if role == 0:
+            self.write_str(writer, MSG_CHAT,
+                f"[系统] 你已创建房间 {room.id}\n"
+                f"[系统] 你的名字是 {name}，可使用 \\listcommand 查看命令")
+        else:
+            self.write_str(writer, MSG_CHAT,
+                f"[系统] 你已加入房间 {room.id}\n"
+                f"[系统] 你的名字是 {name}，可使用 \\listcommand 查看命令，或等待房主操作")
+            # 同步房间状态给新客户端
+            if room.data:
+                msg_id = 13  # MSG_ENTER_ROOM_READY
+                self.write_pkt(writer, msg_id, room.data.encode() + NUL)
+        self.write_str(writer, MSG_CHAT, f"[系统] 输入文字即可聊天")
+        await self.flush(writer)
+
+        print(f"  [{room.id}] {name} 加入 ({room.member_count} 人)")
+
+        if role == 1 and room.host:
+            self.write_str(room.host, MSG_CHAT, f"[系统] {name} 加入")
+            await self.flush(room.host)
+
+        await self._sync_room_info(room)
+
+        try:
+            while True:
+                pkt = await self.read_pkt(reader)
+                if pkt is None:
+                    break
+                msg_id, payload = pkt
+                body = struct.pack("<i", msg_id) + payload
+
+                if msg_id == MSG_CHAT:
+                    try:
+                        txt = payload.decode("utf-8").rstrip("\x00")
+                    except UnicodeDecodeError:
+                        txt = ""
+                    # 去掉 GM 端拼入的 "say " 前缀
+                    if txt.startswith("say "):
+                        txt = txt[4:]
+                    # 命令拦截
+                    if self._handle_cmd(writer, room, role, cid, txt):
+                        await self.flush(writer)
+                        continue
+                    # 系统消息不加名前缀
+                    if not txt.startswith("[系统]"):
+                        # 通讯录 
+                        already = any(txt.startswith(n + ": ") for n in room.used_names())
+                        if not already:
+                            room.msgs[name] = txt[:20]
+                            asyncio.ensure_future(self._sync_room_info(room))
+                            txt = name + ": " + txt
+                    body = struct.pack("<i", msg_id) + txt.encode() + NUL
+
+                # 监控关键消息，更新房间状态
+                if msg_id == 13 and role == 0:  # MSG_ENTER_ROOM_READY
+                    room.data = payload.decode("utf-8").rstrip("\x00")
+                    room.state = "lobby"
+                    room.file_cache.clear()
+                    room.file_pending.clear()
+                elif msg_id == 12:   # MSG_START_BATTLE
+                    room.state = "battle"
+                    room.battle_started_at = time.time()
+                elif msg_id == 19:  # MSG_SERVER_ACTION
+                    act = payload[0] if payload else 0
+                    if act == 4:    # 回房
+                        room.state = "lobby"
+
+                if msg_id == MSG_REQUEST_FILE and role == 1:
+                    await self._handle_request_file(room, writer, payload)
+                    continue
+                if msg_id == MSG_TRANSFER_FILE and role == 0:
+                    await self._handle_transfer_file(room, payload)
+                    continue
+
+                if role == 0:
+                    await self._broadcast(room, body)
+                else:
+                    await self._to_host(room, body)
+        except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
+            pass  # 客户端断开，正常清理
+        finally:
+            self.remove(writer)
+
+
+async def main():
+    import sys
+    port = PORT
+    max_members = MAX_MEMBERS
+    if len(sys.argv) > 1:
+        port = int(sys.argv[1])
+    if len(sys.argv) > 2:
+        max_members = int(sys.argv[2])
+    if port <= 0 or port > 65535:
+        print(f"端口无效: {port}")
+        return
+    if max_members < 2:
+        print(f"人数上限至少为2: {max_members}")
+        return
+
+    relay = Relay(max_members=max_members)
+    srv = await asyncio.start_server(relay.handle, HOST, port)
+    print(f"中继启动: {HOST}:{port}  最大人数: {max_members}")
+    asyncio.create_task(relay.cleanup_loop())
+    async with srv:
+        await srv.serve_forever()
+
+if __name__ == "__main__":
+    asyncio.run(main())

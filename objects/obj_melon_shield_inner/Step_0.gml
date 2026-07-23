@@ -1,4 +1,4 @@
-if instance_exists(parent_plant){
+if instance_exists(parent_plant)&& parent_plant.visible==true{
 	if parent_plant.hp <= 0.33*parent_plant.max_hp{
 		image_index = 1
 	}

@@ -1,26 +1,28 @@
-// obj_plant_parent 的 Step 事件
-if global.is_paused{
-	exit
-}
-if ice_timer > 0{
-	ice_timer--
-	is_slowdown = true
-}
-else{
-	is_slowdown = false
-}
-if frozen_timer > 0{
-	frozen_timer--
-	is_frozen = true
-}
-else{
-	is_frozen = false
-}
-if hp <= 0{
-	instance_destroy()
-}
+	// obj_plant_parent 的 Step 事件
+	if global.is_paused{
+		exit
+	}
+	// 客户端：拦截死亡，等待服务端广播 MSG_UNIT_DEATH
+	if (global.network.mode == "client" && hp <= 0) { exit; }
 
-if flash_value >0{
+	if ice_timer > 0{
+		ice_timer--
+		is_slowdown = true
+	}
+	else{
+		is_slowdown = false
+	}
+	if frozen_timer > 0{
+		frozen_timer--
+		is_frozen = true
+	}
+	else{
+		is_frozen = false
+	}
+	if hp <= 0{
+		instance_destroy()
+	}
+	if flash_value >0{
 	
 	flash_value -= 10
 	
@@ -111,3 +113,8 @@ if timer < current_flash_speed - 1 {
     timer = 0;
 }
 
+
+if(global.network.mode=="client"&&!ds_map_exists(global.network.map_instance_id_net_id, id)){
+	instance_destroy(id);
+	show_debug_message("销毁卡片");
+}

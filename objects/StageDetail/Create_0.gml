@@ -67,6 +67,77 @@ function on_create_room() {
     global.level_data = _level_data
     global.level_id = self.state.custom_stage.id
     global.level_file = _parse_result.data
+    if (global.network.mode == "server") {
+        var _json_struct = {
+            target_level_id: global.level_id,
+            level_index: 0,
+            map_id: global.map_id,
+            level_data: global.level_data,
+            level_file: global.level_file
+        }
+        // 自定义资源：发送文件名和指纹，客户端指纹一致则跳过传输
+        // 只发原始相对路径，不泄露房主本地完整路径
+        var _raw_json = _parse_result.data
+        var _resource_fingerprints = {}
+        var _json_dir = self.state.custom_stage.json_path
+        global._file_cache_json_path = _json_dir
+
+        var _sprite_rel = ""
+        var _sprite_path_raw = variable_struct_get(_raw_json, "map_sprite")
+        if (!is_undefined(_sprite_path_raw) && string_length(string(_sprite_path_raw)) > 0) {
+            if (laboratory_path_is_relative(string(_sprite_path_raw))) {
+                _sprite_rel = string(_sprite_path_raw)
+                variable_struct_set(_json_struct, "map_sprite_name", _sprite_rel)
+                _resource_fingerprints[$ "map_sprite"] = file_cache_compute_fingerprint(
+                    laboratory_resolve_datafile_path(_sprite_rel, _json_dir))
+            }
+        }
+
+        var _check_custom_music = function(_raw_json,_field) {
+            var _path = variable_struct_get(_raw_json, _field)
+            return !is_undefined(_path) && laboratory_path_is_relative(string(_path))
+        }
+        var _custom_music_names = {}
+        if (_check_custom_music(_raw_json,"pre_music") || _check_custom_music(_raw_json,"elite_music") || _check_custom_music(_raw_json,"boss_music")) {
+            var _ld = _json_struct[$ "level_data"]
+            _ld[$ "pre_music"]   = mus_delicious_island_daytime_pre
+            _ld[$ "elite_music"] = mus_delicious_island_daytime_elite
+            _ld[$ "boss_music"]  = mus_delicious_island_daytime_boss
+            if (_check_custom_music(_raw_json,"pre_music")) {
+                var _rel = string(variable_struct_get(_raw_json, "pre_music"))
+                _custom_music_names[$ "pre_music"] = _rel
+                _resource_fingerprints[$ "pre_music"] = file_cache_compute_fingerprint(
+                    laboratory_resolve_datafile_path(_rel, _json_dir))
+            }
+            if (_check_custom_music(_raw_json,"elite_music")) {
+                var _rel = string(variable_struct_get(_raw_json, "elite_music"))
+                _custom_music_names[$ "elite_music"] = _rel
+                _resource_fingerprints[$ "elite_music"] = file_cache_compute_fingerprint(
+                    laboratory_resolve_datafile_path(_rel, _json_dir))
+            }
+            if (_check_custom_music(_raw_json,"boss_music")) {
+                var _rel = string(variable_struct_get(_raw_json, "boss_music"))
+                _custom_music_names[$ "boss_music"] = _rel
+                _resource_fingerprints[$ "boss_music"] = file_cache_compute_fingerprint(
+                    laboratory_resolve_datafile_path(_rel, _json_dir))
+            }
+            variable_struct_set(_json_struct, "custom_music_names", _custom_music_names)
+        }
+        variable_struct_set(_json_struct, "resource_fingerprints", _resource_fingerprints)
+
+        // 存全局，供 obj_shell 新客户端重发同步
+        global._sync_map_sprite_name = _sprite_rel;
+        global._sync_custom_music_names = _custom_music_names;
+        global._sync_resource_fingerprints = _resource_fingerprints;
+
+        var _json = json_stringify(_json_struct)
+		
+		
+        var _list = global.network.connected_clients;
+        for (var _i = 0; _i < array_length(_list); _i++) {
+            send_message(_list[_i], MSG_ENTER_ROOM_READY, _json);
+        }
+    }
     global.gui_stack.to(room_ready)
     window_set_cursor(cr_arrow)
 }

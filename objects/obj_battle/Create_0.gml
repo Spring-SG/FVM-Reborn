@@ -12,6 +12,7 @@ var mus_inst = instance_create_depth(0,0,0,obj_battle_music_controller)
 mus_inst.battle_music = global.level_data.pre_music
 
 global.game_over = false
+global.wait_sprite_load=true;
 
 instance_create_depth(0,0,0,obj_battle_pause_manager)
 instance_create_depth(0,0,-2900,obj_battle_timer_display)
@@ -85,36 +86,41 @@ for(var i = 0 ; i < global.grid_rows;i++){
 		global.row_feature[i] = "land"
 	}
 }
+
 for(var i = 0 ; i < global.grid_rows ; i++){
 	for(var j = 0 ; j < global.grid_cols ; j ++){
-		var cards = plant_list[i][j].plant
-		if array_length(cards) > 0{
-			for(var k = 0; k < array_length(cards);k++){
-				var card_data = deck_get_card_data(cards[k],0)
-				var card_obj = card_data[? "obj"]
-				var new_x = global.grid_offset_x + j * global.grid_cell_size_x
-				var new_y = global.grid_offset_y + i * global.grid_cell_size_y
-				var grid_pos = get_grid_position_from_world(new_x,new_y)
-				var new_plant = instance_create_depth(grid_pos.x, grid_pos.y, 0,card_obj);
-				var depth_value = calculate_plant_depth(j, i, new_plant.plant_type);
-				card_created(new_plant, j, i);
-				new_plant.depth = depth_value
+		
+		// 客户端跳过
+		if (global.network.mode!="client"){
+			var cards = plant_list[i][j].plant
+			if array_length(cards) > 0{
+				for(var k = 0; k < array_length(cards);k++){
+					var card_data = deck_get_card_data(cards[k],0)
+					var card_obj = card_data[? "obj"]
+					var new_x = global.grid_offset_x + j * global.grid_cell_size_x
+					var new_y = global.grid_offset_y + i * global.grid_cell_size_y
+					var grid_pos = get_grid_position_from_world(new_x,new_y)
+					var new_plant = instance_create_depth(grid_pos.x, grid_pos.y, 0,card_obj);
+					var depth_value = calculate_plant_depth(j, i, new_plant.plant_type);
+					card_created(new_plant, j, i);
+					new_plant.depth = depth_value;
+				}
 			}
-			
-		}
-		var map_objs = plant_list[i][j].object
-		if array_length(map_objs) > 0{
-			for(var k = 0; k < array_length(map_objs);k++){
-				var map_obj_data = get_map_object_data(map_objs[k])
-				var map_obj = map_obj_data._obj
-				var grid_pos = get_world_position_from_grid(j,i)
-				var new_x = grid_pos.x + map_obj_data.x_offset
-				var new_y = grid_pos.y + map_obj_data.y_offset
+		
+			var map_objs = plant_list[i][j].object
+			if array_length(map_objs) > 0{
+				for(var k = 0; k < array_length(map_objs);k++){
+					var map_obj_data = get_map_object_data(map_objs[k])
+					var map_obj = map_obj_data._obj
+					var grid_pos = get_world_position_from_grid(j,i)
+					var new_x = grid_pos.x + map_obj_data.x_offset
+					var new_y = grid_pos.y + map_obj_data.y_offset
 				
-				var new_obj = instance_create_depth(new_x, new_y, -1200,map_obj);
-				new_obj.row = i
-				new_obj.col = j
-			}
+					var new_obj = instance_create_depth(new_x, new_y, -1200,map_obj);
+					new_obj.row = i
+					new_obj.col = j
+				}
+		  }
 			
 		}
 	}
@@ -294,7 +300,18 @@ function enemy_subwave_summon(){
             
             var grid_pos = get_grid_position_from_world(new_x, new_y);
             var new_enemy = instance_create_depth(grid_pos.x+30, grid_pos.y + 38, 0, enemy_obj);
-            
+		
+			// 服务端广播产生敌人
+			if(global.network.mode="server"){
+				add_net_id(new_enemy.id);
+				var _net_id = global.network.map_instance_id_net_id[? new_enemy.id];
+				var _list = global.network.connected_clients;
+				var _size = array_length(_list);
+				for (var _i = 0; _i < _size; _i++) {
+					var _socket = _list[_i];
+					send_message(_socket, MSG_SPAWN_ENEMY, _net_id, grid_pos.x+30, grid_pos.y + 3, object_get_name(enemy_obj));
+				}
+			}
             // 更新统计信息
             current_total_hp += global.enemy_map[? enemy_list[i].type].hp;
             
@@ -304,4 +321,53 @@ function enemy_subwave_summon(){
         }
     }
     
+}
+
+function drawLoader(){
+
+	var _total = 0;
+	var _loaded = 0;
+	var _q = global._loader_sprite_queue;
+	if (_q != undefined && ds_list_size(_q) > 0) {
+		var _entry = ds_list_find_value(_q, 0);
+		_total = _entry.total;
+		_loaded = _entry.loaded;
+	}
+
+	var _bar_w = 700;
+	var _bar_h = 20;
+	var _x1 = (room_width - _bar_w) / 2;
+	var _y1 = room_height / 2 + 250;
+	var _ratio = (_total > 0) ? (_loaded / _total) : 0;
+
+	draw_set_colour(c_black);
+	draw_set_alpha(0.8);
+	draw_rectangle(0, 0, room_width, room_height, false);
+	draw_set_alpha(1);
+
+	draw_set_color(c_white);
+	draw_rectangle(_x1 - 2, _y1 - 2, _x1 + _bar_w + 2, _y1 + _bar_h + 2, false);
+
+	draw_set_color($fde98b);
+	draw_rectangle(_x1, _y1, _x1 + _bar_w * _ratio, _y1 + _bar_h, false);
+
+	draw_sprite_ext(spr_game_logo, 0, room_width / 2, room_height / 3, 1, 1, 0, c_white, 1);
+
+	draw_set_valign(fa_left)
+	draw_set_halign(fa_top)
+	draw_set_color(c_white);
+	draw_set_font(font_yuan);
+	var _text = (_total > 0 && _loaded >= _total) ? "加载完成！" : "正在加载中！ " + string(_loaded) + "/" + string(_total);
+	draw_text(_x1, _y1 - 30, _text);
+	draw_set_valign(fa_middle)
+	draw_set_halign(fa_center)
+	draw_set_colour(c_yellow)
+	draw_text(_x1 + _bar_w / 2, _y1 - 80, "本游戏为免费开源游戏，任何付费获取方式均为诈骗\n游戏作者B站名称：Spring曙光");
+			
+	var _q = global._loader_sprite_queue;
+	var _sz = (_q != undefined) ? ds_list_size(_q) : 0;
+	if (_sz == 0) {
+	    global.wait_sprite_load = false;
+	    global.is_paused = false;
+	}
 }

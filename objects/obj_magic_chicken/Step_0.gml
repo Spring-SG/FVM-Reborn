@@ -1,3 +1,4 @@
+
 if global.is_paused{
 	exit
 }
@@ -10,7 +11,7 @@ if is_slowdown{
 
 attack_timer++
 
-if attack_timer == 15 * current_flash_speed - 1{
+if attack_timer == 15 * current_flash_speed - 1&& global.network.mode != "client"{
 	var card_save_data = get_card_info_simple(target_card)
 	if card_save_data != false{
 		var prev_card_info = get_plant_data_with_skill(target_card,card_save_data.shape,card_save_data.level,card_save_data.skill)
@@ -65,10 +66,30 @@ if attack_timer == 15 * current_flash_speed - 1{
 		
 		var logical_world = get_world_position_from_grid(logical_col, logical_row);
 		var new_card = instance_create_depth(logical_world.x + platform_shift_x, logical_world.y + platform_shift_y, 0, card_slot_data[? "obj"])	
+		
+		// 当前网络同步需要的数据，不影响offline模式 
+		if (variable_instance_exists(self, "target_card_info")){
+			new_card[$ "level"] = target_card_info[$ "level"]
+			new_card[$ "shape"] = target_card_info[$ "shape"]
+			new_card[$ "skill"] = target_card_info[$ "skill"]
+			new_card[$ "current_level"] = target_card_info[$ "level"]
+			var _si = target_card_info[$ "sprite_index"];
+			if (is_string(_si)) {
+				if (ds_map_exists(global._sprite_cache, _si)) {
+					_si = get_load_sprite(_si);
+				} else {
+					_si = asset_get_index(_si);
+				}
+			}
+			new_card[$ "sprite_index"] = _si;
+		}
 		card_created(new_card, logical_col, logical_row)
+		
+		network_apply_plant_level(new_card);
+		
 	}
 }
 
 if attack_timer > current_flash_speed * 29 - 1{
-	instance_destroy()
+      instance_destroy()
 }

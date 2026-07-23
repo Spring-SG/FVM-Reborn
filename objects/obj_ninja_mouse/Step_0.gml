@@ -55,24 +55,29 @@ if state == ENEMY_STATE.ACTING{
 		image_index = floor(timer/flash_speed) mod 16 + 27
 	}
 	if timer >= flash_speed * 16 or hp <= 0{
+		if global.network.mode != "client"{
 		if hp > 0{
 			if !instance_exists(inst_left){
 				inst_left = instance_create_depth(x-100,y,depth,obj_minion_mouse)
+				network_spawn_enemy(x-100,y,inst_left);
 			}
 			if !instance_exists(inst_right){
 				inst_right = instance_create_depth(x+100,y,depth,obj_minion_mouse)
+				network_spawn_enemy(x+100,y,inst_right);
 			}
 			if grid_row > 0 && !instance_exists(inst_up){
 				if global.row_feature[clamp(grid_row - 1,0,global.grid_rows - 1)] != "water"{
 					inst_up = instance_create_depth(x,y-global.grid_cell_size_y,depth,obj_minion_mouse)
+					network_spawn_enemy(x,y-global.grid_cell_size_y,inst_up);
 				}
 			}
 			if grid_row < global.grid_rows - 1 && !instance_exists(inst_down){
 				if global.row_feature[clamp(grid_row + 1,0,global.grid_rows - 1)] != "water"{
 					inst_down = instance_create_depth(x,y+global.grid_cell_size_y,depth,obj_minion_mouse)
+					network_spawn_enemy(x,y+global.grid_cell_size_y,inst_down);
 				}
 			}
-			
+			}
 		}
 		state = ENEMY_STATE.NORMAL
 		sprite_index = spr_ninja_mouse

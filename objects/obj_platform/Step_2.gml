@@ -191,6 +191,7 @@ else if (state == "moving") {
     
     visual_x_shift = is_axis_x ? ((move_progress - 1) * move_direction * global.grid_cell_size_x) : 0;
     visual_y_shift = (!is_axis_x) ? ((move_progress - 1) * move_direction * global.grid_cell_size_y) : 0;
+	
     
     x += visual_delta_x;
     y += visual_delta_y;
@@ -245,13 +246,14 @@ else if (state == "moving") {
 							}
 						}
 						
+
                     }
                 }
             }
         }
     }
 	
-    // 删除不存在的实例id，并清理对应的 list
+
 	var _keys = ds_map_keys_to_array(global._move_instance_map);
 	for (var _i = 0; _i < array_length(_keys); _i++) {
 	    var _key = _keys[_i];
@@ -263,7 +265,7 @@ else if (state == "moving") {
 	        ds_map_delete(global._move_instance_map, _key);
 	    }
 	}
-	
+
     if (is_finish) {
         move_progress = 0;
         visual_x_shift = 0;

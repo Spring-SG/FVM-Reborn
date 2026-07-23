@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"config_syn",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"config_syn",
+  "parent":{
+    "name":"Shell",
+    "path":"folders/脚本/Shell.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

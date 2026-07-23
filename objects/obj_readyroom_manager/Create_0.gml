@@ -65,3 +65,62 @@ for(var i = 0;i < global.level_file.total_waves;i ++){
 		}
 	}
 }
+
+  function _get_needed_sprites() {
+      var _list = [];
+      var _seen = ds_map_create();
+      var _card_count = 0;
+      var _enemy_count = 0;
+
+      // 1. 卡组
+      for (var i = 0; i < ds_list_size(global.selected_deck); i++) {
+          var _entry = global.selected_deck[| i];
+          var _card = _entry[? "data"];
+          if (is_undefined(_card)) continue;
+          var _obj = _card[? "obj"];
+          if (is_undefined(_obj) || is_undefined(global._object_deps)) continue;
+          var _obj_name = object_get_name(_obj);
+          var _sprites = global._object_deps[$ _obj_name];
+          if (is_undefined(_sprites)) continue;
+          for (var k = 0; k < array_length(_sprites); k++) {
+              var _name = _sprites[k];
+              if (!ds_map_exists(_seen, _name)) {
+                  ds_map_add(_seen, _name, true);
+                  array_push(_list, _name);
+                  _card_count++;
+              }
+          }
+      }
+
+      // 2. 敌人
+      var _all_enemies = [];
+      array_copy(_all_enemies, 0, enemy_type_list, 0, array_length(enemy_type_list));
+      for (var i = 0; i < array_length(boss_type_list); i++)
+          array_push(_all_enemies, boss_type_list[i]);
+
+      for (var i = 0; i < array_length(_all_enemies); i++) {
+          var _info = global.enemy_map[? _all_enemies[i]];
+          if (is_undefined(_info)) continue;
+          var _obj = _info[$ "_obj"];
+          if (is_undefined(_obj) || is_undefined(global._object_deps)) continue;
+          var _obj_name = object_get_name(_obj);
+          var _sprites = global._object_deps[$ _obj_name];
+          if (is_undefined(_sprites)) continue;
+          for (var k = 0; k < array_length(_sprites); k++) {
+              var _name = _sprites[k];
+              if (!ds_map_exists(_seen, _name)) {
+                  ds_map_add(_seen, _name, true);
+                  array_push(_list, _name);
+                  _enemy_count++;
+              }
+          }
+      }
+
+      ds_map_destroy(_seen);
+      show_debug_message("[_get_needed_sprites] cards=" + string(ds_list_size(global.selected_deck))
+          + " enemies=" + string(array_length(_all_enemies))
+          + " → card_sprites=" + string(_card_count)
+          + " enemy_sprites=" + string(_enemy_count)
+          + " list=" + string(_list));
+      return _list;
+  }

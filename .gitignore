@@ -71,3 +71,4 @@ sprites.info.json
 .vs/
 x64/
 *.user
+ffmpeg/ffmpeg.exe
