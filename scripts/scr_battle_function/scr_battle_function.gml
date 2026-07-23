@@ -776,6 +776,21 @@ function parse_network_message(buf, _sock) {
 					);
 				}
 			}
+			// 将 level_data 中的音频名字符串转为 audio ID
+			{
+				var _pre = global.level_data[$ "pre_music"];
+				if (is_string(_pre)) {
+					global.level_data[$ "pre_music"] = get_load_audio(_pre);
+				}
+				var _elite = global.level_data[$ "elite_music"];
+				if (is_string(_elite)) {
+					global.level_data[$ "elite_music"] = get_load_audio(_elite);
+				}
+				var _boss = global.level_data[$ "boss_music"];
+				if (is_string(_boss)) {
+					global.level_data[$ "boss_music"] = get_load_audio(_boss);
+				}
+			}
 			if( global.level_file!= undefined&& global.level_file.total_waves!= undefined){
 				audio_play_sound(snd_button, 0, 0);
 				texture_prefetch("cards");

@@ -79,6 +79,33 @@
 - 联机需先通过 `connectpubserver ip [port] 房间名称` 连接中继服务器
 - 需要在本地或者云端运行 relay_server.exe 或relay_server.py 启动中继服务器
 
+## Python 脚本
+
+### 依赖
+- `lazyloading_migrate_sprites.py` — 无需额外安装
+- `lazyloading_migrate_sprites_and_music_depth.py` — `pip install Pillow`，音频转换需 **ffmpeg**（放 `ffmpeg/ffmpeg.exe` 或系统 PATH）
+- `lazyloading_restore_backup.py` — 无需额外安装
+
+### 用法
+
+**简单版** — 适合本地预览测试，速度快
+```bash
+python lazyloading_migrate_sprites.py
+```
+精灵→`get_load_sprite("xxx")`，音乐→`mus_menu` 默认
+
+**深度版** — 适合正式构建发布，精灵预合并条带 + 音乐转 OGG
+```bash
+python lazyloading_migrate_sprites_and_music_depth.py
+```
+精灵帧→`sprites_join/` 条带PNG，音乐→`backgroundmusic/` OGG，代码→`get_load_audio("xxx")`
+
+**还原**
+```bash
+python lazyloading_restore_backup.py [--keep-join]
+```
+> 两个迁移脚本互斥，切换需先还原。
+
 ## 问题反馈
 
 如果您在使用过程中遇到问题，或有改进建议，欢迎通过 Issues 页面提交反馈。

@@ -66,3 +66,8 @@ tmp/
 sprites.import.json
 # This is a cache file for speeding up subsequent pipeline operations. It should not be tracked in git.
 sprites.info.json
+
+
+.vs/
+x64/
+*.user

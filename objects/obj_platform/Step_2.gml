@@ -246,30 +246,14 @@ else if (state == "moving") {
 							}
 						}
 						
-						
-						/*
-                        with (all) {
-                            if ((variable_instance_exists(id, "parent_plant") && parent_plant == plant) || 
-                                (variable_instance_exists(id, "parent_player") && parent_player == plant)) {
-                                if (id != plant) {
-                                    x += visual_delta_x;
-                                    y += visual_delta_y;
-                                    if (variable_instance_exists(id, "target_x")) target_x += visual_delta_x;
-                                    if (variable_instance_exists(id, "target_y")) target_y += visual_delta_y;
-                                    
-                                    if (object_index == obj_melon_shield_inner && instance_exists(parent_plant)) {
-                                        depth = calculate_plant_depth(parent_plant.grid_col, parent_plant.grid_row, "shield_inner");
-                                    }
-                                }
-                            }
-                        }*/
+
                     }
                 }
             }
         }
     }
 	
-	// 删除不存在的实例id，并清理对应的 list
+
 	var _keys = ds_map_keys_to_array(global._move_instance_map);
 	for (var _i = 0; _i < array_length(_keys); _i++) {
 	    var _key = _keys[_i];
