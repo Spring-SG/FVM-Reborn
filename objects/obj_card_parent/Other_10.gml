@@ -77,19 +77,7 @@ var grid_pos = get_grid_position_from_world(x, y);
     }
     
     // 获取该网格的植物列表
-    var plant_list = ds_grid_get(global.grid_plants, col, row);
+    // var plant_list = ds_grid_get(global.grid_plants, col, row);
     
-    // 根据植物类型检查是否可以种植
-	if target_card != "none"{
-		for (var i = 0; i < ds_list_size(plant_list); i++) {
-	        var plant = ds_list_find_value(plant_list, i);
-	        if (plant.plant_id == target_card) {
-				
-				if feature_type == "upgrade"{
-					instance_destroy(plant)
-					break
-				}
-				
-	       }
-	    }
-	}
+    // 底座销毁已由obj_card_slot放置逻辑（逻辑格）精确处理；
+    // 此处按视觉位置重复销毁会导致平台移动中误删反方向邻格（已移除）

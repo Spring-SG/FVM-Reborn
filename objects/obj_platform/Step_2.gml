@@ -306,8 +306,11 @@ if (id == global._last_platform){
 // 渲染前以x/y为锚点，统一更新所有卡片的grid_col/grid_row和depth
 with (obj_card_parent) {
     var grid_pos = get_grid_position_from_world(x, y)
-    grid_col = grid_pos.col
-    grid_row = grid_pos.row
+    // 平台移动中保留逻辑位置（与obj_card_parent Step_0一致），避免覆盖导致grid与注册脱节
+    if (!(variable_instance_exists(id, "platform_grid_lock") && platform_grid_lock)) {
+        grid_col = grid_pos.col
+        grid_row = grid_pos.row
+    }
     if (variable_instance_exists(id, "plant_type")) {
         var _type = plant_type
         if (object_index == obj_cotton_candy) _type = "lilypad"
