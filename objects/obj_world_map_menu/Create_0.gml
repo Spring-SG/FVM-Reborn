@@ -35,3 +35,10 @@ btn5.map_name = "海底旋涡"
 btn5.map_id = "undersea_vortex"
 btn5.room_target = room_map
 btn5.level_require = 20
+
+var btn6 = instance_create_depth(x+485,y+245,depth-1,obj_world_map_choose_btn)
+btn6.sprite_index = spr_world_map_volcanic_ruins
+btn6.map_name = "火山遗迹"
+btn6.map_id = "volcanic_ruins"
+btn6.room_target = room_map
+btn6.level_require = 36

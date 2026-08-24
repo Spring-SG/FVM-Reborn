@@ -6505,7 +6505,7 @@
                 },
                 {
                     "id": "clover_3",
-                    "amount": 3.0
+                    "amount": 9.0
                 }
             ]
         },
@@ -6523,7 +6523,7 @@
                 },
                 {
                     "id": "clover_3",
-                    "amount": 3.0
+                    "amount": 9.0
                 }
             ],
             "card_unlock": [],

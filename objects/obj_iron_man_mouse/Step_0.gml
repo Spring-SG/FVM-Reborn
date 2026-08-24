@@ -334,12 +334,7 @@ switch state{
 			}
 			else{
 				if skill_count >= array_length(skill_group){
-					if hp > 0.5 * maxhp{
-						skill_group = skill_group_list[1]
-					}
-					else{
-						skill_group = skill_group_list[0]
-					}
+					skill_group = skill_group_list[0]
 					skill_group = array_shuffle(skill_group)
 					skill_count = 0
 				}
