@@ -19,7 +19,8 @@ ignore_list = ["mario_mouse","mario_pipeline","arno","pharaoh_coffin","temple_ph
 				"needle_baron","fog_julie","lieutenant_buzz","irritable_jack","hot_vajra","hot_vajra_spike","huang_xiaoming",
 				"angelababy","angelababy_diamond","mouse_train_1","captain_america_mouse","captain_rainbow","iron_man_mouse","mouse_train_2",
 				"iron_man","spider_man_mouse","hulk_mouse","mouse_train_3","mermaid_mary","mermaid_wave","machine_shark_1",
-				"lobster_knight","electric_jellyfish","jellyfish_bullet"
+				"lobster_knight","electric_jellyfish","jellyfish_bullet","war_god","war_god_duck","war_god_wood","hercules",
+				"thor"
 ]
 
 target_ignore = ["mole","bat_mouse","sawblade_mouse","dentist_mouse","baron_bats","paratrooper_mouse_shield","kamikaze_glider_mouse",

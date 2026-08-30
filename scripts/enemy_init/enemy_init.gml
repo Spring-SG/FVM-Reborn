@@ -131,4 +131,7 @@ function enemy_init(){
 	register_enemy("lobster_knight",{"name":"龙虾骑士","_obj":obj_lobster_knight,"hp":90000,"shield":0,"description":"龙虾骑士：海底旋涡BOSS","speed":0.3,"atk":10,"cycle":36,"range":90,"ash_proof":true,"spr":spr_lobster_knight_idle,"feature":"land"})
 	register_enemy("electric_jellyfish",{"name":"电光水母","_obj":obj_electric_jellyfish,"hp":90000,"shield":0,"description":"电光水母：海底旋涡BOSS","speed":0.3,"atk":10,"cycle":36,"range":90,"ash_proof":true,"spr":spr_electric_jellyfish_idle,"feature":"land"})
 	register_enemy("machine_shark_2",{"name":"机械鲨鱼二态","_obj":obj_machine_shark_2,"hp":120000,"shield":0,"description":"机械鲨鱼二态：天妇罗旋涡BOSS","speed":0.3,"atk":10,"cycle":36,"range":90,"ash_proof":true,"spr":spr_machine_shark_1_idle,"feature":"land"})
+	register_enemy("war_god",{"name":"战神","_obj":obj_war_god,"hp":250000,"shield":0,"description":"战神：瀑布遗迹BOSS","speed":0.072,"atk":2000,"cycle":1,"range":90,"ash_proof":true,"spr":spr_war_god_idle,"feature":"land"})
+	register_enemy("hercules",{"name":"大力神","_obj":obj_hercules,"hp":400000,"shield":0,"description":"大力神：丛林遗迹BOSS","speed":0.072,"atk":2000,"cycle":1,"range":90,"ash_proof":true,"spr":spr_hercules_idle,"feature":"land"})
+	register_enemy("thor",{"name":"雷神","_obj":obj_thor_body,"hp":800000,"shield":0,"description":"雷神：基地遗迹BOSS","speed":0.3,"atk":2000,"cycle":1,"range":90,"ash_proof":true,"spr":spr_thor_head_idle,"feature":"land"})
 }

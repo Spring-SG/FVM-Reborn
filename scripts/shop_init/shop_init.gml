@@ -46,7 +46,7 @@ function shop_init(){
 	register_goods("rotate_leo",{"type":"card_attire","cost":"50000","unlock_item_id":"rotate_leo","description":"旋转咖啡喷壶的狮子座精灵时装","display_name":"旋转星座时装"})
 	register_goods("melon_virgo",{"type":"card_attire","cost":"50000","unlock_item_id":"melon_virgo","description":"瓜皮护罩的处女座精灵时装","display_name":"瓜皮星座时装"})
 	register_goods("bubble_maltose",{"type":"card_attire","cost":"50","unlock_item_id":"bubble_maltose","description":"保护视力的绝佳选择","display_name":"气泡麦芽糖时装"})
-	register_goods("lobster_athena",{"type":"card_attire","cost":"50000","unlock_item_id":"lobster_athena","description":"咖喱龙虾炮的雅典娜守护时装","display_name":"龙虾炮雅典娜时装"})
+	register_goods("lobster_athena",{"type":"card_attire","cost":"50000","unlock_item_id":"lobster_athena","description":"咖喱龙虾炮的雅典娜守护时装","display_name":"龙虾炮星座时装"})
 	
 	register_goods("player_attire_1",{"type":"player_attire","cost":"50000","unlock_item_id":"player_attire_1","description":"角色的雪球兔兔时装","display_name":"雪球兔兔"})
 	register_goods("player_attire_2",{"type":"player_attire","cost":"50000","unlock_item_id":"player_attire_2","description":"角色的提拉米苏时装","display_name":"提拉米苏"})

@@ -1,3 +1,31 @@
+draw_set_colour(c_white)
+draw_set_font(font_yuan)
+draw_set_valign(fa_middle)
+draw_set_halign(fa_left)
+
+var level_text = global.level_data.name
+draw_text(x-250,y-42,level_text)
+
+var diff_text = "美味"
+if global.difficulty == 0{
+	diff_text = "美味"
+	draw_set_colour(c_lime)
+}
+else if global.difficulty == 1{
+	diff_text = "火山"
+	draw_set_colour(c_aqua)
+}
+else if global.difficulty == 2{
+	diff_text = "浮空"
+	draw_set_colour(c_red)
+}
+else if global.difficulty == 3{
+	diff_text = "星际"
+	draw_set_colour(c_purple)
+}
+
+draw_text(x-230+string_width(level_text),y-42,diff_text)
+
 if obj_battle.level_stage == "boss"{
 	exit
 }
@@ -68,26 +96,3 @@ draw_set_colour(c_white)
 draw_set_font(font_yuan)
 draw_set_valign(fa_middle)
 draw_set_halign(fa_left)
-
-var level_text = global.level_data.name
-draw_text(x-250,y-42,level_text)
-
-var diff_text = "美味"
-if global.difficulty == 0{
-	diff_text = "美味"
-	draw_set_colour(c_lime)
-}
-else if global.difficulty == 1{
-	diff_text = "火山"
-	draw_set_colour(c_aqua)
-}
-else if global.difficulty == 2{
-	diff_text = "浮空"
-	draw_set_colour(c_red)
-}
-else if global.difficulty == 3{
-	diff_text = "星际"
-	draw_set_colour(c_purple)
-}
-
-draw_text(x-230+string_width(level_text),y-42,diff_text)

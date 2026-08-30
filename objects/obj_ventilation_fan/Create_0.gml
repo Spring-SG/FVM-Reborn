@@ -31,5 +31,6 @@ ignore_list = ["mario_mouse","mario_pipeline","arno","pharaoh_coffin","temple_ph
 				"needle_baron","baron_bats","irritable_jack","irritable_jack_rock","hot_vajra","hot_vajra_spike","paratrooper_mouse_shield",
 				"fog_julie","lieutenant_buzz","huang_xiaoming","angelababy","angelababy_diamond","mouse_train_1","aircraft_carrier","captain_america_mouse",
 				"captain_rainbow","iron_man_mouse","mouse_train_2","iron_man","machine_bomb_mouse","spider_man_mouse","hulk_mouse","mouse_train_3",
-				"mermaid_mary","mermaid_wave","machine_shark_1","undersea_submarine","lobster_knight","electric_jellyfish","jellyfish_bullet"
+				"mermaid_mary","mermaid_wave","machine_shark_1","undersea_submarine","lobster_knight","electric_jellyfish","jellyfish_bullet","war_god",
+				"war_god_duck","war_god_wood","hercules","thor"
 ]

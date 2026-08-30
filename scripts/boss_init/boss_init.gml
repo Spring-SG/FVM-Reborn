@@ -28,4 +28,7 @@ function boss_init(){
 	register_boss("machine_shark_1",{"name":"机械鲨鱼","hp":80000,"icon":spr_rumble_icon})
 	register_boss("lobster_knight",{"name":"龙虾骑士","hp":90000,"icon":spr_pink_paul_icon})
 	register_boss("electric_jellyfish",{"name":"电光水母","hp":90000,"icon":spr_pink_paul_icon})
+	register_boss("war_god",{"name":"战神","hp":250000,"icon":spr_mario_mouse_icon})
+	register_boss("hercules",{"name":"大力神","hp":400000,"icon":spr_rumble_icon})
+	register_boss("thor",{"name":"雷神","hp":800000,"icon":spr_rumble_icon})
 }

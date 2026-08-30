@@ -10,7 +10,7 @@ if global.map_id == "delicious_island"{
 		draw_set_font(font_yuan)
 		var tooptip_x = 520
 		var tooptip_y = 560
-		var text = "神殿解锁条件\n击败一次洞君（"+string(global.save_data.unlocked_items.mario_mouse_killed)+"/1）\n击败一次阿诺（"+string(global.save_data.unlocked_items.arno_killed)+"/1）"
+		var text = "神殿解锁条件\n在曲奇岛、色拉岛陆或色拉岛水中任选一关通关（"+string(global.save_data.unlocked_items.mario_mouse_killed)+"/1）\n在慕斯岛、香槟岛陆或香槟岛水中任选一关通关（"+string(global.save_data.unlocked_items.arno_killed)+"/1）"
 		var tooptip_width = string_width(text)+10
 		var tooptip_height = string_height(text)+10
 		draw_rectangle(tooptip_x,tooptip_y,tooptip_x+tooptip_width,tooptip_y+tooptip_height,0)

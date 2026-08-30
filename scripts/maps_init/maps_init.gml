@@ -1861,7 +1861,7 @@ function maps_init(){
 					"pre_music":mus_volcanic_tower_pre,
 					"elite_music":mus_volcanic_tower_elite,
 					"boss_music":mus_volcanic_tower_boss,
-					"player_level_require":36,
+					"player_level_require":45,
 					"pre_level_require":["hazelnut_waterfall"]
 				},
 				{
@@ -1877,7 +1877,7 @@ function maps_init(){
 					"pre_music":mus_volcanic_tower_pre,
 					"elite_music":mus_volcanic_tower_elite,
 					"boss_music":mus_volcanic_tower_boss,
-					"player_level_require":36,
+					"player_level_require":45,
 					"pre_level_require":["grape_jungle"]
 				},
 				{
@@ -1893,7 +1893,7 @@ function maps_init(){
 					"pre_music":mus_volcanic_tower_pre,
 					"elite_music":mus_volcanic_tower_elite,
 					"boss_music":mus_volcanic_tower_boss,
-					"player_level_require":36,
+					"player_level_require":55,
 					"pre_level_require":["blueberry_jungle"]
 				},
 				{
@@ -1909,7 +1909,7 @@ function maps_init(){
 					"pre_music":mus_volcanic_tower_pre,
 					"elite_music":mus_volcanic_tower_elite,
 					"boss_music":mus_volcanic_tower_boss,
-					"player_level_require":36,
+					"player_level_require":55,
 					"pre_level_require":["milkshake_base"]
 				},
 			]
