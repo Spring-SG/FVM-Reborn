@@ -30,7 +30,7 @@ for (var i = 0; i < array_length(buttons); i++) {
         frame = (mouse_check_button_pressed(mb_left)) ? 2 : 1;
     }
     
-    draw_sprite_ext(spr_common_button, frame, btn_x, btn_y, 1.5, 1.5, 0, c_white, 1);
+    draw_sprite_ext(spr_common_button,  frame,  btn_x,  btn_y, 0.75, 0.75,  0,  c_white,  1);
     draw_set_font(font_yuan);
     draw_text(btn_x, btn_y, btn[1]);
 }

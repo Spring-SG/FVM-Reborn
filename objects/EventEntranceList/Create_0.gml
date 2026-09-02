@@ -16,7 +16,7 @@ function create_widgets() {
     /// @type {Asset.GMObject.Button} 
     var _laboratory_entrance = instance_create_depth(0, 0, -3, Button)
     _laboratory_entrance.set_sprite(spr_laboratory_icon)
-                        .set_scale(1.8)
+                        .set_scale(0.9)
                         .set_on_click(function() {
                             global.gui_stack.to(room_laboratory)
                         })

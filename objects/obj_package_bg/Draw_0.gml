@@ -6,7 +6,7 @@ draw_set_alpha(1);
 draw_self()
 
 // 绘制背包格子背景
-draw_sprite_ext(spr_package_bg_2,0,530,room_height/2,1.8,1.8,0,c_white,1)
+draw_sprite_ext(spr_package_bg_2, 0, 530, room_height/2, 0.9, 0.9, 0, c_white, 1)
 
 // 绘制玩家金币数量
 draw_set_font(font_number); 
@@ -33,9 +33,9 @@ if info_button_select == 1{
 	draw_set_font(font_yuan)
 	//绘制武器栏位
 	for(var i = 0;i < 3; i++){
-		draw_sprite_ext(spr_package_weapon_bg,0,x-1180,y-320+260*i,2,2,0,c_white,1)
+		draw_sprite_ext(spr_package_weapon_bg, 0, x-1180, y-320+260*i, 1, 1, 0, c_white, 1)
 		for(var j = 0; j < 3 ; j++){
-			draw_sprite_ext(spr_package_gem_bg,0,x-1180+200*j,y-220+260*i,1.8,1.8,0,c_white,1)
+			draw_sprite_ext(spr_package_gem_bg, 0, x-1180+200*j, y-220+260*i, 0.9, 0.9, 0, c_white, 1)
 		}
 	}
 	if global.save_data.equipped_items.main_weapon.id != ""{
@@ -44,9 +44,9 @@ if info_button_select == 1{
 		var gem_list = global.save_data.equipped_items.main_weapon.gems
 		for(var i = 0 ; i < array_length(gem_list);i++){
 			var gem_icon = get_gem_info(gem_list[i]).icon
-			draw_sprite_ext(gem_icon,0,x-1180+200*i,y-220,1.7,1.7,0,c_white,1)
+			draw_sprite_ext(gem_icon,0,x-1180+200*i,y-220,0.85,0.85,0,c_white,1)
 			if get_gem_level(gem_list[i]) > 0{
-				draw_sprite_ext(spr_star_slot,get_gem_level(gem_list[i])-1,x-1205+200*i,y-246,1.6,1.6,0,c_white,1)
+				draw_sprite_ext(spr_star_slot, get_gem_level(gem_list[i])-1, x-1205+200*i, y-246, 0.8, 0.8, 0, c_white, 1)
 			}
 		}
 	}
@@ -56,9 +56,9 @@ if info_button_select == 1{
 		var gem_list = global.save_data.equipped_items.secondary_weapon.gems
 		for(var i = 0 ; i < array_length(gem_list);i++){
 			var gem_icon = get_gem_info(gem_list[i]).icon
-			draw_sprite_ext(gem_icon,0,x-1180+200*i,y+40,1.7,1.7,0,c_white,1)
+			draw_sprite_ext(gem_icon,0,x-1180+200*i,y+40,0.85,0.85,0,c_white,1)
 			if get_gem_level(gem_list[i]) > 0{
-				draw_sprite_ext(spr_star_slot,get_gem_level(gem_list[i])-1,x-1205+200*i,y+14,1.6,1.6,0,c_white,1)
+				draw_sprite_ext(spr_star_slot, get_gem_level(gem_list[i])-1, x-1205+200*i, y+14, 0.8, 0.8, 0, c_white, 1)
 			}
 		}
 	}
@@ -68,9 +68,9 @@ if info_button_select == 1{
 		var gem_list = global.save_data.equipped_items.super_weapon.gems
 		for(var i = 0 ; i < array_length(gem_list);i++){
 			var gem_icon = get_gem_info(gem_list[i]).icon
-			draw_sprite_ext(gem_icon,0,x-1180+200*i,y+300,1.7,1.7,0,c_white,1)
+			draw_sprite_ext(gem_icon,0,x-1180+200*i,y+300,0.85,0.85,0,c_white,1)
 			if get_gem_level(gem_list[i]) > 0{
-				draw_sprite_ext(spr_star_slot,get_gem_level(gem_list[i])-1,x-1205+200*i,y+274,1.6,1.6,0,c_white,1)
+				draw_sprite_ext(spr_star_slot, get_gem_level(gem_list[i])-1, x-1205+200*i, y+274, 0.8, 0.8, 0, c_white, 1)
 			}
 		}
 	}
@@ -114,7 +114,7 @@ if package_button_select == 1 {
 	}
     for(var i = 0 ; i < package_cols ; i++){
         for(var j = 0 ; j < package_rows ; j++){
-            draw_sprite_ext(spr_package_slot_bg,0,42+i*84, 48+96 * j-y_offset,1.8,1.8,0,c_white,1)
+            draw_sprite_ext(spr_package_slot_bg, 0, 42+i*84,  48+96 * j-y_offset, 0.9, 0.9, 0, c_white, 1)
         }
     }
     
@@ -170,7 +170,7 @@ if package_button_select == 1 {
 				}
 				var level = global.save_data.unlocked_cards[info_index].level
 				if level > 0{
-					draw_sprite_ext(spr_star_slot, level - 1, card_x-25, card_y-35,1.4,1.4,0,c_white,1);
+					draw_sprite_ext(spr_star_slot,  level - 1,  card_x-25,  card_y-35, 0.7, 0.7, 0, c_white, 1);
 				}
                 // 检查鼠标是否悬停在卡片上
                 var spr_width = 84;
@@ -229,7 +229,7 @@ else if package_button_select == 2 {
     // 绘制武器背包
     for(var i = 0 ; i < package_cols ; i++){
         for(var j = 0 ; j < package_rows ; j++){
-            draw_sprite_ext(spr_package_slot_bg,1,42+i*84,44 + 88 * j - y_offset,1.8,1.8,0,c_white,1)
+            draw_sprite_ext(spr_package_slot_bg, 1, 42+i*84, 44 + 88 * j - y_offset, 0.9, 0.9, 0, c_white, 1)
         }
     }
     
@@ -258,10 +258,10 @@ else if package_button_select == 2 {
                 // 绘制武器图标
                 if (is_equipped) {
                     // 已装备的武器，用高亮边框或颜色显示
-                    draw_sprite_ext(spr_package_slot_bg, 1, weapon_x, weapon_y, 1.8, 1.8, 0, c_yellow, 1);
+                    draw_sprite_ext(spr_package_slot_bg,  1,  weapon_x,  weapon_y, 0.9, 0.9,  0,  c_yellow,  1);
                     draw_sprite_ext(weapon_data.icon, 0, weapon_x, weapon_y, 1, 1, 0, c_white, 1);
                 } else {
-                    draw_sprite_ext(spr_package_slot_bg, 1, weapon_x, weapon_y, 1.8, 1.8, 0, c_white, 1);
+                    draw_sprite_ext(spr_package_slot_bg,  1,  weapon_x,  weapon_y, 0.9, 0.9,  0,  c_white,  1);
                     draw_sprite_ext(weapon_data.icon, 0, weapon_x, weapon_y, 1, 1, 0, c_white, 1);
                 }
                 
@@ -307,14 +307,14 @@ else if package_button_select == 2 {
                 // 绘制宝石图标
                 if (is_equipped) {
                     // 已装备的宝石，用高亮边框或颜色显示
-                    draw_sprite_ext(spr_package_slot_bg, 1, weapon_x, weapon_y, 1.8, 1.8, 0, c_yellow, 1);
-                    draw_sprite_ext(weapon_data.icon, 0, weapon_x, weapon_y, 1.4, 1.4, 0, c_white, 1);
+                    draw_sprite_ext(spr_package_slot_bg,  1,  weapon_x,  weapon_y, 0.9, 0.9,  0,  c_yellow,  1);
+                    draw_sprite_ext(weapon_data.icon, 0, weapon_x, weapon_y, 0.7, 0.7, 0, c_white, 1);
                 } else {
-                    draw_sprite_ext(spr_package_slot_bg, 1, weapon_x, weapon_y, 1.8, 1.8, 0, c_white, 1);
-                    draw_sprite_ext(weapon_data.icon, 0, weapon_x, weapon_y, 1.4, 1.4, 0, c_white, 1);
+                    draw_sprite_ext(spr_package_slot_bg,  1,  weapon_x,  weapon_y, 0.9, 0.9,  0,  c_white,  1);
+                    draw_sprite_ext(weapon_data.icon, 0, weapon_x, weapon_y, 0.7, 0.7, 0, c_white, 1);
                 }
 				if get_gem_level(weapon_id) > 0{
-					draw_sprite_ext(spr_star_slot,get_gem_level(weapon_id)-1,weapon_x-28,weapon_y-30,1.4,1.4,0,c_white,1)
+					draw_sprite_ext(spr_star_slot, get_gem_level(weapon_id)-1, weapon_x-28, weapon_y-30, 0.7, 0.7, 0, c_white, 1)
 				}
                 
                 // 检查鼠标是否悬停在宝石上
@@ -421,7 +421,7 @@ else if package_button_select == 3{
 	// 绘制道具背包
     for(var i = 0 ; i < package_cols ; i++){
         for(var j = 0 ; j < package_rows ; j++){
-            draw_sprite_ext(spr_package_slot_bg,1,42+i*84,44 + 88 * j-y_offset,1.8,1.8,0,c_white,1)
+            draw_sprite_ext(spr_package_slot_bg, 1, 42+i*84, 44 + 88 * j-y_offset, 0.9, 0.9, 0, c_white, 1)
         }
     }
 	// 绘制所有道具
@@ -442,8 +442,8 @@ else if package_button_select == 3{
                 var material_x = 42 + col * 84;
                 var material_y = 44 + row * 88 - y_offset;
                                
-                //draw_sprite_ext(spr_package_slot_bg, 1, weapon_x, weapon_y, 1.8, 1.8, 0, c_white, 1);
-                draw_sprite_ext(spr_craft_material,material_data.icon, material_x, material_y, 1.8, 1.8, 0, c_white, 1);
+                //draw_sprite_ext(spr_package_slot_bg,  1,  weapon_x,  weapon_y, 0.9, 0.9,  0,  c_white,  1);
+                draw_sprite_ext(spr_craft_material, material_data.icon,  material_x,  material_y, 0.9, 0.9,  0,  c_white,  1);
 				draw_set_halign(fa_right);
 				draw_set_valign(fa_bottom);
 				draw_set_colour(c_white)

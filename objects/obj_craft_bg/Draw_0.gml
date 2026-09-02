@@ -17,7 +17,7 @@ draw_set_colour(c_white)
 draw_set_valign(fa_top)
 draw_set_halign(fa_left)
 for(var i = 0 ; i < 10 ; i++){
-    draw_sprite_ext(spr_package_slot_bg,1,x-752+i*84,y + 454,1.8,1.8,0,c_white,1)
+    draw_sprite_ext(spr_package_slot_bg, 1, x-752+i*84, y + 454, 0.9, 0.9, 0, c_white, 1)
 }
 
 if button_select == 0{
@@ -33,7 +33,7 @@ if button_select == 0{
 		var material_id = card_material_id_list[i]
 		var material_info = get_material_info(material_id)
 		var material_amount = get_material_amount(material_id)
-		draw_sprite_ext(spr_craft_material,material_info.icon,x-752+i*84,y + 454,1.8,1.8,0,c_white,1)
+		draw_sprite_ext(spr_craft_material, material_info.icon, x-752+i*84, y + 454, 0.9, 0.9, 0, c_white, 1)
 		draw_set_halign(fa_right);
 		draw_set_valign(fa_bottom);
 		draw_set_colour(c_white)
@@ -50,7 +50,7 @@ if button_select == 0{
 	//绘制右侧栏位
 	for(var i = 0 ; i < 7 ; i++){
         for(var j = 0 ; j < 20 ; j++){
-            draw_sprite_ext(spr_package_slot_bg,0,42+i*84,48+96 * j-y_offset,1.8,1.8,0,c_white,1)
+            draw_sprite_ext(spr_package_slot_bg, 0, 42+i*84, 48+96 * j-y_offset, 0.9, 0.9, 0, c_white, 1)
         }
     }
 	//绘制所有已解锁防御卡
@@ -74,7 +74,7 @@ if button_select == 0{
 			draw_set_font(font_pixel)
 			draw_text(card_x,card_y+37,card_slot_data[? "cost"])
 			if card_data.max_level > 0{
-				draw_sprite_ext(spr_star_slot, card_data.max_level - 1, card_x-25, card_y-35,1.4,1.4,0,c_white,1);
+				draw_sprite_ext(spr_star_slot,  card_data.max_level - 1,  card_x-25,  card_y-35, 0.7, 0.7, 0, c_white, 1);
 			}
 		}
 		
@@ -141,7 +141,7 @@ if button_select == 0{
 		draw_set_font(font_pixel)
 		draw_text(card_x,card_y+37,card_slot_data[? "cost"])
 		if card_data.max_level > 0{
-			draw_sprite_ext(spr_star_slot, card_data.max_level - 1, card_x-25, card_y-35,1.4,1.4,0,c_white,1);
+			draw_sprite_ext(spr_star_slot,  card_data.max_level - 1,  card_x-25,  card_y-35, 0.7, 0.7, 0, c_white, 1);
 		}
 		//绘制强化需要的材料
 		if card_data.max_level <= 15{
@@ -153,7 +153,7 @@ if button_select == 0{
 			draw_set_valign(fa_middle)
 			draw_set_halign(fa_left)
 			draw_text(x-160,y+300,string(craft_rule.gold_amount))
-			draw_sprite_ext(spr_craft_material,get_material_info(craft_rule.spices_require).icon,x-455,y-20,1.8,1.8,0,c_white,1)
+			draw_sprite_ext(spr_craft_material, get_material_info(craft_rule.spices_require).icon, x-455, y-20, 0.9, 0.9, 0, c_white, 1)
 			draw_set_halign(fa_center)
 			draw_set_colour(c_black)
 			//如果低级材料不足，尝试获取高级材料
@@ -193,7 +193,7 @@ if button_select == 0{
 				else{
 					display_clover_amount = get_material_amount(craft_rule.clover_require)
 				}
-				draw_sprite_ext(spr_craft_material,get_material_info(craft_rule.clover_require).icon,x-155,y-20,1.8,1.8,0,c_white,1)
+				draw_sprite_ext(spr_craft_material, get_material_info(craft_rule.clover_require).icon, x-155, y-20, 0.9, 0.9, 0, c_white, 1)
 				draw_set_halign(fa_center)
 				draw_set_colour(c_black)
 				draw_set_font(font_number)
@@ -212,7 +212,7 @@ if button_select == 0{
 }
 else if button_select == 1{
 	//绘制宝石强化UI背景
-	draw_sprite_ext(spr_package_gem_bg,0,x-305,y+110,1.8,1.8,0,c_white,1)
+	draw_sprite_ext(spr_package_gem_bg, 0, x-305, y+110, 0.9, 0.9, 0, c_white, 1)
 	draw_sprite_ext(spr_craft_material_bg,0,x-305,y-40,1.8,1.8,0,c_white,1)
 	draw_sprite_ext(spr_craft_slot_text,3,x-305,y+110,1.8,1.8,0,c_white,1)
 	draw_sprite_ext(spr_craft_slot_text,4,x-305,y-40,1.8,1.8,0,c_white,1)
@@ -221,7 +221,7 @@ else if button_select == 1{
 		var material_id = gem_material_id_list[i]
 		var material_info = get_material_info(material_id)
 		var material_amount = get_material_amount(material_id)
-		draw_sprite_ext(spr_craft_material,material_info.icon,x-752+i*84,y + 454,1.8,1.8,0,c_white,1)
+		draw_sprite_ext(spr_craft_material, material_info.icon, x-752+i*84, y + 454, 0.9, 0.9, 0, c_white, 1)
 		draw_set_halign(fa_right);
 		draw_set_valign(fa_bottom);
 		draw_set_colour(c_white)
@@ -236,7 +236,7 @@ else if button_select == 1{
 	//绘制右侧栏位
 	for(var i = 0 ; i < 7 ; i++){
         for(var j = 0 ; j < 9 ; j++){
-            draw_sprite_ext(spr_package_slot_bg,1,x+196+i*84,y - 324 + 88 * j,1.8,1.8,0,c_white,1)
+            draw_sprite_ext(spr_package_slot_bg, 1, x+196+i*84, y - 324 + 88 * j, 0.9, 0.9, 0, c_white, 1)
         }
     }
 	//绘制所有宝石
@@ -257,10 +257,10 @@ else if button_select == 1{
                 var weapon_y = y - 324 + row * 88;
                 
                 // 绘制宝石图标
-                draw_sprite_ext(weapon_data.icon, 0, weapon_x, weapon_y, 1.4, 1.4, 0, c_white, 1);
+                draw_sprite_ext(weapon_data.icon, 0, weapon_x, weapon_y, 0.7, 0.7, 0, c_white, 1);
                 
 				if get_gem_max_level(weapon_id) > 0{
-					draw_sprite_ext(spr_star_slot,get_gem_max_level(weapon_id)-1,weapon_x-28,weapon_y-30,1.4,1.4,0,c_white,1)
+					draw_sprite_ext(spr_star_slot, get_gem_max_level(weapon_id)-1, weapon_x-28, weapon_y-30, 0.7, 0.7, 0, c_white, 1)
 				}
                 
                 // 检查鼠标是否悬停在宝石上
@@ -322,10 +322,10 @@ else if button_select == 1{
 		var weapon_data = get_gem_info(weapon_id)
                 
         // 绘制宝石图标
-        draw_sprite_ext(weapon_data.icon, 0, weapon_x, weapon_y, 1.7, 1.7, 0, c_white, 1);
+        draw_sprite_ext(weapon_data.icon, 0, weapon_x, weapon_y, 0.85, 0.85, 0, c_white, 1);
                 
 		if get_gem_max_level(weapon_id) > 0{
-			draw_sprite_ext(spr_star_slot,get_gem_max_level(weapon_id)-1,weapon_x-28,weapon_y-30,1.6,1.6,0,c_white,1)
+			draw_sprite_ext(spr_star_slot, get_gem_max_level(weapon_id)-1, weapon_x-28, weapon_y-30, 0.8, 0.8, 0, c_white, 1)
 		}
 		//绘制强化需要的材料
 		if get_gem_max_level(weapon_id) <= 14{
@@ -335,7 +335,7 @@ else if button_select == 1{
 			draw_set_valign(fa_middle)
 			draw_set_halign(fa_left)
 			draw_text(x-160,y+300,string(craft_rule.gold_amount))
-			draw_sprite_ext(spr_craft_material,get_material_info(craft_rule.crystal_require).icon,x-305,y-40,1.8,1.8,0,c_white,1)
+			draw_sprite_ext(spr_craft_material, get_material_info(craft_rule.crystal_require).icon, x-305, y-40, 0.9, 0.9, 0, c_white, 1)
 			draw_set_halign(fa_center)
 			draw_set_colour(c_black)
 			//如果低级材料不足，尝试获取高级材料

@@ -2,12 +2,17 @@
   "$GMSprite":"v2",
   "%Name":"spr_laboratory_icon",
   "bboxMode":2,
-  "bbox_bottom":50,
+  "bbox_bottom":100,
   "bbox_left":0,
-  "bbox_right":54,
+  "bbox_right":108,
   "bbox_top":0,
   "collisionKind":1,
   "collisionTolerance":0,
+  "ConfigValues":{
+    "BC7":{
+      "textureGroupId":"{ \"name\":\"UI\", \"path\":\"texturegroups/UI\" }",
+    },
+  },
   "DynamicTexturePage":false,
   "edgeFiltering":false,
   "For3D":false,
@@ -16,7 +21,7 @@
   ],
   "gridX":0,
   "gridY":0,
-  "height":50,
+  "height":100,
   "HTile":false,
   "layers":[
     {"$GMImageLayer":"","%Name":"187ec608-b67f-46ce-bff9-43c725755dbd","blendMode":0,"displayName":"default","isLocked":false,"name":"187ec608-b67f-46ce-bff9-43c725755dbd","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
@@ -86,5 +91,5 @@
   },
   "type":0,
   "VTile":false,
-  "width":54,
+  "width":108,
 }

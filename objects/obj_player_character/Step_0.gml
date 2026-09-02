@@ -42,7 +42,14 @@ if flash_value >0{
 	
 }
 if is_placed{
-	depth = calculate_plant_depth(grid_col, grid_row, "normal")
+	var have_platform = false;
+	with obj_platform{
+		have_platform = true
+		break
+	}
+	if(have_platform==false){
+		depth = calculate_plant_depth(grid_col, grid_row, "normal")
+	}
 }
 else{
 	depth = -5000

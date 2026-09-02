@@ -16,7 +16,7 @@ draw_text(x, y - 105, "星级");
 draw_text(x, y - 25, "转职");
 draw_text(x, y + 55, "技能");
 for(var i = 0 ; i< 3 ; i++){
-	draw_sprite_ext(spr_package_number_bg,0,x,y-70+80*i,1.5,1.5,0,c_white,1)
+	draw_sprite_ext(spr_package_number_bg, 0, x, y-70+80*i, 0.75, 0.75, 0, c_white, 1)
 }
 if not info_got{
 	ds_map_add(target_current_info,"level",obj_info_island_bg.view_card_level)

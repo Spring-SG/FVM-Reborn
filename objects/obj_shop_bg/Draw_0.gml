@@ -84,7 +84,7 @@ for(var i = 0 ; i< 4; i++){
 				}
 				else if goods_data.type == "gem"{
 					var weapon_data = get_gem_info(goods_data.unlock_item_id)
-					draw_sprite_ext(weapon_data.icon,0,x-618+411*j-122,y-210+165*i+25,1.8,1.8,0,c_white,1)
+					draw_sprite_ext(weapon_data.icon,0,x-618+411*j-122,y-210+165*i+25,0.9,0.9,0,c_white,1)
 					//检查是否解锁
 					var is_unlocked = is_gem_unlocked(goods_data.unlock_item_id)
 					if is_unlocked{

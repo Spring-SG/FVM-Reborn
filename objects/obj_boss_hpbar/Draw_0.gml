@@ -18,13 +18,13 @@ draw_set_color(bg_color)
 draw_rectangle(x,y+6,x+(bar_width+28),y+icon_height/2-10,false)
 draw_sprite_ext(spr_boss_hpbar_bar,0,x,y+icon_height/4,((bar_width+30)*hp_rate)/2,1.8,0,c_white,1)
 if obj_battle.boss_count < 2{
-	draw_sprite_ext(spr_boss_hpbar_icon_bg,0,x,y,1.8,1.8,0,c_white,1)
+	draw_sprite_ext(spr_boss_hpbar_icon_bg, 0, x, y, 0.9, 0.9, 0, c_white, 1)
 }
-draw_sprite_ext(spr_boss_hpbar_left,0,x,y+icon_height/4,1.8,1.8,0,c_white,1)
+draw_sprite_ext(spr_boss_hpbar_left, 0, x, y+icon_height/4, 0.45, 0.45, 0, c_white, 1)
 draw_sprite_ext(spr_boss_hpbar_middle,0,x+9*1.8,y+icon_height/4,bar_width/3,1.8,0,c_white,1)
-draw_sprite_ext(spr_boss_hpbar_right,0,x+9*1.8+bar_width,y+icon_height/4,1.8,1.8,0,c_white,1)
+draw_sprite_ext(spr_boss_hpbar_right, 0, x+9*1.8+bar_width, y+icon_height/4, 0.9, 0.9, 0, c_white, 1)
 if obj_battle.boss_count < 2{
-	draw_sprite_ext(spr_boss_hpbar_name,0,x,y-icon_height/4 + 2,1.8,1.8,0,c_white,1)
+	draw_sprite_ext(spr_boss_hpbar_name, 0, x, y-icon_height/4 + 2, 0.9, 0.9, 0, c_white, 1)
 	draw_set_valign(fa_middle)
 	draw_set_halign(fa_center)
 	draw_set_font(font_hei)
@@ -37,7 +37,7 @@ if obj_battle.boss_count < 2{
 	draw_set_halign(fa_top)
 }
 else{
-	draw_sprite_ext(spr_boss_hpbar_name,0,x-135,y+icon_height/4 ,1.8,1.8,0,c_white,1)
+	draw_sprite_ext(spr_boss_hpbar_name, 0, x-135, y+icon_height/4 , 0.9, 0.9, 0, c_white, 1)
 	draw_set_valign(fa_middle)
 	draw_set_halign(fa_center)
 	draw_set_font(font_hei)

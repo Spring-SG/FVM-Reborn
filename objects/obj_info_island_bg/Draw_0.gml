@@ -6,7 +6,7 @@ draw_set_alpha(1);
 draw_self()
 
 // 绘制背包格子背景
-draw_sprite_ext(spr_info_island_bg_1,0,530,room_height/2,1.8,1.8,0,c_white,1)
+draw_sprite_ext(spr_info_island_bg_1, 0, 530, room_height/2, 0.45, 0.45, 0, c_white, 1)
 
 // 绘制玩家金币数量
 draw_set_font(font_yuan); // 假设有一个字体font_main
@@ -26,10 +26,10 @@ if info_button_select == 1 {
     for(var i = 0 ; i < info_rows ; i++){
         for(var j = 0 ; j < info_cols ; j++){
 			if j + i * info_cols == select_card_index{
-				draw_sprite_ext(spr_info_island_info_bg,1,x-1154+j*128*1.5,y - 435 + 142*1.5 * i-y_offset,1.5,1.5,0,c_white,1)
+				draw_sprite_ext(spr_info_island_info_bg, 1, x-1154+j*128*1.5, y - 435 + 142*1.5 * i-y_offset, 0.75, 0.75, 0, c_white, 1)
 			}
 			else{
-				draw_sprite_ext(spr_info_island_info_bg,0,x-1154+j*128*1.5,y - 435 + 142*1.5 * i-y_offset,1.5,1.5,0,c_white,1)
+				draw_sprite_ext(spr_info_island_info_bg, 0, x-1154+j*128*1.5, y - 435 + 142*1.5 * i-y_offset, 0.75, 0.75, 0, c_white, 1)
 			}
         }
     }
@@ -74,7 +74,7 @@ if info_button_select == 1 {
                 }
 				if card_index == hover_card_index{
 					draw_set_alpha(1)
-					draw_sprite_ext(spr_info_island_select_box,0,card_x,card_y,2,2,0,c_white,0.5)
+					draw_sprite_ext(spr_info_island_select_box, 0, card_x, card_y, 1, 1, 0, c_white, 0.5)
 				}
                         
             card_index++;
@@ -95,7 +95,7 @@ if info_button_select == 1 {
         if (row < info_rows) {
             var card_x = x - 1154 + col * 128*1.5;
             var card_y = y - 265 + row * 142*1.5-y_offset;
-			//draw_sprite_ext(spr_info_island_select_box,0,card_x,card_y,2,2,0,c_white,0.5)
+			//draw_sprite_ext(spr_info_island_select_box, 0, card_x, card_y, 1, 1, 0, c_white, 0.5)
 		}
 		
         
@@ -164,10 +164,10 @@ else if info_button_select == 2 {
     for(var i = 0 ; i < info_rows ; i++){
         for(var j = 0 ; j < info_cols ; j++){
 			if j + i * info_cols == select_card_index{
-				draw_sprite_ext(spr_info_island_info_bg,1,x-1154+j*128*1.5,y - 435 + 142*1.5 * i-y_offset,1.5,1.5,0,c_white,1)
+				draw_sprite_ext(spr_info_island_info_bg, 1, x-1154+j*128*1.5, y - 435 + 142*1.5 * i-y_offset, 0.75, 0.75, 0, c_white, 1)
 			}
 			else{
-				draw_sprite_ext(spr_info_island_info_bg,0,x-1154+j*128*1.5,y - 435 + 142*1.5 * i-y_offset,1.5,1.5,0,c_white,1)
+				draw_sprite_ext(spr_info_island_info_bg, 0, x-1154+j*128*1.5, y - 435 + 142*1.5 * i-y_offset, 0.75, 0.75, 0, c_white, 1)
 			}
         }
     }
@@ -210,7 +210,7 @@ else if info_button_select == 2 {
                 }
 				if enemy_index == hover_card_index{
 					draw_set_alpha(1)
-					draw_sprite_ext(spr_info_island_select_box,0,card_x,card_y,2,2,0,c_white,0.5)
+					draw_sprite_ext(spr_info_island_select_box, 0, card_x, card_y, 1, 1, 0, c_white, 0.5)
 				}
                         
             enemy_index++;
@@ -231,7 +231,7 @@ else if info_button_select == 2 {
         if (row < info_rows) {
             var card_x = x - 1154 + col * 128*1.5;
             var card_y = y - 265 + row * 142*1.5-y_offset;
-			//draw_sprite_ext(spr_info_island_select_box,0,card_x,card_y,2,2,0,c_white,0.5)
+			//draw_sprite_ext(spr_info_island_select_box, 0, card_x, card_y, 1, 1, 0, c_white, 0.5)
 		}
 		
         
@@ -286,10 +286,10 @@ else if info_button_select == 3 {
     for(var i = 0 ; i < info_rows ; i++){
         for(var j = 0 ; j < info_cols ; j++){
 			if j + i * info_cols == select_card_index{
-				draw_sprite_ext(spr_info_island_info_bg,1,x-1154+j*128*1.5,y - 435 + 142*1.5 * i-y_offset,1.5,1.5,0,c_white,1)
+				draw_sprite_ext(spr_info_island_info_bg, 1, x-1154+j*128*1.5, y - 435 + 142*1.5 * i-y_offset, 0.75, 0.75, 0, c_white, 1)
 			}
 			else{
-				draw_sprite_ext(spr_info_island_info_bg,0,x-1154+j*128*1.5,y - 435 + 142*1.5 * i-y_offset,1.5,1.5,0,c_white,1)
+				draw_sprite_ext(spr_info_island_info_bg, 0, x-1154+j*128*1.5, y - 435 + 142*1.5 * i-y_offset, 0.75, 0.75, 0, c_white, 1)
 			}
         }
     }
@@ -336,7 +336,7 @@ else if info_button_select == 3 {
             }
 			if enemy_index == hover_card_index{
 				draw_set_alpha(1)
-				draw_sprite_ext(spr_info_island_select_box,0,card_x,card_y,2,2,0,c_white,0.5)
+				draw_sprite_ext(spr_info_island_select_box, 0, card_x, card_y, 1, 1, 0, c_white, 0.5)
 			}
                         
             enemy_index++;
@@ -357,7 +357,7 @@ else if info_button_select == 3 {
         if (row < info_rows) {
             var card_x = x - 1154 + col * 128*1.5;
             var card_y = y - 265 + row * 142*1.5-y_offset;
-			//draw_sprite_ext(spr_info_island_select_box,0,card_x,card_y,2,2,0,c_white,0.5)
+			//draw_sprite_ext(spr_info_island_select_box, 0, card_x, card_y, 1, 1, 0, c_white, 0.5)
 		}
 		
         

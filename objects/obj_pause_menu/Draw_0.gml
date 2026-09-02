@@ -39,7 +39,7 @@ for (var i = 0; i < array_length(buttons); i++) {
     }
     
     // 绘制按钮
-    draw_sprite_ext(spr_common_button, frame, btn_x, btn_y, 1.5, 1.5, 0, c_white, 1);
+    draw_sprite_ext(spr_common_button,  frame,  btn_x,  btn_y, 0.75, 0.75,  0,  c_white,  1);
     
     // 绘制按钮文本
     draw_set_font(font_yuan);

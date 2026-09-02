@@ -25,7 +25,7 @@ draw_sprite_ext(card_spr, 0, x, y+18,0.9,0.9,0,c_white,1);
 //绘制星级
 
 if clevel > 0{
-	draw_sprite_ext(spr_star_slot, clevel - 1, x-30, y-43,1.6,1.6,0,c_white,1);
+	draw_sprite_ext(spr_star_slot,  clevel - 1,  x-30,  y-43, 0.8, 0.8, 0, c_white, 1);
 }
 
 

@@ -1,6 +1,6 @@
 #macro kDefaultAvatar spr_player_character_icon
-image_xscale = 1.8
-image_yscale = 1.8
+image_xscale = 0.9
+image_yscale = 0.9
 menu_type = 0
 instance_create_depth(x + 385,y + 73,depth-1,obj_fullscreen_btn)
 instance_create_depth(x + 362,y + 113,depth-1,obj_edit_btn)

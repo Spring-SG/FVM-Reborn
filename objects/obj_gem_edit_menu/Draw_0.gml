@@ -14,7 +14,7 @@ draw_text(x, y - 165, "宝石信息编辑");
 // 绘制文字
 draw_text(x, y - 105, "星级");
 for(var i = 0 ; i< 1 ; i++){
-	draw_sprite_ext(spr_package_number_bg,0,x,y-70+80*i,1.5,1.5,0,c_white,1)
+	draw_sprite_ext(spr_package_number_bg, 0, x, y-70+80*i, 0.75, 0.75, 0, c_white, 1)
 }
 if not info_got{
 	var card_id = global.save_data.unlocked_gems[target_card_index].id
