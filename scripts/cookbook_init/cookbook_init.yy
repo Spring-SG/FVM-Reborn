@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"cookbook_init",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"cookbook_init",
+  "parent":{
+    "name":"Cookbook",
+    "path":"folders/脚本/Menu/Cookbook.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -161,42 +161,50 @@ switch state{
 				spike_left_1 = instance_create_depth(spike_pos1.x,spike_pos1.y+25,-800,obj_vajra_spike)
 				spike_left_1.maxhp *= (1+((maxhp - 80000)/80000)*0.5)
 				spike_left_1.hp = spike_left_1.maxhp
+				spike_left_1.hp_modified = true
 			
 				var spike_pos2 = get_world_position_from_grid(0,global.grid_rows-1)
 				spike_left_2 = instance_create_depth(spike_pos2.x,spike_pos2.y+25,-800,obj_vajra_spike)
 				spike_left_2.maxhp *= (1+((maxhp - 80000)/80000)*0.5)
 				spike_left_2.hp = spike_left_2.maxhp
+				spike_left_2.hp_modified = true
 			
 				var spike_pos3 = get_world_position_from_grid(global.grid_cols-1,0)
 				spike_right_1 = instance_create_depth(spike_pos3.x,spike_pos3.y+25,-800,obj_vajra_spike)
 				spike_right_1.maxhp *= (1+((maxhp - 80000)/80000)*0.5)
 				spike_right_1.hp = spike_right_1.maxhp
+				spike_right_1.hp_modified = true
 			
 				var spike_pos4 = get_world_position_from_grid(global.grid_cols-1,global.grid_rows-1)
 				spike_right_2 = instance_create_depth(spike_pos4.x,spike_pos4.y+25,-800,obj_vajra_spike)
 				spike_right_2.maxhp *= (1+((maxhp - 80000)/80000)*0.5)
 				spike_right_2.hp = spike_right_2.maxhp
+				spike_right_2.hp_modified = true
 			}
 			else{
 				var spike_pos1 = get_world_position_from_grid(4,0)
 				spike_left_1 = instance_create_depth(spike_pos1.x,spike_pos1.y+25,-800,obj_vajra_spike)
 				spike_left_1.maxhp *= (1+((maxhp - 80000)/80000)*0.5)
 				spike_left_1.hp = spike_left_1.maxhp
+				spike_left_1.hp_modified = true
 			
 				var spike_pos2 = get_world_position_from_grid(0,3)
 				spike_left_2 = instance_create_depth(spike_pos2.x,spike_pos2.y+25,-800,obj_vajra_spike)
 				spike_left_2.maxhp *= (1+((maxhp - 80000)/80000)*0.5)
 				spike_left_2.hp = spike_left_2.maxhp
+				spike_left_2.hp_modified = true
 			
 				var spike_pos3 = get_world_position_from_grid(global.grid_cols-1,3)
 				spike_right_1 = instance_create_depth(spike_pos3.x,spike_pos3.y+25,-800,obj_vajra_spike)
 				spike_right_1.maxhp *= (1+((maxhp - 80000)/80000)*0.5)
 				spike_right_1.hp = spike_right_1.maxhp
+				spike_right_1.hp_modified = true
 			
 				var spike_pos4 = get_world_position_from_grid(4,global.grid_rows-1)
 				spike_right_2 = instance_create_depth(spike_pos4.x,spike_pos4.y+25,-800,obj_vajra_spike)
 				spike_right_2.maxhp *= (1+((maxhp - 80000)/80000)*0.5)
 				spike_right_2.hp = spike_right_2.maxhp
+				spike_right_2.hp_modified = true
 			}
 			
 		}

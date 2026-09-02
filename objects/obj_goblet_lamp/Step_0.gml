@@ -22,19 +22,21 @@ var upgrade_data = get_plant_data_with_skill(plant_id, shape,current_level,skill
 	else{
 		cycle = upgrade_data[? "cycle"]
 	}
-if grow_timer < 90*60{
+	
+
+if grow_timer < grow_time{
 	grow_timer++
 }
-else if grow_timer == 90*60{
+else if grow_timer == grow_time{
 	state = CARD_STATE.GROW
 	audio_play_sound(snd_goblet_lamp_grow,0,0)
 	grow_timer++
 }
-else if grow_timer < 90*60+8*current_flash_speed{
+else if grow_timer < grow_time+8*current_flash_speed{
 	state = CARD_STATE.GROW
 	grow_timer++
 }
-else if grow_timer == 90*60+8*current_flash_speed{
+else if grow_timer == grow_time+8*current_flash_speed{
 	state = CARD_STATE.IDLE
 	flash_offset = 36
 	grow_timer++

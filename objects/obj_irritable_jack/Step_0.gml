@@ -192,6 +192,7 @@ switch state{
 					}
 					rock_inst.maxhp = rock_inst.maxhp + rock_inst.maxhp*((maxhp/30000)*0.5)
 					rock_inst.hp = rock_inst.maxhp
+					rock_inst.hp_modified = true
 				}
 			}
 		}

@@ -17,3 +17,7 @@ plant_type = "normal"
 
 grow_timer = 0
 flash_offset = 0
+grow_time = 90 * 60
+if is_cookbook_equipped("grape_wine"){
+	grow_time = 60 * 60
+}

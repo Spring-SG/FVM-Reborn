@@ -27,3 +27,5 @@ depth = -5000
 if card_equipped_attire_id("player")!= -1{
 	sprite_index = get_attire_info(card_equipped_attire_id("player")).spr
 }
+
+awake_buff_timer = 0

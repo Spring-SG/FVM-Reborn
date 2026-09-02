@@ -50,6 +50,10 @@ function load_file(file_slot) {
 				global.save_data.player.crown_version = "0.0.0"
 				global.save_data.version = 1.7
 			}
+			if global.save_data.version == 1.7{
+				global.save_data.equipped_cookbook = [[],[],[]]
+				global.save_data.version = 1.8
+			}
 		}
         return true;
     } catch(e) {
@@ -61,7 +65,7 @@ function load_file(file_slot) {
 function reset_file(file_slot){
 	//重置到初始存档
 	global.save_data = {
-            "version": 1.6,
+            "version": 1.8,
             "player": {
                 "gold": 0,
                 "level": 1,
@@ -143,7 +147,8 @@ function reset_file(file_slot){
 				}
 			],
 			"completed_tasks":[],
-			"attires":[]
+			"attires":[],
+			"equipped_cookbook":[[],[],[]]
         };
 	save_file(file_slot)
 }

@@ -67,6 +67,28 @@ plant_type = card_data[? "plant_type"]
 feature_type = card_data[? "feature_type"]
 target_card = card_data[? "target_card"]
 
+//检查食谱
+var cookbook_list = global.save_data.equipped_cookbook
+for(var i = 0 ; i < array_length(cookbook_list) ; i++){
+	for(var j = 0 ; j < array_length(cookbook_list[i]) ; j++){
+		var cookbook_data = get_cookbook_data(cookbook_list[i][j])
+		var modifs = cookbook_data.modif
+		for(var k = 0 ; k < array_length(modifs) ; k++){
+			if array_get_index(modifs[k].card_id,plant_id) != -1{
+				if variable_instance_exists(self,modifs[k].modif_type){
+					if modifs[k].modif_calc == "plus"{
+						variable_instance_set(self,modifs[k].modif_type,variable_instance_get(self,modifs[k].modif_type)+modifs[k].amount)
+					}
+					else if modifs[k].modif_calc == "multiply"{
+						variable_instance_set(self,modifs[k].modif_type,variable_instance_get(self,modifs[k].modif_type)*modifs[k].amount)
+					}
+					max_hp = hp
+				}
+			}
+		}
+	}
+}
+
 var grid_pos = get_grid_position_from_world(x, y);
     var col = grid_pos.col;
     var row = grid_pos.row;

@@ -336,4 +336,14 @@ function slots_init(){
 		{"shape":1, "sprite":spr_curry_lobster_cannon_1_icon, "cost":275, "cooldown":20*60, "description":"麻辣龙虾炮：发射两个追踪咖喱炮弹","plant_type":"normal","feature_type":"amphi","target_card":"none","place_preview":spr_curry_lobster_cannon_1},
 		{"shape":2, "sprite":spr_curry_lobster_cannon_2_icon, "cost":275, "cooldown":20*60, "description":"加农龙虾炮：发射三个追踪咖喱炮弹","plant_type":"normal","feature_type":"amphi","target_card":"none","place_preview":spr_curry_lobster_cannon_2}
 	]);
+	register_card("sugar_ball_pult", obj_sugar_ball_pult, [
+	    {"shape":0, "sprite":spr_sugar_ball_pult_icon, "cost":375, "cooldown":7*60, "description":"全能糖球投手：投掷可追踪3行内敌人的糖球","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_sugar_ball_pult},
+	    {"shape":1, "sprite":spr_sugar_ball_pult_1_icon, "cost":375, "cooldown":7*60, "description":"水果糖全能投手：投掷可追踪3行内敌人的糖球","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_sugar_ball_pult_1},
+		{"shape":2, "sprite":spr_sugar_ball_pult_2_icon, "cost":375, "cooldown":7*60, "description":"可可糖全能投手：投掷两个可追踪3行内敌人的糖球","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_sugar_ball_pult_2}
+	]);
+	register_card("pizza_oven", obj_pizza_oven, [
+	    {"shape":0, "sprite":spr_pizza_oven, "cost":250, "cooldown":7*60, "description":"迷你披萨炉：发射披萨攻击最后一个敌人","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_pizza_oven},
+	    {"shape":1, "sprite":spr_pizza_oven_1, "cost":250, "cooldown":7*60, "description":"香脆披萨炉：发射披萨攻击最后一个敌人","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_pizza_oven_1},
+		{"shape":2, "sprite":spr_pizza_oven_2, "cost":250, "cooldown":7*60, "description":"拉丝披萨炉：发射两个披萨攻击最后一个敌人","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_pizza_oven_2}
+	]);
 }

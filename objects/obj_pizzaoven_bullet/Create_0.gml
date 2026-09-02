@@ -1,0 +1,11 @@
+damage = 0
+move_speed = 0
+row = 0
+damage_type = "air"
+target_type = "air"
+timer = 0
+target_x = 0
+target_enemy = noone
+state = "move"
+image_xscale = 1.8
+image_yscale = 1.8

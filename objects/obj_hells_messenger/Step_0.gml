@@ -281,6 +281,7 @@ switch state{
 			inst.y_speed = (target_pos.y-inst.y)/120
 			inst.maxhp *= (1 + ((maxhp-30000)/30000)*0.5)
 			inst.hp = inst.maxhp
+			inst.hp_modified = true
 		}
 		
 		if timer >= 10*5-1{

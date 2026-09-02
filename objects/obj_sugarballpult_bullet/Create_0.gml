@@ -1,0 +1,15 @@
+damage = 0
+move_speed = 0
+cvspeed = 0
+cgravity = 0
+row = 0
+target_enemy = noone
+hitted_enemy = noone
+hit_enemy = false
+splashed = false
+shape = 0
+damage_type = "throw"
+target_type = "throw"
+image_angle = -45
+image_xscale = 1.8
+image_yscale = 1.8

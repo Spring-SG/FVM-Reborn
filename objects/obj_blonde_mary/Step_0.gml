@@ -161,7 +161,7 @@ switch state{
 		if timer >= 325{
 			with obj_card_parent{
 				if array_get_index(other.awake_card_id_list,id) != -1{
-					state = CARD_STATE.IDLE
+					awake_buff_timer += 5
 				}
 			}
 			awake_card_id_list = []

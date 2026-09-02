@@ -159,6 +159,7 @@ switch state{
 				var spike_inst = instance_create_depth(x-125,spike_pos.y+25,depth,obj_pete_spike)
 				spike_inst.maxhp *= (1+((maxhp - 40000)/40000)*0.5)
 				spike_inst.hp = spike_inst.maxhp
+				spike_inst.hp_modified = true
 			}
 		}
 		if timer >= 110 + 60 * 8 - 1{
@@ -210,6 +211,7 @@ switch state{
 				var claw_inst = instance_create_depth(bandage_pos.x+10,bandage_pos.y+20,-800,obj_pete_claw)
 				claw_inst.maxhp *= (1 + ((maxhp-40000)/40000)*0.5)
 				claw_inst.hp = claw_inst.maxhp
+				claw_inst.hp_modified = true
 			}
 		}
 		

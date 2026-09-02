@@ -28,6 +28,7 @@ if state == "drop"{
 		if sprite_index == spr_lobster_athena_bullet{
 			inst.sprite_index = spr_lobster_athena_bullet
 		}
+		audio_play_sound(snd_lobster_cannon,0,0)
 		instance_destroy()
 	}
 	

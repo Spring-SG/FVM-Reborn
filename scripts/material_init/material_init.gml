@@ -50,4 +50,19 @@ function material_init(){
 										"icon":8,
 										"pos_x":2,
 										"pos_y":2})
+	register_material("copper_cookbook_fragment",{"name":"铜食谱碎片",
+										"description":"铜食谱碎片：解锁上等佳肴槽位所需材料",
+										"icon":10,
+										"pos_x":0,
+										"pos_y":3})
+	register_material("silver_cookbook_fragment",{"name":"银食谱碎片",
+										"description":"银食谱碎片：解锁秘制佳肴槽位所需材料",
+										"icon":11,
+										"pos_x":1,
+										"pos_y":3})
+	register_material("gold_cookbook_fragment",{"name":"金食谱碎片",
+										"description":"金食谱碎片：解锁极品佳肴槽位所需材料",
+										"icon":12,
+										"pos_x":2,
+										"pos_y":3})
 }
