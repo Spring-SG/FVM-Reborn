@@ -151,3 +151,8 @@ global.music_volume_before_mute = global.music_volume > 0 ? global.music_volume 
 global.sound_volume_before_mute = global.sound_volume > 0 ? global.sound_volume : 0.7;
 
 show_debug_message(working_directory)
+
+// 屏蔽输入法（IME）：游戏内全程中文候选框不弹出
+if (native_disable_ime != undefined) {
+    native_disable_ime();
+}

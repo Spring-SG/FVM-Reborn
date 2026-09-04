@@ -1,4 +1,10 @@
 #pragma once
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
 
 #include <filesystem>
 #include <fstream>
@@ -8,6 +14,9 @@
 #include "file_system.h"
 #include "json.hpp"
 #include "typedef.h"
+
+#include <imm.h>
+#pragma comment(lib, "imm32.lib")
 
 using json = nlohmann::json;
 
@@ -281,4 +290,25 @@ GmlCallable auto RestoreBackup(const char* saves_dir,
 
   return RestoreBackupWithTargetFile(saves_dir_copy.c_str(),
                                      chosen_file.c_str());
+}
+
+/**
+ * @brief 屏蔽当前线程的输入法（IME），让中文候选框不再弹出。
+ *        返回 0 表示成功（或已达到屏蔽效果）。
+ */
+GmlCallable auto DisableIme() -> double {
+  // 1) 禁用当前线程 IME（游戏主线程，候选框不弹）
+  ImmDisableIME(GetCurrentThreadId());
+
+  // 2) 兜底：把前台窗口的 IME 上下文置空（更彻底）
+  HWND hwnd = GetForegroundWindow();
+  if (hwnd) {
+    HIMC himc = ImmGetContext(hwnd);
+    if (himc) {
+      ImmAssociateContext(hwnd, nullptr);
+      ImmReleaseContext(hwnd, himc);
+    }
+  }
+
+  return static_cast<double>(NativeError::Ok);
 }
