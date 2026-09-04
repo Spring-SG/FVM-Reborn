@@ -325,7 +325,7 @@ function slots_init(){
 	register_card("coal_starfish", obj_coal_starfish, [
 	    {"shape":0, "sprite":spr_coal_starfish, "cost":225, "cooldown":7*60, "description":"炭烧海星：向五个方向发射星星，陆地窒息","plant_type":"normal","feature_type":"amphi","target_card":"none"},
 		{"shape":1, "sprite":spr_coal_starfish_1, "cost":225, "cooldown":7*60, "description":"芝士焗海星：向五个方向发射星星","plant_type":"normal","feature_type":"amphi","target_card":"none"},
-		{"shape":2, "sprite":spr_coal_starfish_2_icon, "cost":275, "cooldown":7*60, "description":"芥末海星刺身：向五个方向发射两颗星星","plant_type":"normal","feature_type":"amphi","target_card":"none","place_preview":spr_coal_starfish_2}
+		{"shape":2, "sprite":spr_coal_starfish_2_icon, "cost":225, "cooldown":7*60, "description":"芥末海星刺身：向五个方向发射两颗星星","plant_type":"normal","feature_type":"amphi","target_card":"none","place_preview":spr_coal_starfish_2}
 	]);
 	register_card("horseshoe_crab_bread",obj_horseshoe_crab_bread,[
 		{"shape":0,"sprite":spr_horseshoe_crab_bread_0_0,"cost":150,"cooldown":30*60,"description":"老虎蟹面包：阻挡剑鱼鼠冲刺","plant_type":"normal","feature_type":"normal","target_card":"none"},
@@ -337,9 +337,9 @@ function slots_init(){
 		{"shape":2, "sprite":spr_curry_lobster_cannon_2_icon, "cost":275, "cooldown":20*60, "description":"加农龙虾炮：发射三个追踪咖喱炮弹","plant_type":"normal","feature_type":"amphi","target_card":"none","place_preview":spr_curry_lobster_cannon_2}
 	]);
 	register_card("sugar_ball_pult", obj_sugar_ball_pult, [
-	    {"shape":0, "sprite":spr_sugar_ball_pult_icon, "cost":375, "cooldown":7*60, "description":"全能糖球投手：投掷可追踪3行内敌人的糖球","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_sugar_ball_pult},
-	    {"shape":1, "sprite":spr_sugar_ball_pult_1_icon, "cost":375, "cooldown":7*60, "description":"水果糖全能投手：投掷可追踪3行内敌人的糖球","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_sugar_ball_pult_1},
-		{"shape":2, "sprite":spr_sugar_ball_pult_2_icon, "cost":375, "cooldown":7*60, "description":"可可糖全能投手：投掷两个可追踪3行内敌人的糖球","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_sugar_ball_pult_2}
+	    {"shape":0, "sprite":spr_sugar_ball_pult_icon, "cost":300, "cooldown":7*60, "description":"全能糖球投手：投掷可追踪3行内敌人的糖球","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_sugar_ball_pult},
+	    {"shape":1, "sprite":spr_sugar_ball_pult_1_icon, "cost":300, "cooldown":7*60, "description":"水果糖全能投手：投掷可追踪3行内敌人的糖球","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_sugar_ball_pult_1},
+		{"shape":2, "sprite":spr_sugar_ball_pult_2_icon, "cost":300, "cooldown":7*60, "description":"可可糖全能投手：投掷两个可追踪3行内敌人的糖球","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_sugar_ball_pult_2}
 	]);
 	register_card("pizza_oven", obj_pizza_oven, [
 	    {"shape":0, "sprite":spr_pizza_oven, "cost":250, "cooldown":7*60, "description":"迷你披萨炉：发射披萨攻击最后一个敌人","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_pizza_oven},

@@ -35,7 +35,7 @@ switch (button_select) {
 		//draw_set_halign(fa_left);
 		//draw_set_valign(fa_top);
 		draw_sprite(spr_option_menu_text,2,x-120,y+30)
-		draw_sprite_ext(spr_option_menu_difficulty,global.difficulty,x+15,y+72,0.3,0.3,0,c_white,1)
+		draw_sprite_ext(spr_option_menu_difficulty,global.difficulty,x+15,y+72,0.2,0.2,0,c_white,1)
 		break
     
     // 可以添加其他设置页面
@@ -45,7 +45,7 @@ switch (button_select) {
 		draw_set_valign(fa_top);
 		draw_set_color(#9DCFEC);
 		
-		draw_sprite(spr_option_volume_bg,0,x,y-85)
+		draw_sprite(spr_option_volume_bg,0,x,y-87)
 		// 音乐标签
 		//draw_text_ext_transformed(x - 430, y - 155, "音乐",0,900,1,1,0);
 		draw_text_ext_transformed(x + 355, y - 148, string(round(global.music_volume * 100)) + "%", 0, 900, 1, 1, 0);
@@ -60,14 +60,14 @@ switch (button_select) {
 		var bar_max_x = x + 280;
 
 		// 音乐进度条
-		draw_sprite(spr_option_volume_bar,0,x,y-135)
+		draw_sprite(spr_option_volume_bar,0,x+2,y-134)
 		//draw_set_color(merge_color(c_blue,c_black,0.5));
 		//draw_roundrect(bar_min_x, y - 150, bar_max_x, y - 120, false);
 		draw_set_color(#17314C);
 		draw_roundrect(bar_max_x, y - 150, bar_min_x + (bar_max_x - bar_min_x) * global.music_volume, y - 120, false);
 
 		// 音效进度条
-		draw_sprite(spr_option_volume_bar,0,x,y-37)
+		draw_sprite(spr_option_volume_bar,0,x+2,y-37)
 		//draw_set_color(merge_color(c_blue,c_black,0.5));
 		//draw_roundrect(bar_min_x, y - 55, bar_max_x, y - 25, false);
 		draw_set_color(#17314C);

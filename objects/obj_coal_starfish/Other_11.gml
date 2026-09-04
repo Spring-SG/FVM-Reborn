@@ -1,4 +1,4 @@
-var inst = instance_create_depth(x-40,y-75,depth-500,obj_coalstarfish_bullet)
+var inst = instance_create_depth(x-40,y-45,depth-500,obj_coalstarfish_bullet)
 inst.damage = atk
 inst.move_speed = -8
 inst.row = grid_row
@@ -10,7 +10,7 @@ if shape == 2{
 	inst.sprite_index = spr_coalstarfish_bullet_2
 }
 
-var inst2 = instance_create_depth(x,y-95,depth-500,obj_coalstarfish_bullet)
+var inst2 = instance_create_depth(x,y-45,depth-500,obj_coalstarfish_bullet)
 inst2.damage = atk
 inst2.move_speed = 0
 inst2.y_move_speed = 8
@@ -34,7 +34,7 @@ if shape == 2{
 	inst3.sprite_index = spr_coalstarfish_bullet_2
 }
 
-var inst4 = instance_create_depth(x+40,y-75,depth-500,obj_coalstarfish_bullet)
+var inst4 = instance_create_depth(x+40,y-45,depth-500,obj_coalstarfish_bullet)
 inst4.damage = atk
 inst4.move_speed = 5
 inst4.y_move_speed = -3
@@ -46,7 +46,7 @@ if shape == 2{
 	inst4.sprite_index = spr_coalstarfish_bullet_2
 }
 
-var inst5 = instance_create_depth(x+40,y-75,depth-500,obj_coalstarfish_bullet)
+var inst5 = instance_create_depth(x+40,y-45,depth-500,obj_coalstarfish_bullet)
 inst5.damage = atk
 inst5.move_speed = 5
 inst5.y_move_speed = 3

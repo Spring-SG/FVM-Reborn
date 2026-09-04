@@ -19,3 +19,6 @@ flash_speed = 6
 plant_type = "normal"
 is_slowdown = false
 
+heal_wait = 0
+current_hp = 0
+bleed_damage = 0

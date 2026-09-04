@@ -1,6 +1,6 @@
 
 
-if not obj_tower_cake_bg.is_submenu_opened && is_unlocked{
+if not obj_tower_cake_bg.is_submenu_opened{
 	var level_list = global.maps_map[? "tower_cake"].levels_data
 	global.level_data = level_list[level_index]
 
@@ -38,4 +38,5 @@ if not obj_tower_cake_bg.is_submenu_opened && is_unlocked{
 			refresh_reward_button()
 		}
 	}
+	obj_tower_cake_start_btn.is_unlocked = is_unlocked
 }

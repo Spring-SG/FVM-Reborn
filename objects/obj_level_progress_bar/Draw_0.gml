@@ -28,6 +28,11 @@ if obj_battle.level_stage == "boss"{
 	exit
 }
 
+draw_set_colour(c_white)
+draw_set_font(font_yuan)
+draw_set_valign(fa_middle)
+draw_set_halign(fa_left)
+
 draw_sprite_ext(spr_level_progress_bg_right,0,x,y,1.8,1.8,0,c_white,1)
 draw_sprite_ext(spr_level_progress_bg_middle, 0, x, y, 65, 0.9, 0, c_white, 1)
 draw_sprite_ext(spr_level_progress_bg_left, 0, x-260, y, 0.9, 0.9, 0, c_white, 1)

@@ -10,7 +10,7 @@ if button_select < 0{
 	draw_set_halign(fa_left)
 	draw_set_valign(fa_middle)
 	draw_text(x+230,y-260,"未选择食谱类型")
-	draw_text(x+240,y-165,"点击左侧选项卡以选择食谱类型")
+	draw_text(x+240,y-163,"点击左侧选项卡以选择食谱类型")
 	draw_text(x+230,y+33,"未选择食谱类型")
 	draw_text(x+240,y+128,"点击左侧选项卡以选择食谱类型")
 }
@@ -25,7 +25,7 @@ else{
 	if max_cookbook_slot <= 0{
 		draw_text(x+230,y-260,"食谱槽位未解锁")
 		var cm_data = get_material_info(cookbook_material[button_select])
-		draw_text(x+240,y-165,$"获取1个{cm_data.name}以解锁此槽位")
+		draw_text(x+240,y-163,$"获取1个{cm_data.name}以解锁此槽位")
 	}
 	else{
 		if array_length(cookbook_rank_list) >= 1{
@@ -33,12 +33,12 @@ else{
 			draw_text(x+230,y-285,cdata.title)
 			draw_text(x+230,y-235,cdata.tiny_desc)
 			draw_set_valign(fa_top)
-			draw_text(x+230,y-178,cdata.desc)
+			draw_text(x+230,y-176,cdata.desc)
 			draw_sprite_ext(spr_cookbook_icon,cdata.icon,x+150,y-260,1.8,1.8,0,c_white,1)
 		}
 		else{
 			draw_text(x+230,y-260,"未装配食谱")
-			draw_text(x+240,y-165,"在左侧食谱列表中装配食谱")
+			draw_text(x+240,y-163,"在左侧食谱列表中装配食谱")
 		}
 	}
 	if max_cookbook_slot <= 1{

@@ -10,5 +10,5 @@ config_key = "";
 tooltip_text = ""
 b_type = "prev"
 
-hitbox_width = 17 * 1.8
-hitbox_height = 22 * 1.8
+hitbox_width = 17 * 1
+hitbox_height = 22 * 1

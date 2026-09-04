@@ -2610,6 +2610,7 @@
     {"id":{"name":"spr_option_menu_bg_2","path":"sprites/spr_option_menu_bg_2/spr_option_menu_bg_2.yy",},},
     {"id":{"name":"spr_option_menu_difficulty","path":"sprites/spr_option_menu_difficulty/spr_option_menu_difficulty.yy",},},
     {"id":{"name":"spr_option_menu_text","path":"sprites/spr_option_menu_text/spr_option_menu_text.yy",},},
+    {"id":{"name":"spr_option_mute_btn","path":"sprites/spr_option_mute_btn/spr_option_mute_btn.yy",},},
     {"id":{"name":"spr_option_select_btn_1","path":"sprites/spr_option_select_btn_1/spr_option_select_btn_1.yy",},},
     {"id":{"name":"spr_option_select_btn_2","path":"sprites/spr_option_select_btn_2/spr_option_select_btn_2.yy",},},
     {"id":{"name":"spr_option_select_btn_3","path":"sprites/spr_option_select_btn_3/spr_option_select_btn_3.yy",},},

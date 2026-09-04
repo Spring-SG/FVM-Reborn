@@ -35,8 +35,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_mute_button",
-    "path":"sprites/spr_mute_button/spr_mute_button.yy",
+    "name":"spr_option_mute_btn",
+    "path":"sprites/spr_option_mute_btn/spr_option_mute_btn.yy",
   },
   "spriteMaskId":null,
   "visible":true,

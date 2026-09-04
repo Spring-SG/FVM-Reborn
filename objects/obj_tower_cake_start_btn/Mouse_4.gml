@@ -1,4 +1,4 @@
-if not obj_tower_cake_bg.is_submenu_opened{
+if not obj_tower_cake_bg.is_submenu_opened && is_unlocked{
 	if obj_tower_cake_bg.level_select != -1{
 		if global.level_id == "tower_cake_35_2" && global.difficulty >= 3 && !global.tower_level_click && !is_level_completed("tower_cake_35_2"){
 			instance_create_depth(room_width/2,room_height/2,depth-1,obj_tower_cake_confirm_menu)

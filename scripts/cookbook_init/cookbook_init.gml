@@ -282,15 +282,15 @@ function cookbook_init(){
 		{
 			"rank":1,
 			"title":"冷烤火鸡",
-			"tiny_desc":"减少冰桶炸弹冷却",
-			"desc":"冰桶炸弹冷却时间减少2秒",
+			"tiny_desc":"减少冰煮蛋器冷却",
+			"desc":"冰煮蛋器冷却时间减少25秒",
 			"icon":13,
 			"modif":[
 				{
-					"card_id":["ice_bucket_bomb"],
+					"card_id":["ice_egg_boiler_pult"],
 					"modif_type":"cooldown",
 					"modif_calc":"plus",
-					"amount":-2*60
+					"amount":-25*60
 				}
 			]
 		}
@@ -367,18 +367,18 @@ function cookbook_init(){
 			]
 		}
 	)
-	register_cookbook(
-		"chunky_blood_stew",
-		{
-			"rank":2,
-			"title":"毛血旺",
-			"tiny_desc":"火盆死亡爆炸",
-			"desc":"火盆死亡后在原地生成一个酒瓶炸弹",
-			"icon":18,
-			"modif":[
-			]
-		}
-	)
+	//register_cookbook(
+	//	"chunky_blood_stew",
+	//	{
+	//		"rank":2,
+	//		"title":"毛血旺",
+	//		"tiny_desc":"火盆死亡爆炸",
+	//		"desc":"火盆死亡后在原地生成一个酒瓶炸弹",
+	//		"icon":18,
+	//		"modif":[
+	//		]
+	//	}
+	//)
 	register_cookbook(
 		"bread_family",
 		{
@@ -548,7 +548,7 @@ function cookbook_init(){
 			"title":"太阳饼",
 			"tiny_desc":"减少产火卡冷却",
 			"desc":"小火炉和酒杯灯冷却时间减少2秒\n大火炉冷却时间减20秒",
-			"icon":30,
+			"icon":31,
 			"modif":[
 				{
 					"card_id":["small_fire","goblet_lamp"],
@@ -572,7 +572,7 @@ function cookbook_init(){
 			"title":"多元料理",
 			"tiny_desc":"减少勇士挑战奖励卡片冷却",
 			"desc":"迷你披萨炉和全能糖球投手冷却时间减少2秒",
-			"icon":33,
+			"icon":36,
 			"modif":[
 				{
 					"card_id":["pizza_oven","sugar_ball_pult"],

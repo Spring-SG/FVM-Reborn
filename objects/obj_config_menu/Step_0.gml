@@ -108,7 +108,7 @@ function draw_games_page(){
 	    btn32.config_key = "difficulty";
 	    btn32.state = global.difficulty;
 		btn32.b_type = "next"
-		btn32.image_xscale = -1.8
+		btn32.image_xscale = -0.9
 	    array_push(setting_buttons, btn32);
 		
 		// 创建失焦暂停开关
@@ -146,7 +146,7 @@ function draw_audio_page(){
 	    array_push(setting_buttons, slider_music);
     
 	    // 创建音乐静音按钮
-	    var mute_music = instance_create_depth(slider_max_x + 45, slider_y+3, depth-1, obj_mute_button);
+	    var mute_music = instance_create_depth(slider_max_x + 52, slider_y+3, depth-1, obj_mute_button);
 	    mute_music.volume_type = "music";
 	    array_push(setting_buttons, mute_music);
     
@@ -160,7 +160,7 @@ function draw_audio_page(){
 	    array_push(setting_buttons, slider_sound);
     
 	    // 创建音效静音按钮
-	    var mute_sound = instance_create_depth(slider_max_x + 45, slider_y+3, depth-1, obj_mute_button);
+	    var mute_sound = instance_create_depth(slider_max_x + 52, slider_y+3, depth-1, obj_mute_button);
 	    mute_sound.volume_type = "sound";
 	    array_push(setting_buttons, mute_sound);
     

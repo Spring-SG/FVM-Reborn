@@ -283,7 +283,8 @@ function maps_init(){
 					"boss_music":mus_volcanic_tower_boss,
 					"pre_level":"tower_cake_9_1",
 					"rewards":[
-						{"card_id":"egg_boiler_pult","target_shape":1}
+						{"card_id":"egg_boiler_pult","target_shape":1},
+						{"card_id":"sugar_ball_pult","target_shape":1}
 					]
 				},
 				{
@@ -487,7 +488,8 @@ function maps_init(){
 					"boss_music":mus_volcanic_tower_boss,
 					"pre_level":"tower_cake_16_1",
 					"rewards":[
-						{"card_id":"ice_cream","target_shape":1}
+						{"card_id":"ice_cream","target_shape":1},
+						{"card_id":"pizza_oven","target_shape":1}
 					]
 				},
 				{
@@ -694,7 +696,8 @@ function maps_init(){
 					"boss_music":mus_floating_island_daytime_boss,
 					"pre_level":"tower_cake_23_1",
 					"rewards":[
-						{"card_id":"stinky_tofu_pult","target_shape":2}
+						{"card_id":"stinky_tofu_pult","target_shape":2},
+						{"card_id":"sugar_ball_pult","target_shape":2}
 					]
 				},
 				{
@@ -825,7 +828,8 @@ function maps_init(){
 					"boss_music":mus_floating_island_daytime_boss,
 					"pre_level":"tower_cake_27_2",
 					"rewards":[
-						{"card_id":"gatlin_long_bao","target_shape":2}
+						{"card_id":"gatlin_long_bao","target_shape":2},
+						{"card_id":"pizza_oven","target_shape":2}
 					]
 				},
 				{

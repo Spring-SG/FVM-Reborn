@@ -51,4 +51,7 @@ function level_info_island_init(){
 	register_level_info_island("sea_anemone_current_daytime",{"name":"海葵洋流（日）","icon":spr_levelselect_button_undersea,"spr":spr_sea_anemone_current_daytime,"description":"使用老虎蟹面包抵挡剑鱼鼠的冲刺。\n龙虾骑士的破坏性很强，需要尽快集火击杀。","spr_index":4})
 	register_level_info_island("sea_anemone_current_night",{"name":"海葵洋流（夜）","icon":spr_levelselect_button_undersea,"spr":spr_sea_anemone_current_night,"description":"使用糖葫芦炮弹对付海底潜艇。\n电光水母的能量球需要尽快摧毁，否则很容易火苗不足。","spr_index":5})
 	register_level_info_island("tempura_vortex",{"name":"天妇罗旋涡","icon":spr_levelselect_button_undersea,"spr":spr_tempura_vortex,"description":"机械鲨鱼二态的破坏性要强得多，尽力在第4行摆放输出卡片吧。","spr_index":6})
+	register_level_info_island("kernel_waterfall",{"name":"瀑布遗迹","icon":spr_levelselect_button_ruins,"spr":spr_waterfall_ruins,"description":"战神会在第4行出场，需要尽力集火。\n鸭子会持续破坏卡片，避免在2行和6行放置关键卡片。","spr_index":0})
+	register_level_info_island("blueberry_jungle",{"name":"丛林遗迹","icon":spr_levelselect_button_ruins,"spr":spr_jungle_ruins,"description":"大力神会在第4行出场，需要尽力集火。\n释放横向声波后，需要快速在第4行补充输出。","spr_index":2})
+	register_level_info_island("milkshake_base",{"name":"基地遗迹","icon":spr_levelselect_button_ruins,"spr":spr_base_ruins,"description":"雷神会沿着地图上的路径前进，需要灵活组织阵型。\n雷神技能使用频率低但是移速快，需要尽可能造成伤害。","spr_index":4})
 }
