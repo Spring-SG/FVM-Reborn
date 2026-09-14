@@ -42,3 +42,10 @@ btn6.map_name = "火山遗迹"
 btn6.map_id = "volcanic_ruins"
 btn6.room_target = room_map
 btn6.level_require = 36
+
+var btn7 = instance_create_depth(x+172,y+7,depth-1,obj_world_map_choose_btn)
+btn7.sprite_index = spr_world_map_explore_camp
+btn7.map_name = "探险营地"
+btn7.map_id = "explore_camp"
+btn7.room_target = room_map
+btn7.level_require = 20

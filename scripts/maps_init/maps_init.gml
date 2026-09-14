@@ -1923,4 +1923,13 @@ function maps_init(){
 			]
 		}
 	)
+	register_map(
+		"explore_camp",
+		{
+			"map_name":"探险营地",
+			"map_sprite":spr_explore_camp,
+			"levels_data":[
+			]
+		}
+	)
 }

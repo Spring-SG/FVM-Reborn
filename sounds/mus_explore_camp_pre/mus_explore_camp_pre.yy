@@ -1,0 +1,26 @@
+{
+  "$GMSound":"v2",
+  "%Name":"mus_explore_camp_pre",
+  "audioGroupId":{
+    "name":"music",
+    "path":"audiogroups/music",
+  },
+  "bitDepth":1,
+  "channelFormat":0,
+  "compression":0,
+  "compressionQuality":4,
+  "conversionMode":0,
+  "duration":60.768005,
+  "exportDir":"",
+  "name":"mus_explore_camp_pre",
+  "parent":{
+    "name":"explore_camp",
+    "path":"folders/声音/Battle BGM/explore_camp.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"mus_explore_camp_pre.mp3",
+  "volume":1.0,
+}
