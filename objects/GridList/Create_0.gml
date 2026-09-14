@@ -18,6 +18,10 @@ self.state = {
 
     grid_x: 3,
     grid_gap: 10,
+    scrollbar_width: 14,
+    scrollbar_dragging: false,
+    scrollbar_drag_offset: 0,
+    show_scrollbar: false,
 
     /// @type {function} 
     should_correspond: function () {return true},
@@ -86,6 +90,21 @@ function set_should_correspond(_should_correspond) {
         throw("GridList: should_correspond must be a function")
     }
     self.state.should_correspond = _should_correspond
+    return self
+}
+
+function destroy_items() {
+    var _n = array_length(self.state.items)
+    for (var _i = 0; _i < _n; _i++) {
+        var _inst = self.state.items[_i]
+        if (!is_undefined(_inst) && instance_exists(_inst)) {
+            instance_destroy(_inst)
+        }
+    }
+    self.state.items = []
+    self.state.content_height = 0
+    self.state.scroll_y = 0
+    self.state.scroll_target_y = 0
     return self
 }
 
@@ -195,6 +214,94 @@ function is_mouse_over_viewport() {
     )
 }
 
+function scrollbar_needed() {
+    return self.state.show_scrollbar && get_max_scroll() > 0
+}
+
+function get_scrollbar_metrics() {
+    var _track_x = self.state.viewport_left + self.state.viewport_width - self.state.scrollbar_width
+    var _track_y = self.state.viewport_top
+    var _track_w = self.state.scrollbar_width
+    var _track_h = self.state.viewport_height
+    var _max = get_max_scroll()
+    var _ratio = (_max <= 0) ? 1 : clamp(self.state.viewport_height / self.state.content_height, 0.12, 1)
+    var _thumb_h = max(28, _track_h * _ratio)
+    var _thumb_y = _track_y
+    if (_max > 0) {
+        _thumb_y = _track_y + (self.state.scroll_y / _max) * (_track_h - _thumb_h)
+    }
+    return {
+        track_x: _track_x,
+        track_y: _track_y,
+        track_w: _track_w,
+        track_h: _track_h,
+        thumb_x: _track_x,
+        thumb_y: _thumb_y,
+        thumb_w: _track_w,
+        thumb_h: _thumb_h,
+    }
+}
+
+function is_mouse_over_scrollbar() {
+    if (!scrollbar_needed()) {
+        return false
+    }
+    var _m = get_scrollbar_metrics()
+    var _mx = device_mouse_x(0)
+    var _my = device_mouse_y(0)
+    return point_in_rectangle(_mx, _my, _m.track_x, _m.track_y, _m.track_x + _m.track_w, _m.track_y + _m.track_h)
+}
+
+function apply_scrollbar_input() {
+    if (!scrollbar_needed()) {
+        self.state.scrollbar_dragging = false
+        return
+    }
+    var _m = get_scrollbar_metrics()
+    var _mx = device_mouse_x(0)
+    var _my = device_mouse_y(0)
+    var _over_track = point_in_rectangle(_mx, _my, _m.track_x, _m.track_y, _m.track_x + _m.track_w, _m.track_y + _m.track_h)
+    var _over_thumb = point_in_rectangle(_mx, _my, _m.thumb_x, _m.thumb_y, _m.thumb_x + _m.thumb_w, _m.thumb_y + _m.thumb_h)
+
+    if (mouse_check_button_pressed(mb_left) && _over_track) {
+        if (_over_thumb) {
+            self.state.scrollbar_dragging = true
+            self.state.scrollbar_drag_offset = _my - _m.thumb_y
+        } else {
+            var _max = get_max_scroll()
+            var _travel = max(1, _m.track_h - _m.thumb_h)
+            self.state.scroll_target_y = clamp((_my - _m.track_y - _m.thumb_h * 0.5) / _travel * _max, 0, _max)
+        }
+    }
+
+    if (self.state.scrollbar_dragging) {
+        if (mouse_check_button(mb_left)) {
+            var _max = get_max_scroll()
+            var _travel = max(1, _m.track_h - _m.thumb_h)
+            var _thumb_y = clamp(_my - self.state.scrollbar_drag_offset, _m.track_y, _m.track_y + _travel)
+            self.state.scroll_target_y = ((_thumb_y - _m.track_y) / _travel) * _max
+            self.state.scroll_y = self.state.scroll_target_y
+        } else {
+            self.state.scrollbar_dragging = false
+        }
+    }
+}
+
+function draw_scrollbar() {
+    if (!scrollbar_needed()) {
+        return
+    }
+    var _m = get_scrollbar_metrics()
+    draw_set_alpha(0.35)
+    draw_set_color(make_color_rgb(70, 52, 36))
+    draw_roundrect(_m.track_x, _m.track_y, _m.track_x + _m.track_w, _m.track_y + _m.track_h, false)
+    draw_set_alpha(0.85)
+    draw_set_color(make_color_rgb(210, 176, 120))
+    draw_roundrect(_m.thumb_x, _m.thumb_y, _m.thumb_x + _m.thumb_w, _m.thumb_y + _m.thumb_h, false)
+    draw_set_alpha(1)
+    draw_set_color(c_white)
+}
+
 function apply_wheel() {
     if (!is_mouse_over_viewport()) {
         return
@@ -213,6 +320,7 @@ function on_begin_step() {
     if (!self.state.should_correspond()) {
         exit
     }
+    apply_scrollbar_input()
     apply_wheel()
     smooth_scroll_y()
     layout_items()
@@ -223,6 +331,7 @@ function on_begin_step() {
 function on_draw() {
     var _item_count = array_length(self.state.items)
     if (_item_count == 0) {
+        draw_scrollbar()
         return
     }
 
@@ -253,5 +362,6 @@ function on_draw() {
     }
 
     gpu_set_scissor(_prev_scissor)
+    draw_scrollbar()
 }
 

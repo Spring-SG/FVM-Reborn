@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"MapDownloadManager",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"MapDownloadManager",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Feature/Laboratory/Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

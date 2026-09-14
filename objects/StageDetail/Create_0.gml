@@ -46,13 +46,24 @@ function get_height() {
     return self.state.height
 }
 
+function destroy_widgets() {
+    if (!is_undefined(self.state.close_button) && instance_exists(self.state.close_button)) {
+        instance_destroy(self.state.close_button)
+    }
+    self.state.close_button = undefined
+
+    if (!is_undefined(self.state.start_button) && instance_exists(self.state.start_button)) {
+        instance_destroy(self.state.start_button)
+    }
+    self.state.start_button = undefined
+}
+
 function on_close() {
     if (!is_undefined(self.state.on_close_clicked)) {
         self.state.on_close_clicked()
-        instance_destroy(self.state.close_button)
-        self.state.close_button = undefined
-        instance_destroy()
     }
+    destroy_widgets()
+    instance_destroy()
 }
 
 function on_create_room() {
@@ -93,6 +104,9 @@ function create_widgets() {
         .set_sprite(spr_create_room)
         .set_scale(2)
         .set_on_click(method(self, on_create_room))
+        .set_should_correspond(method({owner: id}, function() {
+            return instance_exists(owner)
+        }))
     self.state.start_button = start_button
 }
 
@@ -105,6 +119,10 @@ function on_create() {
 
 function on_step() {
 
+}
+
+function on_cleanup() {
+    destroy_widgets()
 }
 
 function on_draw() {
@@ -140,7 +158,7 @@ function on_draw() {
 
         draw_sprite_ext(spr_level_progress_icon, 0, 
             self.state.left + 60, self.state.top + self.state.height - 90, 
-            1.5, 1.5, 
+            0.7, 0.7, 
             0, c_white, 1)
         scribble("Lv." +  string(self.state.custom_stage.mouse_level))
             .draw(self.state.left + 90, self.state.top+self.state.height-108)
@@ -154,7 +172,7 @@ function on_draw() {
         
         draw_sprite_ext(spr_level_progress_flag, 0, 
             self.state.left + 340, self.state.top + self.state.height - 80, 
-            1.2, 1.2, 
+            0.3, 0.3, 
             0, c_white, 1)
         scribble(string(self.state.custom_stage.total_waves))
             .draw(self.state.left + 370, self.state.top+self.state.height-106)

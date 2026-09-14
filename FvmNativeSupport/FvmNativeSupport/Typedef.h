@@ -13,6 +13,14 @@ constexpr int JsonParseFailed = -2;
 constexpr int OperationCancelled = -3;
 constexpr int EncodingFailed = -4;
 constexpr int UnknownFailure = -5;
+constexpr int DllLoadFailed = -10;
+constexpr int InvalidArchive = -11;
+constexpr int ExtractFailed = -12;
+constexpr int PathTraversal = -13;
+constexpr int PasswordRequired = -14;
+constexpr int UnsupportedFormat = -15;
+constexpr int OpenFailed = -16;
+constexpr int FileCreateFailed = -17;
 }  // namespace NativeError
 
 inline auto NativeLogFilePath() -> std::string& {

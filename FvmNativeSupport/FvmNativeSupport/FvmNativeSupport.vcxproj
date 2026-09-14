@@ -122,11 +122,20 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
     <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\third_party\7zip\CPP;$(ProjectDir)..\third_party\7zip\C;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>ole32.lib;oleaut32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>if not exist "$(ProjectDir)..\..\datafiles\native" mkdir "$(ProjectDir)..\..\datafiles\native"
+if not exist "$(ProjectDir)..\..\extensions\WindowsNative" mkdir "$(ProjectDir)..\..\extensions\WindowsNative"
+if exist "$(ProjectDir)..\..\datafiles\native\7z.dll" copy /Y "$(ProjectDir)..\..\datafiles\native\7z.dll" "$(ProjectDir)..\..\extensions\WindowsNative\7z.dll"
+copy /Y "$(TargetPath)" "$(ProjectDir)..\..\datafiles\native\"
+copy /Y "$(TargetPath)" "$(ProjectDir)..\..\extensions\WindowsNative\"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -138,11 +147,20 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
     <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\third_party\7zip\CPP;$(ProjectDir)..\third_party\7zip\C;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>ole32.lib;oleaut32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>if not exist "$(ProjectDir)..\..\datafiles\native" mkdir "$(ProjectDir)..\..\datafiles\native"
+if not exist "$(ProjectDir)..\..\extensions\WindowsNative" mkdir "$(ProjectDir)..\..\extensions\WindowsNative"
+if exist "$(ProjectDir)..\..\datafiles\native\7z.dll" copy /Y "$(ProjectDir)..\..\datafiles\native\7z.dll" "$(ProjectDir)..\..\extensions\WindowsNative\7z.dll"
+copy /Y "$(TargetPath)" "$(ProjectDir)..\..\datafiles\native\"
+copy /Y "$(TargetPath)" "$(ProjectDir)..\..\extensions\WindowsNative\"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Test|x64'">
     <ClCompile>
@@ -152,12 +170,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="test.cpp" />
+    <ClCompile Include="archive_extractor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="file_system.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="typedef.h" />
     <ClInclude Include="entry.h" />
+    <ClInclude Include="archive_extractor.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

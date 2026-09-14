@@ -18,8 +18,14 @@
     <ClCompile Include="test.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="archive_extractor.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="archive_extractor.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
     <ClInclude Include="file_system.h">
       <Filter>头文件</Filter>
     </ClInclude>

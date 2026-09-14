@@ -1,0 +1,3 @@
+[submodule "FvmNativeSupport/third_party/7zip"]
+	path = FvmNativeSupport/third_party/7zip
+	url = https://github.com/ip7z/7zip.git
