@@ -73,6 +73,22 @@ function set_on_click(_on_click) {
     return self
 }
 
+function is_search_box_blocking() {
+    var _blocking = false
+    with (SearchBox) {
+        if (visible && state.hovered) {
+            _blocking = true
+        }
+    }
+    return _blocking
+}
+
+function clear_mouse_status() {
+    if (self.state.mouse_status != MouseStatus.NONE) {
+        self.state.mouse_status = MouseStatus.NONE
+    }
+}
+
 function update_mouse() {
     var _s = self.state
     var _mx = device_mouse_x_to_gui(0)
@@ -119,10 +135,12 @@ function on_create() {
 function on_step() {
     if (!self.state.initialized) exit
     if (is_undefined(self.state.custom_stage)) exit
-    if (!self.state.should_correspond()) exit
+    if (!self.state.should_correspond() || is_search_box_blocking()) {
+        clear_mouse_status()
+        exit
+    }
 
     update_mouse()
-    
 }
 
 function on_draw() {

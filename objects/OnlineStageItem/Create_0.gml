@@ -67,6 +67,43 @@ function set_thumb_sprite(_sprite) {
 /// @param {Asset.GMSprite} _sprite
 /// @param {Real} _x
 /// @param {Real} _y
+function difficulty_badge(_difficulty) {
+    var _d = string_lower(string_trim(string(_difficulty)))
+    var _badge = undefined
+    if (_d == "hard") {
+        _badge = {letter: "H", color: make_color_rgb(196, 56, 48)}
+    } else if (_d == "normal") {
+        _badge = {letter: "N", color: make_color_rgb(214, 176, 48)}
+    } else if (_d == "easy") {
+        _badge = {letter: "E", color: make_color_rgb(64, 148, 72)}
+    }
+    return _badge
+}
+
+function draw_difficulty_badge(_x, _y, _box) {
+    if (is_undefined(self.state.item)) {
+        return
+    }
+    var _badge = difficulty_badge(self.state.item.difficulty)
+    if (is_undefined(_badge)) {
+        return
+    }
+    var _r = 14
+    var _pad = 7
+    var _cx = _x + _pad + _r
+    var _cy = _y + _box - _pad - _r
+    draw_set_circle_precision(24)
+    draw_set_color(_badge.color)
+    draw_circle(_cx, _cy, _r, false)
+    scribble(_badge.letter)
+        .align(fa_center, fa_middle)
+        .starting_format("font_hei")
+        .blend(c_white, 1)
+        .scale(0.72)
+        .draw(_cx, _cy)
+    draw_set_color(c_white)
+}
+
 function draw_map_preview(_sprite, _x, _y) {
     var _box = self.state.map_sprite_size
     var _sw = sprite_get_width(_sprite)
@@ -115,6 +152,23 @@ function action_rect() {
     }
 }
 
+function is_search_box_blocking() {
+    var _blocking = false
+    with (SearchBox) {
+        if (visible && state.hovered) {
+            _blocking = true
+        }
+    }
+    return _blocking
+}
+
+function clear_mouse_status() {
+    if (self.state.mouse_status != MouseStatus.NONE) {
+        self.state.mouse_status = MouseStatus.NONE
+    }
+    self.state.action_hover = false
+}
+
 function update_mouse() {
     var _s = self.state
     var _mx = device_mouse_x_to_gui(0)
@@ -147,7 +201,10 @@ function on_create() {
 function on_step() {
     if (!self.state.initialized) exit
     if (!visible) exit
-    if (!self.state.should_correspond()) exit
+    if (!self.state.should_correspond() || is_search_box_blocking()) {
+        clear_mouse_status()
+        exit
+    }
     update_mouse()
 }
 
@@ -177,6 +234,7 @@ function on_draw() {
             draw_set_color(make_color_rgb(180, 160, 130))
             draw_rectangle(_sprite_start_x, _sprite_start_y, _sprite_start_x + _box, _sprite_start_y + _box, false)
         }
+        draw_difficulty_badge(_sprite_start_x, _sprite_start_y, _box)
         gpu_set_scissor(_prev_scissor)
     }
 
@@ -187,7 +245,11 @@ function on_draw() {
     scribble(self.state.item.author)
         .align(fa_left, fa_center)
         .draw(self.state.left + 154, self.state.top + 78)
-    scribble(self.state.item.description)
+    var _desc = string_trim(string(self.state.item.description))
+    if (_desc == "") {
+        _desc = "无简介"
+    }
+    scribble(_desc)
         .wrap(330, 80)
         .line_spacing("90%")
         .scale(0.82)

@@ -144,6 +144,26 @@ function FileUtil() constructor {
         }
     }
 
+    /// @param {String} _path
+    /// @param {Struct|Array} _json
+    /// @returns {Struct.Result}
+    static save_json_to_path = function(_path, _json) {
+        try {
+            var _dir = filename_dir(_path)
+            if (_dir != "" && !directory_exists(_dir)) {
+                directory_create(_dir)
+            }
+            var _text = json_stringify(_json)
+            var _buf = buffer_create(string_byte_length(_text) + 1, buffer_fixed, 1)
+            buffer_write(_buf, buffer_string, _text)
+            buffer_save(_buf, _path)
+            buffer_delete(_buf)
+            return new Result().success()
+        } catch (e) {
+            return new Result().fail(ErrorCode.CREATE_FILE_FAILED, "Failed to save json: " + _path + "\n" + string(e))
+        }
+    }
+
     /// @description Path passed to buffer_load：内置关卡为 level_data/…；模组为 mods/…（与 level_data 同级）；或绝对路径。
     /// @param {String} _level_file  maps_init level_file (often relative to level_data/)
     /// @param {String} [_hard_file] 

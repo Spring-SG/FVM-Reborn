@@ -132,7 +132,11 @@ function on_draw() {
     scribble(_item.author)
         .draw(self.state.left + 130, self.state.top + 228)
 
-    var _body = _item.description
+    var _desc = string_trim(string(_item.description))
+    if (_desc == "") {
+        _desc = "无简介"
+    }
+    var _body = _desc
     if (_item.detail != "") {
         _body += "\n" + _item.detail
     }

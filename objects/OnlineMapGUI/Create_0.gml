@@ -17,7 +17,11 @@ self.state = {
     /// @type {function}
     on_close: undefined,
     pending: {},
+    /// @type {Struct}
+    detail_requests: {},
     busy: false,
+    bootstrapped: false,
+    skip_first_step: true,
 }
 
 function set_on_close(_on_close) {
@@ -112,24 +116,39 @@ function rebuild_list() {
             }))
         _widget.visible = false
         array_push(_widgets, _widget)
-        request_thumb(_item)
+        apply_local_thumb(_item)
     }
     self.state.grid_list.set_items(_widgets)
 }
 
-function request_thumb(_item) {
+function apply_local_thumb(_item) {
     if (_item.image == "") {
         return
     }
     var _cache = self.state.manager.get_thumb_cache_path(_item.id)
     var _sprite = self.state.manager.load_thumb_sprite(_item.id, _cache)
-    if (!is_undefined(_sprite)) {
-        _item.thumb_sprite = _sprite
-        var _widget = find_item_widget(_item.id)
-        if (!is_undefined(_widget)) {
-            _widget.set_thumb_sprite(_sprite)
-        }
+    if (is_undefined(_sprite)) {
         return
+    }
+    _item.thumb_sprite = _sprite
+    var _widget = find_item_widget(_item.id)
+    if (!is_undefined(_widget)) {
+        _widget.set_thumb_sprite(_sprite)
+    }
+}
+
+function request_thumb(_item, _force = false) {
+    if (_item.image == "") {
+        return
+    }
+    var _cache = self.state.manager.get_thumb_cache_path(_item.id)
+    if (_force) {
+        self.state.manager.invalidate_thumb(_item.id)
+    } else {
+        apply_local_thumb(_item)
+        if (!is_undefined(_item.thumb_sprite) && sprite_exists(_item.thumb_sprite)) {
+            return
+        }
     }
     var _url = self.state.manager.resolve_api_url(_item.image)
     if (_url == "") {
@@ -137,6 +156,86 @@ function request_thumb(_item) {
     }
     var _id = http_get_file(_url, _cache)
     track_request(_id, {kind: "thumb", item_id: _item.id, dest: _cache})
+}
+
+function request_item_detail(_item) {
+    if (_item.id == "") {
+        return
+    }
+    var _id = string(_item.id)
+    if (self.state.manager.has_item_detail_cache(_id)) {
+        return
+    }
+    if (variable_struct_exists(self.state.detail_requests, _id)) {
+        return
+    }
+    variable_struct_set(self.state.detail_requests, _id, true)
+    request_json(kMapApiBase + "/api/items/" + _id, "GET", {kind: "detail", item_id: _id})
+}
+
+function apply_cached_list() {
+    var _cached = self.state.manager.load_list_cache()
+    if (is_undefined(_cached) || array_length(_cached) == 0) {
+        return false
+    }
+    self.state.items = _cached
+    self.state.status_text = "在线地图 " + string(array_length(_cached)) + " 张"
+    try {
+        rebuild_list()
+    } catch (_e) {
+        self.state.status_text = "列表创建失败"
+        show_debug_message("[OnlineMap] cached rebuild_list failed: " + string(_e))
+    }
+    return true
+}
+
+function set_items_status() {
+    self.state.status_text = "在线地图 " + string(array_length(self.state.items)) + " 张"
+}
+
+function apply_remote_list(_fresh) {
+    var _manager = self.state.manager
+    var _old_map = _manager.index_items_by_id(self.state.items)
+    var _merged = []
+    var _need_rebuild = array_length(_fresh) != array_length(self.state.items)
+    for (var i = 0; i < array_length(_fresh); i++) {
+        var _item = _fresh[i]
+        if (_item.id == "") {
+            continue
+        }
+        var _cached = variable_struct_get(_old_map, string(_item.id))
+        if (!is_undefined(_cached)) {
+            if (!_need_rebuild && self.state.items[i].id != _item.id) {
+                _need_rebuild = true
+            }
+            if (_manager.has_item_detail_cache(_item.id)) {
+                var _detail = _manager.load_item_detail_cache(_item.id)
+                if (!is_undefined(_detail)) {
+                    _manager.assign_item(_cached, _detail)
+                }
+            } else {
+                request_item_detail(_cached)
+            }
+            array_push(_merged, _cached)
+        } else {
+            _need_rebuild = true
+            request_item_detail(_item)
+            request_thumb(_item)
+            array_push(_merged, _item)
+        }
+    }
+    _manager.save_list_cache(_fresh)
+    self.state.items = _merged
+    set_items_status()
+    if (!_need_rebuild) {
+        return
+    }
+    try {
+        rebuild_list()
+    } catch (_e) {
+        self.state.status_text = "列表创建失败"
+        show_debug_message("[OnlineMap] rebuild_list failed: " + string(_e))
+    }
 }
 
 function open_detail(_item) {
@@ -154,7 +253,7 @@ function open_detail(_item) {
             action_fn(_clicked)
         }))
     self.state.detail = _detail
-    request_json(kMapApiBase + "/api/items/" + _item.id, "GET", {kind: "detail", item_id: _item.id})
+    request_item_detail(_item)
 }
 
 function handle_item_action(_item) {
@@ -207,7 +306,9 @@ function finish_download(_item, _dest) {
 }
 
 function request_list() {
-    self.state.status_text = "正在获取地图列表…"
+    if (array_length(self.state.items) == 0) {
+        self.state.status_text = "正在获取地图列表…"
+    }
     request_json(kMapApiBase + "/api/items", "GET", {kind: "list"})
 }
 
@@ -235,6 +336,12 @@ function handle_http() {
         if (_meta.kind == "zip") {
             self.state.busy = false
             self.state.status_text = "下载失败 status=" + string(_status) + " http=" + string(_http)
+        } else if (_meta.kind == "list" && array_length(self.state.items) == 0) {
+            self.state.status_text = "获取列表失败"
+        } else if (_meta.kind == "detail") {
+            if (variable_struct_exists(self.state.detail_requests, string(_meta.item_id))) {
+                variable_struct_remove(self.state.detail_requests, string(_meta.item_id))
+            }
         }
         show_debug_message("[OnlineMap] request failed kind=" + _meta.kind + " status=" + string(_status) + " http=" + string(_http))
         return
@@ -242,62 +349,69 @@ function handle_http() {
 
     if (_meta.kind == "list") {
         if (_http != 200 && _http != 0) {
-            self.state.status_text = "获取列表失败 HTTP " + string(_http)
+            if (array_length(self.state.items) == 0) {
+                self.state.status_text = "获取列表失败 HTTP " + string(_http)
+            }
             show_debug_message("[OnlineMap] list http=" + string(_http) + " body=" + string_copy(_result, 1, 200))
             return
         }
         if (string_length(_result) == 0) {
-            self.state.status_text = "获取列表失败：空响应"
+            if (array_length(self.state.items) == 0) {
+                self.state.status_text = "获取列表失败：空响应"
+            }
             return
         }
         try {
             var _json = json_parse(_result)
             if (!is_struct(_json)) {
-                self.state.status_text = "解析失败：根节点不是对象"
+                if (array_length(self.state.items) == 0) {
+                    self.state.status_text = "解析失败：根节点不是对象"
+                }
                 show_debug_message("[OnlineMap] list root type invalid")
                 return
             }
             var _raw_items = variable_struct_get(_json, "items")
-            self.state.items = []
+            var _fresh = []
             if (is_array(_raw_items)) {
                 for (var i = 0; i < array_length(_raw_items); i++) {
-                    array_push(self.state.items, self.state.manager.item_from_json(_raw_items[i]))
+                    array_push(_fresh, self.state.manager.item_from_json(_raw_items[i]))
                 }
             }
-            self.state.status_text = "在线地图 " + string(array_length(self.state.items)) + " 张"
+            apply_remote_list(_fresh)
         } catch (_e) {
-            self.state.status_text = "解析地图列表失败"
+            if (array_length(self.state.items) == 0) {
+                self.state.status_text = "解析地图列表失败"
+            }
             show_debug_message("[OnlineMap] json_parse failed: " + string(_e))
             show_debug_message("[OnlineMap] body preview: " + string_copy(_result, 1, 300))
-            return
-        }
-        try {
-            rebuild_list()
-        } catch (_rebuild_e) {
-            self.state.status_text = "列表创建失败"
-            show_debug_message("[OnlineMap] rebuild_list failed: " + string(_rebuild_e))
         }
         return
     }
 
     if (_meta.kind == "detail") {
+        if (variable_struct_exists(self.state.detail_requests, string(_meta.item_id))) {
+            variable_struct_remove(self.state.detail_requests, string(_meta.item_id))
+        }
         try {
             var _detail_json = json_parse(_result)
             var _item = find_item(_meta.item_id)
-            if (!is_undefined(_item)) {
+            if (!is_undefined(_item) && is_struct(_detail_json)) {
+                self.state.manager.save_item_detail_cache(_item.id, _detail_json)
                 var _fresh = self.state.manager.item_from_json(_detail_json)
-                _fresh.thumb_sprite = _item.thumb_sprite
-                _fresh.downloaded = self.state.manager.is_downloaded(_fresh.title)
-                var _idx = 0
-                for (var j = 0; j < array_length(self.state.items); j++) {
-                    if (self.state.items[j].id == _item.id) {
-                        _idx = j
-                        break
-                    }
+                self.state.manager.assign_item(_item, _fresh)
+                apply_local_thumb(_item)
+                if (is_undefined(_item.thumb_sprite) || !sprite_exists(_item.thumb_sprite)) {
+                    request_thumb(_item)
                 }
-                self.state.items[_idx] = _fresh
-                if (!is_undefined(self.state.detail) && instance_exists(self.state.detail)) {
-                    self.state.detail.set_item(_fresh)
+                if (!is_undefined(self.state.detail) && instance_exists(self.state.detail) && !is_undefined(self.state.detail.state.item) && self.state.detail.state.item.id == _item.id) {
+                    self.state.detail.set_item(_item)
+                }
+                var _widget = find_item_widget(_item.id)
+                if (!is_undefined(_widget)) {
+                    _widget.set_downloaded(_item.downloaded)
+                    if (!is_undefined(_item.thumb_sprite) && sprite_exists(_item.thumb_sprite)) {
+                        _widget.set_thumb_sprite(_item.thumb_sprite)
+                    }
                 }
             }
         } catch (_e) {
@@ -396,10 +510,19 @@ function create_widgets() {
 function on_create() {
     self.state.manager = new MapDownloadManager()
     create_widgets()
-    request_list()
 }
 
 function on_step() {
+    if (self.state.bootstrapped) {
+        return
+    }
+    if (self.state.skip_first_step) {
+        self.state.skip_first_step = false
+        return
+    }
+    self.state.bootstrapped = true
+    apply_cached_list()
+    request_list()
 }
 
 function on_draw() {

@@ -211,6 +211,153 @@ function MapDownloadManager() constructor {
         return _item
     }
 
+    /// @param {Struct.OnlineMapItem} _item
+    /// @returns {Struct}
+    static item_to_cache_struct = function(_item) {
+        return {
+            id: _item.id,
+            title: _item.title,
+            author: _item.author,
+            description: _item.description,
+            detail: _item.detail,
+            difficulty: _item.difficulty,
+            downloads: _item.downloads,
+            enemy_types: _item.enemy_types,
+            special_mechanics: _item.special_mechanics,
+            image: _item.image,
+            map_file: _item.map_file,
+            upload_time: _item.upload_time,
+            timestamp: _item.timestamp,
+            author_desc: _item.author_desc,
+        }
+    }
+
+    /// @returns {String}
+    static get_list_cache_path = function() {
+        return self.working_cache_dir("") + "online_items.json"
+    }
+
+    /// @param {String} _id
+    /// @returns {String}
+    static get_item_detail_cache_path = function(_id) {
+        return self.working_cache_dir("items") + string(_id) + ".json"
+    }
+
+    /// @param {String} _id
+    /// @returns {Bool}
+    static has_item_detail_cache = function(_id) {
+        return _id != "" && file_exists(self.get_item_detail_cache_path(_id))
+    }
+
+    /// @param {String} _id
+    /// @returns {Struct.OnlineMapItem|Undefined}
+    static load_item_detail_cache = function(_id) {
+        if (!self.has_item_detail_cache(_id)) {
+            return undefined
+        }
+        var _result = self.file_util.load_json_from_path(self.get_item_detail_cache_path(_id))
+        if (_result.is_failed() || !is_struct(_result.data)) {
+            return undefined
+        }
+        return self.item_from_json(_result.data)
+    }
+
+    /// @param {String} _id
+    /// @param {Struct} _json
+    /// @returns {Struct.Result}
+    static save_item_detail_cache = function(_id, _json) {
+        if (_id == "" || !is_struct(_json)) {
+            return new Result().fail(ErrorCode.JSON_PARSE_FAILED, "Invalid item detail cache")
+        }
+        return self.file_util.save_json_to_path(self.get_item_detail_cache_path(_id), _json)
+    }
+
+    /// @returns {Array<Struct.OnlineMapItem>|Undefined}
+    static load_list_cache = function() {
+        var _result = self.file_util.load_json_from_path(self.get_list_cache_path())
+        if (_result.is_failed()) {
+            return undefined
+        }
+        var _json = _result.data
+        var _raw = _json
+        if (is_struct(_json)) {
+            _raw = variable_struct_get(_json, "items")
+        }
+        if (!is_array(_raw)) {
+            return undefined
+        }
+        var _items = []
+        for (var i = 0; i < array_length(_raw); i++) {
+            var _item = self.item_from_json(_raw[i])
+            if (_item.id == "") {
+                continue
+            }
+            var _detail = self.load_item_detail_cache(_item.id)
+            if (!is_undefined(_detail)) {
+                self.assign_item(_item, _detail)
+            }
+            array_push(_items, _item)
+        }
+        return _items
+    }
+
+    /// @param {Array<Struct.OnlineMapItem>} _items
+    /// @returns {Struct.Result}
+    static save_list_cache = function(_items) {
+        var _raw = []
+        for (var i = 0; i < array_length(_items); i++) {
+            array_push(_raw, self.item_to_cache_struct(_items[i]))
+        }
+        return self.file_util.save_json_to_path(self.get_list_cache_path(), {items: _raw})
+    }
+
+    /// @param {Array<Struct.OnlineMapItem>} _items
+    /// @returns {Struct}
+    static index_items_by_id = function(_items) {
+        var _map = {}
+        for (var i = 0; i < array_length(_items); i++) {
+            variable_struct_set(_map, string(_items[i].id), _items[i])
+        }
+        return _map
+    }
+
+    /// @param {Struct.OnlineMapItem} _dest
+    /// @param {Struct.OnlineMapItem} _src
+    static assign_item = function(_dest, _src) {
+        var _thumb = _dest.thumb_sprite
+        _dest.id = _src.id
+        _dest.title = _src.title
+        _dest.author = _src.author
+        _dest.description = _src.description
+        _dest.detail = _src.detail
+        _dest.difficulty = _src.difficulty
+        _dest.downloads = _src.downloads
+        _dest.enemy_types = _src.enemy_types
+        _dest.special_mechanics = _src.special_mechanics
+        _dest.image = _src.image
+        _dest.map_file = _src.map_file
+        _dest.upload_time = _src.upload_time
+        _dest.timestamp = _src.timestamp
+        _dest.author_desc = _src.author_desc
+        _dest.downloaded = self.is_downloaded(_dest.title)
+        if (!is_undefined(_src.thumb_sprite) && sprite_exists(_src.thumb_sprite)) {
+            _dest.thumb_sprite = _src.thumb_sprite
+        } else {
+            _dest.thumb_sprite = _thumb
+        }
+    }
+
+    /// @param {String} _id
+    static invalidate_thumb = function(_id) {
+        var _cached = variable_struct_get(self.owned_sprites, _id)
+        if (!is_undefined(_cached) && sprite_exists(_cached)) {
+            sprite_delete(_cached)
+        }
+        if (variable_struct_exists(self.owned_sprites, _id)) {
+            variable_struct_remove(self.owned_sprites, _id)
+        }
+    }
+
     /// @param {Array<Struct.OnlineMapItem>} _items
     /// @param {String} _query
     /// @returns {Array<Struct.OnlineMapItem>}
