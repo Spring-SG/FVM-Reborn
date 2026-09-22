@@ -137,6 +137,14 @@ global.ime_block = ini_read_bool("settings", "ime_block", true); // 输入法屏
 if (ini_read_string("settings", "ime_block", "") == "") {
     ini_write_bool("settings", "ime_block", true);
 }
+
+// 鼠标输入限频频率（Hz）：高回报率鼠标掉帧修复。默认 500，设 0 = 完全关闭。
+// 兼容旧配置：键缺失时补写，玩家可手改 %LOCALAPPDATA%\FVM_Reborn\config.ini 调整。
+// 注意：必须在 ini_open / ini_close 区间内读取，否则会报 INI 文件未定义。
+global.mouse_limit_hz = ini_read_real("settings", "mouse_limit_hz", 500);
+if (ini_read_string("settings", "mouse_limit_hz", "") == "") {
+    ini_write_real("settings", "mouse_limit_hz", 500);
+}
 for (var i = 0; i < array_length(global.keybind_config); i++) {
 	    var kb = global.keybind_config[i];
 	    var key_val = ini_read_real("keybinds", kb.name, kb.default1);
@@ -161,4 +169,21 @@ show_debug_message(working_directory)
 // 屏蔽输入法（IME）：游戏内全程中文候选框不弹出
 if (global.ime_block && native_disable_ime != undefined) {
     native_disable_ime(window_handle());
+}
+
+// ═══ 鼠标输入限频（高回报率鼠标掉帧修复）═════════════════════════════════════
+// 现象：8 kHz 鼠标在游戏窗口内移动时，draw 阶段单帧阻塞最高 380 ms（fps 降至 2.6），
+//       而同期 CPU 占用始终低于 17%，即 runner 在等待而非在计算（step 保持 0.37 ms）。
+// 排查：在窗口过程里丢弃消息无法节流（runner 使用自身的 PeekMessage 循环，已实测）；
+//       光标合成、raw input、WM_SETCURSOR、独占全屏均已逐个排除。
+// 做法：native 侧（mouse_limit.h）使用系统级 WH_MOUSE_LL 钩子，运行在独立线程上；
+//       快于目标频率的移动被吞掉且只保留最新位置，再由另一线程按目标频率以 SendInput
+//       重新注入。思路与 Ixeris 的 "buffered raw input + threaded event polling" 一致。
+// 范围：仅对快于目标频率的输入生效；等于或低于目标频率的鼠标逐条通过，不会变顿。
+// 安全：① 仅在游戏窗口处于前台时限频；② 注入线程超过 100 ms 未能注入则全部放行。
+// 开关：[settings] mouse_limit_hz（默认 500，0 = 关闭）。该值已在上方
+//       ini_open / ini_close 区间读取，此处仅负责启用。
+// ═════════════════════════════════════════════════════════════════════════════
+if (global.mouse_limit_hz != 0 && native_start_mouse_limit != undefined) {
+    native_start_mouse_limit(global.mouse_limit_hz, window_handle());
 }
