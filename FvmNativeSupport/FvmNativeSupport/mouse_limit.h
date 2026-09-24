@@ -154,6 +154,16 @@ static volatile LONG g_inject_tick = 0;
 
 // 本模块不做任何前台/几何判断：玩家是否在游戏里由 GML 侧用 window_has_focus() 决定
 // （有焦点才 Start，失焦即 Stop）。这里只在 g_interval > 0 且心跳新鲜时限频。
+// 放行的这条移动会由系统真正送达，光标随即处于 ms->pt，位移累加的基准必须跟着挪。
+// 否则这条放行造成的偏移会被之后每一条被吞事件重复计入（乘法放大）→ 光标卡顿/跳动。
+// 注意【只换基准，不动 g_acc】：g_acc 是「尚欠玩家的位移」，换个参照系依旧有效；
+// 若把它清零，等于吞掉这段真实位移，光标会系统性滞后。
+// 自己注入的事件 pt 恰等于 g_cur，本调用退化为无操作 —— 正常路径行为完全不变。
+static void RebaseTo(const MSLLHOOKSTRUCT *ms) {
+  g_cur_x = ms->pt.x;
+  g_cur_y = ms->pt.y;
+}
+
 static LRESULT CALLBACK LowLevelProc(int nCode, WPARAM wParam, LPARAM lParam) {
   g_arrive += 1.0;
   if (nCode != HC_ACTION || wParam != WM_MOUSEMOVE || g_interval <= 0) {
@@ -164,6 +174,8 @@ static LRESULT CALLBACK LowLevelProc(int nCode, WPARAM wParam, LPARAM lParam) {
   MSLLHOOKSTRUCT *ms = reinterpret_cast<MSLLHOOKSTRUCT *>(lParam);
   if (ms == nullptr || (ms->flags & LLMHF_INJECTED) != 0) {
     g_inj_seen += 1.0;  // 我们自己注入的事件，绝不能再吞（否则自我循环）
+    if (ms != nullptr)
+      RebaseTo(ms);  // 本事件已放行，基准必须跟随，否则偏移被重复累加
     g_pass += 1.0;
     return CallNextHookEx(g_hook, nCode, wParam, lParam);
   }
@@ -172,6 +184,7 @@ static LRESULT CALLBACK LowLevelProc(int nCode, WPARAM wParam, LPARAM lParam) {
   const DWORD now_ms = GetTickCount();
   if (now_ms - static_cast<DWORD>(g_inject_tick) > kStallMs) {
     g_stale += 1.0;
+    RebaseTo(ms);  // 本条被放行，同上：基准跟随，避免恢复限频后带着旧偏移继续累加
     g_pass += 1.0;
     return CallNextHookEx(g_hook, nCode, wParam, lParam);
   }
