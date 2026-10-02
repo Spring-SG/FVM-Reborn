@@ -16,6 +16,12 @@ if keyboard_check_pressed(vk_escape) || mouse_check_button_pressed(mb_right){
 	}
 }
 
+// 飞入动画推进（线性：每帧固定位移，到点后由槽位绘制接手）
+if fly_active{
+	fly_t++
+	if fly_t >= fly_dur fly_active = false
+}
+
 if instance_exists(obj_quit_confirm) || instance_exists(obj_level_preview){
 	is_submenu_open = true
 }

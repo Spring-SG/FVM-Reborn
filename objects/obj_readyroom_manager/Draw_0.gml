@@ -51,6 +51,11 @@ for(var i = 0 ; i < slot_rows ; i++){
 					break
 				}
 			}
+			// 正在飞回这个格子的卡：飞行结束前继续按"已选"灰显（灰显分支不参与悬停判定，等于不可点），落地后才恢复可选
+			if fly_active && !fly_add && fly_pool_i == card_index{
+				is_unlocked = false
+				is_selected = true
+			}
             
             // 绘制卡片
             if (is_unlocked) {
@@ -87,6 +92,10 @@ for(var i = 0 ; i < slot_rows ; i++){
                                       hover_x + spr_width/2, hover_y + spr_height/2)) 
 				&& mouse_y > y+315 && mouse_y < y+755{
                     hover_card_index = card_index;
+                    // 记下这张卡在屏幕上的位置（网格画在 surface 上，要加上第 120 行贴图时的偏移）
+                    hover_card_x = card_x + (x - 25 + 803 - 42)
+                    hover_card_y = card_y + (y + 375 - 48)
+                    hover_card_spr = card_data[? "sprite"]
                 }
             } else if (is_selected){
                 // 未解锁的卡片使用灰色滤镜
@@ -115,6 +124,16 @@ for(var i = 0 ; i < slot_rows ; i++){
             card_index++;
         }
     }
+	// 卡片飞行动画（池内副本）：画在卡池 surface 上，超出可视卡池范围的部分会被 surface 自动裁掉
+	// surface 左上角 = 第 124 行 draw_surface 的落点，所以这里要减掉那个偏移
+	if fly_active && sprite_exists(fly_spr){
+		var _fly_p = fly_t / fly_dur
+		var _fly_e = 1 - (1 - _fly_p) * (1 - _fly_p) * (1 - _fly_p)
+		var _fly_x = lerp(fly_sx, fly_tx, _fly_e) - (x - 25 + 803 - 42)
+		var _fly_y = lerp(fly_sy, fly_ty, _fly_e) - (y + 375 - 48)
+		draw_sprite_ext(spr_slot, 0, _fly_x, _fly_y - 3, 0.25, 0.25, 0, c_white, 1)
+		draw_sprite_ext(fly_spr, 0, _fly_x, _fly_y + 15, 0.7, 0.7, 0, c_white, 1)
+	}
 	surface_reset_target()
 }
 draw_surface(slot_surface,x-25+803-42,y+ 375-48)
@@ -172,7 +191,7 @@ for(var i = 0;i<11;i++){
 }
 hover_slot_index = -1
 for(var i = deck_first_slot_index; i < deck_first_slot_index+11;i++){
-	if i < deck_slot_max() && !deck_slot_is_empty(i){
+	if i < deck_slot_max() && !deck_slot_is_empty(i) && !(fly_active && fly_add && i == fly_slot){
 	var card_id = global.selected_deck[| i][? "card_id"]
 	var card_shape = global.selected_deck[| i][? "shape"]
 	var card_data = global.selected_deck[| i][? "data"]

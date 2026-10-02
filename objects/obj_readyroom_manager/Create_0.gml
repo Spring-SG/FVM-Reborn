@@ -19,6 +19,22 @@ deck_ensure_size();
 select_card_index = ds_list_create()
 hover_card_index = -1
 hover_slot_index = -1
+
+// 卡片飞入卡槽的动画状态（线性匀速）
+fly_active = false
+fly_add = true
+fly_t = 0
+fly_dur = 1
+fly_sx = 0
+fly_sy = 0
+fly_tx = 0
+fly_ty = 0
+fly_spr = -1
+fly_slot = -1
+fly_pool_i = -1
+hover_card_x = 0
+hover_card_y = 0
+hover_card_spr = -1
 slot_rows = 11
 slot_cols = 10
 slot_surface = -1
