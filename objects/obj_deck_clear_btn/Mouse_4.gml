@@ -17,6 +17,7 @@ if !obj_readyroom_manager.is_submenu_open{
 			}
 			if _pool_i >= 0 && sprite_exists(_spr){
 				array_push(_rm.fly_batch, {
+					add: false,   // 飞回卡池
 					spr: _spr,
 					sx: _rm.x + 805 + (_i - _first) * 86,
 					sy: _rm.y + 132,

@@ -55,7 +55,7 @@ for(var i = 0 ; i < slot_rows ; i++){
 			var _fly_back = (fly_active && !fly_add && fly_pool_i == card_index)
 			if !_fly_back{
 				for (var _fi = 0; _fi < array_length(fly_batch); _fi++){
-					if fly_batch[_fi].pool_i == card_index{ _fly_back = true; break }
+					if fly_batch[_fi].pool_i == card_index && fly_batch[_fi].add == false{ _fly_back = true; break }
 				}
 			}
 			if _fly_back{
@@ -206,8 +206,13 @@ for(var i = 0;i<11;i++){
 	
 }
 hover_slot_index = -1
+// 正在飞入的槽位：这些槽位在落地前不画静态卡（否则和飞行中的那副本重影）
+var _flyin_slots = []
+for (var _bi = 0; _bi < array_length(fly_batch); _bi++){
+	if fly_batch[_bi].add == true array_push(_flyin_slots, fly_batch[_bi].slot)
+}
 for(var i = deck_first_slot_index; i < deck_first_slot_index+11;i++){
-	if i < deck_slot_max() && !deck_slot_is_empty(i) && !(fly_active && fly_add && i == fly_slot){
+	if i < deck_slot_max() && !deck_slot_is_empty(i) && !(fly_active && fly_add && i == fly_slot) && array_get_index(_flyin_slots, i) == -1{
 	var card_id = global.selected_deck[| i][? "card_id"]
 	var card_shape = global.selected_deck[| i][? "shape"]
 	var card_data = global.selected_deck[| i][? "data"]
