@@ -52,7 +52,13 @@ for(var i = 0 ; i < slot_rows ; i++){
 				}
 			}
 			// 正在飞回这个格子的卡：飞行结束前继续按"已选"灰显（灰显分支不参与悬停判定，等于不可点），落地后才恢复可选
-			if fly_active && !fly_add && fly_pool_i == card_index{
+			var _fly_back = (fly_active && !fly_add && fly_pool_i == card_index)
+			if !_fly_back{
+				for (var _fi = 0; _fi < array_length(fly_batch); _fi++){
+					if fly_batch[_fi].pool_i == card_index{ _fly_back = true; break }
+				}
+			}
+			if _fly_back{
 				is_unlocked = false
 				is_selected = true
 			}
@@ -134,6 +140,16 @@ for(var i = 0 ; i < slot_rows ; i++){
 		draw_sprite_ext(spr_slot, 0, _fly_x, _fly_y - 3, 0.25, 0.25, 0, c_white, 1)
 		draw_sprite_ext(fly_spr, 0, _fly_x, _fly_y + 15, 0.7, 0.7, 0, c_white, 1)
 	}
+		// 清空时批量飞回卡池的那一份（同一套落点算法、同样画在卡池 surface 上）
+		for (var _bi = 0; _bi < array_length(fly_batch); _bi++){
+			var _b  = fly_batch[_bi]
+			var _bp = max(0, _b.t) / _b.dur
+			var _be = 1 - (1 - _bp) * (1 - _bp) * (1 - _bp)
+			var _bx = lerp(_b.sx, _b.tx, _be) - (x - 25 + 803 - 42)
+			var _by = lerp(_b.sy, _b.ty, _be) - (y + 375 - 48)
+			draw_sprite_ext(spr_slot, 0, _bx, _by - 3, 0.25, 0.25, 0, c_white, 1)
+			draw_sprite_ext(_b.spr, 0, _bx, _by + 15, 0.7, 0.7, 0, c_white, 1)
+		}
 	surface_reset_target()
 }
 draw_surface(slot_surface,x-25+803-42,y+ 375-48)

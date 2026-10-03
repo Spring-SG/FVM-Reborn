@@ -14,3 +14,15 @@ if fly_active && sprite_exists(fly_spr){
 		draw_sprite_ext(fly_spr, 0, _fx, _fy + 15, 0.7, 0.7, 0, c_white, 1)
 	}
 }
+// 清空时批量飞回卡池的那一份（顶层副本，同样只管"还没进入卡池"的那一段）
+for (var _bi = 0; _bi < array_length(fly_batch); _bi++){
+	var _b  = fly_batch[_bi]
+	var _bp = max(0, _b.t) / _b.dur
+	var _be = 1 - (1 - _bp) * (1 - _bp) * (1 - _bp)
+	var _bx = lerp(_b.sx, _b.tx, _be)
+	var _by = lerp(_b.sy, _b.ty, _be)
+	if _by - _card_half < _pool_top{
+		draw_sprite_ext(spr_slot, 0, _bx, _by - 3, 0.25, 0.25, 0, c_white, 1)
+		draw_sprite_ext(_b.spr, 0, _bx, _by + 15, 0.7, 0.7, 0, c_white, 1)
+	}
+}

@@ -29,3 +29,8 @@ else{
 	is_submenu_open = false
 }
 
+// 清空时批量飞回卡池：倒着删避免下标错位
+for (var _bi = array_length(fly_batch) - 1; _bi >= 0; _bi--){
+	fly_batch[_bi].t++
+	if fly_batch[_bi].t >= fly_batch[_bi].dur array_delete(fly_batch, _bi, 1)
+}
