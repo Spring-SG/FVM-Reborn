@@ -1958,7 +1958,7 @@ function maps_init(){
 					"pre_music":mus_explore_camp_pre,
 					"elite_music":mus_explore_camp_pre,
 					"boss_music":mus_explore_camp_boss,
-					"player_level_require":20,
+					"player_level_require":25,
 					"pre_level_require":["chiffon_camp_daytime"]
 				},
 				{

@@ -3719,7 +3719,7 @@
                 "skewer_bomb"
             ],
             "weapon_unlock": [],
-            "gem_unlock": [],
+            "gem_unlock": ["holy_gem"],
             "player_level": 26.0
         }
     ]

@@ -48,4 +48,4 @@ btn7.sprite_index = spr_world_map_explore_camp
 btn7.map_name = "探险营地"
 btn7.map_id = "explore_camp"
 btn7.room_target = room_map
-btn7.level_require = 99
+btn7.level_require = 20

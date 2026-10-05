@@ -54,6 +54,12 @@ function load_file(file_slot) {
 				global.save_data.equipped_cookbook = [[],[],[]]
 				global.save_data.version = 1.8
 			}
+			if global.save_data.version == 1.8{
+				if array_get_index(global.save_data.completed_levels,"cheese_castle") != -1{
+					unlock_gem("holy_gem")
+				}
+				global.save_data.version = 1.9
+			}
 		}
         return true;
     } catch(e) {
@@ -65,7 +71,7 @@ function load_file(file_slot) {
 function reset_file(file_slot){
 	//重置到初始存档
 	global.save_data = {
-            "version": 1.8,
+            "version": 1.9,
             "player": {
                 "gold": 0,
                 "level": 1,

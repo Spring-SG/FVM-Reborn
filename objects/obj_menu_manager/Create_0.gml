@@ -36,18 +36,18 @@ global.laboretory_room = false
 
 
 self.texture_to_load = [
-	"UI",
+	//"UI",
 	"cards",
 	"enemy_delicious",
 	"enemy_volcanic",
-	"bullet",
-	"effects",
-	"player",
-	"maps",
+	//"bullet",
+	//"effects",
+	//"player",
+	//"maps",
 	"enemy_tower",
 	"enemy_floating",
-	"pack_undersea_vortex",
-	//"pack_explore_camp"
+	//"pack_undersea_vortex",
+	"pack_explore_camp"
 ]
 
 self.texture_count = array_length(self.texture_to_load)

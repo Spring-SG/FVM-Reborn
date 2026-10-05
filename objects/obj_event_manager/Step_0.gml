@@ -1145,15 +1145,48 @@ if is_real(global.level_file.version){
 			//处理全屏海水事件
 			if event_list[i].id == "full_seawater"{
 				if event_timer == 1{
-					for(var i = 0 ; i < global.grid_rows ; i++){
+					for(var __count__ = 0 ; __count__ < global.grid_rows ; __count__++){
 						for(var j = 0 ; j < global.grid_cols; j++){
 
-							var obs_pos = get_world_position_from_grid(j,i)
+							var obs_pos = get_world_position_from_grid(j,__count__)
 							var inst = instance_create_depth(obs_pos.x,obs_pos.y-35,-1200,obj_seawater)
-							inst.row = i
+							inst.row = __count__
 							inst.col = j
-							inst.depth = calculate_plant_depth(j,i,"coffee")
+							inst.depth = calculate_plant_depth(j,__count__,"coffee")
 						
+						}
+					}
+				}
+			}
+			//处理人面曲奇生成事件
+			if event_list[i].id == "face_cookie_spawn"{
+				if event_timer > event_list[i].start_time*60{
+					if (event_timer - event_list[i].start_time*60) mod (event_list[i].interval*60) == 5{
+						for(var __count__ = 0 ; __count__ < event_list[i].cookie_amount ; __count__++){
+							var can_summon = true
+							for(var hole_try_count = 0 ; hole_try_count < 100;hole_try_count++){
+								can_summon = true
+								var pos_x = irandom_range(0,global.grid_cols-1)
+								var pos_y = irandom_range(0,global.grid_rows-1)
+								var cave_pos = get_world_position_from_grid(pos_x,pos_y)
+								var plant_list = ds_grid_get(global.grid_plants,cave_pos.col,cave_pos.row)
+								with obj_face_cookie{
+									var pos1 = get_grid_position_from_world(x,y)
+									if(pos1.row == cave_pos.row && pos1.col == cave_pos.col){
+										can_summon = false
+									}
+								}
+								if ds_list_size(plant_list)>0 or global.grid_terrains[cave_pos.row][cave_pos.col].type == "obstacle"{
+									can_summon = false
+								}
+								if can_summon{
+									var inst = instance_create_depth(cave_pos.x,cave_pos.y+15,-5,obj_face_cookie)
+									if event_list[i].time_type == "night"{
+										inst.sprite_index = spr_face_cookie_night
+									}
+									break
+								}
+							}
 						}
 					}
 				}
