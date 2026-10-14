@@ -65,4 +65,14 @@ function material_init(){
 										"icon":12,
 										"pos_x":2,
 										"pos_y":3})
+	register_material("less_camp_coin",{"name":"补给币",
+										"description":"补给币：购买番外卡片一转所需货币\n通关探险营地关卡获取",
+										"icon":13,
+										"pos_x":0,
+										"pos_y":4})
+	register_material("camp_coin",{"name":"营地金币",
+										"description":"营地金币：购买番外卡片二转所需货币\n完成探险营地支线任务获取",
+										"icon":14,
+										"pos_x":1,
+										"pos_y":4})
 }

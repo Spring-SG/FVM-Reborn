@@ -23,7 +23,7 @@ function shop_init(){
 	register_goods("card_slot_21",{"type":"item","cost":"100000","unlock_item_id":"card_slot_21","description":"解锁第21格卡槽","display_name":"卡槽第21格","spr":spr_slot_21})
 	
 	register_goods("howitzer",{"type":"weapon","cost":"20000","unlock_item_id":"howitzer","description":"榴弹炮：自动发射高伤害榴弹\n需装备于超级武器槽位","display_name":"榴弹炮（超级武器）"})
-	register_goods("enhanced_howitzer",{"type":"weapon","cost":"50000","unlock_item_id":"enhanced_howitzer","description":"加强榴弹炮：自动发射两个高伤害榴弹\n需装备于超级武器槽位","display_name":"加强榴弹炮（超级武器）"})
+	register_goods("enhanced_howitzer",{"type":"weapon","cost":"50000","unlock_item_id":"enhanced_howitzer","description":"加强榴弹炮：自动发射两个高伤害榴弹\n需装备于超级武器槽位","display_name":"加强榴弹炮（超武）"})
 	register_goods("mighty_gun",{"type":"weapon","cost":"15000","unlock_item_id":"mighty_gun","description":"威武枪：发射四发子弹\n需装备于主武器槽位","display_name":"威武枪（主武器）"})
 	register_goods("cat_gun",{"type":"weapon","cost":"50000","unlock_item_id":"cat_gun","description":"猫猫枪：发射能惊吓敌人的猫猫弹\n需装备于主武器槽位","display_name":"猫猫枪（主武器）"})
 	register_goods("cut_cake_shield",{"type":"weapon","cost":"8000","unlock_item_id":"cut_cake_shield","description":"切糕盾牌：增加300生命值\n需装备于副武器槽位","display_name":"切糕盾牌（副武器）"})
@@ -68,4 +68,9 @@ function shop_init(){
 	register_goods("player_attire_12",{"type":"player_attire","cost":"50000","unlock_item_id":"player_attire_12","description":"角色的丁香绮缘时装","display_name":"丁香绮缘"})
 	register_goods("player_attire_13",{"type":"player_attire","cost":"50000","unlock_item_id":"player_attire_13","description":"角色的梦恋花语时装","display_name":"梦恋花语"})
 	register_goods("player_attire_14",{"type":"player_attire","cost":"50000","unlock_item_id":"player_attire_14","description":"角色的探险家时装","display_name":"探险家"})
+	
+	register_goods("sugar_roxburghii_1",{"type":"camp","cost":"3","unlock_item_id":"sugar_roxburghii","description":"烟熏刺梨：购买后解锁糖渍刺梨一转","display_name":"烟熏刺梨（一转）","coin_type":"less_camp_coin","target_shape":1})
+	register_goods("sugar_roxburghii_2",{"type":"camp","cost":"3","unlock_item_id":"sugar_roxburghii","description":"生腌酸刺梨：购买后解锁糖渍刺梨二转","display_name":"生腌酸刺梨（二转）","coin_type":"camp_coin","target_shape":2})
+	register_goods("nut_frier_1",{"type":"camp","cost":"3","unlock_item_id":"nut_frier","description":"橡子搅拌机：购买后解锁坚果爆炒机一转","display_name":"橡子搅拌机（一转）","coin_type":"less_camp_coin","target_shape":1})
+	register_goods("nut_frier_2",{"type":"camp","cost":"3","unlock_item_id":"nut_frier","description":"松塔爆破机：购买后解锁坚果爆炒机二转","display_name":"松塔爆破机（二转）","coin_type":"camp_coin","target_shape":2})
 }

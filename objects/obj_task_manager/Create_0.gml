@@ -5,7 +5,8 @@ not_equip_weapon = false
 not_use_designated_card = false
 
 card_group = {
-	"bomb":["coke_bomb","kettle_bomb","flour_sack","steel_wool","mouse_clip","wine_bottle_bomb","skewer_bomb","whisky_bomb","aquarius_elve","chili_powder","rabbit_lantern","delicacy_firework"]
+	"bomb":["coke_bomb","kettle_bomb","flour_sack","steel_wool","mouse_clip","wine_bottle_bomb","skewer_bomb","whisky_bomb","aquarius_elve","chili_powder","rabbit_lantern","delicacy_firework"],
+	"fishbone":["fishbone","iron_fishbone","sugar_roxburghii"]
 }
 
 function reset_task_state(){
@@ -112,6 +113,33 @@ function refresh_task_progress(){
 					//如果没有携带指定卡片，则增加进度
 					if not_use_designated_card{
 						add_task_progress(task_id,j,1)
+					}
+					//如果进度满足要求，则增加完成计数
+					if get_task_progress(task_id,j) >= task_data.requirements[j].require{
+						complete_count++
+					}
+				}
+				//卡槽限制类任务
+				if task_data.requirements[j].type == "slot_limit"{
+					edit_task_progress(task_id,j,0)
+					with obj_card_slot{
+						//增加卡槽数量
+						add_task_progress(task_id,j,1)
+					}
+					//如果进度满足要求，则增加完成计数
+					if get_task_progress(task_id,j) <= task_data.requirements[j].require{
+						complete_count++
+					}
+				}
+				//养成限制类任务
+				if task_data.requirements[j].type == "card_progress_limit"{
+					edit_task_progress(task_id,j,1)
+					with obj_card_slot{
+						//为每个卡槽检测是否超出限制
+						var card_progress = get_card_info_simple(card_id)
+						if(card_progress.level > task_data.requirements[j].card_level_limit || card_progress.shape > task_data.requirements[j].card_shape_limit || card_progress.skill > task_data.requirements[j].card_skill_limit){
+							edit_task_progress(task_id,j,0)
+						}
 					}
 					//如果进度满足要求，则增加完成计数
 					if get_task_progress(task_id,j) >= task_data.requirements[j].require{

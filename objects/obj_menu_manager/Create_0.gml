@@ -45,7 +45,7 @@ self.texture_to_load = [
 	//"player",
 	//"maps",
 	"enemy_tower",
-	"enemy_floating",
+	//"enemy_floating",
 	//"pack_undersea_vortex",
 	"pack_explore_camp"
 ]
@@ -139,7 +139,7 @@ function on_draw() {
 	if self.texture_loaded <= array_length(self.texture_to_load)-1{
 		_text = "加载中 " + string(self.texture_loaded) + "/" + string(self.texture_count) + " " + self.texture_to_load[clamp(self.texture_loaded,0,array_length(self.texture_to_load)-1)];
 	}
-    draw_text(_x1, _y1 - 30, _text);
+    draw_text(_x1, _y1 - 35, _text);
 	draw_set_valign(fa_middle)
 	draw_set_halign(fa_center)
 	draw_set_colour(c_yellow)

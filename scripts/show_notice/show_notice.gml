@@ -115,8 +115,8 @@ function draw_notices() {
         draw_set_halign(fa_center);
         draw_set_valign(fa_middle);
         draw_set_alpha(alpha);
-        draw_text_ext_transformed(
-            pos_x, pos_y-3, text,90,1920,scale,scale,0
+        draw_text_transformed(
+            pos_x, pos_y - (text_height*scale)/2 - padding*2, text,scale,scale,0
         );
         
         // 重置绘制设置

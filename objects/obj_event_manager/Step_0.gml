@@ -1166,7 +1166,7 @@ if is_real(global.level_file.version){
 							var can_summon = true
 							for(var hole_try_count = 0 ; hole_try_count < 100;hole_try_count++){
 								can_summon = true
-								var pos_x = irandom_range(0,global.grid_cols-1)
+								var pos_x = irandom_range(3,global.grid_cols-2)
 								var pos_y = irandom_range(0,global.grid_rows-1)
 								var cave_pos = get_world_position_from_grid(pos_x,pos_y)
 								var plant_list = ds_grid_get(global.grid_plants,cave_pos.col,cave_pos.row)

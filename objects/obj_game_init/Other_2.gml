@@ -116,7 +116,7 @@ function unlock_all(){//测试版设置初始存档
 	unlock_card("rabbit_lantern",13,2,8)
 	unlock_card("delicacy_firework",13,2,8)
 	unlock_card("sugar_roxburghii",13,2,8)
-	unlock_card("nut_frier",13,2,8)
+	unlock_card("nut_frier",13,0,8)
 	unlock_card("fruit_tart",13,2,8)
 	
 	global.save_data.player.gold = 99000000
@@ -166,6 +166,8 @@ function unlock_all(){//测试版设置初始存档
 	set_material_amount("copper_cookbook_fragment",2)
 	set_material_amount("silver_cookbook_fragment",2)
 	set_material_amount("gold_cookbook_fragment",2)
+	set_material_amount("less_camp_coin",6)
+	set_material_amount("camp_coin",6)
 	global.save_data.unlocked_items.elite_unlocked = true
 	
 }

@@ -2025,6 +2025,22 @@ function maps_init(){
 					"player_level_require":50,
 					"pre_level_require":["nut_platform_daytime"]
 				},
+				{
+					"id":"camp_shop",
+					"name":"营地商店",
+					"button_spr":spr_levelselect_button_camp,
+					"button_index":5,
+					"button_x":1450,
+					"button_y":550,
+					"level_file":"camp/nut_platform_night.json",
+					"hard_level_file":"camp/nut_platform_night_hard.json",
+					"level_sprite":spr_nut_platform_night,
+					"pre_music":mus_explore_camp_pre,
+					"elite_music":mus_explore_camp_pre,
+					"boss_music":mus_explore_camp_boss,
+					"player_level_require":0,
+					"pre_level_require":[]
+				},
 			]
 		}
 	)
