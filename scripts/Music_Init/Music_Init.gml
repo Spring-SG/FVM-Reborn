@@ -18,8 +18,8 @@ function Music_Init(){
 ///   ② 同一音效并发上限（same_max）—— 超出丢弃
 ///   ③ 强度 → 增益（duck）—— 按最近 density_ms 内的触发次数 d 提升增益：
 ///      单份增益 = min(1.10, 1 + 0.10·(d−1)/d)，无论多密都不超过基准的 1.10 倍
-///   ④ 变化度（vary_pitch / jitter）—— 每次播放音高随机 ±vary_pitch、最小间隔
-///      随机 ±jitter，消除"同一份采样按固定节奏反复播"造成的听觉疲劳
+///   ④ 变化度 —— 间隔随机 ±jitter；音高随机 ±vary_pitch，但【只在战斗场景内】生效：
+///      菜单/界面里连点按钮时逐声随机会听起来走音，战斗的嘈杂里才有变化度的意义
 ///
 /// ⚠️ 实际间隔 = clamp(时长 × gap_ratio, gap_ms, gap_max)：短音效落在 gap_ms 地板上，
 ///      长音效按自身时长的一半（上限 gap_max）。叠放厚度上限因此由 gap_ratio 决定
@@ -49,7 +49,7 @@ global.audio.jitter     = 0.25;   // 最小间隔的随机抖动幅度（±比�
 global.audio.same_max   = 8;     // 同一音效并发上限（唯一的并发限制，无全局总量限制）
 global.audio.duck       = true;   // 强度→增益：触发越密越响，单份上限 1.10 倍
 global.audio.density_ms = 300;    // 增益用的密度统计窗口（毫秒）
-global.audio.vary_pitch = 0.06;   // 每次播放的音高随机幅度（±比例，0.06 ≈ ±1 个半音）
+global.audio.vary_pitch = 0.06;   // 音高随机幅度（±比例，0.06 ≈ ±1 个半音）；只在战斗场景内生效
 global.audio.music_len  = 3.0;    // 时长超过该值（秒）视为音乐，不节流
 
 global.audio.played     = 0;      // 实际发声次数（含放行）
@@ -177,10 +177,13 @@ global.audio.play = function(_snd, _prio = 0, _loop = 0) {
         global.audio.gain[$ _k] = _g;
     }
 
-    // ④ 变化度：每次播放给一个轻微随机的音高（±vary_pitch），避免连续触发变成一模
-    //    一样的一份采样反复播 —— 这是消除听觉疲劳最有效的一招。
-    //    按实例 id 设（每份各不相同）；设之前确认实例真的在播，避免无效索引。
-    if (global.audio.vary_pitch > 0 && audio_is_playing(_id)) {
+    // ④ 变化度：只在【战斗场景内】给轻微随机音高。
+    //    连点按钮基本都发生在菜单/背包/商城/强化这些界面，而 UI 音效没有战斗的嘈杂垫底，
+    //    逐声随机会让连续点击听起来走音、发飘 —— 所以战斗外一律不给音高随机。
+    //    判据用 instance_exists(obj_battle)：它不是 persistent，只存在于 room_battle
+    //    （项目里已有同样用法：scripts/load_custom_deck/load_custom_deck.gml:22）。
+    //    战斗里保留随机：音效密集、环境声多，轻微音高差异反而让重复的命中声不那么腻。
+    if (global.audio.vary_pitch > 0 && instance_exists(obj_battle) && audio_is_playing(_id)) {
         audio_sound_pitch(_id, random_range(1 - global.audio.vary_pitch,
                                             1 + global.audio.vary_pitch));
     }
