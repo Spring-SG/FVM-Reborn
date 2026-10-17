@@ -32,28 +32,19 @@ if state == "drop"{
 		instance_destroy()
 	}
 	
-	if !instance_exists(target_enemy) || target_enemy == noone{
-		target_enemy = find_priority_enemy()
-		if target_enemy != noone{
-			target_col = target_enemy.grid_col
-			target_row = target_enemy.grid_row
-			var new_pos = get_world_position_from_grid(target_col,target_row)
-			var y_left = abs(y-new_pos.y+15)
-			y = new_pos.y-15-y_left
-			x = new_pos.x
-		}
-	}
-	else{
-		if target_enemy.hp <= 0 || target_enemy.y <= 0{
-			target_enemy = find_priority_enemy()
-			if target_enemy != noone{
-				target_col = target_enemy.grid_col
-				target_row = target_enemy.grid_row
-				var new_pos = get_world_position_from_grid(target_col,target_row)
-				var y_left = abs(y-new_pos.y+15)
-				y = new_pos.y-15-y_left
-				x = new_pos.x
-			}
-		}
+	// 重新索敌：当前目标格里已经没有可打的敌人了，就换成当前的最优目标格
+	//   只用格子坐标判断，不再持有实例 id —— 目标在同一帧里被别的子弹打死也不会崩
+	var _t = find_priority_enemy()
+	var _cell_idx = target_row * global.grid_cols + target_col
+	var _target_alive = (target_col >= 0 && target_row >= 0
+		&& _cell_idx >= 0 && _cell_idx < array_length(global._curry_cannon_alive)
+		&& global._curry_cannon_alive[_cell_idx]);
+	if (!_target_alive && _t != noone){
+		target_col = _t.col
+		target_row = _t.row
+		var new_pos = get_world_position_from_grid(target_col,target_row)
+		var y_left = abs(y-new_pos.y+15)
+		y = new_pos.y-15-y_left
+		x = new_pos.x
 	}
 }

@@ -17,3 +17,5 @@ atk_cycle = 1
 atk = 2000
 
 bomb_col = [0,0,0,0,0,0,0,0,1]
+
+can_use_ladder= false

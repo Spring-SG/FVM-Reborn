@@ -54,3 +54,6 @@ awake_anim = 0
 plant_id = ""  // 植物唯一标识符
 current_level = 0  // 当前等级
 
+// ========= 是否有梯子 ========
+have_loder = false
+

@@ -29,3 +29,7 @@ if card_equipped_attire_id("player")!= -1{
 }
 
 awake_buff_timer = 0
+
+
+// ========= 是否有梯子 ========
+have_loder = false

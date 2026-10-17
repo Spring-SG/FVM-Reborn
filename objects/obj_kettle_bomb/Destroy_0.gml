@@ -46,6 +46,16 @@ if state == CARD_STATE.IDLE{
 		}
 	}
 
+
+	with (obj_ladder) {
+		if (host_plant != noone && instance_exists(host_plant)) {
+			if (host_plant.grid_row >= other.grid_row-2 && host_plant.grid_row <= other.grid_row+2
+				&& point_distance(host_plant.x, host_plant.y, _x, _y) < _range) {
+				instance_destroy();
+			}
+		}
+	}
+	
 	// 播放倭瓜攻击效果
 	//effect_create_above(ef_explosion, x, y, 2, c_white);
 
