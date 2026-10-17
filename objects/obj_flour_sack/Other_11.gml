@@ -28,7 +28,7 @@ if (has_target) {
 		target_x = x + x_distance
 	}
     //target_x = nearest_enemy.x;
-    target_y = nearest_enemy.y;
+    target_y = clamp(nearest_enemy.y-45,y-15,y);
 	var delay = 0
 	if shape == 0{
 		delay = 20
@@ -39,7 +39,7 @@ if (has_target) {
     // 移动到目标
     //move_towards_point(target_x, target_y, 20);
 	chspeed = (target_x-x)/delay
-	cvspeed = (target_y-45-y)/delay
+	cvspeed = (target_y-y)/delay
 	alarm[0] = delay; // 设置一个短暂延迟，让倭瓜有时间移动到目标位置
 	
 	

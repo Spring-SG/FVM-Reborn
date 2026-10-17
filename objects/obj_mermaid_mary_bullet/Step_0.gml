@@ -27,7 +27,7 @@ if state == "drop"{
 			}
 		}
 		var inst = instance_create_depth(x,y-30,-800,obj_coke_bomb_explode)
-		inst.sprite_index = spr_machine_shark_1_bullet_effect
+		inst.sprite_index = spr_mermaid_mary_bullet_effect
 		instance_destroy()
 	}
 }

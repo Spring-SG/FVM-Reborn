@@ -31,8 +31,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_machine_shark_1_bullet",
-    "path":"sprites/spr_machine_shark_1_bullet/spr_machine_shark_1_bullet.yy",
+    "name":"spr_mermaid_mary_bullet",
+    "path":"sprites/spr_mermaid_mary_bullet/spr_mermaid_mary_bullet.yy",
   },
   "spriteMaskId":null,
   "visible":true,

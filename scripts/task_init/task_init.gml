@@ -979,7 +979,7 @@ function task_init(){
 					{
 						"type":"level_complete",
 						"target_level":"snowcap_volcano",
-						"desc":"通关一次雪顶火山）",
+						"desc":"通关一次雪顶火山",
 						"require":1,
 					}
 				],

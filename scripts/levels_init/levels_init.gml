@@ -54,4 +54,10 @@ function level_info_island_init(){
 	register_level_info_island("kernel_waterfall",{"name":"瀑布遗迹","icon":spr_levelselect_button_ruins,"spr":spr_waterfall_ruins,"description":"战神会在第4行出场，需要尽力集火。\n鸭子会持续破坏卡片，避免在2行和6行放置关键卡片。","spr_index":0})
 	register_level_info_island("blueberry_jungle",{"name":"丛林遗迹","icon":spr_levelselect_button_ruins,"spr":spr_jungle_ruins,"description":"大力神会在第4行出场，需要尽力集火。\n释放横向声波后，需要快速在第4行补充输出。","spr_index":2})
 	register_level_info_island("milkshake_base",{"name":"基地遗迹","icon":spr_levelselect_button_ruins,"spr":spr_base_ruins,"description":"雷神会沿着地图上的路径前进，需要灵活组织阵型。\n雷神技能使用频率低但是移速快，需要尽可能造成伤害。","spr_index":4})
+	register_level_info_island("chiffon_camp_daytime",{"name":"戚风营地（日）","icon":spr_levelselect_button_camp,"spr":spr_chiffon_camp_daytime,"description":"轮胎鼠扔出的轮胎对阵型破坏性大，需要尽快集火击杀。","spr_index":0})
+	register_level_info_island("chiffon_camp_night",{"name":"戚风营地（夜）","icon":spr_levelselect_button_camp,"spr":spr_chiffon_camp_night,"description":"使用糖渍刺梨对付越野车鼠。\n旅行唱机大部分时间处于空中，需要趁它在地面时集火输出。","spr_index":1})
+	register_level_info_island("ice_beer_bar_daytime",{"name":"冰啤酒吧（日）","icon":spr_levelselect_button_camp,"spr":spr_ice_beer_bar_daytime,"description":"酒桶鼠遇到爆炸后会有高额伤害减免，需要避免炸到它。","spr_index":2})
+	register_level_info_island("ice_beer_bar_night",{"name":"冰啤酒吧（夜）","icon":spr_levelselect_button_camp,"spr":spr_ice_beer_bar_night,"description":"需要快速处理饮料贩卖机扔出的酒瓶，否则对阵型破坏性大。","spr_index":3})
+	register_level_info_island("nut_platform_daytime",{"name":"坚果高台（日）","icon":spr_levelselect_button_camp,"spr":spr_nut_platform_daytime,"description":"当人面曲奇开始吸收火苗时，铲除将要产出火苗的产火卡可以有效避免繁殖。","spr_index":4})
+	register_level_info_island("nut_platform_night",{"name":"坚果高台（夜）","icon":spr_levelselect_button_camp,"spr":spr_nut_platform_night,"description":"本关障碍较多，会连续出现两个BOSS，需要灵活组织阵型。","spr_index":5})
 }

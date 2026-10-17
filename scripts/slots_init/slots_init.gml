@@ -366,9 +366,9 @@ function slots_init(){
 	    {"shape":1, "sprite":spr_nut_frier_1, "cost":300, "cooldown":7*60, "description":"橡子搅拌机：向前方5个方向发射子弹","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_nut_frier_1},
 		{"shape":2, "sprite":spr_nut_frier_2, "cost":300, "cooldown":7*60, "description":"松塔爆破机：向前方5个方向发射子弹","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_nut_frier_2}
 	]);
-	register_card("fruit_tart", obj_fruit_tart, [
-	    {"shape":0, "sprite":spr_fruit_tart, "cost":150, "cooldown":14*60, "description":"美味水果塔：为本行左侧的投掷类卡片增加伤害","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_fruit_tart},
-	    {"shape":1, "sprite":spr_fruit_tart_1, "cost":150, "cooldown":7*60, "description":"风车水果塔：为本行左侧的投掷类卡片增加伤害","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_fruit_tart_1},
-		{"shape":2, "sprite":spr_fruit_tart_2, "cost":150, "cooldown":7*60, "description":"巧克力水果塔：为本行投掷类卡片增加伤害","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_fruit_tart_2}
-	]);
+	//register_card("fruit_tart", obj_fruit_tart, [
+	//    {"shape":0, "sprite":spr_fruit_tart, "cost":150, "cooldown":14*60, "description":"美味水果塔：为本行左侧的投掷类卡片增加伤害","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_fruit_tart},
+	//    {"shape":1, "sprite":spr_fruit_tart_1, "cost":150, "cooldown":7*60, "description":"风车水果塔：为本行左侧的投掷类卡片增加伤害","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_fruit_tart_1},
+	//	{"shape":2, "sprite":spr_fruit_tart_2, "cost":150, "cooldown":7*60, "description":"巧克力水果塔：为本行投掷类卡片增加伤害","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_fruit_tart_2}
+	//]);
 }

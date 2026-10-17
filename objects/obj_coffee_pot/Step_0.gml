@@ -10,21 +10,21 @@ if is_slowdown{
 	current_flash_speed *= 2
 }
 
-if state == CARD_STATE.SLEEP{
-	anim_timer++
-	image_index = floor(anim_timer/current_flash_speed) mod 10
-	//if anim_timer > 60{
-	//	state = CARD_STATE.AWAKE
-	//}
-}
-if state == CARD_STATE.AWAKE{
-	wake_timer++
-	image_index = floor(wake_timer/current_flash_speed) mod 5 + 10
-	if wake_timer >= 5*current_flash_speed{
-		sprite_index = spr_coffee_pot;
-		image_index = 0
-		timer = 0
-		state = CARD_STATE.IDLE
+if shape < 1{
+	if state == CARD_STATE.SLEEP{
+		sprite_index = spr_coffee_pot_sleep
+		anim_timer++
+		image_index = floor(anim_timer/current_flash_speed) mod 10
+	}
+	if state == CARD_STATE.AWAKE{
+		wake_timer++
+		image_index = floor(wake_timer/current_flash_speed) mod 5 + 10
+		if wake_timer >= 5*current_flash_speed{
+			sprite_index = spr_coffee_pot;
+			image_index = 0
+			timer = 0
+			state = CARD_STATE.IDLE
+		}
 	}
 }
 

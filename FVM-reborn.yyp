@@ -2605,6 +2605,8 @@
     {"id":{"name":"spr_melon_virgo_outer_3","path":"sprites/spr_melon_virgo_outer_3/spr_melon_virgo_outer_3.yy",},},
     {"id":{"name":"spr_menu_select_btn","path":"sprites/spr_menu_select_btn/spr_menu_select_btn.yy",},},
     {"id":{"name":"spr_menu_ui","path":"sprites/spr_menu_ui/spr_menu_ui.yy",},},
+    {"id":{"name":"spr_mermaid_mary_bullet_effect","path":"sprites/spr_mermaid_mary_bullet_effect/spr_mermaid_mary_bullet_effect.yy",},},
+    {"id":{"name":"spr_mermaid_mary_bullet","path":"sprites/spr_mermaid_mary_bullet/spr_mermaid_mary_bullet.yy",},},
     {"id":{"name":"spr_mermaid_mary_dash","path":"sprites/spr_mermaid_mary_dash/spr_mermaid_mary_dash.yy",},},
     {"id":{"name":"spr_mermaid_mary_death","path":"sprites/spr_mermaid_mary_death/spr_mermaid_mary_death.yy",},},
     {"id":{"name":"spr_mermaid_mary_idle","path":"sprites/spr_mermaid_mary_idle/spr_mermaid_mary_idle.yy",},},
