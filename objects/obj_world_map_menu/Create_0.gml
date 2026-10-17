@@ -1,5 +1,9 @@
 image_xscale = 0.9
 image_yscale = 0.9
+
+// 整块面板的进出场过渡（从下方滑入 = 向上到位 + 淡入；关闭原路返回）
+panel_anim_init(id, 0.28, 0.18, 260)
+panel_anim_kids(id, [obj_world_map_close_btn, obj_world_map_choose_btn])
 instance_create_depth(x+620,y-410,depth-1,obj_world_map_close_btn)
 instance_create_depth(x+15,y-160,depth-1,obj_world_map_choose_btn)
 var btn = instance_create_depth(x-365,y-85,depth-1,obj_world_map_choose_btn)

@@ -61,6 +61,12 @@ function refresh_level_button(){
 			var c_level_data = level_list[level_index]
 			var inst = instance_create_depth(x-648,y+438-56*i,depth-1,obj_tower_cake_level_btn)
 			inst.btn_index = i
+			// 瀑布流入场（等级 2）：本页最上面那条先出现，往下依次延迟 2 帧
+			var _wf_n = min(15, array_length(level_list) - 15 * (current_page - 1))
+			inst.wf_y0  = inst.y
+			inst.wf_dur = 18
+			inst.wf_t   = ui_anim_on(2) ? -(max(0, _wf_n - 1 - i) * 2) : 18
+			inst.image_alpha = (inst.wf_t < 0) ? 0 : 1
 			inst.level_index = level_index
 			inst.btn_text = string((level_index div 2) + 1) + "-" + string((level_index mod 2) + 1)
 		

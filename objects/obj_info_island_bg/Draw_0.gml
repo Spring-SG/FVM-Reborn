@@ -1,8 +1,17 @@
 // 绘制事件
-draw_set_alpha(0.5);
+if (pnl_closing && pnl_o <= 0.001){ exit }   // 已经淡没了：一个像素都别再画出去
+
+draw_set_alpha(0.5 * pnl_o);
 // 绘制半透明遮罩
 draw_rectangle_color(0, 0, room_width, room_height, c_black, c_black, c_black, c_black, false);
 draw_set_alpha(1);
+
+// 菜单内容全部先画进 anim_surf，最后分左右两半错开贴上（左半从左侧滑入、右半从右侧滑入，一起淡入）
+if (!surface_exists(anim_surf)){
+    anim_surf = surface_create(room_width, room_height)
+}
+surface_set_target(anim_surf)
+draw_clear_alpha(c_black, 0)
 draw_self()
 
 // 绘制背包格子背景
@@ -18,6 +27,28 @@ draw_set_color(c_white);
 draw_set_halign(fa_left);
 draw_set_valign(fa_bottom);
 draw_set_font(font_yuan)
+
+// ── 页签切换：页面完全不动，只把「内容」换掉并让新内容淡入（等级 1）────────────────
+// 页面内容单独录在 info_surface 里（下面三处 draw_surface_ext 乘 tab_fade 贴回），
+// 「换页 + 淡入」只需要改这一个 alpha。
+if (!variable_instance_exists(id, "tab_fade")) { tab_fade = 1; tab_fade_t = -1 }
+if (variable_instance_exists(id, "tab_shown") && tab_shown != info_button_select) {
+	tab_shown   = info_button_select
+	tab_fade    = 0
+	tab_fade_t  = 0
+}
+if (tab_fade_t >= 0) {
+	if (!ui_anim_on(1)) { tab_fade = 1; tab_fade_t = -1 }
+	else {
+		tab_fade_t += ui_anim_dt()
+		// 0.20s + 2 次幂（平方 ease-out）：前段不过冲，中间有可辨认区间
+		tab_fade = ui_anim_ease(clamp(tab_fade_t / 0.20, 0, 1), 2)
+		if (tab_fade_t >= 0.20) { tab_fade = 1; tab_fade_t = -1 }
+	}
+}
+
+var _real_tab = info_button_select   // 页签动画期间先画「当前显示的那一页」，尾部还原
+if (variable_instance_exists(id, "tab_shown")) info_button_select = tab_shown
 
 if info_button_select == 1 {
 	if surface_exists(info_surface){
@@ -83,34 +114,11 @@ if info_button_select == 1 {
 	
 	surface_reset_target()
 	}
-	draw_surface(info_surface,x-1380,y-368)
+	draw_surface_ext(info_surface,x-1380,y-368,1,1,0,c_white,tab_fade)
     // 绘制悬停提示
     if (hover_card_index != -1) {
         // 获取鼠标位置
-        var tooltip_x = mouse_x + 15;
-        var tooltip_y = mouse_y - 15;
-		var row = hover_card_index div info_cols;
-        var col = hover_card_index mod info_cols;
-        
-        if (row < info_rows) {
-            var card_x = x - 1154 + col * 128*1.5;
-            var card_y = y - 265 + row * 142*1.5-y_offset;
-			//draw_sprite_ext(spr_info_island_select_box, 0, card_x, card_y, 1, 1, 0, c_white, 0.5)
-		}
-		
-        
-        // 绘制提示背景
-        draw_set_color(c_black);
-        draw_set_alpha(0.7);
-        draw_rectangle(tooltip_x - 5, tooltip_y - 5, 
-                      tooltip_x + 150, tooltip_y + 30, false);
-        
-        // 绘制提示文本
-		draw_set_halign(fa_left);
-		draw_set_valign(fa_top);
-        draw_set_alpha(1);
-        draw_set_color(c_white);
-        draw_text(tooltip_x, tooltip_y, "点击查看情报");
+        tooltip_set(mouse_x + 15, mouse_y - 15, "点击查看情报", 1);
     }
 	if select_card_index != -1{
 		//绘制右侧信息栏
@@ -219,34 +227,11 @@ else if info_button_select == 2 {
 	
 	surface_reset_target()
 	}
-	draw_surface(info_surface,x-1380,y-368)
+	draw_surface_ext(info_surface,x-1380,y-368,1,1,0,c_white,tab_fade)
     // 绘制悬停提示
     if (hover_card_index != -1) {
         // 获取鼠标位置
-        var tooltip_x = mouse_x + 15;
-        var tooltip_y = mouse_y - 15;
-		var row = hover_card_index div info_cols;
-        var col = hover_card_index mod info_cols;
-        
-        if (row < info_rows) {
-            var card_x = x - 1154 + col * 128*1.5;
-            var card_y = y - 265 + row * 142*1.5-y_offset;
-			//draw_sprite_ext(spr_info_island_select_box, 0, card_x, card_y, 1, 1, 0, c_white, 0.5)
-		}
-		
-        
-        // 绘制提示背景
-        draw_set_color(c_black);
-        draw_set_alpha(0.7);
-        draw_rectangle(tooltip_x - 5, tooltip_y - 5, 
-                      tooltip_x + 150, tooltip_y + 30, false);
-        
-        // 绘制提示文本
-		draw_set_halign(fa_left);
-		draw_set_valign(fa_top);
-        draw_set_alpha(1);
-        draw_set_color(c_white);
-        draw_text(tooltip_x, tooltip_y, "点击查看情报");
+        tooltip_set(mouse_x + 15, mouse_y - 15, "点击查看情报", 1);
     }
 	if select_card_index != -1{
 		//绘制右侧信息栏
@@ -345,34 +330,11 @@ else if info_button_select == 3 {
 	
 	surface_reset_target()
 	}
-	draw_surface(info_surface,x-1380,y-368)
+	draw_surface_ext(info_surface,x-1380,y-368,1,1,0,c_white,tab_fade)
     // 绘制悬停提示
     if (hover_card_index != -1) {
         // 获取鼠标位置
-        var tooltip_x = mouse_x + 15;
-        var tooltip_y = mouse_y - 15;
-		var row = hover_card_index div info_cols;
-        var col = hover_card_index mod info_cols;
-        
-        if (row < info_rows) {
-            var card_x = x - 1154 + col * 128*1.5;
-            var card_y = y - 265 + row * 142*1.5-y_offset;
-			//draw_sprite_ext(spr_info_island_select_box, 0, card_x, card_y, 1, 1, 0, c_white, 0.5)
-		}
-		
-        
-        // 绘制提示背景
-        draw_set_color(c_black);
-        draw_set_alpha(0.7);
-        draw_rectangle(tooltip_x - 5, tooltip_y - 5, 
-                      tooltip_x + 150, tooltip_y + 30, false);
-        
-        // 绘制提示文本
-		draw_set_halign(fa_left);
-		draw_set_valign(fa_top);
-        draw_set_alpha(1);
-        draw_set_color(c_white);
-        draw_text(tooltip_x, tooltip_y, "点击查看情报");
+        tooltip_set(mouse_x + 15, mouse_y - 15, "点击查看情报", 1);
     }
 	if select_card_index != -1{
 		//绘制右侧信息栏
@@ -402,6 +364,14 @@ else if info_button_select == 3 {
 
 
 // ===== 滚动条参数 =====
+    // 滚动平滑趋近：滚轮与点轨道只改目标值，这里每帧非线性逼近（等级 1；等级 0 直接到位）
+    if (ui_anim_on(1)) {
+        y_offset += (y_offset_target - y_offset) * 0.28
+        if (abs(y_offset_target - y_offset) < 0.5) y_offset = y_offset_target
+    } else {
+        y_offset = y_offset_target
+    }
+
 var sb_x       = x - 1388 + surface_width + 10;  // 起始位置 x（左边界）
 var sb_y_start = y - 352;                          // 起始位置 y（顶部）
 var sb_y_end   = y - 384 + surface_height;         // 结束位置 y（底部）
@@ -429,13 +399,16 @@ if (scroll_max > 0) {
     scrollbar_w = spr_w * sb_w;
     scrollbar_h = bar_height;
 
-    // 拖拽逻辑
+    // 拖拽逻辑 + 点轨道空白处跳到该处（与备战房 / 合成屋同一套交互）
     if (mouse_check_button_pressed(mb_left)) {
         if (point_in_rectangle(mouse_x, mouse_y, scrollbar_x, scrollbar_y,
                                scrollbar_x + scrollbar_w, scrollbar_y + scrollbar_h)) {
             scrollbar_dragging = true;
             scrollbar_drag_start_y = mouse_y;
             scrollbar_drag_start_offset = y_offset;
+        } else if (point_in_rectangle(mouse_x, mouse_y, scrollbar_x, sb_y_start,
+                                      scrollbar_x + scrollbar_w, sb_y_start + track_h)) {
+            y_offset_target = clamp((mouse_y - sb_y_start - bar_height * 0.5) / (track_h - bar_height) * scroll_max, 0, scroll_max);
         }
     }
 
@@ -443,6 +416,7 @@ if (scroll_max > 0) {
         var dy = mouse_y - scrollbar_drag_start_y;
         y_offset = scrollbar_drag_start_offset + dy * (scroll_max / (track_h - bar_height));
         y_offset = clamp(y_offset, 0, scroll_max);
+				y_offset_target = y_offset
     }
 
     if (mouse_check_button_released(mb_left)) {
@@ -454,3 +428,21 @@ if (scroll_max > 0) {
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
 draw_set_alpha(1);
+
+// 提示框：推进尺寸/消失动画并绘制（每帧一次）
+tooltip_draw();
+// ---- 过渡：把刚画好的整屏内容分左右两半错开贴上 ----
+surface_reset_target()
+// 接缝 951 = 左边列表面板的右缘（素材几何硬算 955~956，实机取 951）；写死会切坏左边的面板。
+// 注意：spr_info_island_bg_2 的 .yy 里 width/height 是过期的（写 473x487，PNG 实际 1892x1948），
+//       别用 sprite_get_width() 反推尺寸。
+var _split = 951
+var _shift = (1 - pnl_o) * anim_slide
+
+info_button_select = _real_tab        // 还原，别把「显示用页签」漏给 Step 逻辑
+
+// （页签计时见 Draw_0 顶部）
+
+// 菜单整体贴回：左半从左侧滑入、右半从右侧滑入，一起淡入（只有入场/退场动它，页签不参与）
+draw_surface_part_ext(anim_surf, 0, 0, _split, room_height, -_shift, 0, 1, 1, c_white, pnl_o)
+draw_surface_part_ext(anim_surf, _split, 0, room_width - _split, room_height, _split + _shift, 0, 1, 1, c_white, pnl_o)

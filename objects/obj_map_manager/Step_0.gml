@@ -1,44 +1,44 @@
 if keyboard_check_pressed(vk_escape){
 	if instance_exists(obj_config_menu){
-		instance_destroy(obj_config_menu)
+		panel_anim_close(obj_config_menu)
 		obj_player_info_ui.menu_type = 0
 	}
 	else if instance_exists(obj_edit_menu){
-		instance_destroy(obj_edit_menu)
+		panel_anim_close(obj_edit_menu)
 		obj_player_info_ui.menu_type = 0
 	}
 	else if instance_exists(obj_world_map_menu){
-		instance_destroy(obj_world_map_menu)
+		panel_anim_close(obj_world_map_menu)
 		obj_player_info_ui.menu_type = 0
 		obj_world_map_button.world_map = 0
 	}
 	else if instance_exists(obj_package_bg){
-		instance_destroy(obj_package_bg)
+		panel_anim_close(obj_package_bg)
 		obj_player_info_ui.menu_type = 0
 		obj_world_map_button.world_map = 0
 	}
 	else if instance_exists(obj_info_island_bg){
-		instance_destroy(obj_info_island_bg)
+		panel_anim_close(obj_info_island_bg)
 		obj_player_info_ui.menu_type = 0
 		obj_world_map_button.world_map = 0
 	}
 	else if instance_exists(obj_shop_bg){
-		instance_destroy(obj_shop_bg)
+		panel_anim_close(obj_shop_bg)
 		obj_player_info_ui.menu_type = 0
 		obj_world_map_button.world_map = 0
 	}
 	else if instance_exists(obj_task_bg){
-		instance_destroy(obj_task_bg)
+		panel_anim_close(obj_task_bg)
 		obj_player_info_ui.menu_type = 0
 		obj_world_map_button.world_map = 0
 	}
 	else if instance_exists(obj_craft_bg){
-		instance_destroy(obj_craft_bg)
+		panel_anim_close(obj_craft_bg)
 		obj_player_info_ui.menu_type = 0
 		obj_world_map_button.world_map = 0
 	}
 	else if instance_exists(obj_cookbook_bg){
-		instance_destroy(obj_cookbook_bg)
+		panel_anim_close(obj_cookbook_bg)
 		obj_player_info_ui.menu_type = 0
 		obj_world_map_button.world_map = 0
 	}
@@ -52,7 +52,7 @@ if keyboard_check_pressed(vk_escape){
 	}
 }
 
-if current_map_id != global.map_id{
+if current_map_id != global.map_id && ds_map_exists(global.maps_map, global.map_id){
 	instance_destroy(obj_levelselect_button)
 	current_map_id = global.map_id
 	var map_button_array = struct_get(ds_map_find_value(global.maps_map,current_map_id),"levels_data")

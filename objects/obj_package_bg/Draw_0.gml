@@ -1,8 +1,11 @@
+panel_anim_step(id)
+if (!instance_exists(id)) { exit }
 // 绘制事件
-draw_set_alpha(0.5);
+draw_set_alpha(0.5 * ui_anim_alpha(id));
 // 绘制半透明遮罩
 draw_rectangle_color(0, 0, room_width, room_height, c_black, c_black, c_black, c_black, false);
 draw_set_alpha(1);
+panel_anim_begin(id)
 draw_self()
 
 // 绘制背包格子背景
@@ -19,6 +22,24 @@ draw_set_color(c_white);
 draw_set_halign(fa_left);
 draw_set_valign(fa_bottom);
 draw_set_font(font_yuan)
+// ── 页签切换：整页淡入（旧页当帧消失，不做退场）──
+// 左右两半各用各的计时器：点左半的标签只淡左半，点右半只淡右半。
+// 左半（玩家信息）直接画在屏幕上，吃下面的 draw_set_alpha；右半是烘进 package_surface 再 blit，
+// 所以进 surface 之前先把 alpha 复位、只在 blit 上乘右半的淡入值。
+if (pg_t_l >= 0) { pg_t_l++; if (pg_t_l > pg_frames) pg_t_l = -1; }
+if (pg_t_r >= 0) { pg_t_r++; if (pg_t_r > pg_frames) pg_t_r = -1; }
+var _pg_ease_l = 1;
+if (pg_t_l >= 0) {
+	var _pg_pl = pg_t_l / pg_frames;
+	_pg_ease_l = 1 - (1 - _pg_pl) * (1 - _pg_pl) * (1 - _pg_pl);
+}
+var _pg_ease_r = 1;
+if (pg_t_r >= 0) {
+	var _pg_pr = pg_t_r / pg_frames;
+	_pg_ease_r = 1 - (1 - _pg_pr) * (1 - _pg_pr) * (1 - _pg_pr);
+}
+draw_set_alpha(_pg_ease_l);
+
 if info_button_select == 1{
 	//绘制武器栏位文字
 	draw_set_halign(fa_left);
@@ -107,11 +128,13 @@ else if info_button_select == 3{
 	draw_set_valign(fa_bottom);
 	draw_set_font(font_yuan)
 }
+draw_set_alpha(1)   // surface 里的内容按原样烘：页签淡入只加在 blit 上，避免平方淡出
 if package_button_select == 1 {
-	if surface_exists(package_surface){
-		surface_set_target(package_surface)
-		draw_clear_alpha(c_black,0)
-	}
+	// 目标必须设上，且与后面的 surface_reset_target() 成对：
+        // 否则会把外层表面目标弹掉
+        if (!surface_exists(package_surface)){ package_surface = surface_create(756,775) }
+        surface_set_target(package_surface)
+        draw_clear_alpha(c_black,0)
     for(var i = 0 ; i < package_cols ; i++){
         for(var j = 0 ; j < package_rows ; j++){
             draw_sprite_ext(spr_package_slot_bg, 0, 42+i*84,  48+96 * j-y_offset, 0.9, 0.9, 0, c_white, 1)
@@ -197,35 +220,28 @@ if package_button_select == 1 {
     }
 	
 	surface_reset_target()
+	draw_set_alpha(_pg_ease_r)
 	draw_surface(package_surface,x-354-42,y-361-48)
+	draw_set_alpha(1)
     
     // 绘制悬停提示
-    if (hover_card_index != -1) {
+    if (hover_card_index != -1 && !instance_exists(obj_craft_bg)) {
         // 获取鼠标位置
         var tooltip_x = mouse_x + 15;
         var tooltip_y = mouse_y + 15;
 		
 		var tooltip_text = "左键点击调节卡片\n右键点击查看情报"
         
-        // 绘制提示背景
-        draw_set_color(c_black);
-        draw_set_alpha(0.7);
-        draw_rectangle(tooltip_x - 5, tooltip_y - 5, 
-                      tooltip_x + string_width(tooltip_text)+5, tooltip_y + string_height(tooltip_text)+5, false);
-        
-        // 绘制提示文本
-		draw_set_halign(fa_left);
-		draw_set_valign(fa_top);
-        draw_set_alpha(1);
-        draw_set_color(c_white);
-        draw_text(tooltip_x, tooltip_y, tooltip_text);
+		// 悬浮提示：切换物品时框尺寸非线性过渡（tooltip_set / tooltip_draw）
+		tooltip_set(tooltip_x, tooltip_y, tooltip_text, 1);
     }
 }
 else if package_button_select == 2 {
-	if surface_exists(package_surface){
-		surface_set_target(package_surface)
-		draw_clear_alpha(c_black,0)
-	}
+	// 目标必须设上，且与后面的 surface_reset_target() 成对：
+        // 否则会把外层表面目标弹掉
+        if (!surface_exists(package_surface)){ package_surface = surface_create(756,775) }
+        surface_set_target(package_surface)
+        draw_clear_alpha(c_black,0)
     // 绘制武器背包
     for(var i = 0 ; i < package_cols ; i++){
         for(var j = 0 ; j < package_rows ; j++){
@@ -337,7 +353,9 @@ else if package_button_select == 2 {
     }
 	
 	surface_reset_target()
+	draw_set_alpha(_pg_ease_r)
 	draw_surface(package_surface,x-354-42,y-368-44)
+	draw_set_alpha(1)
     
     // 绘制悬停提示
     if (hover_weapon_index != -1) {
@@ -360,17 +378,8 @@ else if package_button_select == 2 {
                 tooltip_text = weapon_data.description + "\n左键点击装备"
             }
 			
-            // 绘制提示背景
-            draw_set_color(c_black);
-            draw_set_alpha(0.7);
-            draw_rectangle(tooltip_x - string_width(tooltip_text) - 5, tooltip_y - 5, 
-                          tooltip_x +5, tooltip_y + string_height(tooltip_text)+5, false);
-			//绘制提示文本
-			draw_set_halign(fa_left);
-            draw_set_valign(fa_top);
-            draw_set_alpha(1);
-            draw_set_color(c_white);
-			draw_text(tooltip_x- string_width(tooltip_text), tooltip_y, tooltip_text);
+		// 悬浮提示：切换物品时框尺寸非线性过渡（tooltip_set / tooltip_draw）
+		tooltip_set(tooltip_x, tooltip_y, tooltip_text, -1);
 			
             
         }
@@ -395,17 +404,8 @@ else if package_button_select == 2 {
                 tooltip_text = weapon_data.description + "\n左键点击镶嵌\n右键点击编辑"
             }
 			
-            // 绘制提示背景
-            draw_set_color(c_black);
-            draw_set_alpha(0.7);
-            draw_rectangle(tooltip_x - string_width(tooltip_text)- 5, tooltip_y - 5, 
-                          tooltip_x +5, tooltip_y + string_height(tooltip_text)+5, false);
-			//绘制提示文本
-			draw_set_halign(fa_left);
-            draw_set_valign(fa_top);
-            draw_set_alpha(1);
-            draw_set_color(c_white);
-			draw_text(tooltip_x- string_width(tooltip_text), tooltip_y, tooltip_text);
+		// 悬浮提示：切换物品时框尺寸非线性过渡（tooltip_set / tooltip_draw）
+		tooltip_set(tooltip_x, tooltip_y, tooltip_text, -1);
 			
             
         }
@@ -414,10 +414,11 @@ else if package_button_select == 2 {
 
 }
 else if package_button_select == 3{
-	if surface_exists(package_surface){
-		surface_set_target(package_surface)
-		draw_clear_alpha(c_black,0)
-	}
+	// 目标必须设上，且与后面的 surface_reset_target() 成对：
+        // 否则会把外层表面目标弹掉
+        if (!surface_exists(package_surface)){ package_surface = surface_create(756,775) }
+        surface_set_target(package_surface)
+        draw_clear_alpha(c_black,0)
 	// 绘制道具背包
     for(var i = 0 ; i < package_cols ; i++){
         for(var j = 0 ; j < package_rows ; j++){
@@ -475,7 +476,9 @@ else if package_button_select == 3{
         }
     }
 	surface_reset_target()
+	draw_set_alpha(_pg_ease_r)
 	draw_surface(package_surface,x-354-42,y-368-44)
+	draw_set_alpha(1)
 	// 绘制悬停提示
     if (hover_material_index != -1) {
 		var material_list = ds_map_keys_to_array(global.material_pool)
@@ -496,16 +499,8 @@ else if package_button_select == 3{
 			
             // 绘制提示背景
 			draw_set_font(font_yuan)
-            draw_set_color(c_black);
-            draw_set_alpha(0.7);
-            draw_rectangle(tooltip_x - string_width(tooltip_text) - 5, tooltip_y - 5, 
-                          tooltip_x +5, tooltip_y + string_height(tooltip_text)+5, false);
-			//绘制提示文本
-			draw_set_halign(fa_left);
-            draw_set_valign(fa_top);
-            draw_set_alpha(1);
-            draw_set_color(c_white);
-			draw_text(tooltip_x- string_width(tooltip_text), tooltip_y, tooltip_text);
+		// 悬浮提示：切换物品时框尺寸非线性过渡（tooltip_set / tooltip_draw）
+		tooltip_set(tooltip_x, tooltip_y, tooltip_text, -1);
 			
             
         }
@@ -516,3 +511,50 @@ else if package_button_select == 3{
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
 draw_set_alpha(1);
+
+// 悬浮提示框统一在最上层绘制（含 0.2s 宽限与淡出）
+tooltip_draw();
+// ── 卡片网格滚动条（与 obj_info_island_bg / GridList 用同一个精灵和同一套交互）──────
+// 卡片画进 package_surface（756×775），贴回见上面的 draw_surface；上限按当前页签取
+// Mouse_61 里的式子，保证滑块行程 = 滚轮能到的范围。必须在 panel_anim_end_split
+// 之前画：那之后面板 surface 已贴回，再画就录不进去了。
+{
+    var _sb_scl = 2.2
+    var _sb_w   = sprite_get_width(spr_info_island_scroll_bar)  * _sb_scl
+    var _sb_h   = sprite_get_height(spr_info_island_scroll_bar) * _sb_scl
+    var _sb_l   = x - 354 - 42
+    var _sb_t   = (package_button_select == 1) ? (y - 361 - 48) : (y - 368 - 44)
+    // 精灵原点是左上角 → x 是「按钮左边缘」，补半个按钮宽让中心落在凹槽线上
+    var _sb_x   = _sb_l + 756 - _sb_w + 28 + _sb_w * 0.5
+    var _sb_vh  = 775                                    // 视口高 = package_surface 高度
+    var _sb_max = (package_button_select == 1) ? (package_rows - 8) * 96 : (package_rows - 9) * 88
+    // 滚动平滑趋近：滚轮与点轨道只改目标值，这里每帧非线性逼近（等级 1；等级 0 直接到位）
+    if (ui_anim_on(1)) {
+        y_offset += (y_offset_target - y_offset) * 0.28
+        if (abs(y_offset_target - y_offset) < 0.5) y_offset = y_offset_target
+    } else {
+        y_offset = y_offset_target
+    }
+
+    if (_sb_max > 0 && _sb_vh > _sb_h) {
+        var _sb_travel = _sb_vh - _sb_h
+        var _sb_y = _sb_t + clamp(y_offset / _sb_max, 0, 1) * _sb_travel
+        draw_sprite_ext(spr_info_island_scroll_bar, 0, _sb_x, _sb_y, _sb_scl, _sb_scl, 0, c_white, 1)
+        if (mouse_check_button_pressed(mb_left)) {
+            if (point_in_rectangle(mouse_x, mouse_y, _sb_x, _sb_y, _sb_x + _sb_w, _sb_y + _sb_h)) {
+                sb_dragging = true
+                sb_drag_y = mouse_y
+                sb_drag_offset = y_offset
+            } else if (point_in_rectangle(mouse_x, mouse_y, _sb_x, _sb_t, _sb_x + _sb_w, _sb_t + _sb_vh)) {
+                y_offset_target = clamp((mouse_y - _sb_t - _sb_h * 0.5) / _sb_travel * _sb_max, 0, _sb_max)
+            }
+        }
+        if (sb_dragging && mouse_check_button(mb_left)) {
+            y_offset = clamp(sb_drag_offset + (mouse_y - sb_drag_y) * (_sb_max / _sb_travel), 0, _sb_max)
+            y_offset_target = y_offset
+        }
+        if (mouse_check_button_released(mb_left)) sb_dragging = false
+    }
+}
+
+panel_anim_end_split(id, 951, 260)

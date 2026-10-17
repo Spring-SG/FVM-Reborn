@@ -1,6 +1,6 @@
 global.audio.play(snd_button,0,0)
 if btn_type == "cancel"{
-	instance_destroy(obj_edit_menu)
+	panel_anim_close(obj_edit_menu)
 	obj_player_info_ui.menu_type = 0
 }
 else if btn_type == "save"{
@@ -8,7 +8,7 @@ else if btn_type == "save"{
 		event_user(0)
 	}
 	global.save_data.player.name = global.player_name
-	instance_destroy(obj_edit_menu)
+	panel_anim_close(obj_edit_menu)
 	obj_player_info_ui.menu_type = 0
 }
 else if btn_type == "open_save_folder"{

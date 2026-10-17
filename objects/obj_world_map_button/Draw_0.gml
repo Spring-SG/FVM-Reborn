@@ -1,4 +1,6 @@
-if global.menu_screen{
+// 过渡的淡出阶段先不画：那时旧房间还看得见，LOGO 突然冒出来很突兀
+//（淡入阶段照画：它被遮罩盖着，跟着画面一起显出来）
+if global.menu_screen && room_transition_state().mode != 1{
 	draw_self()
 	draw_sprite_ext(spr_map_name_display, 0, x, y+85, 0.9, 0.9, 0, c_white, 1)
 	draw_set_color(c_white)

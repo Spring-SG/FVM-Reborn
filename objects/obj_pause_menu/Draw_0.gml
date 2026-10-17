@@ -1,8 +1,12 @@
 // obj_pause_menu - Draw Event
+panel_anim_step(id)                 // 自己的淡入淡出（关闭播完自己销毁）
+if (!instance_exists(id)) { exit }
+var _a = ui_anim_alpha(id)
+
 // 绘制半透明背景
-draw_set_alpha(0.5);
+draw_set_alpha(0.5 * _a);
 draw_rectangle_color(0, 0, room_width, room_height, c_black, c_black, c_black, c_black, false);
-draw_set_alpha(1);
+draw_set_alpha(_a);   // 后面的文字/按钮都用 _a（draw_self 走 image_alpha）
 
 // 绘制菜单背景
 //var bg = spr_pause_menu;
@@ -39,9 +43,11 @@ for (var i = 0; i < array_length(buttons); i++) {
     }
     
     // 绘制按钮
-    draw_sprite_ext(spr_common_button,  frame,  btn_x,  btn_y, 0.75, 0.75,  0,  c_white,  1);
+    draw_sprite_ext(spr_common_button,  frame,  btn_x,  btn_y, 0.75, 0.75,  0,  c_white,  _a);
     
     // 绘制按钮文本
     draw_set_font(font_yuan);
     draw_text(btn_x, btn_y, btn[1]);
 }
+
+draw_set_alpha(1)                  // 复位，别把 alpha 漏给后面画的东西

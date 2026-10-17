@@ -1,5 +1,5 @@
 if global.menu_screen{
-	if world_map == 0 {
+	if world_map == 0 && !instance_exists(obj_world_map_menu) {   // 正在关闭时不重复创建
 		if instance_exists(obj_player_info_ui){
 			if obj_player_info_ui.menu_type != 0{
 				exit

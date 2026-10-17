@@ -167,3 +167,12 @@ function shop_list_recharge(){
 		}
 	}
 }
+
+// 整块面板的进出场过渡（实现在 scripts/GuiStack/GuiStack.gml）
+panel_anim_init(id, 0.28, 0.18, 260)
+panel_anim_kids(id, [obj_closeshop_btn, obj_shop_select_btn, obj_shop_page_btn, obj_shop_buy_btn, obj_shop_buy_confirm])
+
+// ── 页签切换：整页淡入（旧页当帧消失，不做退场）──
+pg_t      = -1;    // -1 = 无动画；>=0 = 动画进行到第几帧（0 = 全透明起步）
+pg_frames = 13;    // 时长（帧），60fps ≈ 0.22s
+pg_surf   = -1;    // 商品格内容的录制面（只在切页那 0.22s 里存在）

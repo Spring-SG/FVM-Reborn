@@ -13,3 +13,5 @@ for(var i = 0 ; i < array_length(remove_task_id_list);i++){
 }
 obj_player_info_ui.menu_type = 0
 obj_world_map_button.world_map = 0
+
+panel_anim_free(id)

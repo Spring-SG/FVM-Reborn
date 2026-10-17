@@ -61,3 +61,41 @@ var btn5 = instance_create_depth(x+420,y+90,depth-1,obj_player_attire_select_btn
 btn5.type = "next"
 
 var btn6 = instance_create_depth(x - 280, y +175 , depth-1, obj_update_checker_btn);
+
+// 时装切换动画（与设置面板难度名同一套做法：窗口内左右滑动 + 裁剪窗口）
+sw_shown  = selected_attire_index
+sw_from   = selected_attire_index
+sw_t      = -1
+sw_frames = 18
+sw_dir    = 1
+sw_pending_dir = 0          // 按钮按下时写入本次方向，Step 消费后清零
+
+sw_surf   = -1
+sw_win_l  = x - 174
+sw_win_t  = y - 16
+sw_win_w  = 548
+sw_win_h  = 224
+
+// ── 打开/关闭动效：整块从下方滑入 + 淡入（统一接口，说明见 scripts/GuiStack/GuiStack.gml 顶部）──
+// 设置面板同款。obj_update_checker_btn 传实例 id 而不是类型：obj_menu_manager/Create_0.gml:58
+// 也会创建它，传类型会把菜单管理器那个一起拖下来。
+panel_anim_init(id, 0.28, 0.18, 260);
+panel_anim_kids(id, [obj_edit_menu_button, obj_text_input, obj_save_slot_select_btn,
+                     obj_player_attire_select_btn, btn6]);
+
+function edit_attire_content_draw(_index, _dx, _dy){
+	if _index != -1{
+		var _id = player_attire_id_list[_index]
+		var _d  = get_attire_info(_id)
+		draw_sprite(_d.icon, 0, x + 100 + _dx, y + 95 + _dy)
+		draw_set_halign(fa_center)
+		draw_set_valign(fa_middle)
+		draw_text(x + 100 + _dx, y + 180 + _dy, _d.name)
+	}
+	else{
+		draw_set_halign(fa_center)
+		draw_set_valign(fa_middle)
+		draw_text(x - 75 + _dx, y + 100 + _dy, "无")
+	}
+}
+

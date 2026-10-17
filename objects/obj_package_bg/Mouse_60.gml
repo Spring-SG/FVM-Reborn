@@ -1,7 +1,7 @@
 
-if y_offset > 40{
-	y_offset -= 40
+if y_offset_target > 40{
+	y_offset_target -= 40
 }
 else{
-	y_offset = 0
+	y_offset_target = 0
 }

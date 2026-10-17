@@ -69,8 +69,18 @@ function draw_settings_page(){
 		btn5.tooltip_text = "将全屏变为无边框窗口模式\n该选项只会在你下一次切换全屏时生效"
 	    array_push(setting_buttons, btn5);
     
+		// 动效分级滑块：重新进入本页时旋钮直接对齐当前档位（不播回弹）
+		ui_anim_knob_dx = ui_anim_slider_dx[clamp(ui_anim_level(), 0, 2)];
+		ui_anim_snap_p  = 1;
+		ui_anim_drag    = false;
+    
 	    // 标记当前设置页面
 	    current_settings = id;
+	    // 记录本页子对象的基准 x：标签页滑动以此为原点（每个 page 创建按钮后各记一次）
+	    pg_base_x = [];
+	    for (var _pg_b = 0; _pg_b < array_length(setting_buttons); _pg_b++) {
+	        if (instance_exists(setting_buttons[_pg_b])) pg_base_x[_pg_b] = setting_buttons[_pg_b].x;
+	    }
 	}
 }
 
@@ -120,6 +130,11 @@ function draw_games_page(){
     
 	    // 标记当前设置页面
 	    current_settings = id;
+	    // 记录本页子对象的基准 x：标签页滑动以此为原点（每个 page 创建按钮后各记一次）
+	    pg_base_x = [];
+	    for (var _pg_b = 0; _pg_b < array_length(setting_buttons); _pg_b++) {
+	        if (instance_exists(setting_buttons[_pg_b])) pg_base_x[_pg_b] = setting_buttons[_pg_b].x;
+	    }
 	}
 }
 
@@ -138,7 +153,9 @@ function draw_audio_page(){
 	    var slider_max_x = x + 280;
 	    var slider_y = y - 135;
     
-	    // 创建音乐滑块
+	    // global.vol_intro_p 恒为 -1：音量条不播入场
+
+// 创建音乐滑块
 	    var slider_music = instance_create_depth(slider_min_x, slider_y, depth-1, obj_volume_slider);
 	    slider_music.volume_type = "music";
 	    slider_music.min_x = slider_min_x;
@@ -167,6 +184,11 @@ function draw_audio_page(){
     
 	    // 标记当前设置页面
 	    current_settings = id;
+	    // 记录本页子对象的基准 x：标签页滑动以此为原点（每个 page 创建按钮后各记一次）
+	    pg_base_x = [];
+	    for (var _pg_b = 0; _pg_b < array_length(setting_buttons); _pg_b++) {
+	        if (instance_exists(setting_buttons[_pg_b])) pg_base_x[_pg_b] = setting_buttons[_pg_b].x;
+	    }
 	}	
 }
 
@@ -215,6 +237,126 @@ function draw_controls_page(){
     
 	    // 标记当前设置页面
 	    current_settings = id;
+	    // 记录本页子对象的基准 x：标签页滑动以此为原点（每个 page 创建按钮后各记一次）
+	    pg_base_x = [];
+	    for (var _pg_b = 0; _pg_b < array_length(setting_buttons); _pg_b++) {
+	        if (instance_exists(setting_buttons[_pg_b])) pg_base_x[_pg_b] = setting_buttons[_pg_b].x;
+	    }
 	}
 }
 
+
+// ── 难度切换动画：检测 global.difficulty 变化并推进计时（与 Draw_0 case 3 的滑出/滑入配套）──
+if (global.difficulty != diff_shown) {
+    diff_anim_from = diff_shown;
+    diff_shown     = global.difficulty;
+    if (ui_anim_on(1)) {                    // 等级名滑动从「基础」档起；等级 0 直接换图，不走动画
+        diff_anim_t = 0;
+        var _d4     = (diff_shown - diff_anim_from + 4) mod 4;
+        diff_anim_dir = (_d4 == 1) ? 1 : -1;   // 1 = 下一级（新图从右侧进）；其余（含 3→0 回绕）当上一级
+    } else {
+        diff_anim_t = -1;
+    }
+}
+if (diff_anim_t >= 0) {
+    diff_anim_t++;
+    if (diff_anim_t >= diff_anim_frames) diff_anim_t = -1;
+}
+
+// （这里不再有音量条入场的计时）
+
+// ══════════════════════ 动效分级三档滑块（「画面设置」页第 6 行；绘制在 Draw_0 case 2）══════════════════════
+// 三档：0 = 关闭 / 1 = 基础 / 2 = 完全，读写的就是 scripts/GuiStack/GuiStack.gml 的 global.ui_anim
+/// @function ui_anim_nearest_stop(_dx)
+// 旋钮的相对 x → 最近的档位（0/1/2）
+function ui_anim_nearest_stop(_dx){
+	var _step = (ui_anim_slider_dx[2] - ui_anim_slider_dx[0]) / 2;  // 三档等距，半档 = 吸附半径
+	return clamp(round((_dx - ui_anim_slider_dx[0]) / _step), 0, 2);
+}
+
+/// @function ui_anim_slider_apply(_level)
+// 落到某一档：夹到 0..2 → 更新 global.ui_anim → 写 config.ini → 播按钮音（值没变就不写盘不出声）
+function ui_anim_slider_apply(_level){
+	_level = clamp(round(_level), 0, 2);
+	if (_level != clamp(ui_anim_level(), 0, 2)) {
+		global.ui_anim = _level;
+		ini_open("config.ini");
+		ini_write_real("settings", "ui_anim", _level);
+		ini_close();
+		global.audio.play(snd_button, 0, 0);
+	}
+}
+
+/// @function ui_anim_slider_step()
+// 拖动/点击 1:1 跟手；松手后按 ease-out 吸附到最近档位
+function ui_anim_slider_step(){
+	var _row_y = y + ui_anim_slider_dy;
+	var _x0    = x + ui_anim_slider_dx[0];
+	var _x2    = x + ui_anim_slider_dx[2];
+
+	// 在滑块行内按下（横向各留 16px 余量）：开始拖动。点某一档也走这条路——按下即 1:1 跟手
+	if (mouse_check_button_pressed(mb_left) &&
+		point_in_rectangle(mouse_x, mouse_y, _x0 - 16, _row_y - 20, _x2 + 16, _row_y + 20)) {
+		ui_anim_drag   = true;
+		ui_anim_snap_p = 1;
+	}
+
+	if (ui_anim_drag) {
+		if (mouse_check_button(mb_left)) {
+			ui_anim_knob_dx = clamp(mouse_x, _x0, _x2) - x;             // 拖动 1:1，不吸附
+			ui_anim_slider_apply(ui_anim_nearest_stop(ui_anim_knob_dx)); // 档位名与动效实时跟着走
+		} else {
+			ui_anim_drag = false;
+			ui_anim_slider_apply(ui_anim_nearest_stop(ui_anim_knob_dx));
+			ui_anim_snap_from = ui_anim_knob_dx;   // 松手：从当前位置回弹到落定的档位
+			ui_anim_snap_p    = 0;
+		}
+	}
+
+	// 吸附回弹：cubic ease-out（起步快、收尾慢；与难度名滑出/滑入同一套缓动），不用线性匀速
+	if (!ui_anim_drag && ui_anim_snap_p < 1) {
+		ui_anim_snap_p = min(1, ui_anim_snap_p + 1 / ui_anim_snap_frames);
+		var _e = 1 - (1 - ui_anim_snap_p) * (1 - ui_anim_snap_p) * (1 - ui_anim_snap_p);
+		ui_anim_knob_dx = ui_anim_snap_from
+		                + (ui_anim_slider_dx[clamp(ui_anim_level(), 0, 2)] - ui_anim_snap_from) * _e;
+	}
+}
+
+// 只有停在「画面设置」页才响应滑块；切走时清掉拖动状态
+if (button_select == 2) {
+	ui_anim_slider_step();
+} else {
+	ui_anim_drag = false;
+}
+
+// ── 标签页切换：整页位移 + 淡入的推进与施加（缓动/位移量与 Draw_0 的视口偏移严格同源）──
+// 只写 x / image_alpha 两个通道；入场期间（pnl_o < 0.999）不写：kid-sync 会覆盖它们。
+if (pg_t >= 0) {
+	var _pg_ease  = 1 - (1 - pg_t / pg_frames) * (1 - pg_t / pg_frames) * (1 - pg_t / pg_frames);
+	var _pg_shift = pg_dir * pg_slide * (1 - _pg_ease);
+	pg_shift = _pg_shift;   // 暴露给独立子对象（obj_volume_slider 的星星自己补这个偏移）
+	if (pnl_o >= 0.999) {
+		for (var _pg_i = 0; _pg_i < array_length(setting_buttons); _pg_i++) {
+			if (instance_exists(setting_buttons[_pg_i])) {
+				if (_pg_i < array_length(pg_base_x)) {
+					setting_buttons[_pg_i].x = pg_base_x[_pg_i] + _pg_shift;
+				}
+				setting_buttons[_pg_i].image_alpha = _pg_ease;
+			}
+		}
+	}
+	pg_t++;
+	if (pg_t > pg_frames) {
+		pg_t = -1;
+		pg_shift = 0;   // 收尾：偏移归零（星星自己补的就是这个值）
+		// 收尾：x 归基准、alpha 归 1，并把录制面还回去
+		for (var _pg_j = 0; _pg_j < array_length(setting_buttons); _pg_j++) {
+			if (instance_exists(setting_buttons[_pg_j])) {
+				if (_pg_j < array_length(pg_base_x)) setting_buttons[_pg_j].x = pg_base_x[_pg_j];
+				setting_buttons[_pg_j].image_alpha = 1;
+			}
+		}
+		if surface_exists(pg_surf) surface_free(pg_surf);
+		pg_surf = -1;
+	}
+}

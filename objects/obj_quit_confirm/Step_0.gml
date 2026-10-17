@@ -27,7 +27,7 @@ for (var i = 0; i < array_length(buttons); i++) {
 					if instance_exists(obj_world_map_button){
 						obj_world_map_button.world_map = 0
 					}
-                    instance_destroy();
+                    panel_anim_close(id);   // 淡出后再销毁
                     break;
                     
                 case 0: // 确定
@@ -59,5 +59,5 @@ for (var i = 0; i < array_length(buttons); i++) {
 
 // ESC键关闭确认窗口
 if (keyboard_check_pressed(vk_escape)) {
-    instance_destroy();
+    panel_anim_close(id);   // 淡出后再销毁
 }

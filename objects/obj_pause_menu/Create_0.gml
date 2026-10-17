@@ -21,3 +21,7 @@ submenu_open = false; // 是否有子菜单打开
 button_normal = 0; // 普通状态
 button_hover = 1; // 悬停状态
 button_pressed = 2; // 按下状态
+
+// 三级菜单淡入淡出（等级 1 起）
+panel_anim_init(id, 0.18, 0.22, 0, 3)
+panel_anim_kids(id, [])

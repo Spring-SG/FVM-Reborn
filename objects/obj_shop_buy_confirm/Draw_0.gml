@@ -1,14 +1,17 @@
 // obj_quit_confirm - Draw Event
+panel_anim_step(id)
+if (!instance_exists(id)) { exit }
+var _a = ui_anim_alpha(id)   // 跟着商城面板一起淡（文字不吃 image_alpha）
 
 // 绘制半透明背景
 if not instance_exists(obj_pause_menu){
-	draw_set_alpha(0.5);
+	draw_set_alpha(0.5 * _a);
 	draw_rectangle_color(0, 0, room_width, room_height, c_black, c_black, c_black, c_black, false);
-	draw_set_alpha(1);
 }
+draw_set_alpha(_a);
 
 // 绘制背景
-draw_sprite_ext(bg, 0, x, y, 1.5, 1.5, 0, c_white, 1);
+draw_sprite_ext(bg, 0, x, y, 1.5, 1.5, 0, c_white, _a);
 
 // 绘制提示文本
 draw_set_font(font_yuan);
@@ -40,7 +43,8 @@ for (var i = 0; i < array_length(buttons); i++) {
         frame = (mouse_check_button_pressed(mb_left)) ? 2 : 1;
     }
     
-    draw_sprite_ext(spr_common_button,  frame,  btn_x,  btn_y, 0.75, 0.75,  0,  c_white,  1);
+    draw_sprite_ext(spr_common_button,  frame,  btn_x,  btn_y, 0.75, 0.75,  0,  c_white,  _a);   // 跟着面板淡出
     draw_set_font(font_yuan);
     draw_text(btn_x, btn_y, btn[1]);
 }
+draw_set_alpha(1)

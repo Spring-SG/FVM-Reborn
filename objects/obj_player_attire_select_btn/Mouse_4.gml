@@ -1,3 +1,4 @@
+obj_edit_menu.sw_pending_dir = (type == "prev") ? -1 : 1   // 方向以按下的箭头为准
 if type == "prev"{
 	if obj_edit_menu.selected_attire_index > -1{
 		obj_edit_menu.selected_attire_index -= 1

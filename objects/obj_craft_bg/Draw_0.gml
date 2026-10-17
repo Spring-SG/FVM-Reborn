@@ -1,8 +1,16 @@
-draw_set_alpha(0.5);
+panel_anim_step(id)
+if (!instance_exists(id)) { exit }
+draw_set_alpha(0.5 * ui_anim_alpha(id));
 // 绘制半透明遮罩
 draw_rectangle_color(0, 0, room_width, room_height, c_black, c_black, c_black, c_black, false);
 draw_set_alpha(1);
-draw_self()
+// 基底（外框 + 面板底色）：固定不动、不参与滑动，所以画在 surface 之前（在遮罩之上、三层之下）
+draw_sprite_ext(spr_craft_bg_base, 0, x, y, image_xscale, image_yscale, 0, c_white, image_alpha * ui_anim_alpha(id))
+panel_anim_begin(id)
+// 背景拆成三层（外框在基底里，收尾时另外画，不参与滑动）
+draw_sprite_ext(spr_craft_bg_left,  0, x, y, image_xscale, image_yscale, 0, c_white, image_alpha)
+draw_sprite_ext(spr_craft_bg_right, 0, x, y, image_xscale, image_yscale, 0, c_white, image_alpha)
+draw_sprite_ext(spr_craft_bg_bar,   0, x, y, image_xscale, image_yscale, 0, c_white, image_alpha)
 
 draw_sprite_ext(spr_craft_gold_require_bg,0,x-45,y+300,1.8,1.8,0,c_white,1)
 
@@ -46,6 +54,7 @@ if button_select == 0{
 		}
 		
 	}
+	if (!surface_exists(card_surface)){ card_surface = surface_create(600,815) }   // 保证配对，别 set 到不存在的 surface
 	surface_set_target(card_surface)
 	//绘制右侧栏位
 	for(var i = 0 ; i < 7 ; i++){
@@ -101,27 +110,8 @@ if button_select == 0{
 	//绘制悬停提示
 	if (hover_card_index != -1) {
         
-		draw_set_font(font_yuan)
-        // 获取鼠标位置
-        var tooltip_x = mouse_x - 15;
-        var tooltip_y = mouse_y - 15;
-            
-		// 获取提示文本
-        var tooltip_text = "点击将卡片放入强化槽"
-        
-			
-        // 绘制提示背景
-        draw_set_color(c_black);
-        draw_set_alpha(0.7);
-        draw_rectangle(tooltip_x - string_width(tooltip_text) - 5, tooltip_y - 5, 
-                        tooltip_x +5, tooltip_y + string_height(tooltip_text)+5, false);
-		//绘制提示文本
-		draw_set_halign(fa_left);
-        draw_set_valign(fa_top);
-        draw_set_alpha(1);
-        draw_set_color(c_white);
-		draw_set_font(font_yuan)
-		draw_text(tooltip_x- string_width(tooltip_text), tooltip_y, tooltip_text);
+		draw_set_font(font_yuan);
+			tooltip_set(mouse_x - 15, mouse_y - 15, "点击将卡片放入强化槽", -1);
 			
             
     }
@@ -285,31 +275,9 @@ else if button_select == 1{
         
         if (!is_undefined(weapon_data)) {
 			draw_set_font(font_yuan)
-            // 获取鼠标位置
-            var tooltip_x = mouse_x - 15;
-            var tooltip_y = mouse_y - 15;
-            
-			// 获取提示文本
-            
-            var tooltip_text = weapon_data.name
-            var is_equipped = is_weapon_equipped(weapon_id);
-            
-            var slot = get_weapon_slot(weapon_id);
-            tooltip_text += "\n点击将宝石放入强化槽"
-            
-			
-            // 绘制提示背景
-            draw_set_color(c_black);
-            draw_set_alpha(0.7);
-            draw_rectangle(tooltip_x - string_width(tooltip_text) - 5, tooltip_y - 5, 
-                          tooltip_x +5, tooltip_y + string_height(tooltip_text)+5, false);
-			//绘制提示文本
-			draw_set_halign(fa_left);
-            draw_set_valign(fa_top);
-            draw_set_alpha(1);
-            draw_set_color(c_white);
-			draw_set_font(font_yuan)
-			draw_text(tooltip_x- string_width(tooltip_text), tooltip_y, tooltip_text);
+            var tooltip_text = weapon_data.name + "\n点击将宝石放入强化槽";
+            	draw_set_font(font_yuan);
+            	tooltip_set(mouse_x - 15, mouse_y - 15, tooltip_text, -1);
 			
             
         }
@@ -362,3 +330,49 @@ else if button_select == 1{
 		}
 	}
 }
+
+// ── 卡片网格滚动条（与 obj_info_island_bg / GridList 用同一个精灵和同一套交互）──────
+// 卡片画进 card_surface（600×815）、贴回在 (x+196-42, y-321-48)。必须在
+// panel_anim_end_parts 之前画：那之后面板 surface 已贴回，再画就录不进去了。
+{
+    var _sb_scl = 2.2
+    var _sb_w   = sprite_get_width(spr_info_island_scroll_bar)  * _sb_scl
+    var _sb_h   = sprite_get_height(spr_info_island_scroll_bar) * _sb_scl
+    var _sb_l   = x + 196 - 42
+    var _sb_t   = y - 321 - 48
+    // 精灵原点是左上角 → x 是「按钮左边缘」，补半个按钮宽让中心落在凹槽线上
+    var _sb_x   = _sb_l + 600 - _sb_w + 28 + _sb_w * 0.5
+    var _sb_vh  = 815                                    // 视口高 = card_surface 高度
+    var _sb_max = 96 * 20 - 815                          // 与 Mouse_61 同一上限
+    // 滚动平滑趋近：滚轮与点轨道只改目标值，这里每帧非线性逼近（等级 1；等级 0 直接到位）
+    if (ui_anim_on(1)) {
+        y_offset += (y_offset_target - y_offset) * 0.28
+        if (abs(y_offset_target - y_offset) < 0.5) y_offset = y_offset_target
+    } else {
+        y_offset = y_offset_target
+    }
+
+    if (_sb_max > 0 && _sb_vh > _sb_h) {
+        var _sb_travel = _sb_vh - _sb_h
+        var _sb_y = _sb_t + clamp(y_offset / _sb_max, 0, 1) * _sb_travel
+        draw_sprite_ext(spr_info_island_scroll_bar, 0, _sb_x, _sb_y, _sb_scl, _sb_scl, 0, c_white, 1)
+        if (mouse_check_button_pressed(mb_left)) {
+            if (point_in_rectangle(mouse_x, mouse_y, _sb_x, _sb_y, _sb_x + _sb_w, _sb_y + _sb_h)) {
+                sb_dragging = true
+                sb_drag_y = mouse_y
+                sb_drag_offset = y_offset
+            } else if (point_in_rectangle(mouse_x, mouse_y, _sb_x, _sb_t, _sb_x + _sb_w, _sb_t + _sb_vh)) {
+                y_offset_target = clamp((mouse_y - _sb_t - _sb_h * 0.5) / _sb_travel * _sb_max, 0, _sb_max)
+            }
+        }
+        if (sb_dragging && mouse_check_button(mb_left)) {
+            y_offset = clamp(sb_drag_offset + (mouse_y - sb_drag_y) * (_sb_max / _sb_travel), 0, _sb_max)
+            y_offset_target = y_offset
+        }
+        if (mouse_check_button_released(mb_left)) sb_dragging = false
+    }
+}
+
+// 提示框：推进尺寸/消失动画并绘制（每帧一次）
+tooltip_draw();
+panel_anim_end_parts(id, craft_parts, 260)

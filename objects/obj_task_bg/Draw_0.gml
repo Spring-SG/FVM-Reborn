@@ -1,7 +1,10 @@
-draw_set_alpha(0.5);
+panel_anim_step(id)                      // 推进过渡（关闭播完会销毁自己）
+if (!instance_exists(id)) { exit }        // 已被销毁：这一帧不再画
+draw_set_alpha(0.5 * ui_anim_alpha(id));   // 遮罩跟着面板一起淡
 // 绘制半透明遮罩
 draw_rectangle_color(0, 0, room_width, room_height, c_black, c_black, c_black, c_black, false);
 draw_set_alpha(1);
+panel_anim_begin(id)
 draw_self()
 
 if target_task_index != -1{
@@ -46,3 +49,5 @@ else{
 	draw_set_valign(fa_top)
 	draw_text(x-50,y-310,"点击左侧选项卡以查看任务。")
 }
+
+panel_anim_end_slide(id, 260)   // 整块从下方滑入 + 淡入

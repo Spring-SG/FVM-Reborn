@@ -1,8 +1,11 @@
+panel_anim_step(id)
+if (!instance_exists(id)) { exit }
 // 绘制事件
-draw_set_alpha(0.5);
+draw_set_alpha(0.5 * ui_anim_alpha(id));
 // 绘制半透明遮罩
 draw_rectangle_color(0, 0, room_width, room_height, c_black, c_black, c_black, c_black, false);
 draw_set_alpha(1);
+panel_anim_begin(id)
 draw_self()
 
 // 绘制玩家金币数量
@@ -23,6 +26,34 @@ draw_sprite_ext(spr_shop_bg_2,0,x,y+58,1.8,1.8,0,c_white,1)
 for(var i = 0 ; i< 4; i++){
 	for(var j = 0; j < 4; j++){
 		draw_sprite_ext(spr_shop_goods_bg,0,x-618+411*i,y-190+165*j,1.8,1.8,0,c_white,1)
+	}
+}
+
+// ── 页签切换：整页淡入（旧页当帧消失，不做退场）──
+// 面板自己画的商品格与标签统一吃 draw_set_alpha；子对象 obj_shop_buy_btn 是切页签时
+// 销毁重建的，所以按类型逐帧写 image_alpha，不依赖数组。
+if (pg_t >= 0) {
+	pg_t++;
+	if (pg_t > pg_frames) pg_t = -1;
+}
+var _pg_ease = 1;
+if (pg_t >= 0) {
+	var _pg_p = pg_t / pg_frames;
+	_pg_ease = 1 - (1 - _pg_p) * (1 - _pg_p) * (1 - _pg_p);
+}
+// 入场期间不写子对象：kid-sync 会覆盖
+if (pg_t >= 0 && pnl_o >= 0.999) {
+	with (obj_shop_buy_btn) { image_alpha = _pg_ease }
+}
+// 商品格内部成对使用 draw_set_alpha(0.5)/(1)（售罄压暗），外层 alpha 会被中途复位，故这段内容
+// 录进 pg_surf 后整体乘淡入值贴回。
+var _pg_live = false;
+if (pg_t >= 0 && pnl_o >= 0.999) {
+	if (!surface_exists(pg_surf)) pg_surf = surface_create(room_width, room_height);
+	if (surface_exists(pg_surf)) {
+		surface_set_target(pg_surf);
+		draw_clear_alpha(c_black, 0);
+		_pg_live = true;
 	}
 }
 
@@ -179,3 +210,11 @@ for(var i = 0 ; i< 4; i++){
 		}
 	}
 }
+
+if (_pg_live) {
+	surface_reset_target()
+	draw_surface_ext(pg_surf, 0, 0, 1, 1, 0, c_white, _pg_ease)
+}
+draw_set_alpha(1)   // 别把透明度漏给收尾
+
+panel_anim_end_slide(id, 260)

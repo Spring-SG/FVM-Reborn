@@ -42,6 +42,11 @@ slot_cols = 10
 slot_surface = -1
 map_surface = -1
 y_offset = 0
+y_offset_target = 0
+// 滚动条状态（绘制与拖动都在 Draw_0 末尾，与滚轮共用 y_offset）
+sb_dragging = false
+sb_drag_y = 0
+sb_drag_offset = 0
 
 is_submenu_open = false
 

@@ -1,1 +1,2 @@
 instance_destroy(obj_card_attire_select_btn)
+if surface_exists(sw_surf) surface_free(sw_surf)

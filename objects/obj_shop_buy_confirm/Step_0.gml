@@ -22,7 +22,7 @@ for (var i = 0; i < array_length(buttons); i++) {
             switch (i) {
                 case 1: // 取消
 					obj_shop_bg.is_submenu_opened = false
-                    instance_destroy();
+                    panel_anim_close(id);   // 淡出后再销毁
                     break;
                     
                 case 0: // 确定
@@ -65,7 +65,7 @@ for (var i = 0; i < array_length(buttons); i++) {
 						with obj_shop_bg{
 							shop_list_recharge()
 						}
-					instance_destroy()
+					panel_anim_close(id)   // 淡出后再销毁
                     break;
             }
 			global.audio.play(snd_button,0,0)
@@ -76,5 +76,5 @@ for (var i = 0; i < array_length(buttons); i++) {
 
 // ESC键关闭确认窗口
 if (keyboard_check_pressed(vk_escape)) {
-    instance_destroy();
+    panel_anim_close(id);   // 淡出后再销毁
 }

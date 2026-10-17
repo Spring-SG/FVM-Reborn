@@ -27,7 +27,7 @@ if (!submenu_open) {
             if (mouse_check_button_released(mb_left)) {
                 switch (i) {
                     case 0: // 继续游戏
-                        instance_destroy();
+                        panel_anim_close(id);   // 淡出后再销毁
                         global.is_paused = false;
                         global.show_menu = false;
                         break;

@@ -68,4 +68,4 @@ else if btn_type == "apply"{
 	save_file(global.save_slot)
 }
 obj_package_bg.is_submenu_opened = false
-instance_destroy(obj_card_edit_menu)
+panel_anim_close(obj_card_edit_menu)      // 反向淡完再销毁

@@ -44,4 +44,4 @@ else if btn_type == "apply"{
 	save_file(0)
 }
 obj_package_bg.is_submenu_opened = false
-instance_destroy(obj_gem_edit_menu)
+panel_anim_close(obj_gem_edit_menu)      // 反向淡完再销毁

@@ -1,4 +1,6 @@
 // 滑块属性
+star_prev_x = x;    // 星星滚动用：上一帧的位置
+spin_angle  = 0;    // 累计旋转角度（度）
 image_xscale = 1
 image_yscale = 1
 volume_type = ""; // "music" 或 "sound"（由创建者设置）

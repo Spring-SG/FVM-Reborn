@@ -72,8 +72,14 @@ function refresh_task_list(){
 			array_push(current_task_list,saved_task_list[i])
 			var inst = instance_create_depth(x-400,y-130+52*(array_length(current_task_list)-1),depth-1,obj_task_line_bg)
 			inst.btn_index = array_length(current_task_list)-1
+			// 瀑布流入场（等级 2）：本页从上往下依次延迟 2 帧（与食神谱 obj_cookbook_bg:37 同款）
+			inst.wf_t = ui_anim_on(2) ? -(inst.btn_index * 2) : 18
 			inst.task_title = task_data.title
 			inst.state = saved_task_list[i].state
 		}
 	}
 }
+
+// 整块面板的进出场过渡（实现在 scripts/GuiStack/GuiStack.gml）
+panel_anim_init(id, 0.28, 0.18, 260)
+panel_anim_kids(id, [obj_closetask_btn, obj_task_claim_btn, obj_task_line_bg, obj_task_select_btn])

@@ -1,4 +1,4 @@
 if not obj_package_bg.is_submenu_opened{
 global.audio.play(snd_button,0,0)
-instance_destroy(obj_package_bg)
+panel_anim_close(obj_package_bg)      // 反向滑出 + 淡出，播完由 panel_anim_step 销毁
 }

@@ -11,3 +11,7 @@ for (var i = 0; i < array_length(setting_buttons); i++) {
         instance_destroy(setting_buttons[i]);
     }
 }
+
+// 释放过渡用的 surface 与子对象登记表（surfaces 不会自己回收）
+panel_anim_free(id);
+if surface_exists(pg_surf) surface_free(pg_surf)

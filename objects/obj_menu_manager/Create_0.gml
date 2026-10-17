@@ -60,6 +60,7 @@ if !global.preloaded{
 }
 
 function after_texture_load() {
+	if (ui_anim_on(1)) self.outro_t = 0   // 等级 1/2 才开始收尾（黑滤镜淡出 + LOGO 下移 50px 淡出）；等级 0 加载界面直接消失
     scribble_font_set_default("font_hei")
     scribble_font_bake_outline_4dir("font_hei", "font_hei_outline_4dir_black", c_dkgray, false)
 	if !global.preloaded{
@@ -108,14 +109,25 @@ self.active_width = 0
 self.offset_x = (room_width - self.total_progress_bar_width) / 2
 self.offset_y = (room_height/2 + 250)
 self.animating = false
+self.outro_t = -1            // 收尾动画：-1 = 无；>=0 = 播放中（加载完成后触发）
+self.outro_frames = 48       // 时长（帧），60fps ≈ 0.8s
 function on_draw() {
-    if (!self.animating && self.texture_loaded == 0) return;
-    if (global.preloaded) return;
+    if (self.outro_t < 0) {
+        if (global.preloaded) return;
+        if (!self.animating && self.texture_loaded == 0) return;
+    }
+
+    // 收尾进度 0 → 1（非线性 ease-out：起步快、收尾慢）
+    var _out = 0;
+    if (self.outro_t >= 0) {
+        _out = clamp(self.outro_t / self.outro_frames, 0, 1);
+        _out = 1 - (1 - _out) * (1 - _out) * (1 - _out);
+    }
+    var _fade = 1 - _out;   // 加载界面留存度（黑滤镜 / 进度条 / 文字一起淡出）
 
     draw_set_colour(c_black);
-    draw_set_alpha(0.8);
+    draw_set_alpha(0.8 * _fade);
     draw_rectangle(0, 0, room_width, room_height, false);
-    draw_set_alpha(1);
 
     var _ratio = (self.texture_count > 0) ? (self.display_progress / self.texture_count) : 0;
     var _current_width = self.total_progress_bar_width * _ratio;
@@ -124,12 +136,14 @@ function on_draw() {
     var _y1 = self.offset_y;
     var _bar_h = 20;
 
+    draw_set_alpha(_fade);
     draw_set_color(self.inactive_bg);
     draw_rectangle(_x1 - 2, _y1 - 2, _x1 + self.total_progress_bar_width + 2, _y1 + _bar_h + 2, false);
 
     draw_set_color(self.active_bg);
     draw_rectangle(_x1, _y1, _x1 + _current_width, _y1 + _bar_h, false);
-	draw_sprite_ext(spr_game_logo,0,room_width/2,room_height/3,1,1,0,c_white,1)
+	// LOGO：加载完成后下移 50px 并淡出
+	draw_sprite_ext(spr_game_logo,0,room_width/2,room_height/3 + 50 * _out,1,1,0,c_white,_fade)
     
 	draw_set_valign(fa_left)
 	draw_set_halign(fa_top)
@@ -144,5 +158,5 @@ function on_draw() {
 	draw_set_halign(fa_center)
 	draw_set_colour(c_yellow)
 	draw_text(_x1+self.total_progress_bar_width/2, _y1 - 80, "本游戏为免费开源游戏，任何付费获取方式均为诈骗\n游戏作者B站名称：Spring曙光");
+	draw_set_alpha(1)
 }
-

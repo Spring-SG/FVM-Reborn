@@ -7,3 +7,5 @@ obj_world_map_button.world_map = 0
 if surface_exists(package_surface){
 	surface_free(package_surface)
 }
+
+panel_anim_free(id)
