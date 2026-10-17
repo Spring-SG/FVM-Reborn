@@ -140,5 +140,5 @@ function enemy_init(){
 	register_enemy("carpet_mouse",{"name":"飞毯鼠","_obj":obj_carpet_mouse,"hp":1800,"shield":0,"description":"飞毯鼠：空降并使用地毯罩住卡片","speed":0.30,"atk":10,"cycle":36,"range":90,"ash_proof":false,"spr":spr_carpet_mouse_air,"feature":"land"})
 	register_enemy("barrel_mouse",{"name":"酒桶鼠","_obj":obj_barrel_mouse,"hp":2700,"shield":0,"description":"酒桶鼠：免疫爆炸伤害并减伤","speed":0.45,"atk":10,"cycle":36,"range":90,"ash_proof":true,"spr":spr_barrel_mouse,"feature":"land"})
 	register_enemy("travel_record",{"name":"旅行唱机","_obj":obj_travel_record,"hp":50000,"shield":0,"description":"旅行唱机：探险营地BOSS","speed":0.3,"atk":10,"cycle":36,"range":90,"ash_proof":true,"spr":spr_travel_record_idle_2,"feature":"land"})
-	register_enemy("beverage_machine",{"name":"饮料贩卖机","_obj":obj_travel_record,"hp":80000,"shield":0,"description":"饮料贩卖机：探险营地BOSS","speed":0.3,"atk":10,"cycle":36,"range":90,"ash_proof":true,"spr":spr_travel_record_idle_2,"feature":"land"})
+	register_enemy("beverage_machine",{"name":"饮料贩卖机","_obj":obj_beverage_machine,"hp":80000,"shield":0,"description":"饮料贩卖机：探险营地BOSS","speed":0.3,"atk":10,"cycle":36,"range":90,"ash_proof":true,"spr":spr_beverage_machine_idle,"feature":"land"})
 }

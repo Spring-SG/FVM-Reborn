@@ -47,7 +47,7 @@ global.level_name = "曲奇岛"
 global.level_data = {}
 global.debug = 0
 global.laboretory_room = false
-global.game_version = "2.4.1"
+global.game_version = "3.0.0"
 global.tower_level_click = false
 global.tower_cake_page = 1
 Music_Init()

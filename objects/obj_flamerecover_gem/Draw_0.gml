@@ -36,7 +36,7 @@ if on_click{
     var text_height = string_height_ext(description, 0.65, 180);
     
     var box_width = text_width + 20;
-    var box_height = text_height + 15;
+    var box_height = text_height + 30;
 	
 
 	display_description += "\n自动使用"

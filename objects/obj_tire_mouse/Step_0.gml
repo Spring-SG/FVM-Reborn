@@ -34,6 +34,29 @@ else{
 	current_move_speed = move_speed
 }
 
+if hp > 0 && state != ENEMY_STATE.DEAD{
+	if state == ENEMY_STATE.DIG{
+		anim_timer++
+		if hp > maxhp*hurt_rate{
+			image_index = floor(anim_timer/5) mod 16
+		}
+		else{
+			image_index = floor(anim_timer/5) mod 16 + 16
+		}
+		if anim_timer == 16*5 - 1{
+			state = ENEMY_STATE.NORMAL
+			anim_timer = 0
+			sprite_index = spr_tire_mouse_land
+			move_anim = 8
+			attack_anim = 6
+			death_anim = 15
+			atk_cycle = 36
+			atk = 10
+			move_speed = 0.3
+		}
+	}
+}
+
 if is_frozen || is_stun || scare_timer > 0{
 	exit
 }
@@ -57,26 +80,6 @@ if hp > 0 && state != ENEMY_STATE.DEAD{
 			instance_create_depth(x,y,-800,obj_tire_mouse_tire)
 		}
 		if anim_timer == 10*5 - 1{
-			state = ENEMY_STATE.NORMAL
-			anim_timer = 0
-			sprite_index = spr_tire_mouse_land
-			move_anim = 8
-			attack_anim = 6
-			death_anim = 15
-			atk_cycle = 36
-			atk = 10
-			move_speed = 0.3
-		}
-	}
-	if state == ENEMY_STATE.DIG{
-		anim_timer++
-		if hp > maxhp*hurt_rate{
-			image_index = floor(anim_timer/5) mod 16
-		}
-		else{
-			image_index = floor(anim_timer/5) mod 16 + 16
-		}
-		if anim_timer == 16*5 - 1{
 			state = ENEMY_STATE.NORMAL
 			anim_timer = 0
 			sprite_index = spr_tire_mouse_land

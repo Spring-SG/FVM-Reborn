@@ -9,8 +9,11 @@ if (hp <= 0 && state != ENEMY_STATE.DEAD) {
 	sprite_index = spr_carpet_mouse
 }
 if !appear{
-	target_col = irandom_range(2,6)
+	target_col = irandom_range(4,6)
 	target_row = irandom_range(0,global.grid_rows-1)
+	while global.row_feature[target_row] != "land"{
+		target_row = irandom_range(0,global.grid_rows-1)
+	}
 	var target_pos = get_world_position_from_grid(target_col,target_row)
 	x = target_pos.x+10
 	y = -sprite_height - 10

@@ -16,10 +16,10 @@ draw_text(x-430,y+372,"欢迎来到魔塔蛋糕！在这里，你开始时就拥
 
 //绘制关卡信息
 if level_select != -1{
-	draw_text(x+176,y-360,global.level_data.name)
-	draw_text(x+176,y-315,(global.level_file.level_time_feature == "night" ? "黑夜":"白天")+"关卡")
-	draw_text(x+176,y-270,"争分夺秒")
-	draw_text(x+176,y-225,string(floor(global.level_file.time_limit/60))+"分钟")
+	draw_text(x+176,y-365,global.level_data.name)
+	draw_text(x+176,y-320,(global.level_file.level_time_feature == "night" ? "黑夜":"白天")+"关卡")
+	draw_text(x+176,y-275,"争分夺秒")
+	draw_text(x+176,y-230,string(floor(global.level_file.time_limit/60))+"分钟")
 	
 	draw_set_halign(fa_center)
 	draw_set_valign(fa_middle)
@@ -34,10 +34,10 @@ if level_select != -1{
 	draw_surface(map_surface,x-434,y-380)
 }
 else{
-	draw_text(x+176,y-360,"未选择关卡")
-	draw_text(x+176,y-315,"未选择关卡")
-	draw_text(x+176,y-270,"未选择关卡")
-	draw_text(x+176,y-225,"未选择关卡")
+	draw_text(x+176,y-365,"未选择关卡")
+	draw_text(x+176,y-320,"未选择关卡")
+	draw_text(x+176,y-275,"未选择关卡")
+	draw_text(x+176,y-230,"未选择关卡")
 	draw_set_halign(fa_center)
 	draw_set_valign(fa_middle)
 	draw_text(x-50,y+100,"请点击左侧关卡列表以选择关卡")

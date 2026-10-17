@@ -11,6 +11,12 @@
 					event_user(0)
 		            // 受伤效果
 		            //effect_create_above(effect_smoke, x, y, 1, c_gray);
+					if get_gem_index("ice_gem")!= -1{
+						var f_value = get_gem_info("ice_gem").ice_time[get_gem_level("ice_gem")] * 60
+						if ice_timer < f_value{
+							ice_timer = f_value
+						}
+					}
 		        } else {
 		            // 直接摧毁非免疫敌人
 					if special_ash{
