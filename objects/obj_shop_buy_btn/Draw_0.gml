@@ -7,7 +7,7 @@ draw_set_color(c_black)
 draw_set_halign(fa_center)
 draw_set_valign(fa_middle)
 ui_anim_text_alpha(id)	// 文字不吃 image_alpha，跟着面板一起淡
-draw_text(x,y-110,goods_name)
+draw_text(x+3,y-110,goods_name)
 draw_set_font(font_number)
 if not is_disabled{
 	draw_set_color(c_yellow)

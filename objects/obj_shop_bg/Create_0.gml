@@ -39,9 +39,9 @@ shop_list_recharge()
 function shop_list_recharge(){
 	ds_list_clear(goods_list)
 	
-	var map_array = []
+	var map_array = global.goods_id_pool
 
-	ds_map_keys_to_array(global.goods_map,map_array)
+	//ds_map_keys_to_array(global.goods_map,map_array)
 
 	var goods_array_size = array_length(map_array)
 

@@ -5,6 +5,7 @@ image_speed = 0
 is_submenu_opened = false
 button_select = -1
 target_task_index = -1
+y_offset = 0
 
 current_task_list = []
 
@@ -59,6 +60,7 @@ function check_card_upgrade(){
 function refresh_task_list(){
 	check_card_upgrade()
 	instance_destroy(obj_task_line_bg)
+	y_offset = 0
 	//target_task_index = -1
 	current_task_list = []
 	var saved_task_list = global.save_data.tasks

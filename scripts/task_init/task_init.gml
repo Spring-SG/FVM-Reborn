@@ -979,7 +979,7 @@ function task_init(){
 					{
 						"type":"level_complete",
 						"target_level":"snowcap_volcano",
-						"desc":"通关一次雪顶火山）",
+						"desc":"通关一次雪顶火山",
 						"require":1,
 					}
 				],
@@ -1966,6 +1966,120 @@ function task_init(){
 					{
 						"type":"gold",
 						"amount":5000
+					}
+				]
+			}
+		)
+		register_task("camp_level_0",
+			{
+				"type":"side_task",
+				"title":"前往探险营地",
+				"desc":"击败旅行唱机，开始你的探险营地之旅。",
+				"single_game":false,//非单局完成
+				"oneshot":false,//非一命完成
+				"task_unlock":"camp_level_1",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"chiffon_camp_daytime",
+						"desc":"通关一次戚风营地（日）",
+						"require":1,
+					}
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"secret_spices",
+						"amount":50
+					},
+					{
+						"type":"gold",
+						"amount":5000
+					}
+				]
+			}
+		)
+		register_task("camp_level_1",
+			{
+				"type":"side_task",
+				"title":"宁缺毋滥",
+				"desc":"在缺少卡槽的情况下通关坚果高台（日）。",
+				"single_game":true,//单局完成
+				"oneshot":false,//非一命完成
+				"task_unlock":"camp_level_2",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"nut_platform_daytime",
+						"desc":"通关一次坚果高台（日）",
+						"require":1,
+					},
+					{
+						"type":"slot_limit",
+						"desc":"不得携带超过7张卡片",
+						"require":7,
+					},
+					{
+						"type":"card_progress_limit",
+						"desc":"使用不超过11星和1转的卡片",
+						"card_level_limit":11,
+						"card_shape_limit":1,
+						"card_skill_limit":8,
+						"require":1,
+					}
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"camp_coin",
+						"amount":3
+					},
+					{
+						"type":"gold",
+						"amount":25000
+					}
+				]
+			}
+		)
+		register_task("camp_level_2",
+			{
+				"type":"side_task",
+				"title":"刺刺失踪了",
+				"desc":"在不使用鱼刺类卡片的情况下通关坚果高台（夜）。",
+				"single_game":true,//单局完成
+				"oneshot":false,//非一命完成
+				"task_unlock":"none",
+				"requirements":[
+					{
+						"type":"level_complete",
+						"target_level":"nut_platform_night",
+						"desc":"通关一次坚果高台（夜）",
+						"require":1,
+					},
+					{
+						"type":"card_type_limit",
+						"desc":"不能携带任何地刺类卡片",
+						"limit_card_type":"fishbone",
+						"require":1,
+					},
+					{
+						"type":"card_progress_limit",
+						"desc":"使用不超过11星和1转的卡片",
+						"card_level_limit":11,
+						"card_shape_limit":1,
+						"card_skill_limit":8,
+						"require":1,
+					}
+				],
+				"rewards":[
+					{
+						"type":"item",
+						"item_id":"camp_coin",
+						"amount":3
+					},
+					{
+						"type":"gold",
+						"amount":25000
 					}
 				]
 			}

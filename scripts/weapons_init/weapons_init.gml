@@ -6,8 +6,8 @@ function weapons_init(){
 										"slot":"main_weapon",
 										"atk":10,
 										"cycle":78,
-										"description":"笼包枪：发射包子攻击敌人",
-										"name":"笼包枪",
+										"description":"笼包枪：发射包子攻击敌人\n需装备于主武器槽位",
+										"name":"笼包枪（主武器）",
 										"atk_impact":[12,14,16,18,20,22,26,32,40,55,70,85,100,115,130,145]
 										})
 		register_weapon("star_gun",{"sprite":spr_star_gun_icon,
@@ -16,8 +16,8 @@ function weapons_init(){
 										"slot":"main_weapon",
 										"atk":10,
 										"cycle":78,
-										"description":"星星枪：发射两发星星攻击敌人",
-										"name":"星星枪",
+										"description":"星星枪：发射两发星星攻击敌人\n需装备于主武器槽位",
+										"name":"星星枪（主武器）",
 										"atk_impact":[12,14,16,18,20,22,26,32,40,55,70,85,100,115,130,145]
 										})
 		register_weapon("ice_gun",{"sprite":spr_ice_gun,
@@ -26,8 +26,8 @@ function weapons_init(){
 										"slot":"main_weapon",
 										"atk":10,
 										"cycle":78,
-										"description":"冰块枪：发射减速冰弹攻击敌人",
-										"name":"冰块枪",
+										"description":"冰块枪：发射减速冰弹攻击敌人\n需装备于主武器槽位",
+										"name":"冰块枪（主武器）",
 										"atk_impact":[12,14,16,18,20,22,26,32,40,55,70,85,100,115,130,145]
 										})
 		register_weapon("cat_gun",{"sprite":spr_cat_gun,
@@ -36,8 +36,8 @@ function weapons_init(){
 										"slot":"main_weapon",
 										"atk":10,
 										"cycle":78,
-										"description":"猫猫枪：发射能惊吓敌人的猫猫弹",
-										"name":"猫猫枪",
+										"description":"猫猫枪：发射能惊吓敌人的猫猫弹\n需装备于主武器槽位",
+										"name":"猫猫枪（主武器）",
 										"atk_impact":[12,14,16,18,20,22,26,32,40,55,70,85,100,115,130,145]
 										})
 		register_weapon("mighty_gun",{"sprite":spr_mighty_gun,
@@ -46,8 +46,8 @@ function weapons_init(){
 									"slot":"main_weapon",
 									"atk":10,
 									"cycle":78,
-									"description":"威武枪：发射四颗子弹攻击敌人",
-									"name":"威武枪",
+									"description":"威武枪：发射四颗子弹攻击敌人\n需装备于主武器槽位",
+									"name":"威武枪（主武器）",
 									"atk_impact":[12,14,16,18,20,22,26,32,40,55,70,85,100,115,130,145]
 									})
 		register_weapon("steel_claw_gun",{"sprite":spr_steel_claw_gun,
@@ -56,8 +56,8 @@ function weapons_init(){
 									"slot":"main_weapon",
 									"atk":10,
 									"cycle":78,
-									"description":"钢爪枪：向前方三行发射水弹",
-									"name":"钢爪枪",
+									"description":"钢爪枪：向前方三行发射水弹\n需装备于主武器槽位",
+									"name":"钢爪枪（主武器）",
 									"atk_impact":[12,14,16,18,20,22,26,32,40,55,70,85,100,115,130,145]
 									})
 		register_weapon("bubble_gun",{"sprite":spr_bubble_gun_icon,
@@ -66,8 +66,8 @@ function weapons_init(){
 									"slot":"main_weapon",
 									"atk":10,
 									"cycle":78,
-									"description":"泡泡枪：发射穿透泡泡",
-									"name":"泡泡枪",
+									"description":"泡泡枪：发射穿透泡泡\n需装备于主武器槽位",
+									"name":"泡泡枪（主武器）",
 									"atk_impact":[12,14,16,18,20,22,26,32,40,55,70,85,100,115,130,145]
 									})
 		register_weapon("double_water_gun",{"sprite":spr_double_water_gun,
@@ -76,8 +76,8 @@ function weapons_init(){
 									"slot":"main_weapon",
 									"atk":10,
 									"cycle":78,
-									"description":"双向水枪：向前后两个方向发射水弹",
-									"name":"双向水枪",
+									"description":"双向水枪：向前后两个方向发射水弹\n需装备于主武器槽位",
+									"name":"双向水枪（主武器）",
 									"atk_impact":[12,14,16,18,20,22,26,32,40,55,70,85,100,115,130,145]
 									})
 		register_weapon("ice_spoon_crossbow",{"sprite":spr_ice_spoon_crossbow,
@@ -86,8 +86,8 @@ function weapons_init(){
 									"slot":"main_weapon",
 									"atk":60,
 									"cycle":180,
-									"description":"冰勺弩枪：投掷减速冰鸡蛋",
-									"name":"冰勺弩枪",
+									"description":"冰勺弩枪：投掷减速冰鸡蛋\n需装备于主武器槽位",
+									"name":"冰勺弩枪（主武器）",
 									"atk_impact":[72, 84, 96, 118, 140, 162, 196, 232, 270, 335, 430, 535, 650, 775, 910, 1045]
 									})
 		register_weapon("poseidon_dart_gun",{"sprite":spr_poseidon_dart_gun,
@@ -96,8 +96,8 @@ function weapons_init(){
 										"slot":"main_weapon",
 										"atk":20,
 										"cycle":90,
-										"description":"海神镖枪：发射两个追踪飞镖攻击敌人",
-										"name":"海神镖枪",
+										"description":"海神镖枪：发射两个追踪飞镖攻击敌人\n需装备于主武器槽位",
+										"name":"海神镖枪（主武器）",
 										"atk_impact":[24,28,32,36,40,44,52,64,80,110,140,170,200,230,260,290]
 										})
 		register_weapon("ice_mighty_gun",{"sprite":spr_ice_mighty_gun,
@@ -106,8 +106,8 @@ function weapons_init(){
 									"slot":"main_weapon",
 									"atk":15,
 									"cycle":78,
-									"description":"冰威武枪：发射四颗冰弹攻击敌人",
-									"name":"冰威武枪",
+									"description":"冰威武枪：发射四颗冰弹攻击敌人\n需装备于主武器槽位",
+									"name":"冰威武枪（主武器）",
 									"atk_impact":[18, 21, 24, 27, 30, 33, 39, 48, 60, 80, 100, 120, 140, 160, 180, 200]
 									})
 		register_weapon("double_ice_crossbow",{"sprite":spr_double_ice_crossbow,
@@ -116,8 +116,8 @@ function weapons_init(){
 									"slot":"main_weapon",
 									"atk":60,
 									"cycle":180,
-									"description":"冰霜连弩：投掷两个减速冰鸡蛋",
-									"name":"冰霜连弩",
+									"description":"冰霜连弩：投掷两个减速冰鸡蛋\n需装备于主武器槽位",
+									"name":"冰霜连弩（主武器）",
 									"atk_impact":[72, 84, 96, 118, 140, 162, 196, 232, 270, 335, 430, 535, 650, 775, 910, 1045]
 									})
 	}
@@ -127,24 +127,24 @@ function weapons_init(){
 									"obj":obj_player_shield,
 									"slot":"secondary_weapon",
 									"hp_increase":100,
-									"description":"小圆饼盾牌：增加100生命值",
-									"name":"小圆饼盾牌",
+									"description":"小圆饼盾牌：增加100生命值\n需装备于副武器槽位",
+									"name":"小圆饼盾牌（副武器）",
 									})
 		register_weapon("oreo_shield",{"sprite":spr_oreo_shield_icon,
 									"icon":spr_oreo_shield_icon,
 									"obj":obj_player_shield,
 									"slot":"secondary_weapon",
 									"hp_increase":200,
-									"description":"奥利奥盾牌：增加200生命值",
-									"name":"奥利奥盾牌",
+									"description":"奥利奥盾牌：增加200生命值\n需装备于副武器槽位",
+									"name":"奥利奥盾牌（副武器）",
 									})
 		register_weapon("cut_cake_shield",{"sprite":spr_cut_cake_shield_icon,
 									"icon":spr_cut_cake_shield_icon,
 									"obj":obj_player_shield,
 									"slot":"secondary_weapon",
 									"hp_increase":300,
-									"description":"切糕盾牌：增加300生命值",
-									"name":"切糕盾牌",
+									"description":"切糕盾牌：增加300生命值\n需装备于副武器槽位",
+									"name":"切糕盾牌（副武器）",
 									})
 	}
 	{//注册所有超级武器
@@ -154,8 +154,8 @@ function weapons_init(){
 									"slot":"super_weapon",
 									"atk":200,
 									"cycle":20*60,
-									"description":"榴弹炮：自动发射高伤害榴弹",
-									"name":"榴弹炮",
+									"description":"榴弹炮：自动发射高伤害榴弹\n需装备于超级武器槽位",
+									"name":"榴弹炮（超级武器）",
 									"atk_impact":[220,240,260,280,320,360,400,440,480,540,600,640,680,720,760,800],
 									"cycle_impact":[19.8*60,19.4*60,19*60,18.6*60,17.8*60,17*60,16.2*60,15*60,13.8*60,12.6*60,11*60,10*60,9*60,8*60,7*60,6*60]
 									})
@@ -165,8 +165,8 @@ function weapons_init(){
 									"slot":"super_weapon",
 									"atk":200,
 									"cycle":20*60,
-									"description":"加强榴弹炮：自动发射两个高伤害榴弹",
-									"name":"加强榴弹炮",
+									"description":"加强榴弹炮：自动发射两个高伤害榴弹\n需装备于超级武器槽位",
+									"name":"加强榴弹炮（超级武器）",
 									"atk_impact":[220,240,260,280,320,360,400,440,480,540,600,640,680,720,760,800],
 									"cycle_impact":[19.8*60,19.4*60,19*60,18.6*60,17.8*60,17*60,16.2*60,15*60,13.8*60,12.6*60,11*60,10*60,9*60,8*60,7*60,6*60]
 									})
@@ -176,22 +176,22 @@ function weapons_init(){
 									"slot":"super_weapon",
 									"atk":240,
 									"cycle":7.5*60,
-									"description":"旋转水枪：每隔一段时间伤害5*5范围敌人",
-									"name":"旋转水枪",
+									"description":"旋转水枪：每隔一段时间伤害5*5范围敌人\n需装备于超级武器槽位",
+									"name":"旋转水枪（超级武器）",
 									"atk_impact":[264,288,312,336,384,432,480,528,576,648,720,768,816,864,912,960],
 									"cycle_impact":[7.25*60,7*60,6.75*60,6.5*60,6.25*60,6*60,5.75*60,5.5*60,5.25*60,5*60,4.5*60,4*60,3.5*60,3*60,2.5*60,2*60]
 									})
 				
 	}
 	{//注册所有宝石
-		register_gem("attack_gem",{"name":"攻击宝石",
-									"description":"攻击宝石：增加主武器伤害",
+		register_gem("attack_gem",{"name":"攻击宝石（主武器）",
+									"description":"攻击宝石：增加主武器伤害\n需镶嵌于主武器槽位",
 									"icon":spr_attack_gem_icon,
 									"slot":"main_weapon",
 									"obj":noone
 		})
-		register_gem("laser_gem",{"name":"激光宝石",
-									"description":"激光宝石：发射清行激光",
+		register_gem("laser_gem",{"name":"激光宝石（主武器）",
+									"description":"激光宝石：发射清行激光\n需镶嵌于主武器槽位",
 									"icon":spr_laser_gem_icon,
 									"slot":"main_weapon",
 									"obj":obj_laser_gem,
@@ -200,8 +200,8 @@ function weapons_init(){
 									"cooldown":[210,205,200,195,190,185,180,175,170,160,150],
 									"range":[1,1,1,2,2,3,3,4,5,6,7]
 		})
-		register_gem("bomb_gem",{"name":"轰炸宝石",
-							"description":"轰炸宝石：召唤5个3*3范围炸弹",
+		register_gem("bomb_gem",{"name":"轰炸宝石（主武器）",
+							"description":"轰炸宝石：召唤5个3*3范围炸弹\n需镶嵌于主武器槽位",
 							"icon":spr_bomb_gem_icon,
 							"slot":"main_weapon",
 							"obj":obj_bomb_gem,
@@ -209,8 +209,8 @@ function weapons_init(){
 							"first_cooldown":60,
 							"cooldown":[320,300,280,260,240,220,200,180,160,140,120]
 		})
-		register_gem("cateye_gem",{"name":"猫眼宝石",
-							"description":"猫眼宝石：召唤猫猫",
+		register_gem("cateye_gem",{"name":"猫眼宝石（主武器）",
+							"description":"猫眼宝石：召唤猫猫\n需镶嵌于主武器槽位",
 							"icon":spr_cateye_gem_icon,
 							"slot":"main_weapon",
 							"obj":obj_cateye_gem,
@@ -219,8 +219,8 @@ function weapons_init(){
 							"cooldown":[300,280,260,240,220,200,190,180,170,160,150],
 							"range":[1,1,1,2,2,3,3,4,5,6,7]
 		})
-		register_gem("freeze_gem",{"name":"冰冻宝石",
-					"description":"冰冻宝石：冰冻并减速全屏敌人",
+		register_gem("freeze_gem",{"name":"冰冻宝石（主武器）",
+					"description":"冰冻宝石：冰冻并减速全屏敌人\n需镶嵌于主武器槽位",
 					"icon":spr_freeze_gem_icon,
 					"slot":"main_weapon",
 					"obj":obj_freeze_gem,
@@ -228,8 +228,8 @@ function weapons_init(){
 					"first_cooldown":30,
 					"cooldown":[210,200,190,180,170,160,150,140,130,120,110]
 		})
-		register_gem("flame_recover_gem",{"name":"回火宝石",
-					"description":"回火宝石：从天上掉落火苗",
+		register_gem("flame_recover_gem",{"name":"回火宝石（主武器）",
+					"description":"回火宝石：从天上掉落火苗\n需镶嵌于主武器槽位",
 					"icon":spr_flamerecover_gem_icon,
 					"slot":"main_weapon",
 					"obj":obj_flamerecover_gem,
@@ -239,8 +239,8 @@ function weapons_init(){
 					"flame_value":[25,25,25,25,25,25,25,25,25,25,25,26,27,29,31,33],
 					"flame_amount":[1,1,1,2,2,2,3,3,3,4,5,5,5,5,5,5]
 		})
-		register_gem("starlight_gem",{"name":"星光宝石",
-									"description":"星光宝石：压扁老鼠并产生火苗",
+		register_gem("starlight_gem",{"name":"星光宝石（主武器）",
+									"description":"星光宝石：压扁老鼠并产生火苗\n需镶嵌于主武器槽位",
 									"icon":spr_starlight_gem_icon,
 									"slot":"main_weapon",
 									"obj":obj_starlight_gem,
@@ -249,38 +249,55 @@ function weapons_init(){
 									"cooldown":60,
 									"star_amount":[2,3,4,5,6,7,8,9,10,12,14]
 		})
+		register_gem("holy_gem",{"name":"神圣宝石（主武器）",
+					"description":"神圣宝石：使全屏卡片锁定为满生命值\n需镶嵌于主武器槽位",
+					"icon":spr_holy_gem_icon,
+					"slot":"main_weapon",
+					"obj":obj_holy_gem,
+					"max_level":10,
+					"first_cooldown":30,
+					"cooldown":120,
+					"max_time":[2,3,4,5.5,7,8.5,10.5,12.5,14.5,17,19.5]
+		})
 		
 		
-		register_gem("gale_gem",{"name":"疾风宝石",
-									"description":"疾风宝石：增加超级武器攻速",
+		register_gem("gale_gem",{"name":"疾风宝石（超级武器）",
+									"description":"疾风宝石：增加超级武器攻速\n需镶嵌于超级武器槽位",
 									"icon":spr_gale_gem_icon,
 									"slot":"super_weapon",
 									"obj":noone
 		})
-		register_gem("power_gem",{"name":"强力宝石",
-									"description":"强力宝石：增加超级武器伤害",
+		register_gem("power_gem",{"name":"强力宝石（超级武器）",
+									"description":"强力宝石：增加超级武器伤害\n需镶嵌于超级武器槽位",
 									"icon":spr_power_gem_icon,
 									"slot":"super_weapon",
 									"obj":noone
 		})
-		register_gem("transform_gem",{"name":"转化宝石",
-									"description":"转化宝石：子弹落地产生火苗",
+		register_gem("transform_gem",{"name":"转化宝石（超级武器）",
+									"description":"转化宝石：子弹落地产生火苗，仅对榴弹炮类武器生效\n需镶嵌于超级武器槽位",
 									"icon":spr_transform_gem_icon,
 									"slot":"super_weapon",
 									"value":[3,5,8,10,13,15,20,25,30,40,50,53,55,58,63,70],
 									"obj":noone
 		})
+		register_gem("ice_gem",{"name":"减速宝石（超级武器）",
+									"description":"减速宝石：对伤害到的老鼠造成减速\n需镶嵌于超级武器槽位",
+									"icon":spr_ice_gem_icon,
+									"slot":"super_weapon",
+									"ice_time":[0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,5.5,6,6.5,7,7.5,8],
+									"obj":noone
+		})
 		
 		
-		register_gem("health_gem",{"name":"生命宝石",
-									"description":"生命宝石：增加角色生命值",
+		register_gem("health_gem",{"name":"生命宝石（副武器）",
+									"description":"生命宝石：增加角色生命值\n需镶嵌于副武器槽位",
 									"icon":spr_health_gem_icon,
 									"slot":"secondary_weapon",
 									"hp_increase":20,
 									"obj":noone
 		})
-		register_gem("produce_gem",{"name":"生产宝石",
-									"description":"生产宝石：生产火苗",
+		register_gem("produce_gem",{"name":"生产宝石（副武器）",
+									"description":"生产宝石：生产火苗\n需镶嵌于副武器槽位",
 									"icon":spr_produce_gem_icon,
 									"slot":"secondary_weapon",
 									"first_produce_delay":1,
@@ -288,32 +305,32 @@ function weapons_init(){
 									"flame_value":[5,10,15,20,25,30,40,50,60,80,100,110,120,130,140,150],
 									"obj":noone
 		})
-		register_gem("slow_down_gem",{"name":"迟缓宝石",
-									"description":"迟缓宝石：减速周围敌人",
+		register_gem("slow_down_gem",{"name":"迟缓宝石（副武器）",
+									"description":"迟缓宝石：减速周围敌人\n需镶嵌于副武器槽位",
 									"icon":spr_slowdown_gem_icon,
 									"slot":"secondary_weapon",
 									"max_level":10,
 									"cooldown":[20,19,18,17,16,15,14,12,10,9,5],
 									"obj":noone
 		})
-		register_gem("bleed_gem",{"name":"流血宝石",
-									"description":"流血宝石：伤害周围敌人",
+		register_gem("bleed_gem",{"name":"流血宝石（副武器）",
+									"description":"流血宝石：伤害周围敌人\n需镶嵌于副武器槽位",
 									"icon":spr_bleed_gem_icon,
 									"slot":"secondary_weapon",
 									"max_level":10,
 									"atk":[5,10,15,20,25,30,40,50,60,80,100],
 									"obj":noone
 		})
-		register_gem("guard_gem",{"name":"守护宝石",
-									"description":"守护宝石：治疗周围卡片并增加生命上限",
+		register_gem("guard_gem",{"name":"守护宝石（副武器）",
+									"description":"守护宝石：治疗周围卡片并增加生命上限\n需镶嵌于副武器槽位",
 									"icon":spr_guard_gem_icon,
 									"slot":"secondary_weapon",
 									"max_level":10,
 									"max_hp_increase":[5,10,15,20,30,40,50,70,90,110,150],
 									"obj":noone
 		})
-		register_gem("strength_gem",{"name":"蓄力宝石",
-									"description":"蓄力宝石：为周围卡片增加攻击力",
+		register_gem("strength_gem",{"name":"蓄力宝石（副武器）",
+									"description":"蓄力宝石：为周围卡片增加攻击力\n需镶嵌于副武器槽位",
 									"icon":spr_strength_gem_icon,
 									"slot":"secondary_weapon",
 									"max_level":10,

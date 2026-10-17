@@ -48,7 +48,7 @@
 
 详细条款请参阅 [GPL 3.0 许可证全文](https://www.gnu.org/licenses/gpl-3.0.html)。
 
-本仓库中我们自制的贴图和文案由CC BY-NC-SA协议授权。这些内容包括：
+本仓库中我们自制的贴图和文案由**CC BY-NC-SA**协议授权。这些内容包括：
 - 所有的关卡气泡贴图
 - 设置菜单和编辑菜单贴图
 - 软件图标和游戏主标题贴图
@@ -61,7 +61,7 @@
 
 其余原版贴图和文案版权属于欢乐互娱公司，使用时需要遵守原权利方协议。
 
-详情参见 [CC_BY-NC-SA协议条款](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.en)
+详情参见 [CC BY-NC-SA协议条款](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.en)
 
 ## 免责声明
 

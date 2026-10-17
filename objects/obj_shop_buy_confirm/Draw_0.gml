@@ -19,10 +19,10 @@ draw_set_halign(fa_center);
 draw_set_valign(fa_middle);
 draw_set_color(c_white)
 draw_text(x, y - 112, "购买确认")
-draw_text(x, y - 10, "确定以"+string(banding_buy_btn.cost)+"G购买"+banding_buy_btn.goods_name+"吗？");
+draw_text(x, y - 10, "确定购买"+banding_buy_btn.goods_name+"吗？");
 if obj_shop_bg.shop_button_select == 5{
 	draw_set_color(c_yellow)
-	draw_text(x, y + 15, "你需要在左上角的编辑菜单中切换角色时装。");
+	draw_text(x, y + 15, "在左上角的编辑菜单中切换角色时装。");
 	draw_set_color(c_white)
 }
 if obj_shop_bg.shop_button_select == 4{

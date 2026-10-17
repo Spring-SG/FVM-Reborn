@@ -32,11 +32,11 @@ if target_task_index != -1{
 	}
 	if current_task_info.single_game{
 		draw_set_colour(c_red)
-		draw_text(x+60,y-70,"!单局游戏内完成全部任务目标否则重置进度")
+		draw_text(x+60,y-75,"!单局游戏内完成全部任务目标否则重置进度")
 	}
 	else if current_task_info.oneshot{
 		draw_set_colour(c_red)
-		draw_text(x+60,y-70,"!任务过程中如果中途退出或游戏失败则重置进度")
+		draw_text(x+60,y-75,"!任务过程中如果中途退出或游戏失败则重置进度")
 	}
 }
 else{

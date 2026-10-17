@@ -47,7 +47,15 @@
 		    }
 		}
 	}
-
+	
+	with (obj_ladder) {
+		if (host_plant != noone && instance_exists(host_plant)) {
+			if (host_plant.grid_row == other.grid_row
+				|| (abs(host_plant.x - other.x) <= 100 && other.shape >= 2)) {
+				instance_destroy();
+			}
+		}
+	}
 	// 播放倭瓜攻击效果
 	//effect_create_above(ef_explosion, x, y, 2, c_white);
 
