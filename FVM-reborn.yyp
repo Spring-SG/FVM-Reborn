@@ -428,7 +428,9 @@
   "IncludedFiles":[
     {"$GMIncludedFile":"","%Name":"baiguiyexing.json","CopyToMask":-1,"filePath":"datafiles/laboratory","name":"baiguiyexing.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"shendianjihui.json","CopyToMask":-1,"filePath":"datafiles/laboratory","name":"shendianjihui.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"tower-30-2_hard_a.json","CopyToMask":-1,"filePath":"datafiles/laboratory","name":"tower-30-2_hard_a.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"tower-32-2_hard.json","CopyToMask":-1,"filePath":"datafiles/laboratory","name":"tower-32-2_hard.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"tower-34-2_hard_a.json","CopyToMask":-1,"filePath":"datafiles/laboratory","name":"tower-34-2_hard_a.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"tower-35-2_hard_a.json","CopyToMask":-1,"filePath":"datafiles/laboratory","name":"tower-35-2_hard_a.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"tower-35-2_hard.json","CopyToMask":-1,"filePath":"datafiles/laboratory","name":"tower-35-2_hard.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"tower-7-2_hard.json","CopyToMask":-1,"filePath":"datafiles/laboratory","name":"tower-7-2_hard.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},

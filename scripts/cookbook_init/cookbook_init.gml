@@ -61,7 +61,7 @@ function cookbook_init(){
 			"rank":0,
 			"title":"咖啡奶茶",
 			"tiny_desc":"减少咖啡卡冷却",
-			"desc":"除旋转咖啡喷壶外的咖啡类卡片冷却时间减少2秒",
+			"desc":"除旋转咖啡喷壶外的咖啡类卡片冷却时间减\n少2秒",
 			"icon":1,
 			"modif":[
 				{
@@ -157,7 +157,7 @@ function cookbook_init(){
 			"rank":0,
 			"title":"菠萝布丁",
 			"tiny_desc":"加强樱桃反弹布丁",
-			"desc":"樱桃反弹布丁获得反伤效果，且每秒回复10点生命\n值\n樱桃反弹布丁生命值变为2倍",
+			"desc":"樱桃反弹布丁获得反伤效果，且每秒回复10\n点生命值\n樱桃反弹布丁生命值变为2倍",
 			"icon":6,
 			"modif":[
 				{
@@ -175,7 +175,7 @@ function cookbook_init(){
 			"rank":1,
 			"title":"王府井包子",
 			"tiny_desc":"减少包子卡冷却",
-			"desc":"除机枪小笼包外的包子类卡片冷却时间减少1秒",
+			"desc":"除机枪小笼包外的包子类卡片冷却时间减少1\n秒",
 			"icon":7,
 			"modif":[
 				{
@@ -259,7 +259,7 @@ function cookbook_init(){
 			"rank":1,
 			"title":"巧克力雪球",
 			"tiny_desc":"加强巧克力大炮",
-			"desc":"巧克力大炮冷却时间减少5秒，攻击间隔减少1秒\n巧克力投手冷却时间减少3秒",
+			"desc":"巧克力大炮冷却时间减少5秒，攻击间隔减少\n1秒\n巧克力投手冷却时间减少3秒",
 			"icon":12,
 			"modif":[
 				{
@@ -487,7 +487,7 @@ function cookbook_init(){
 			"rank":2,
 			"title":"老北京涮锅",
 			"tiny_desc":"减少浮空三锅冷却",
-			"desc":"麻辣香锅、肥牛火锅和生煎锅冷却时间减少1秒",
+			"desc":"麻辣香锅、肥牛火锅和生煎锅冷却时间减少1\n秒",
 			"icon":24,
 			"modif":[
 				{
@@ -555,6 +555,24 @@ function cookbook_init(){
 					"modif_type":"cooldown",
 					"modif_calc":"plus",
 					"amount":-20*60
+				}
+			]
+		}
+	)
+	register_cookbook(
+		"multi_cuisine",
+		{
+			"rank":2,
+			"title":"营地炖肉",
+			"tiny_desc":"减少探险营地卡片冷却",
+			"desc":"糖渍刺梨和坚果爆炒机冷却时间减少1秒",
+			"icon":34,
+			"modif":[
+				{
+					"card_id":["sugar_roxburghii","nut_frier"],
+					"modif_type":"cooldown",
+					"modif_calc":"plus",
+					"amount":-1*60
 				}
 			]
 		}

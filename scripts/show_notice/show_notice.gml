@@ -46,12 +46,13 @@ function update_notices() {
         // 前 10 帧淡入 + 缩放：toast 不受动效等级门控（等级 0 同样播放）——它是信息提示，
         // 关掉动效不应退化成硬切
         if (notice.frames <= 10) {
-            notice.alpha = notice.frames / 10;
-            notice.scale = 2.2 - (0.2 * (notice.frames / 10));
+            
+                notice.alpha = notice.frames / 10;
+                notice.scale = 2.2 - (0.2 * (notice.frames / 10));
+            
         }
         // 生命周期结束前的阶段
         else if (notice.frames > notice.life) {
-            // 到点后上浮 + 淡出，同样不分档
             // 向上移动并淡出
             notice.pos_y -= 2;
             notice.alpha = 1 - ((notice.frames - notice.life) / 20);
