@@ -10,6 +10,9 @@ if !info_got{
 	var btn5 = instance_create_depth(x+80,y-5,depth-1,obj_card_attire_select_btn)
 	btn5.type = "next"
 	info_got = true
+
+	// 二级小菜单：由小到大弹出（子对象 = 左右两个切换按钮）
+	pop_anim_init(id, [obj_card_attire_select_btn])
 }
 
 // 时装切换动画：首帧静默同步，之后检测索引变化、定方向、推进计时
@@ -42,3 +45,6 @@ if sw_t >= 0{
 	if sw_t >= sw_frames sw_t = -1
 }
 
+
+// 弹出/回缩推进
+pop_anim_step(id)

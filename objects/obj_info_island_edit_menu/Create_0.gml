@@ -44,3 +44,19 @@ for(var i = 0 ; i< 3 ; i++){
 // 三级菜单淡入淡出（等级 1 起；子对象跟着一起淡）
 panel_anim_init(id, 0.18, 0.14, 0, 3)
 panel_anim_kids(id, [obj_info_island_card_edit_select_btn, obj_info_island_edit_menu_btn])
+
+// ── 弹出（scale in）：由小到大弹开 ──
+// 绕面板中心缩放；子对象位置按同一比例向中心收/放，精灵同步缩放
+// 曲线 ease-out back：0.84 → 1，终点轻微过冲后回落，保留体积感
+pop_t = 0
+pop_dur = 0.20          // 秒
+pop_from = 0.84         // 起始缩放（相对终态）
+pop_s = pop_from
+pop_p = 0               // 1 = 已播完
+pop_base_s = image_xscale
+with (obj_info_island_card_edit_select_btn){
+pop_bx = x; pop_by = y; pop_sx = image_xscale
+}
+with (obj_info_island_edit_menu_btn){
+pop_bx = x; pop_by = y; pop_sx = image_xscale
+}

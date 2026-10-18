@@ -71,8 +71,8 @@ function draw_settings_page(){
     
 		// 动效分级滑块：重新进入本页时旋钮直接对齐当前档位（不播回弹）
 		ui_anim_knob_dx = ui_anim_slider_dx[clamp(ui_anim_level(), 0, 2)];
-		ui_anim_snap_p  = 1;
 		ui_anim_drag    = false;
+		ui_anim_drag_moved = false;
     
 	    // 标记当前设置页面
 	    current_settings = id;
@@ -288,37 +288,61 @@ function ui_anim_slider_apply(_level){
 }
 
 /// @function ui_anim_slider_step()
-// 拖动/点击 1:1 跟手；松手后按 ease-out 吸附到最近档位
+// 点/拖选定档位；未拖动时高亮片由弹簧滑向该档位中心
 function ui_anim_slider_step(){
 	var _row_y = y + ui_anim_slider_dy;
 	var _x0    = x + ui_anim_slider_dx[0];
 	var _x2    = x + ui_anim_slider_dx[2];
 
-	// 在滑块行内按下（横向各留 16px 余量）：开始拖动。点某一档也走这条路——按下即 1:1 跟手
+	// 命中区覆盖整条胶囊（段宽 126 × 3，x-270 .. x+108）：点哪段落哪档；
+	// 高亮片不瞬移，由下方弹簧追上，点选同样有滑动过程
 	if (mouse_check_button_pressed(mb_left) &&
-		point_in_rectangle(mouse_x, mouse_y, _x0 - 16, _row_y - 20, _x2 + 16, _row_y + 20)) {
-		ui_anim_drag   = true;
-		ui_anim_snap_p = 1;
+		point_in_rectangle(mouse_x, mouse_y, x - 286, _row_y - 26, x + 124, _row_y + 26)) {
+		ui_anim_drag    = true;
+		ui_anim_press_x = mouse_x;                                   // 记下按下位置：移动超过 4px 才算拖动
+		ui_anim_drag_moved = false;                                  // 还没拖动：松手时不会再用旋钮位置反写档位
+		ui_anim_slider_apply(ui_anim_nearest_stop(mouse_x - x));   // 点哪段选哪档（高亮片交给下面的 ease-out 滑过去）
 	}
 
 	if (ui_anim_drag) {
 		if (mouse_check_button(mb_left)) {
-			ui_anim_knob_dx = clamp(mouse_x, _x0, _x2) - x;             // 拖动 1:1，不吸附
-			ui_anim_slider_apply(ui_anim_nearest_stop(ui_anim_knob_dx)); // 档位名与动效实时跟着走
+			// 横向位移超过 4px 才 1:1 跟手：原地点击必须保持弹簧滑动，否则高亮会瞬移
+			if (abs(mouse_x - ui_anim_press_x) > 4) {
+				ui_anim_drag_moved = true;
+				var _kprev = ui_anim_knob_dx;
+				ui_anim_knob_dx = clamp(mouse_x, _x0, _x2) - x;
+				ui_anim_knob_v  = (ui_anim_knob_dx - _kprev) / max(ui_anim_dt(), 0.0001);   // 拖动速度：给高亮片做拉伸用
+				ui_anim_slider_apply(ui_anim_nearest_stop(ui_anim_knob_dx));
+			}
 		} else {
 			ui_anim_drag = false;
-			ui_anim_slider_apply(ui_anim_nearest_stop(ui_anim_knob_dx));
-			ui_anim_snap_from = ui_anim_knob_dx;   // 松手：从当前位置回弹到落定的档位
-			ui_anim_snap_p    = 0;
+			// 仅在拖动过时按旋钮位置落档：纯点击的档位已在按下时定好，这里再 apply 会把旋钮
+			//（仍停在旧档位）写回去，表现为点击无反应。
+			if (ui_anim_drag_moved) ui_anim_slider_apply(ui_anim_nearest_stop(ui_anim_knob_dx));
+			ui_anim_drag_moved = false;
 		}
 	}
 
-	// 吸附回弹：cubic ease-out（起步快、收尾慢；与难度名滑出/滑入同一套缓动），不用线性匀速
-	if (!ui_anim_drag && ui_anim_snap_p < 1) {
-		ui_anim_snap_p = min(1, ui_anim_snap_p + 1 / ui_anim_snap_frames);
-		var _e = 1 - (1 - ui_anim_snap_p) * (1 - ui_anim_snap_p) * (1 - ui_anim_snap_p);
-		ui_anim_knob_dx = ui_anim_snap_from
-		                + (ui_anim_slider_dx[clamp(ui_anim_level(), 0, 2)] - ui_anim_snap_from) * _e;
+
+	// 高亮片滑动：二阶弹簧。_k = 刚度（越大越快），_c = 阻尼（越小过冲越多，当前约 3~4px）。
+	// 时间步长取 ui_anim_dt()（秒），帧率变化不影响手感。
+	if (!ui_anim_drag) {
+		var _tgt = ui_anim_slider_dx[clamp(ui_anim_level(), 0, 2)];
+		var _dt  = ui_anim_dt();
+		var _k   = 520;   // 刚度：越大越快
+		var _c   = 32;    // 阻尼：越小过冲越多（这里约 3~4px）
+		ui_anim_knob_v += (_tgt - ui_anim_knob_dx) * _k * _dt;
+		ui_anim_knob_v *= exp(-_c * _dt);
+		ui_anim_knob_dx += ui_anim_knob_v * _dt;
+		// 收敛：距离足够近且速度足够小才吸附，避免长时间微抖
+		if (abs(_tgt - ui_anim_knob_dx) < 0.25 && abs(ui_anim_knob_v) < 6) {
+			ui_anim_knob_dx = _tgt;
+			ui_anim_knob_v  = 0;
+		}
+	// 速度包络：拉伸跟着整段滑动走。原始速度只在起手一两帧冲到峰值，直接取瞬时值会让
+	// 高亮片刚变形就弹回；这里用一阶跟随给出连续的速度曲线。
+	var _sv = clamp(abs(ui_anim_knob_v) / 900, 0, 1);   // 900 px/秒 即满速（弹簧峰值约 1070）
+	ui_anim_knob_spd += (_sv - ui_anim_knob_spd) * 0.45;
 	}
 }
 
@@ -327,6 +351,8 @@ if (button_select == 2) {
 	ui_anim_slider_step();
 } else {
 	ui_anim_drag = false;
+	ui_anim_drag_moved = false;
+	ui_anim_knob_spd = 0;   // 离开页面时清掉拉伸，避免下次进来先带一层变形
 }
 
 // ── 标签页切换：整页位移 + 淡入的推进与施加（缓动/位移量与 Draw_0 的视口偏移严格同源）──

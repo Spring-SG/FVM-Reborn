@@ -7,8 +7,8 @@ var my = device_mouse_y_to_gui(0);
 
 for (var i = 0; i < array_length(buttons); i++) {
     var btn = buttons[i];
-    var btn_x = x + btn[0];
-    var btn_y = y + 70;
+    var btn_x = x + btn[0] * pop_s;
+    var btn_y = y + 70 * pop_s;
     var btn_width = btn[2];
     var btn_height = btn[3];
     
@@ -41,3 +41,6 @@ for (var i = 0; i < array_length(buttons); i++) {
 if (keyboard_check_pressed(vk_escape)) {
     panel_anim_close(id);   // 淡出后再销毁
 }
+
+// 推进弹出/回缩（GuiStack pop_anim_step）
+pop_anim_step(id)

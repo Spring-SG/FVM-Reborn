@@ -48,3 +48,6 @@ for(var i = 0 ; i< 3 ; i++){
 // 三级菜单淡入淡出（等级 1 起；子对象跟着一起淡）
 panel_anim_init(id, 0.18, 0.14, 0, 3)
 panel_anim_kids(id, [obj_card_edit_select_btn, obj_card_edit_btn, obj_card_attire_menu, obj_card_attire_select_btn])
+
+// 二级小菜单弹出（scale in）：GuiStack pop_anim_*，子对象一同缩放
+pop_anim_init(id, [obj_card_edit_select_btn, obj_card_edit_btn, obj_card_attire_menu, obj_card_attire_select_btn])

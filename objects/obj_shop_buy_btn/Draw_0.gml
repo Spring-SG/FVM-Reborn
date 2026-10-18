@@ -6,17 +6,11 @@ draw_set_font(font_yuan)
 draw_set_color(c_black)
 draw_set_halign(fa_center)
 draw_set_valign(fa_middle)
-ui_anim_text_alpha(id)	// 文字不吃 image_alpha，跟着面板一起淡
-draw_text(x+3,y-110,goods_name)
+draw_set_alpha(ui_anim_alpha(id) * image_alpha)	// 文字不吃 image_alpha：面板淡入 × 自己入场淡入
+draw_text(x+3,y - 110 * pg_pop,goods_name)
 draw_set_font(font_number)
 if not is_disabled{
 	draw_set_color(c_yellow)
-	draw_text(x,y-62,string(cost)+"G")
-	if point_in_rectangle(mouse_x,mouse_y,x-280,y-120,x-120,y-20){
-		tooltip = true
-	}
-	else{
-		tooltip = false
-	}
+	draw_text(x,y - 62 * pg_pop,string(cost)+"G")
 }
 draw_set_alpha(1)

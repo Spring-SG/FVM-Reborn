@@ -12,8 +12,8 @@ if (!submenu_open) {
     
     for (var i = 0; i < array_length(buttons); i++) {
         var btn = buttons[i];
-        var btn_x = menu_x + btn[0];
-        var btn_y = menu_y + 120 + btn[4];
+        var btn_x = menu_x + btn[0] * pop_s;
+        var btn_y = menu_y + (120 + btn[4]) * pop_s;
         var btn_width = btn[2];
         var btn_height = btn[3];
         
@@ -51,3 +51,6 @@ if (!submenu_open) {
     
     
 }
+
+// 弹出/回缩推进
+pop_anim_step(id)

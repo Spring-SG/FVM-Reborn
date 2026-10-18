@@ -5,7 +5,7 @@ obj_world_map_button.world_map = 2
 // 动效等级 < 1：不滑不淡，直接终态（子对象回基准位置、alpha 1）；正在关闭就立刻销毁
 if (!ui_anim_on(1)){
 	pnl_o = 1
-	pnl_t = 0
+	pnl_t = pnl_closing ? pnl_close_time : pnl_open_time   // 记成已跑完：等级调回 1/2 时不重播进场
 	for (var _gi = 0; _gi < array_length(anim_kids); _gi++){
 		var _gc = anim_kids[_gi][0]
 		if (instance_exists(_gc)){

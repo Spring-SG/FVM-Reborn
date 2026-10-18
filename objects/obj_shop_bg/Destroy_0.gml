@@ -7,3 +7,4 @@ obj_world_map_button.world_map = 0
 
 panel_anim_free(id)
 if surface_exists(pg_surf) surface_free(pg_surf)   // 页签淡入用的录制面
+if surface_exists(pg_old_surf) surface_free(pg_old_surf)   // 交叉淡出的旧内容

@@ -172,7 +172,10 @@ function shop_list_recharge(){
 panel_anim_init(id, 0.28, 0.18, 260)
 panel_anim_kids(id, [obj_closeshop_btn, obj_shop_select_btn, obj_shop_page_btn, obj_shop_buy_btn, obj_shop_buy_confirm])
 
-// ── 页签切换：整页淡入（旧页当帧消失，不做退场）──
-pg_t      = -1;    // -1 = 无动画；>=0 = 动画进行到第几帧（0 = 全透明起步）
-pg_frames = 13;    // 时长（帧），60fps ≈ 0.22s
+// ── 页签/翻页切换：Crossfade + Stagger（旧内容原地淡出，新内容逐格浮现）──
+pg_t      = -1;    // -1 = 无动画；>=0 = 动画进行到第几帧（0 = 刚开始）
+pg_frames = 17;    // 时长（帧），60fps ≈ 0.28s
+pg_dir    = 1;     // 方向：+1 = 往后翻，-1 = 往前翻（目前只用于预留/调试）
 pg_surf   = -1;    // 商品格内容的录制面（只在切页那 0.22s 里存在）
+pg_old_surf = -1;  // 上一帧内容的拷贝（交叉淡出用）
+pg_switch   = false; // 本帧刚切了页签/翻页 -> 先把旧内容拷进 pg_old_surf
