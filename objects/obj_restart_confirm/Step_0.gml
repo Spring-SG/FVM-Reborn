@@ -35,7 +35,12 @@ for (var i = 0; i < array_length(buttons); i++) {
 					if instance_exists(obj_player_info_ui){
 						obj_player_info_ui.menu_type = 0
 					}
-					room_transition_start(room)   // 重开本局也走淡出淡入
+					if ui_anim_level() >= 2{
+						room_transition_start(room)   // 重开本局也走淡出淡入
+					}
+					else{
+						room_restart()
+					}
                     break;
             }
 			global.audio.play(snd_button,0,0)
