@@ -45,20 +45,13 @@ function update_notices() {
         
         // 前20帧：淡入和缩放效果（动效等级 <2：直接满不透明度、不缩放）
         if (notice.frames <= 10) {
-            if (ui_anim_on(2)) {
+            
                 notice.alpha = notice.frames / 10;
                 notice.scale = 2.2 - (0.2 * (notice.frames / 10));
-            } else {
-                notice.alpha = 1;
-                notice.scale = 2.0;
-            }
+            
         }
         // 生命周期结束前的阶段
         else if (notice.frames > notice.life) {
-            if (!ui_anim_on(2)) {                     // 动效等级 <2：到点直接消失，不上浮淡出
-                array_delete(global.notice_list, i, 1);
-                continue;
-            }
             // 向上移动并淡出
             notice.pos_y -= 2;
             notice.alpha = 1 - ((notice.frames - notice.life) / 20);
