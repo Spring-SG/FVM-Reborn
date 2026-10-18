@@ -18,3 +18,6 @@ y = room_height / 2;
 // 三级菜单淡入淡出（等级 1 起）
 panel_anim_init(id, 0.18, 0.22, 0, 3)   // 淡出 0.14 太快，放慢
 panel_anim_kids(id, [])
+
+// 弹窗弹出/回缩：GuiStack pop_anim_*（0.20s，ease-out back），关闭时反向缩回
+pop_anim_init(id, [])

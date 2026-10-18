@@ -36,6 +36,12 @@ if (variable_instance_exists(id, "tab_shown") && tab_shown != info_button_select
 	tab_shown   = info_button_select
 	tab_fade    = 0
 	tab_fade_t  = 0
+	// 切页签时钉住滚动位置：浮现期间内容不滑动，越界的记忆值夹回本页范围
+	if (variable_instance_exists(id, "scroll_max")) { y_offset = clamp(y_offset_target, 0, scroll_max) }
+	else { y_offset = y_offset_target }
+	if (variable_instance_exists(id, "sr_rowv")) {
+		for (var _k = 0; _k < array_length(sr_rowv); _k++) { sr_rowv[_k] = -1 }   // 换页后重新按行计时
+	}
 }
 if (tab_fade_t >= 0) {
 	if (!ui_anim_on(1)) { tab_fade = 1; tab_fade_t = -1 }
@@ -43,8 +49,18 @@ if (tab_fade_t >= 0) {
 		tab_fade_t += ui_anim_dt()
 		// 0.20s + 2 次幂（平方 ease-out）：前段不过冲，中间有可辨认区间
 		tab_fade = ui_anim_ease(clamp(tab_fade_t / 0.20, 0, 1), 2)
-		if (tab_fade_t >= 0.20) { tab_fade = 1; tab_fade_t = -1 }
+		if (tab_fade_t >= 0.55) { tab_fade = 1; tab_fade_t = -1 }   // 给逐格浮现留出时间
 	}
+}
+
+// ── 滚动浮现：每行一个计时器，新进视口的格子自己淡进来（动效等级 2）──
+// 由"行进入视口"驱动，而非按位置切一条横线：不会留下半透明分界线，停下也不残留。
+if (!variable_instance_exists(id, "sr_rowv")) { sr_rowv = array_create(info_rows + 2, -1) }
+var _sr_i0 = max(0, floor((y_offset - 39.5) / 213));
+var _sr_i1 = min(info_rows - 1, floor((y_offset + 700) / 213));   // 只算真正露出来的行（下沿往上留 80px）
+for (var _sr_i = _sr_i0; _sr_i <= _sr_i1; _sr_i++){
+if (sr_rowv[_sr_i] < 0) { sr_rowv[_sr_i] = 0 }
+else if (sr_rowv[_sr_i] < 5) { sr_rowv[_sr_i] += ui_anim_dt() }
 }
 
 var _real_tab = info_button_select   // 页签动画期间先画「当前显示的那一页」，尾部还原
@@ -56,11 +72,12 @@ if info_button_select == 1 {
 		draw_clear_alpha(c_black,0)
     for(var i = 0 ; i < info_rows ; i++){
         for(var j = 0 ; j < info_cols ; j++){
+			var _cag = cell_reveal_alpha(i, j);
 			if j + i * info_cols == select_card_index{
-				draw_sprite_ext(spr_info_island_info_bg, 1, x-1154+j*128*1.5, y - 435 + 142*1.5 * i-y_offset, 0.75, 0.75, 0, c_white, 1)
+				draw_sprite_ext(spr_info_island_info_bg, 1, x-1154+j*128*1.5, y - 435 + 142*1.5 * i-y_offset, 0.75, 0.75, 0, c_white, _cag)
 			}
 			else{
-				draw_sprite_ext(spr_info_island_info_bg, 0, x-1154+j*128*1.5, y - 435 + 142*1.5 * i-y_offset, 0.75, 0.75, 0, c_white, 1)
+				draw_sprite_ext(spr_info_island_info_bg, 0, x-1154+j*128*1.5, y - 435 + 142*1.5 * i-y_offset, 0.75, 0.75, 0, c_white, _cag)
 			}
         }
     }
@@ -84,15 +101,18 @@ if info_button_select == 1 {
         if (row < info_rows) {
             var card_x = x - 1154 + col * 128*1.5;
             var card_y = y - 435 + row * 142*1.5-y_offset;
+            var _ca = cell_reveal_alpha(row, col);
             
             // 绘制卡片
-				draw_sprite_ext(spr_slot, 0, card_x, card_y-3, 0.30, 0.30, 0, c_white, 1);
-                draw_sprite_ext(card_data[? "sprite"], 0, card_x, card_y+15, 0.8, 0.8, 0, c_white, 1);
+				draw_sprite_ext(spr_slot, 0, card_x, card_y-3, 0.30, 0.30, 0, c_white, _ca);
+                draw_sprite_ext(card_data[? "sprite"], 0, card_x, card_y+15, 0.8, 0.8, 0, c_white, _ca);
 				draw_set_color(c_white);
 				draw_set_halign(fa_center);
 				draw_set_valign(fa_middle);
 				draw_set_font(font_yuan)
+				draw_set_alpha(_ca)
 				draw_text(card_x,card_y+87,info[? "name"])
+				draw_set_alpha(1)
 				draw_set_font(font_yuan)
                 // 检查鼠标是否悬停在卡片上
                 var spr_width = 128*1.5;
@@ -105,7 +125,7 @@ if info_button_select == 1 {
                 }
 				if card_index == hover_card_index{
 					draw_set_alpha(1)
-					draw_sprite_ext(spr_info_island_select_box, 0, card_x, card_y, 1, 1, 0, c_white, 0.5)
+					draw_sprite_ext(spr_info_island_select_box, 0, card_x, card_y, 1, 1, 0, c_white, 0.5 * _ca)
 				}
                         
             card_index++;
@@ -114,7 +134,7 @@ if info_button_select == 1 {
 	
 	surface_reset_target()
 	}
-	draw_surface_ext(info_surface,x-1380,y-368,1,1,0,c_white,tab_fade)
+	draw_surface_ext(info_surface, x - 1380, y - 368, 1, 1, 0, c_white, tab_fade)
     // 绘制悬停提示
     if (hover_card_index != -1) {
         // 获取鼠标位置
@@ -171,11 +191,12 @@ else if info_button_select == 2 {
 		draw_clear_alpha(c_black,0)
     for(var i = 0 ; i < info_rows ; i++){
         for(var j = 0 ; j < info_cols ; j++){
+			var _cag = cell_reveal_alpha(i, j);
 			if j + i * info_cols == select_card_index{
-				draw_sprite_ext(spr_info_island_info_bg, 1, x-1154+j*128*1.5, y - 435 + 142*1.5 * i-y_offset, 0.75, 0.75, 0, c_white, 1)
+				draw_sprite_ext(spr_info_island_info_bg, 1, x-1154+j*128*1.5, y - 435 + 142*1.5 * i-y_offset, 0.75, 0.75, 0, c_white, _cag)
 			}
 			else{
-				draw_sprite_ext(spr_info_island_info_bg, 0, x-1154+j*128*1.5, y - 435 + 142*1.5 * i-y_offset, 0.75, 0.75, 0, c_white, 1)
+				draw_sprite_ext(spr_info_island_info_bg, 0, x-1154+j*128*1.5, y - 435 + 142*1.5 * i-y_offset, 0.75, 0.75, 0, c_white, _cag)
 			}
         }
     }
@@ -197,15 +218,18 @@ else if info_button_select == 2 {
         if (row < info_rows) {
             var card_x = x - 1154 + col * 128*1.5;
             var card_y = y - 435 + row * 142*1.5-y_offset;
+            var _ca = cell_reveal_alpha(row, col);
             
             // 绘制敌人
 				
-                draw_sprite_ext(enemy_data.spr, 0, card_x, card_y+65, 1, 1, 0, c_white, 1);
+                draw_sprite_ext(enemy_data.spr, 0, card_x, card_y+65, 1, 1, 0, c_white, _ca);
 				draw_set_color(c_white);
 				draw_set_halign(fa_center);
 				draw_set_valign(fa_middle);
 				draw_set_font(font_yuan)
+				draw_set_alpha(_ca)
 				draw_text(card_x,card_y+87,enemy_data.name)
+				draw_set_alpha(1)
 				draw_set_font(font_yuan)
                 // 检查鼠标是否悬停在敌人上
                 var spr_width = 128*1.5;
@@ -218,7 +242,7 @@ else if info_button_select == 2 {
                 }
 				if enemy_index == hover_card_index{
 					draw_set_alpha(1)
-					draw_sprite_ext(spr_info_island_select_box, 0, card_x, card_y, 1, 1, 0, c_white, 0.5)
+					draw_sprite_ext(spr_info_island_select_box, 0, card_x, card_y, 1, 1, 0, c_white, 0.5 * _ca)
 				}
                         
             enemy_index++;
@@ -227,7 +251,7 @@ else if info_button_select == 2 {
 	
 	surface_reset_target()
 	}
-	draw_surface_ext(info_surface,x-1380,y-368,1,1,0,c_white,tab_fade)
+	draw_surface_ext(info_surface, x - 1380, y - 368, 1, 1, 0, c_white, tab_fade)
     // 绘制悬停提示
     if (hover_card_index != -1) {
         // 获取鼠标位置
@@ -270,11 +294,12 @@ else if info_button_select == 3 {
 		draw_clear_alpha(c_black,0)
     for(var i = 0 ; i < info_rows ; i++){
         for(var j = 0 ; j < info_cols ; j++){
+			var _cag = cell_reveal_alpha(i, j);
 			if j + i * info_cols == select_card_index{
-				draw_sprite_ext(spr_info_island_info_bg, 1, x-1154+j*128*1.5, y - 435 + 142*1.5 * i-y_offset, 0.75, 0.75, 0, c_white, 1)
+				draw_sprite_ext(spr_info_island_info_bg, 1, x-1154+j*128*1.5, y - 435 + 142*1.5 * i-y_offset, 0.75, 0.75, 0, c_white, _cag)
 			}
 			else{
-				draw_sprite_ext(spr_info_island_info_bg, 0, x-1154+j*128*1.5, y - 435 + 142*1.5 * i-y_offset, 0.75, 0.75, 0, c_white, 1)
+				draw_sprite_ext(spr_info_island_info_bg, 0, x-1154+j*128*1.5, y - 435 + 142*1.5 * i-y_offset, 0.75, 0.75, 0, c_white, _cag)
 			}
         }
     }
@@ -296,19 +321,22 @@ else if info_button_select == 3 {
         if (row < info_rows) {
             var card_x = x - 1154 + col * 128*1.5;
             var card_y = y - 435 + row * 142*1.5-y_offset;
+            var _ca = cell_reveal_alpha(row, col);
             
             // 绘制敌人
 			if struct_exists(enemy_data,"spr_index"){
-				draw_sprite_ext(enemy_data.icon, enemy_data.spr_index, card_x, card_y, 0.2, 0.2, 0, c_white, 1);
+				draw_sprite_ext(enemy_data.icon, enemy_data.spr_index, card_x, card_y, 0.2, 0.2, 0, c_white, _ca);
 			}
 			else{
-				draw_sprite_ext(enemy_data.icon, enemy_index, card_x, card_y, 0.2, 0.2, 0, c_white, 1);
+				draw_sprite_ext(enemy_data.icon, enemy_index, card_x, card_y, 0.2, 0.2, 0, c_white, _ca);
 			}
 			draw_set_color(c_white);
 			draw_set_halign(fa_center);
 			draw_set_valign(fa_middle);
 			draw_set_font(font_yuan)
-			draw_text(card_x,card_y+87,enemy_data.name)
+			draw_set_alpha(_ca)
+				draw_text(card_x,card_y+87,enemy_data.name)
+				draw_set_alpha(1)
 			draw_set_font(font_yuan)
             // 检查鼠标是否悬停在敌人上
             var spr_width = 128*1.5;
@@ -321,7 +349,7 @@ else if info_button_select == 3 {
             }
 			if enemy_index == hover_card_index{
 				draw_set_alpha(1)
-				draw_sprite_ext(spr_info_island_select_box, 0, card_x, card_y, 1, 1, 0, c_white, 0.5)
+				draw_sprite_ext(spr_info_island_select_box, 0, card_x, card_y, 1, 1, 0, c_white, 0.5 * _ca)
 			}
                         
             enemy_index++;
@@ -330,7 +358,7 @@ else if info_button_select == 3 {
 	
 	surface_reset_target()
 	}
-	draw_surface_ext(info_surface,x-1380,y-368,1,1,0,c_white,tab_fade)
+	draw_surface_ext(info_surface, x - 1380, y - 368, 1, 1, 0, c_white, tab_fade)
     // 绘制悬停提示
     if (hover_card_index != -1) {
         // 获取鼠标位置

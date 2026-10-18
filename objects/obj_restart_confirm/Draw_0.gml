@@ -11,7 +11,7 @@ if not instance_exists(obj_pause_menu){
 }
 
 // 绘制背景
-draw_sprite_ext(bg, 0, x, y, 1.5, 1.5, 0, c_white, _a);
+draw_sprite_ext(bg, 0, x, y, 1.5 * pop_s, 1.5 * pop_s, 0, c_white, _a);
 
 // 绘制提示文本
 draw_set_alpha(_a)                 // 文字不吃 image_alpha，得显式设
@@ -19,14 +19,14 @@ draw_set_font(font_yuan);
 draw_set_halign(fa_center);
 draw_set_valign(fa_middle);
 draw_set_color(c_white)
-draw_text(x, y - 112, "重开确认")
-draw_text(x, y - 30, "确定要重新开始本关吗？");
+draw_text(x, y - 112 * pop_s, "重开确认")
+draw_text(x, y - 30 * pop_s, "确定要重新开始本关吗？");
 
 // 绘制按钮
 for (var i = 0; i < array_length(buttons); i++) {
     var btn = buttons[i];
-    var btn_x = x + btn[0];
-    var btn_y = y + 70;
+    var btn_x = x + btn[0] * pop_s;
+    var btn_y = y + 70 * pop_s;
     
     // 确定按钮状态
     var frame = 0; // 普通状态
@@ -34,7 +34,7 @@ for (var i = 0; i < array_length(buttons); i++) {
         frame = (mouse_check_button_pressed(mb_left)) ? 2 : 1;
     }
     
-    draw_sprite_ext(spr_common_button,  frame,  btn_x,  btn_y, 0.75, 0.75,  0,  c_white,  _a);
+    draw_sprite_ext(spr_common_button,  frame,  btn_x,  btn_y, 0.75 * pop_s, 0.75 * pop_s,  0,  c_white,  _a);
     draw_set_font(font_yuan);
     draw_text(btn_x, btn_y, btn[1]);
 }

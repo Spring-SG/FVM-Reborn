@@ -13,13 +13,13 @@ draw_set_color(c_white)
 draw_set_font(font_yuan); // 使用菜单字体
 draw_set_halign(fa_center);
 draw_set_valign(fa_middle);
-draw_text(x, y - 165, "卡片信息编辑");
+draw_text(x, y - 165 * pop_s, "卡片信息编辑");
 // 绘制文字
-draw_text(x, y - 105, "星级");
-draw_text(x, y - 25, "转职");
-draw_text(x, y + 55, "技能");
+draw_text(x, y - 105 * pop_s, "星级");
+draw_text(x, y - 25 * pop_s, "转职");
+draw_text(x, y + 55 * pop_s, "技能");
 for(var i = 0 ; i< 3 ; i++){
-	draw_sprite_ext(spr_package_number_bg, 0, x, y-70+80*i, 0.75, 0.75, 0, c_white, _a)
+	draw_sprite_ext(spr_package_number_bg, 0, x, y+(-70+80*i)*pop_s, 0.75*pop_s, 0.75*pop_s, 0, c_white, _a)
 }
 if not info_got{
 	var card_id = global.player_deck[| target_card_index*2];
@@ -40,8 +40,8 @@ if not info_got{
 	info_got = 1
 }
 draw_set_font(font_number);
-draw_text(x,y-70,$"{target_current_info[? "level"]}/{global.save_data.unlocked_cards[info_index].max_level}")
-draw_text(x,y-70+80*1,$"{target_current_info[? "shape"]}/{global.save_data.unlocked_cards[info_index].max_shape}")
-draw_text(x,y-70+80*2,$"{target_current_info[? "skill"]}/{global.save_data.unlocked_items.max_skill_level}")
+draw_text(x,y+(-70)*pop_s,$"{target_current_info[? "level"]}/{global.save_data.unlocked_cards[info_index].max_level}")
+draw_text(x,y+(-70+80*1)*pop_s,$"{target_current_info[? "shape"]}/{global.save_data.unlocked_cards[info_index].max_shape}")
+draw_text(x,y+(-70+80*2)*pop_s,$"{target_current_info[? "skill"]}/{global.save_data.unlocked_items.max_skill_level}")
 draw_set_font(font_yuan);
 draw_set_alpha(1)

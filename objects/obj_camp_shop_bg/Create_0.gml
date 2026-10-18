@@ -74,3 +74,16 @@ function shop_list_recharge(){
 		}
 	}
 }
+
+// ── 翻页动画：Crossfade + Stagger，参数与商城一致 ──
+pg_t        = -1;
+pg_frames   = 17;
+pg_dir      = 1;
+pg_surf     = -1;
+pg_old_surf = -1;
+pg_switch   = false;
+
+// ── 面板进出场：自下而上滑入 260px + 淡入（GuiStack panel_anim，与其它面板同源）──
+panel_anim_init(id, 0.28, 0.18, 260)
+panel_anim_kids(id, [obj_closecampshop_btn, obj_camp_shop_page_btn, obj_camp_shop_buy_btn, obj_sold_out_icon])
+

@@ -1,6 +1,10 @@
 image_xscale = 1.8
 image_yscale = 1.8
 
+// 弹出动画默认值：本对象在父菜单的 Draw 里创建，同一帧的 Draw 可能早于首次 Step 执行
+pop_s = 1; pop_p = 0; pop_t = 0; pop_dur = 0.20; pop_from = 0.84;
+pop_kids = []; pop_mx = x; pop_my = y; pop_back_t = 0; pop_back_p = 0;
+
 target_card_id = ""
 info_got = false
 card_attire_id_list = []
@@ -29,15 +33,15 @@ function card_attire_content_draw(_index, _dx, _dy){
 	if _index != -1{
 		var _id = card_attire_id_list[_index]
 		var _d  = get_attire_info(_id)
-		draw_sprite_ext(spr_slot, 0, x + _dx, y - 10 + _dy, 0.32, 0.32, 0, c_white, 1)
-		draw_sprite(_d.icon, 0, x + _dx, y + 10 + _dy)
+		draw_sprite_ext(spr_slot, 0, x + _dx * pop_s, y - 10 * pop_s + _dy, 0.32 * pop_s, 0.32 * pop_s, 0, c_white, 1)
+		draw_sprite_ext(_d.icon, 0, x + _dx * pop_s, y + 10 * pop_s + _dy, pop_s, pop_s, 0, c_white, 1)
 		draw_set_halign(fa_center)
 		draw_set_valign(fa_middle)
-		draw_text(x + _dx, y + 70 + _dy, _d.name)
+		draw_text(x + _dx * pop_s, y + 70 * pop_s + _dy, _d.name)
 	}
 	else{
 		draw_set_halign(fa_center)
 		draw_set_valign(fa_middle)
-		draw_text(x + _dx, y + 70 + _dy, "无")
+		draw_text(x + _dx * pop_s, y + 70 * pop_s + _dy, "无")
 	}
 }

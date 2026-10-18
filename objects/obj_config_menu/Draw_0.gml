@@ -52,16 +52,7 @@ switch (button_select) {
 
 		// ── 动效分级：三档滑块（左→右 = 关闭 / 基础 / 完全，档位即 global.ui_anim）──
 		var _sy   = y + ui_anim_slider_dy;          // 第 6 行（上面五行开关在 y-170..y+230，同 100 间距）
-		var _sx0  = x + ui_anim_slider_dx[0];       // 档位 0：关闭
-		var _sx2  = x + ui_anim_slider_dx[2];       // 档位 2：完全
 		var _knob = x + ui_anim_knob_dx;            // 旋钮当前显示位置（拖动 1:1 / 松手 ease-out 回弹）
-		var _lvl  = clamp(ui_anim_level(), 0, 2);
-		var _name = "基础";
-		switch (_lvl) {
-			case 0: _name = "关闭"; break;
-			case 2: _name = "完全"; break;
-		}
-
 		// 行标签（与上面五行贴图标签同列 x-360 居中）
 		draw_set_halign(fa_center);
 		draw_set_valign(fa_middle);
@@ -69,24 +60,35 @@ switch (button_select) {
 		// 行标签贴图（与上面五行贴图标签同款）
                 draw_sprite_ext(spr_option_anim_label, 0, x - 360, y + 330, 1, 1, 0, c_white, 1);
 
-		// 轨道：圆角条纹贴图（spr_option_anim_bar = 音量条贴图削成胶囊）；没播到的部分用音量页同款深色盖住
-		// → 关闭：整条深色；基础：左半条纹；完全：整条条纹
-		var _bar_w = sprite_get_width(spr_option_anim_bar);
-		// 贴图原点在正中，故按轨道中点绘制
-			draw_sprite_ext(spr_option_anim_bar, 0, (_sx0 + _sx2) * 0.5, _sy, (_sx2 - _sx0) / _bar_w, 0.8, 0, c_white, 1);
-		if (_sx2 - _knob > 2) {
-			draw_set_color(#17314C);
-			draw_roundrect_ext(_knob, _sy - 10, _sx2, _sy + 10, 10, 10, false);   // 右端跟着轨道一样圆
+		// ── 三段胶囊：三段连成一整条轨道，选中的那段由一块高亮片滑过去表示（滑动手感在 Step_0）──
+		// 尺寸与 Create_0 的 ui_anim_slider_dx 对齐：段宽 126 × 3 段连成一条 / 高 40 / 整排 x-270 .. x+108
+		var _pill_w = 126;
+		var _pill_x0 = x - 270;
+		var _pill_names = ["关闭", "基础", "完全"];
+		var _lvl = clamp(ui_anim_level(), 0, 2);
+		// 圆角一律用贴图：draw_circle / draw_rectangle 不抗锯齿，矢量圆角会有毛边。
+		// spr_option_anim_track = 382×44（378 轨道 + 2px 亮边），原点居中
+		// spr_option_anim_pill  = 132×46（120×34 奶油片 + 2px 淡侧影，已预先模糊），原点居中
+		var _px0 = _pill_x0;
+		var _px1 = _pill_x0 + _pill_w * 3;
+		var _hl_w = _pill_w - 6;
+		var _hl_c = x + clamp(ui_anim_knob_dx, ui_anim_slider_dx[0], ui_anim_slider_dx[2]);
+		var _hl_l = clamp(_hl_c - _hl_w * 0.5, _px0 + 3, _px1 - 3 - _hl_w);
+		draw_set_alpha(1);
+		draw_set_color(c_white);
+		draw_sprite(spr_option_anim_track, 0, (_px0 + _px1) * 0.5, _sy);
+		// 速度感：高亮片按速度包络横向拉长、纵向压扁（满速时 +10% / -13%），停下回到 1:1。
+		var _spd  = clamp(ui_anim_knob_spd, 0, 1);
+		var _sx_p = 1 + 0.10 * _spd;
+		var _sy_p = 1 - 0.13 * _spd;
+		draw_sprite_ext(spr_option_anim_pill, 0, _hl_l + _hl_w * 0.5, _sy, _sx_p, _sy_p, 0, c_white, 1);
+		// 三段文字：当前档位深棕字（配奶油底），其余白字
+		for (var _pi = 0; _pi < 3; _pi++) {
+			draw_set_color((_pi == _lvl) ? make_color_rgb(74, 52, 26) : c_white);
+			draw_text(_pill_x0 + _pill_w * (_pi + 0.5), _sy, _pill_names[_pi]);
 		}
-
-
-		// 旋钮：星星（音量滑块同款贴图）
-		draw_sprite_ext(spr_option_volume_slider, 0, _knob, _sy, 0.55, 0.55, 0, c_white, 1);
-
-		// 当前档位名（滑块右侧）
-  draw_set_color(c_white);      // 复位颜色（上面盖深色时改成了 #17314C）
-		draw_set_halign(fa_left);
-		draw_text(x - 80, y + 327, _name);
+		draw_set_color(c_white);
+		draw_set_alpha(1);
 		draw_set_halign(fa_center);
 	    break;
 	case 3:

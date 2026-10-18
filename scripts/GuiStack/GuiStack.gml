@@ -384,7 +384,9 @@ function panel_anim_step(_inst, _sync_kids = true){
         var _p = 1
         if (!ui_anim_on(1)) {
             pnl_o = 1                       // 关闭动效：不播过渡，永远当作「完全展开」
-            pnl_t = 0
+            // pnl_t 必须记为本段时长而不是 0：等级从 0 切回 1/2 时，若进度被清零，
+            // 下一帧会重播一次进场动画
+            pnl_t = pnl_closing ? pnl_close_time : pnl_open_time
         }
         else {
             var _dur = max(pnl_closing ? pnl_close_time : pnl_open_time, 0.0001)
@@ -519,4 +521,166 @@ function panel_anim_free(_inst){
         if (variable_instance_exists(id, "pnl_surf") && surface_exists(pnl_surf)) { surface_free(pnl_surf) }
         if (variable_instance_exists(id, "pnl_kids") && ds_exists(pnl_kids, ds_type_list)) { ds_list_destroy(pnl_kids) }
     }
+}
+
+
+// ===== 二级小菜单"由小到大弹出" ===============================================
+// Draw 里把固定偏移乘 pop_s（例：draw_text(x, y - 165 * pop_s, "标题")）。
+// 本体缩放 image_xscale/yscale；子对象按相对本体的位置插值并同步缩放。
+
+/// @function pop_anim_init(_inst, _kids, _dur, _from)
+/// @param {Id.Instance} _inst 菜单本体
+/// @param {Array} _kids 要跟着一起缩放弹出的子对象类型数组
+/// @param {Real} _dur 时长（秒），默认 0.20
+/// @param {Real} _from 起始缩放，默认 0.84（略小 + 回弹）
+function pop_anim_init(_inst, _kids, _dur = 0.20, _from = 0.84){
+
+    var _arr = [];
+
+    for (var i = 0; i < array_length(_kids); i++) {
+
+        with (_kids[i]) { array_push(_arr, { inst: id, bx: x, by: y, sx: image_xscale }) }
+
+    }
+
+    with (_inst) {
+
+        pop_t = 0;
+        pop_dur = _dur;
+        pop_from = _from;
+        pop_s = _from;
+        pop_p = 0;
+        pop_mx = x;
+        pop_my = y;
+        pop_base_s = image_xscale;
+        pop_kids = _arr;
+        pop_back_t = 0;
+        pop_back_p = 0;
+
+    }
+
+}
+
+/// @function pop_anim_step(_inst)
+/// @description 推进弹出动画；关闭阶段反向缩回（出场是入场的逆过程），
+///              播完后不再写子对象属性，避免覆盖其自身逻辑
+function pop_anim_step(_inst){
+
+    with (_inst) {
+
+        var _closing = variable_instance_exists(id, "pnl_closing") && pnl_closing;
+
+        // 关闭：缩回起始缩放，之后仍由 panel_anim_step 负责淡出与销毁
+        if (_closing && pop_p >= 1) {
+
+            if (pop_back_p >= 1) { exit }
+
+            var _cd = variable_instance_exists(id, "pnl_close_time") ? max(pnl_close_time, 0.01) : 0.14;
+
+            pop_back_t += ui_anim_dt();
+            pop_back_p = clamp(pop_back_t / _cd, 0, 1);
+
+            pop_s = lerp(1, pop_from, power(pop_back_p, 2));    // ease-in：收得越来越快
+
+            image_xscale = pop_base_s * pop_s;
+            image_yscale = pop_base_s * pop_s;
+
+            for (var i = 0; i < array_length(pop_kids); i++) {
+
+                var _k = pop_kids[i];
+                if (!instance_exists(_k.inst)) { continue }
+                _k.inst.x = pop_mx + (_k.bx - pop_mx) * pop_s;
+                _k.inst.y = pop_my + (_k.by - pop_my) * pop_s;
+                _k.inst.image_xscale = _k.sx * pop_s;
+                _k.inst.image_yscale = _k.sx * pop_s;
+
+            }
+
+
+            exit;
+
+        }
+
+        if (pop_p >= 1) { exit }
+
+        // 动效等级 0：直接终态
+        if (!ui_anim_on(1)) {
+
+            pop_p = 1; pop_s = 1;
+            image_xscale = pop_base_s; image_yscale = pop_base_s;
+
+            for (var i = 0; i < array_length(pop_kids); i++) {
+
+                var _k2 = pop_kids[i];
+                if (!instance_exists(_k2.inst)) { continue }
+                _k2.inst.x = _k2.bx; _k2.inst.y = _k2.by;
+                _k2.inst.image_xscale = _k2.sx; _k2.inst.image_yscale = _k2.sx;
+
+            }
+
+            exit;
+
+        }
+
+        pop_t += ui_anim_dt();
+        pop_p = clamp(pop_t / pop_dur, 0, 1);
+
+        // ease-out back：略过 1 再回落，手感有回弹
+        var _c1 = 1.70158;
+        var _e = 1 + (_c1 + 1) * power(pop_p - 1, 3) + _c1 * power(pop_p - 1, 2);
+        pop_s = lerp(pop_from, 1, _e);
+
+        image_xscale = pop_base_s * pop_s;
+        image_yscale = pop_base_s * pop_s;
+
+            for (var i = 0; i < array_length(pop_kids); i++) {
+
+                var _k = pop_kids[i];
+                if (!instance_exists(_k.inst)) { continue }
+                _k.inst.x = pop_mx + (_k.bx - pop_mx) * pop_s;
+                _k.inst.y = pop_my + (_k.by - pop_my) * pop_s;
+                _k.inst.image_xscale = _k.sx * pop_s;
+                _k.inst.image_yscale = _k.sx * pop_s;
+
+            }
+
+
+    }
+
+}
+
+/// @function cell_reveal_alpha(_row, _col)
+/// @description 情报岛列表格子的浮现透明度（0..1）。在内容绘制时逐格套用，
+///   因此不存在"按格子切块贴回"时的分界线问题。页签切换按 Z 字顺序错峰，
+///   并从第一条可见行起算；滚动时每行各有计时器 sr_rowv，行内再按列错开
+function cell_reveal_alpha(_row, _col){
+
+    if (!ui_anim_on(2)) { return 1 }
+    if (!instance_exists(obj_info_island_bg)) { return 1 }
+
+    var _a = 1;
+
+    with (obj_info_island_bg) {
+
+        if (tab_fade_t >= 0 && y_offset < 1) {
+
+            var _i0 = max(0, floor((y_offset - 39.5) / 213));
+            var _n  = (_row - _i0) * info_cols + _col;
+            if (_n >= 0) { _a = ui_anim_ease(clamp((tab_fade_t - _n * 0.015) / 0.26, 0, 1), 3) }
+
+        }
+        else if (variable_instance_exists(id, "sr_rowv")) {
+
+            var _v = (_row < array_length(sr_rowv)) ? sr_rowv[_row] : -1;
+            // 未开始计时的行（sr_rowv = -1）按 0 处理：按 1 处理会让该行在刚进入视口那一帧整块露出，
+            // 下一帧计时器归零后又突然消失再淡入，表现为闪一下
+            if (_v < 0) { _v = 0 }
+            _a = ui_anim_ease(clamp(_v / 0.28, 0, 1), 3);   // 整排同时淡入，0.28s
+
+        }
+
+    }
+
+    return _a;
+
 }
