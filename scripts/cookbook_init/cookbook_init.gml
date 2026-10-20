@@ -560,7 +560,7 @@ function cookbook_init(){
 		}
 	)
 	register_cookbook(
-		"multi_cuisine",
+		"camp_stew",
 		{
 			"rank":2,
 			"title":"营地炖肉",
