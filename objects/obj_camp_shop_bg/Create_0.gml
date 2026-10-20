@@ -50,7 +50,7 @@ function shop_list_recharge(){
 		            var is_unlocked = false;
 		            for(var k = 0; k < array_length(global.save_data.unlocked_cards); k++) {
 		                if (global.save_data.unlocked_cards[k].id == global.goods_map[? ds_list_find_value(goods_list,i*4+j+(current_page-1)*12)].unlock_item_id) {
-							if get_card_info_simple(global.save_data.unlocked_cards[k].id).shape >= global.goods_map[? ds_list_find_value(goods_list,i*4+j+(current_page-1)*12)].target_shape{
+							if get_card_info_simple(global.save_data.unlocked_cards[k].id).max_shape >= global.goods_map[? ds_list_find_value(goods_list,i*4+j+(current_page-1)*12)].target_shape{
 			                    is_unlocked = true;
 			                    break;
 							}

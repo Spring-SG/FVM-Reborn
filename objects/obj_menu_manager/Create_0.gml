@@ -47,7 +47,8 @@ self.texture_to_load = [
 	"enemy_tower",
 	"enemy_floating",
 	"pack_undersea_vortex",
-	"pack_explore_camp"
+	"pack_explore_camp",
+	//"pack_desert_trip"
 ]
 
 self.texture_count = array_length(self.texture_to_load)
