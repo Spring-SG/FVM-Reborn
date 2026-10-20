@@ -40,7 +40,7 @@ function find_priority_enemy() {
 	            }
 	            // 同时寻找最左侧且最大生命值最高的敌人
 	            if (maxhp > _max_hp || (x < _min_x && maxhp == _max_hp)) {
-	                _min_x = x;
+					_min_x = x;
 	                _max_hp = maxhp;
 	                global._curry_cannon_col = grid_col;
 	                global._curry_cannon_row = grid_row;

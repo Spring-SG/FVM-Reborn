@@ -6,7 +6,7 @@ if not obj_camp_shop_bg.is_submenu_opened and not is_disabled{
 		// 直接取 .shape 会报 "Variable Button.shape not set before reading it"
 		var _ci = get_card_info_simple(target_item)
 		if (!is_struct(_ci)){
-			show_notice("请先解锁这张卡",60)
+			show_notice("该卡片未解锁，无法购买",60)
 			exit
 		}
 		if _ci.shape != target_shape - 1{
