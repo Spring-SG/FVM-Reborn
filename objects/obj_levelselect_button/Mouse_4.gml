@@ -10,6 +10,11 @@ if on_click && obj_player_info_ui.menu_type == 0 && unlock{
 		obj_player_info_ui.menu_type = 4
 		obj_world_map_button.world_map = 2
 	}
+	else if target_level_id == "camp_port"{
+		instance_create_depth(room_width/2,room_height/2,-5,obj_camp_port_menu)
+		obj_player_info_ui.menu_type = 4
+		obj_world_map_button.world_map = 2
+	}
 	else{
 	    global.gui_stack.to(room_ready)
 	

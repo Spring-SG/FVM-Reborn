@@ -366,9 +366,23 @@ function slots_init(){
 	    {"shape":1, "sprite":spr_nut_frier_1, "cost":300, "cooldown":7*60, "description":"橡子搅拌机：向前方5个方向发射子弹","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_nut_frier_1},
 		{"shape":2, "sprite":spr_nut_frier_2, "cost":300, "cooldown":7*60, "description":"松塔爆破机：向前方5个方向发射子弹","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_nut_frier_2}
 	]);
-	//register_card("fruit_tart", obj_fruit_tart, [
-	//    {"shape":0, "sprite":spr_fruit_tart, "cost":150, "cooldown":14*60, "description":"美味水果塔：为本行左侧的投掷类卡片增加伤害","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_fruit_tart},
-	//    {"shape":1, "sprite":spr_fruit_tart_1, "cost":150, "cooldown":7*60, "description":"风车水果塔：为本行左侧的投掷类卡片增加伤害","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_fruit_tart_1},
-	//	{"shape":2, "sprite":spr_fruit_tart_2, "cost":150, "cooldown":7*60, "description":"巧克力水果塔：为本行投掷类卡片增加伤害","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_fruit_tart_2}
-	//]);
+	register_card("fruit_tart", obj_fruit_tart, [
+	    {"shape":0, "sprite":spr_fruit_tart, "cost":150, "cooldown":14*60, "description":"美味水果塔：为本行左侧的投掷类卡片增加伤害","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_fruit_tart},
+	    {"shape":1, "sprite":spr_fruit_tart_1, "cost":150, "cooldown":7*60, "description":"风车水果塔：为本行左侧的投掷类卡片增加伤害","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_fruit_tart_1},
+		{"shape":2, "sprite":spr_fruit_tart_2, "cost":150, "cooldown":7*60, "description":"巧克力水果塔：为本行投掷类卡片增加伤害","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_fruit_tart_2}
+	]);
+	register_card("roast_lizard_pult", obj_roast_lizard_pult, [
+	    {"shape":0, "sprite":spr_roast_lizard_pult, "cost":275, "cooldown":7*60, "description":"烤蜥蜴投手：向前方三行投掷3颗子弹","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_roast_lizard_pult},
+	    {"shape":1, "sprite":spr_roast_lizard_pult_1, "cost":275, "cooldown":7*60, "description":"坚果蜥蜴投手：向前方三行投掷4颗子弹","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_roast_lizard_pult_1},
+		{"shape":2, "sprite":spr_roast_lizard_pult_2, "cost":275, "cooldown":7*60, "description":"花椒蜥蜴投手：向前方三行投掷6颗子弹","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_roast_lizard_pult_2}
+	]);
+	register_card("cactus_sashimi",obj_cactus_sashimi,[
+	    {"shape":0, "sprite":spr_cactus_sashimi, "cost":275, "cooldown":7*60, "description":"仙人掌刺身：向前方三行和后方一行发射尖刺","plant_type":"normal","feature_type":"normal","target_card":"none"},
+	    {"shape":1, "sprite":spr_cactus_sashimi_1, "cost":275, "cooldown":7*60, "description":"仙人球刺身：向前方三行和后方一行发射尖刺","plant_type":"normal","feature_type":"normal","target_card":"none"},
+		{"shape":2, "sprite":spr_cactus_sashimi_2, "cost":275, "cooldown":7*60, "description":"仙人掌花刺身：向前方三行和后方一行发射尖刺","plant_type":"normal","feature_type":"normal","target_card":"none"}
+	])
+	register_card("parsnip_salad",obj_parsnip_salad,[
+	    {"shape":0, "sprite":spr_parsnip_salad, "cost":125, "cooldown":7*60, "description":"防风草沙拉：为5*5范围内卡片抵御龙卷风，3*3范围回血","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_parsnip_salad},
+	    {"shape":1, "sprite":spr_parsnip_salad_1, "cost":125, "cooldown":7*60, "description":"蛋黄酱防风草：为5*5范围内卡片抵御龙卷风和回血","plant_type":"normal","feature_type":"normal","target_card":"none","place_preview":spr_parsnip_salad_1},
+	])
 }

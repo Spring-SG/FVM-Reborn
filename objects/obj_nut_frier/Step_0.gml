@@ -33,17 +33,17 @@ if (has_enemy) {
 	if shape < 2{
 		if attack_timer == cycle - 2*current_flash_speed{
 			event_user(1)
-			audio_play_sound(snd_shot,0,0)
+			global.audio.play(snd_shot,0,0)
 		}
 	}
 	else{
 		if attack_timer == cycle - 3*current_flash_speed{
 			event_user(1)
-			audio_play_sound(snd_shot,0,0)
+			global.audio.play(snd_shot,0,0)
 		}
 		if attack_timer == cycle - 1*current_flash_speed{
 			event_user(1)
-			audio_play_sound(snd_shot,0,0)
+			global.audio.play(snd_shot,0,0)
 		}
 	}
 } else {

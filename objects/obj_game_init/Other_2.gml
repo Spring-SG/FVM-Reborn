@@ -116,8 +116,11 @@ function unlock_all(){//测试版设置初始存档
 	unlock_card("rabbit_lantern",13,2,8)
 	unlock_card("delicacy_firework",13,2,8)
 	unlock_card("sugar_roxburghii",13,2,8)
-	unlock_card("nut_frier",13,0,8)
+	unlock_card("nut_frier",13,2,8)
 	unlock_card("fruit_tart",13,2,8)
+	unlock_card("roast_lizard_pult",13,2,8)
+	unlock_card("cactus_sashimi",13,2,8)
+	unlock_card("parsnip_salad",13,1,8)
 	
 	global.save_data.player.gold = 99000000
 	global.save_data.player.level = 60
@@ -171,7 +174,7 @@ function unlock_all(){//测试版设置初始存档
 	global.save_data.unlocked_items.elite_unlocked = true
 	
 }
-//unlock_all()
+unlock_all()
 global.player_name = global.save_data.player.name
 global.total_time = global.save_data.player.total_time
 

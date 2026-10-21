@@ -56,4 +56,6 @@ current_level = 0  // 当前等级
 
 // ========= 是否有梯子 ========
 have_loder = false
+desert_wind_protect = false
+desert_wind_protect_timer = 0
 

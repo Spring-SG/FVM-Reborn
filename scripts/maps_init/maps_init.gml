@@ -2041,6 +2041,47 @@ function maps_init(){
 					"player_level_require":0,
 					"pre_level_require":[]
 				},
+				{
+					"id":"camp_port",
+					"name":"探险港口",
+					"button_spr":spr_levelselect_button_camp,
+					"button_index":7,
+					"button_x":1220,
+					"button_y":690,
+					"level_file":"camp/nut_platform_night.json",
+					"hard_level_file":"camp/nut_platform_night_hard.json",
+					"level_sprite":spr_nut_platform_night,
+					"pre_music":mus_explore_camp_pre,
+					"elite_music":mus_explore_camp_pre,
+					"boss_music":mus_explore_camp_boss,
+					"player_level_require":0,
+					"pre_level_require":[]
+				},
+			]
+		}
+	)
+	register_map(
+		"desert_trip",
+		{
+			"map_name":"沙漠之旅",
+			"map_sprite":spr_desert_trip,
+			"levels_data":[
+				{
+					"id":"camp_shop",
+					"name":"营地商店",
+					"button_spr":spr_levelselect_button_camp,
+					"button_index":6,
+					"button_x":1420,
+					"button_y":490,
+					"level_file":"camp/nut_platform_night.json",
+					"hard_level_file":"camp/nut_platform_night_hard.json",
+					"level_sprite":spr_nut_platform_night,
+					"pre_music":mus_explore_camp_pre,
+					"elite_music":mus_explore_camp_pre,
+					"boss_music":mus_explore_camp_boss,
+					"player_level_require":0,
+					"pre_level_require":[]
+				},
 			]
 		}
 	)

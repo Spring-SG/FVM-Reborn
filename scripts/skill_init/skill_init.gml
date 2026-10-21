@@ -80,4 +80,7 @@ function skill_init(){
 	register_card_skill("delicacy_firework","atk",[900,950,1000,1050,1100,1150,1200,1250,1300])
 	register_card_skill("sugar_roxburghii","cycle",[1.3*60,1.25*60,1.2*60,1.15*60,1.1*60,1.05*60,1*60,0.95*60,0.9*60])
 	register_card_skill("nut_frier","cycle",[1.6*60,1.55*60,1.5*60,1.45*60,1.4*60,1.35*60,1.3*60,1.25*60,1.2*60])
+	register_card_skill("roast_lizard_pult","cycle",[3*60,2.9*60,2.8*60,2.7*60,2.6*60,2.4*60,2.2*60,2*60,1.8*60])
+	register_card_skill("cactus_sashimi","cycle",[1.4*60,1.35*60,1.3*60,1.25*60,1.2*60,1.15*60,1.1*60,1.05*60,1*60])
+	register_card_skill("parsnip_salad","cycle",[3*60,2.75*60,2.5*60,2.25*60,2*60,1.75*60,1.5*60,1.25*60,1*60])
 }
