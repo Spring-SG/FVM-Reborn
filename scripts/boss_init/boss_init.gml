@@ -33,4 +33,5 @@ function boss_init(){
 	register_boss("thor",{"name":"雷神","hp":800000,"icon":spr_rumble_icon})
 	register_boss("travel_record",{"name":"旅行唱机","hp":50000,"icon":spr_travel_record_icon})
 	register_boss("beverage_machine",{"name":"饮料贩卖机","hp":80000,"icon":spr_beverage_machine_icon})
+	register_boss("witch_shaman_mouse",{"name":"萨满巫师鼠","hp":50000,"icon":spr_witch_shaman_mouse_icon})
 }

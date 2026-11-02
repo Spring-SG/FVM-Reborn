@@ -2071,8 +2071,8 @@ function maps_init(){
 					"name":"营地商店",
 					"button_spr":spr_levelselect_button_camp,
 					"button_index":6,
-					"button_x":1420,
-					"button_y":490,
+					"button_x":290,
+					"button_y":640,
 					"level_file":"camp/nut_platform_night.json",
 					"hard_level_file":"camp/nut_platform_night_hard.json",
 					"level_sprite":spr_nut_platform_night,
@@ -2080,6 +2080,22 @@ function maps_init(){
 					"elite_music":mus_explore_camp_pre,
 					"boss_music":mus_explore_camp_boss,
 					"player_level_require":0,
+					"pre_level_require":[]
+				},
+				{
+					"id":"aloe_dune_daytime",
+					"name":"芦荟沙丘（日）",
+					"button_spr":spr_levelselect_button_desert,
+					"button_index":0,
+					"button_x":1202,
+					"button_y":720,
+					"level_file":"desert/aloe_dune_daytime.json",
+					"hard_level_file":"desert/aloe_dune_daytime_hard.json",
+					"level_sprite":spr_aloe_dune_daytime,
+					"pre_music":mus_delicious_island_crown_pre,
+					"elite_music":mus_delicious_island_crown_elite,
+					"boss_music":mus_delicious_island_daytime_boss,
+					"player_level_require":20,
 					"pre_level_require":[]
 				},
 			]

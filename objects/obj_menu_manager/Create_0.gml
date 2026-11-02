@@ -38,14 +38,14 @@ global.laboretory_room = false
 self.texture_to_load = [
 	//"UI",
 	"cards",
-	"enemy_delicious",
+	//"enemy_delicious",
 	"enemy_volcanic",
 	//"bullet",
 	//"effects",
 	//"player",
 	//"maps",
 	"enemy_tower",
-	"enemy_floating",
+	//"enemy_floating",
 	//"pack_undersea_vortex",
 	//"pack_explore_camp",
 	"pack_desert_trip"

@@ -27,4 +27,4 @@ feature_type = "dwarf"
 target_type = "pierce"
 can_stun_enemy = false
 
-kill_list = ["engineering_vehicle_mouse","garbage_track_mouse","landmine_vehicle_mouse","hazelnut_cannon_mouse","snail_mouse"]
+kill_list = ["engineering_vehicle_mouse","garbage_track_mouse","landmine_vehicle_mouse","hazelnut_cannon_mouse","snail_mouse","trojan_horse"]

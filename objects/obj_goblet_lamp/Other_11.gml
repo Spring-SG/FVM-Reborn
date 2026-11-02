@@ -1,4 +1,4 @@
-if grow_timer < 90*60{
+if grow_timer < grow_time{
 	var inst = instance_create_depth(x, y - 60, depth - 1000, obj_flame);
 	inst.value = flame_produce - 10
 	inst.sprite_index = spr_flame_small
