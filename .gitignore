@@ -62,6 +62,7 @@ tmp/
 
 .vscode/
 .workbuddy/
+build_out/
 
 # If all of your sprite sources are in this repo you can stick a "!" in front of this to track this file. Otherwise this file is machine-specific and should be ignored.
 sprites.import.json

@@ -96,7 +96,7 @@ switch state{
 		
 		// ===== 技能1实战效果：第2~6列（代码索引1~5）全行中随机摧毁3个不重复格子的卡片 =====
 		// 第7帧（timer = 7*5）为动画开始爆发的时刻
-		if timer == 7 * 5{
+		if timer == 23 * 5 + 2{
 			// 枚举候选格子（1~5列 × 全行），洗牌后取前3个，天然保证不重复
 			var _cells = [];
 			var _max_col = min(5, global.grid_cols - 1);
@@ -119,7 +119,7 @@ switch state{
 				
 				// 摧毁该格子上的卡片
 				with obj_card_parent{
-					if grid_col == _cell_col && grid_row == _cell_row && plant_id != "player"{
+					if grid_col == _cell_col && grid_row == _cell_row && plant_id != "player" && plant_type != "coffee" && !invincible && plant_id != "cotton_candy"{
 						if hp >= max_hp{
 							obj_task_manager.card_loss++;
 						}
@@ -166,7 +166,7 @@ switch state{
 					}
 					// 摧毁该格子上的卡片
 					with obj_card_parent{
-						if grid_col == _area_col && grid_row == _area_row && plant_id != "player"{
+						if grid_col == _area_col && grid_row == _area_row && plant_id != "player" && plant_type != "coffee" && !invincible && plant_id != "cotton_candy"{
 							if hp >= max_hp{
 								obj_task_manager.card_loss++;
 							}

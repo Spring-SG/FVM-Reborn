@@ -151,4 +151,5 @@ function enemy_init(){
 	register_enemy("primordial_giant_mouse",{"name":"原始巨人鼠","_obj":obj_primordial_giant_mouse,"hp":3000,"shield":0,"description":"原始巨人鼠：生命值和伤害极高，但攻速慢","speed":0.27,"atk":900,"cycle":108,"range":120,"ash_proof":true,"spr":spr_primordial_giant_mouse,"feature":"land"})
 	register_enemy("little_monster_mouse",{"name":"熊孩子鼠","_obj":obj_little_monster_mouse,"hp":1000,"shield":0,"description":"熊孩子鼠：躲避子弹","speed":0.60,"atk":10,"cycle":36,"range":90,"ash_proof":false,"spr":spr_little_monster_mouse,"feature":"land"})
 	register_enemy("witch_shaman_mouse",{"name":"萨满巫师鼠","_obj":obj_witch_shaman_mouse,"hp":30000,"shield":0,"description":"萨满巫师鼠：沙漠之旅BOSS","speed":0.3,"atk":10,"cycle":36,"range":90,"ash_proof":true,"spr":spr_witch_shaman_mouse_idle,"feature":"land"})
+	register_enemy("medusa",{"name":"美杜莎","_obj":obj_medusa,"hp":50000,"shield":0,"description":"美杜莎：石化凝视与催眠的BOSS","speed":0.3,"atk":10,"cycle":36,"range":90,"ash_proof":true,"spr":spr_medusa_idle,"feature":"land"})
 }

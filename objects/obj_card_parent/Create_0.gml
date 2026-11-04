@@ -48,6 +48,10 @@ idle_anim = 0
 ice_timer = 0
 frozen_timer = 0
 is_frozen = false
+// ===== 美杜莎石化冰冻：被美杜莎冰冻时改用石像外观 =====
+is_medusa_statue = false
+medusa_statue_timer = 0
+medusa_statue_anim = 0
 awake_anim = 0
 
 // ========== 注册信息 ==========

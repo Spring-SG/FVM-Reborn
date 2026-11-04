@@ -16,6 +16,16 @@ if frozen_timer > 0{
 else{
 	is_frozen = false
 }
+// 美杜莎石化：计时结束后恢复原样
+if medusa_statue_timer > 0{
+	medusa_statue_timer--
+	if medusa_statue_timer <= 0{
+		is_medusa_statue = false
+	}
+}
+if is_medusa_statue{
+	medusa_statue_anim ++
+}
 if hp <= 0{
 	instance_destroy()
 }
