@@ -1,10 +1,14 @@
-damage = 0
-move_speed = 0
-row = 0
-damage_type = "normal"
-target_type = "normal"
-burnt = 0
-bounced = false
-brazier_list = ds_list_create()
-image_xscale = 1.8
-image_yscale = 1.8
+/// 强力枪子弹：标准四碰撞直射弹
+event_inherited();
+
+bullet_collides_obstacle = true;
+bullet_collides_brazier  = true;
+bullet_collides_bounce   = true;
+
+bullet_on_hit_effect = function() {
+	if (burnt == 0) {
+		instance_create_depth(x, y, depth, obj_xiaolongbao_bullet_effect);
+	} else {
+		bullet_create_fire_effect();
+	}
+};
