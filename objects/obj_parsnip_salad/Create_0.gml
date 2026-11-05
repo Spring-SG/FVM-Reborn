@@ -22,3 +22,5 @@ bleed_damage = 0
 
 hp_increase_card_list = []
 maxhp_increase_card_list = []
+
+desert_wind_protect = true

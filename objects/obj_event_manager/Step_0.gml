@@ -445,6 +445,71 @@ if is_real(global.level_file.version){
 					}
 				}
 			}
+			//处理沙漠龙卷风
+			//参数：start_col / start_row 初始列、行
+			//      x_speed / y_speed 每帧位移（像素）
+			//      spawn_interval    生成间隔（秒），0 或缺省表示整关只在开局生成一次
+			if event_list[i].id == "desert_tornado"{
+				var tornado_interval = 0
+				if variable_struct_exists(event_list[i],"spawn_interval"){
+					tornado_interval = event_list[i].spawn_interval
+				}
+				else if variable_struct_exists(event_list[i],"interval"){
+					tornado_interval = event_list[i].interval
+				}
+				var tornado_spawn = false
+				if event_timer == 1{
+					tornado_spawn = true
+				}
+				else if tornado_interval > 0 && (event_timer-1) mod round(tornado_interval*60) == 0{
+					tornado_spawn = true
+				}
+				if tornado_spawn{
+					var tornado_col = global.grid_cols-1
+					var tornado_row = 3
+					var tornado_x_speed = -1
+					var tornado_y_speed = 0
+					if variable_struct_exists(event_list[i],"start_col"){
+						tornado_col = event_list[i].start_col
+					}
+					if variable_struct_exists(event_list[i],"start_row"){
+						tornado_row = event_list[i].start_row
+					}
+					if variable_struct_exists(event_list[i],"x_speed"){
+						tornado_x_speed = event_list[i].x_speed
+					}
+					if variable_struct_exists(event_list[i],"y_speed"){
+						tornado_y_speed = event_list[i].y_speed
+					}
+					var tornado_inst = instance_create_depth(0,0,-750,obj_desert_tornado)
+					tornado_inst.col = tornado_col
+					tornado_inst.row = tornado_row
+					tornado_inst.x_speed = tornado_x_speed
+					tornado_inst.y_speed = tornado_y_speed
+				}
+			}
+			//处理沙漠沙尘暴
+			//参数：init_delay 初始生成延迟（秒）
+			//      init_cols 初始沙尘暴列数
+			//      advance_interval 每隔多少秒向左侧多推进一列
+			//      respawn_delay 被换气扇吹散后等多少秒重生（独立参数，不取换气扇的 cycle）
+			if event_list[i].id == "desert_sandstorm"{
+				if event_timer == 1{
+					var sandstorm_ctrl = instance_create_depth(0,0,0,obj_desert_sandstorm_controller)
+					if variable_struct_exists(event_list[i],"init_delay"){
+						sandstorm_ctrl.init_delay = event_list[i].init_delay
+					}
+					if variable_struct_exists(event_list[i],"init_cols"){
+						sandstorm_ctrl.init_cols = event_list[i].init_cols
+					}
+					if variable_struct_exists(event_list[i],"advance_interval"){
+						sandstorm_ctrl.advance_interval = event_list[i].advance_interval
+					}
+					if variable_struct_exists(event_list[i],"respawn_delay"){
+						sandstorm_ctrl.respawn_delay = event_list[i].respawn_delay
+					}
+				}
+			}
 			//处理云和云洞生成
 			if event_list[i].id == "cloud"{
 				if event_timer mod (event_list[i].interval*60) == (event_list[i].interval*60 - 1){
