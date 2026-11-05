@@ -50,6 +50,24 @@ switch (button_select) {
 		//draw_set_valign(fa_top);
 		draw_sprite(spr_option_menu_text,1,x-360,y+30)
 
+		// ── 「暂停滤镜」行标签：第一行右侧（开关在 Step_0 里创建于 x+200）──
+		// 这行没有对应的美术标签贴图（spr_option_menu_text 的行位是烘死的），
+		// 用字体 + 八向描边模拟同款样式：深蓝粗描边 + 浅蓝白字。
+		var _pf_lx = x + 360;
+		var _pf_ly = y - 170;
+		draw_set_font(font_yuan);
+		draw_set_halign(fa_center);
+		draw_set_valign(fa_middle);
+		draw_set_colour(make_color_rgb(28, 64, 120));
+		for (var _pf_i = 0; _pf_i < 8; _pf_i++){
+			var _pf_a = _pf_i * 45;
+			draw_text_transformed(_pf_lx + lengthdir_x(2.5, _pf_a), _pf_ly + lengthdir_y(2.5, _pf_a), "禁用暂停滤镜", 1.2, 1.2, 0);
+		}
+		draw_set_colour(make_color_rgb(214, 234, 255));
+		draw_text_transformed(_pf_lx, _pf_ly, "禁用暂停滤镜", 1.2, 1.2, 0);
+		draw_set_colour(c_white);
+		draw_set_halign(fa_center);
+
 		// ── 动效分级：三档滑块（左→右 = 关闭 / 基础 / 完全，档位即 global.ui_anim）──
 		var _sy   = y + ui_anim_slider_dy;          // 第 6 行（上面五行开关在 y-170..y+230，同 100 间距）
 		var _knob = x + ui_anim_knob_dx;            // 旋钮当前显示位置（拖动 1:1 / 松手 ease-out 回弹）

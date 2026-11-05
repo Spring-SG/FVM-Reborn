@@ -1,5 +1,8 @@
 //step事件
-if global.is_paused{
+// 暂停时仍然允许拿起/放置卡片（空格暂停），只有下面两种情况才完全停手：
+//   ① ESC 菜单打开（global.show_menu）——鼠标要留给菜单按钮
+//   ② 关卡已结束（global.game_over）——结算界面不该再操作卡槽
+if (global.is_paused && (global.show_menu || global.game_over)){
 	exit
 }
 
@@ -18,8 +21,10 @@ if global.debug{
 	cooldown_timer = cooldown
 }
 if cooldown_timer < cooldown{
-	cooldown_timer ++
-
+	// 暂停时不推进冷却倒计时：暂停期间放的卡会停在"刚进入冷却"的进度上，解除暂停后继续走
+	if (!global.is_paused){
+		cooldown_timer ++
+	}
 
     // 冷却中状态
     is_ready = false;

@@ -106,6 +106,7 @@ if (!file_exists("config.ini")) {
 	ini_write_real("settings", "save_slot", 0)
 	ini_write_bool("settings", "lose_focus_pause", true)
 	ini_write_real("settings", "ui_anim", 0)
+	ini_write_bool("settings", "pause_filter", false)
 	ini_open("config.ini");
     for (var i = 0; i < array_length(global.keybind_config); i++) {
         var kb = global.keybind_config[i];
@@ -169,6 +170,14 @@ global.save_slot = ini_read_real("settings", "save_slot", 0)
 global.lose_focus_pause = ini_read_bool("settings", "lose_focus_pause", true);
 global.ime_block = ini_read_bool("settings", "ime_block", true); // 输入法屏蔽开关（个别输入法环境异常时可关）
 global.ui_anim = clamp(ini_read_real("settings", "ui_anim", 0), 0, 2); // 界面动效分级：0=关闭 1=基础 2=完全（设置界面「画面设置」页的滑块改它）
+// 暂停滤镜：[settings] pause_filter
+//   false（默认）= 原来的行为：空格暂停时叠一层黑色半透明遮罩
+//   true          = 开启该选项后，暂停页不再绘制黑色半透明遮罩（暂停时能直接看清战场）
+global.pause_filter = ini_read_bool("settings", "pause_filter", false);
+// 兼容旧配置：键缺失时补写，玩家可手改 %LOCALAPPDATA%\FVM_Reborn\config.ini
+if (ini_read_string("settings", "pause_filter", "") == "") {
+    ini_write_bool("settings", "pause_filter", false);
+}
 // 兼容旧配置：键缺失时补写，玩家可手改 %LOCALAPPDATA%\FVM_Reborn\config.ini 关闭
 if (ini_read_string("settings", "ime_block", "") == "") {
     ini_write_bool("settings", "ime_block", true);

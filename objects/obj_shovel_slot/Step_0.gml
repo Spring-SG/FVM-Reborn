@@ -1,5 +1,6 @@
 // 控制悬停提示透明度
-if global.is_paused{
+// 暂停时仍然允许拿起铲子/铲卡（空格暂停）；ESC 菜单打开或关卡结束时停手
+if (global.is_paused && (global.show_menu || global.game_over)){
 	exit
 }
 var slot_key = global.keybind_map[? "铲子"];

@@ -1,7 +1,4 @@
 // 绘制悬停提示（已优化）
-if global.is_paused{
-	exit
-}
 if (hover_alpha > 0) {
     //draw_set_alpha(hover_alpha);
    

@@ -68,6 +68,13 @@ function draw_settings_page(){
 	    btn5.state = global.borderless_window;
 		btn5.tooltip_text = "将全屏变为无边框窗口模式\n该选项只会在你下一次切换全屏时生效"
 	    array_push(setting_buttons, btn5);
+		
+		// 暂停滤镜开关：放在第一行右侧，与左侧「屏幕震动」对称（本页纵向已排满，没有第 6 行）
+	    var btn6 = instance_create_depth(x + 200, y - 170, depth-2, obj_setting_toggle);
+	    btn6.config_key = "pause_filter";
+	    btn6.state = global.pause_filter;
+		btn6.tooltip_text = "开启后，空格暂停时不再叠加黑色半透明遮罩\n（ESC 菜单与结算界面的遮罩不受影响）"
+	    array_push(setting_buttons, btn6);
     
 		// 动效分级滑块：重新进入本页时旋钮直接对齐当前档位（不播回弹）
 		ui_anim_knob_dx = ui_anim_slider_dx[clamp(ui_anim_level(), 0, 2)];

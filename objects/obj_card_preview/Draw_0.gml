@@ -1,12 +1,11 @@
 // obj_plant_preview DRAW 事件
-
-if not global.is_paused{
-    if (!variable_instance_exists(id, "logical_base_x")) {
-        logical_base_x = x;
-        logical_base_y = y;
-        platform_shift_x = 0;
-        platform_shift_y = 0;
-    }
+// 暂停时也要画：空格暂停下允许拿卡/放卡，预览必须跟着鼠标
+if (!variable_instance_exists(id, "logical_base_x")) {
+    logical_base_x = x;
+    logical_base_y = y;
+    platform_shift_x = 0;
+    platform_shift_y = 0;
+}
 
 // 绘制地面上的半透明预览
 var grid_pos = get_nearest_grid_position(logical_base_x, logical_base_y); // 获取最近的网格位置
@@ -20,4 +19,3 @@ if (is_valid) {
 
 // 绘制实体预览（跟随鼠标）
 draw_sprite_ext(preview_sprite, 0, x, y,1.8,1.8,0,c_white,1);
-}
