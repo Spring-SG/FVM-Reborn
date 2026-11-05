@@ -181,7 +181,7 @@ if info_button_select == 1 {
 		}
 		draw_text_ext_transformed(x-200,y-290,"攻击力："+string(info[? "atk"])+"\n"+"生命值："+string(info[? "hp"])+"\n"+"能量消耗："+string(info[? "cost"]),40,1920,1,1,0)
 		draw_text_ext_transformed(x,y-290,"攻击间隔："+string(info[? "cycle"]/60)+"\n"+"冷却时间："+string(info[? "cooldown"]/60)+"\n"+"火苗产量："+sun,40,1920,1,1,0)
-		draw_text_ext(x-390,y-100,info_text,30,300)
+		info_text_draw(info_text, x-390, y-100)
 		draw_set_font(font_yuan)
 	}
 }
@@ -220,9 +220,10 @@ else if info_button_select == 2 {
             var card_y = y - 435 + row * 142*1.5-y_offset;
             var _ca = cell_reveal_alpha(row, col);
             
-            // 绘制敌人
-				
-                draw_sprite_ext(enemy_data.spr, 0, card_x, card_y+65, 1, 1, 0, c_white, _ca);
+            // 绘制敌人：先画进裁剪面再贴出，BOSS 大贴图不会盖住相邻格子。
+            // 缩放按「普通 / BOSS」两档固定值，不随画布大小变化（否则留白多的贴图会显得过小）
+				var _esc = enemy_is_boss(enemy_id) ? enemy_scale_boss : enemy_scale_normal
+				sprite_clip_draw("info_enemy", enemy_data.spr, 0, card_x, card_y+65, enemy_clip_w, enemy_clip_h, _esc, _ca)
 				draw_set_color(c_white);
 				draw_set_halign(fa_center);
 				draw_set_valign(fa_middle);
@@ -284,7 +285,7 @@ else if info_button_select == 2 {
 		}
 		draw_text_ext_transformed(x-200,y-310,"攻击力："+string(enemy_data.atk)+"\n"+"生命值："+string(enemy_data.hp)+"\n"+"移动速度："+string(enemy_data.speed),40,1920,1,1,0)
 		draw_text_ext_transformed(x,y-310,"攻击间隔："+string(enemy_data.cycle/60)+"\n"+"盾牌血量："+string(enemy_data.shield)+"\n"+"防爆："+ash,40,1920,1,1,0)
-		draw_text_ext(x-390,y-100,info,30,300)
+		info_text_draw(info, x-390, y-100)
 		draw_set_font(font_yuan)
 	}
 }
@@ -385,7 +386,7 @@ else if info_button_select == 3 {
 		//draw_text(x-320,y-160,name)
 		draw_set_halign(fa_left);
 		draw_set_valign(fa_top);
-		draw_text_ext(x-390,y-100,info,30,300)
+		info_text_draw(info, x-390, y-100)
 		draw_set_font(font_yuan)
 	}
 }

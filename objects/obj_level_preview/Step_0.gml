@@ -14,6 +14,11 @@ if array_length(mouse_preview_inst) == 0{
 		var inst = instance_create_depth(300+(i mod 5)*340,900+floor(i / 5)*280,depth-1,obj_mouse_preview)
 		inst.sprite_index = enemy_data.spr
 		inst.tooltip_text = enemy_data.description + "\n基础生命值：" + string(enemy_data.hp)
+		// BOSS 区格子更宽（横 340 / 纵 280），裁剪框相应放大，免得 BOSS 被裁太多
+		// 缩放不用改：instance 的 is_boss 会让它走 scale_boss 那一档
+		inst.is_boss    = true
+		inst.clip_box_w = 300
+		inst.clip_box_h = 250
 		array_push(mouse_preview_inst,inst)
 	}
 }

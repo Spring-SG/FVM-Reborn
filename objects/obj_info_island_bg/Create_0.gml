@@ -31,6 +31,17 @@ info_surface = -1
 surface_width = 900
 surface_height = 780
 
+// ── 情报岛「敌人」立绘：裁剪框 + 统一缩放（可配置）────────────────────
+// 敌人贴图尺寸差异极大（平民鼠 108×104，寄居蟹鼠 468×642），而且画布留白占比从 0.12 到 0.9 不等。
+// 所以不按画布大小自适应（那会让留白多的贴图被额外缩小、显得比同伴小一圈），
+// 改成「普通鼠军 / BOSS」各一个固定缩放，超出裁剪框的部分由 surface 裁掉。
+//   建议裁剪框 ≤ 格子尺寸（格子 192 × 213）
+// 缩放作用在**裁掉透明留白后的内容**上（见 sprite_trim_get），同类贴图看起来大小一致。
+enemy_clip_w         = 176
+enemy_clip_h         = 176
+enemy_scale_normal   = 1.0    // 普通鼠军统一缩放
+enemy_scale_boss     = 0.55   // BOSS 统一缩放（和普通鼠共用同一个格子，所以压小一档）
+
 y_offset = 0
 y_offset_target = 0
 
@@ -56,4 +67,27 @@ for (var _i = 0; _i < array_length(anim_kids); _i++){
     var _c = anim_kids[_i][0]
     _c.anim_base_x = _c.x
     _c.anim_base_y = _c.y
+}
+
+// ---- 情报正文绘制（Scribble）----
+// 文本里只保留段落之间的换行，段内的自动换行交给 Scribble 按宽度处理。
+info_text_wrap    = 790    // 正文最大宽度（原来手工断行≈612px，换成自动换行后按此宽度排版）
+info_text_spacing = "107%" // 行距：font_hei 行高 28 × 1.07 ≈ 30px，与旧的 draw_text_ext(...,30,300) 对齐
+info_text_src     = undefined   // 当前缓存对应的原始文本
+info_text_elem    = undefined   // 缓存下来的 Scribble 文本元素（持有强引用，避免每帧重新解析排版）
+
+/// 绘制情报正文：_text 为注册表里的原文，_x/_y 为左上角
+info_text_draw = function(_text, _x, _y){
+    if (!is_string(_text) || _text == "") return
+    if (info_text_src != _text){
+        info_text_src  = _text
+        info_text_elem = scribble(_text)
+    }
+    info_text_elem
+        .starting_format("font_hei", c_white)
+        .align(fa_left, fa_top)
+        .wrap(info_text_wrap, -1)
+        .line_spacing(info_text_spacing)
+        .ignore_command_tags(true)   // 正文里的 [攻击力] / [火苗产量] 是数值占位符，不是 Scribble 的 [colour]/[tag] 命令
+        .draw(_x, _y)
 }
