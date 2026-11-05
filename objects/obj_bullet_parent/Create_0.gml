@@ -148,7 +148,7 @@ bullet_atk_bonus_multiplier = function(_atk) {
 bullet_apply_atk_bonus = function() {
 	with (obj_card_parent) {
 		if (plant_id == "fruit_tart") {
-			if (grid_row == other.row && ((shape <= 1 && x >= other.x) || shape >= 2)) {
+			if ((grid_row == other.row && ((shape <= 0 && x >= other.x) || shape == 1)) || (abs(grid_row - other.row) <= 1 && shape >= 2)) {
 				other.damage *= other.bullet_atk_bonus_multiplier(atk);
 				other.atk_modified = true;
 			}

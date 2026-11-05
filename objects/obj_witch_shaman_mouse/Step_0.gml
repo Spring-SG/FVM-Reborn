@@ -167,7 +167,7 @@ switch state{
 					var inst = instance_create_depth(x,y-45,depth-1,obj_card_heal_effect)
 					inst.sprite_index = spr_mouse_heal_effect
 				}
-				if move_speed > 0{
+				if move_speed > 0 && !is_boss{
 					move_speed += 2
 					array_push(other.speedup_enemy_list,id)
 				}

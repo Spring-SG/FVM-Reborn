@@ -23,7 +23,7 @@ appear = false
 // ===== 技能参数 =====
 skill1_heal = 600			// 技能1：全场老鼠回复的生命值
 skill1_speed_add = 2		// 技能1：全场老鼠 move_speed 增量
-skill2_freeze_time = 600	// 技能2：冰冻帧数
+skill2_freeze_time = 1800	// 技能2：冰冻帧数
 skill2_front_cols = 4		// 技能2：自身前方冰封的列数
 skill2_row_range = 1		// 技能2：以自身为中心的上下行数（1 即 3 行）
 
