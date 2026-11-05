@@ -21,3 +21,5 @@ bullet_on_hit_effect = function() {
 		bullet_create_fire_effect();
 	}
 };
+
+bullet_collides_obstacle = false

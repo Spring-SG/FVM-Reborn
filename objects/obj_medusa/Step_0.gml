@@ -86,9 +86,9 @@ switch state{
 
 		if timer == 9 * 5{
 			with obj_enemy_parent{
-				if hp > 0 && !is_boss{
+				if hp > 0{
 					hp = min(hp + other.skill1_heal, maxhp)
-					if move_speed > 0{
+					if move_speed > 0 && !is_boss{
 						move_speed += other.skill1_speed_add
 					}
 				}
