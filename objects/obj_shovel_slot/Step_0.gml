@@ -14,7 +14,7 @@ if (mouse_check_button_pressed(mb_left)) {
 		global.audio.play(snd_shovel,0,0)
     }
 }
-if keyboard_check_pressed(slot_key){
+if !global.console_open && keyboard_check_pressed(slot_key){
 	if !is_selected{
 		select_shovel();
 		hotkey_pressed = true
@@ -24,7 +24,7 @@ if keyboard_check_pressed(slot_key){
 		deselect_shovel();
 	}
 }
-if ((mouse_check_button_pressed(mb_right) or keyboard_check_pressed(vk_escape)) && is_selected) {
+if ((mouse_check_button_pressed(mb_right) or (!global.console_open && keyboard_check_pressed(vk_escape))) && is_selected) {
     deselect_shovel();
 }
 // 在铲子槽对象 (obj_shovel_slot) 的鼠标点击处理中添加:

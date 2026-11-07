@@ -97,7 +97,7 @@ function keyboard_get_string(key){
 	            case 189: return "-";
 	            case 190: return ".";
 	            case 191: return "/";
-	            case 192: return "`";
+	            case 192: return "~";   // ~ / ` 键（控制台默认键位）
 	            case 219: return "[";
 	            case 220: return "\\";
 	            case 221: return "]";

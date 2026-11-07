@@ -5,7 +5,7 @@
         // 从头开始播放新实例
         global.audio.play(readyroom_music, 0, 0);
     }
-if keyboard_check_pressed(vk_escape) || mouse_check_button_pressed(mb_right){
+if (!global.console_open && keyboard_check_pressed(vk_escape)) || mouse_check_button_pressed(mb_right){
 	if instance_exists(obj_quit_confirm){
 		instance_destroy(obj_quit_confirm)
 	}
@@ -36,7 +36,7 @@ if (hover_card_index != -1 && !is_submenu_open && !instance_exists(obj_package_b
 	for (var _k = 1; _k <= deck_slot_max(); _k++) {
 		var _hot_key = global.keybind_map[? "卡槽" + string(_k)]
 		if (_hot_key == undefined) continue
-		if (!keyboard_check_pressed(_hot_key)) continue
+		if (global.console_open || !keyboard_check_pressed(_hot_key)) continue
 
 		var _hot_slot = _k - 1
 		var _hot_page = (_hot_slot >= 11) ? 10 : 0

@@ -763,6 +763,8 @@
   },
   "name":"FVM-reborn",
   "resources":[
+    {"id":{"name":"console_commands","path":"scripts/console_commands/console_commands.yy",},},
+    {"id":{"name":"obj_console","path":"objects/obj_console/obj_console.yy",},},
     {"id":{"name":"WindowsNative","path":"extensions/WindowsNative/WindowsNative.yy",},},
     {"id":{"name":"font_hei","path":"fonts/font_hei/font_hei.yy",},},
     {"id":{"name":"font_number","path":"fonts/font_number/font_number.yy",},},

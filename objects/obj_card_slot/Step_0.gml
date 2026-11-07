@@ -77,7 +77,7 @@ if (is_ready && mouse_check_button_pressed(mb_left)) {
 
 var slot_key = global.keybind_map[? "卡槽" + string(slot_index)];
 
-if keyboard_check_pressed(slot_key) && is_ready{
+if !global.console_open && keyboard_check_pressed(slot_key) && is_ready{
         // 选中当前卡槽
 		if !is_selected{
 			select_slot()
@@ -117,7 +117,7 @@ if (is_selected) {
     }
     
     // 右键取消选择
-    if (mouse_check_button_pressed(mb_right)) or (keyboard_check_pressed(vk_escape)) {
+    if (mouse_check_button_pressed(mb_right)) or (!global.console_open && keyboard_check_pressed(vk_escape)) {
         is_selected = false;
         if (selected_preview != noone && instance_exists(selected_preview)) {
             instance_destroy(selected_preview);
