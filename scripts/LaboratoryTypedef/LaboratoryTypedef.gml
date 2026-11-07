@@ -15,6 +15,7 @@ enum ErrorCode {
     LOAD_RESOURCE_FAILED = 0x1003,
     JSON_PARSE_FAILED = 0x1004,
     CREATE_FILE_FAILED = 0x1005,
+    HASH_MISMATCH = 0x1006,
     
     // mod_loader
     INVALID_METADATA = 0x2001,
