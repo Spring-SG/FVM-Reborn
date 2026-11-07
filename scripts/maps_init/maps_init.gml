@@ -2098,6 +2098,38 @@ function maps_init(){
 					"player_level_require":20,
 					"pre_level_require":[]
 				},
+				{
+					"id":"aloe_dune_night",
+					"name":"芦荟沙丘（夜）",
+					"button_spr":spr_levelselect_button_desert,
+					"button_index":1,
+					"button_x":986,
+					"button_y":788,
+					"level_file":"desert/aloe_dune_night.json",
+					"hard_level_file":"desert/aloe_dune_night_hard.json",
+					"level_sprite":spr_aloe_dune_night,
+					"pre_music":mus_delicious_island_crown_pre,
+					"elite_music":mus_delicious_island_crown_elite,
+					"boss_music":mus_delicious_island_night_boss,
+					"player_level_require":30,
+					"pre_level_require":["aloe_dune_daytime"]
+				},
+				{
+					"id":"hippophae_oasis",
+					"name":"沙棘绿洲",
+					"button_spr":spr_levelselect_button_desert,
+					"button_index":2,
+					"button_x":579,
+					"button_y":668,
+					"level_file":"desert/hippophae_oasis.json",
+					"hard_level_file":"desert/hippophae_oasis_hard.json",
+					"level_sprite":spr_hippophae_oasis,
+					"pre_music":mus_delicious_island_crown_pre,
+					"elite_music":mus_delicious_island_crown_elite,
+					"boss_music":mus_delicious_island_daytime_boss,
+					"player_level_require":35,
+					"pre_level_require":["aloe_dune_night"]
+				},
 			]
 		}
 	)

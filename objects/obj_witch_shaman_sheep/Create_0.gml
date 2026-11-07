@@ -4,3 +4,4 @@ image_speed = 0
 
 grid_row = -1
 grid_col = -1
+timer = 0

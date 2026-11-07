@@ -26,7 +26,7 @@ current_cols = 0
 spawn_column = function(_c){
 	for(var r = 0 ; r < global.grid_rows ; r++){
 		var _pos = get_world_position_from_grid(_c,r)
-		instance_create_depth(_pos.x+5,_pos.y-10,-800,obj_desert_sandstorm)
+		instance_create_depth(_pos.x+5,_pos.y-15,-800,obj_desert_sandstorm)
 	}
 }
 

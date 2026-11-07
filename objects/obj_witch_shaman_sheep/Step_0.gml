@@ -2,6 +2,7 @@ if global.is_paused{
 	exit
 }
 
+timer++
 x += 8
 image_index = floor(timer/5) mod 8
 
@@ -12,7 +13,7 @@ grid_col = grid_pos.col
 
 with obj_card_parent{
 	if grid_col == other.grid_col && grid_row == other.grid_row &&
-	plant_id != "player" && plant_type != "coffee" && !invincible && plant_id != "cotton_candy"{
+	plant_id != "player" && plant_type != "coffee" && plant_type != "lilypad" && !invincible && plant_id != "cotton_candy"{
 		if hp >= max_hp{
 			obj_task_manager.card_loss++
 		}

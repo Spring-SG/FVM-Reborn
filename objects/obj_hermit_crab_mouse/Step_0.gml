@@ -119,7 +119,7 @@ switch state{
 				
 				// 摧毁该格子上的卡片
 				with obj_card_parent{
-					if grid_col == _cell_col && grid_row == _cell_row && plant_id != "player" && plant_type != "coffee" && !invincible && plant_id != "cotton_candy"{
+					if grid_col == _cell_col && grid_row == _cell_row && plant_id != "player" && plant_type != "coffee" && plant_type != "lilypad" && !invincible && plant_id != "cotton_candy"{
 						if hp >= max_hp{
 							obj_task_manager.card_loss++;
 						}
@@ -166,7 +166,7 @@ switch state{
 					}
 					// 摧毁该格子上的卡片
 					with obj_card_parent{
-						if grid_col == _area_col && grid_row == _area_row && plant_id != "player" && plant_type != "coffee" && !invincible && plant_id != "cotton_candy"{
+						if grid_col == _area_col && grid_row == _area_row && plant_id != "player" && plant_type != "coffee" && plant_type != "lilypad" && !invincible && plant_id != "cotton_candy"{
 							if hp >= max_hp{
 								obj_task_manager.card_loss++;
 							}

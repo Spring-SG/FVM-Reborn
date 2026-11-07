@@ -119,7 +119,7 @@ switch state{
 			with obj_card_parent{
 				if abs(grid_row - center_row) <= other.skill2_row_range &&
 				grid_col > front_col && grid_col <= front_col + other.skill2_front_cols &&
-				plant_id != "player" && plant_type != "coffee" && !invincible && plant_id != "cotton_candy"{
+				plant_id != "player" && plant_type != "coffee" && plant_type != "lilypad" && !invincible && plant_id != "cotton_candy"{
 					// 冰冻时长不做加法：低于 600 帧的补到 600 帧
 					if frozen_timer < other.skill2_freeze_time{
 						frozen_timer = other.skill2_freeze_time

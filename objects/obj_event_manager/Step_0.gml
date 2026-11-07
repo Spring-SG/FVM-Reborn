@@ -458,10 +458,7 @@ if is_real(global.level_file.version){
 					tornado_interval = event_list[i].interval
 				}
 				var tornado_spawn = false
-				if event_timer == 1{
-					tornado_spawn = true
-				}
-				else if tornado_interval > 0 && (event_timer-1) mod round(tornado_interval*60) == 0{
+				if tornado_interval > 0 && (event_timer-1) mod round(tornado_interval*60) == round(tornado_interval*60)-5{
 					tornado_spawn = true
 				}
 				if tornado_spawn{
