@@ -8,8 +8,7 @@ if (instance_exists(hitted_enemy)) {
 	_y = hitted_enemy.y;
 }
 var _range = 200;
-var _splash = 0.35;
-if (shape >= 1) _splash = 0.5;
+var _splash = 0.5;
 
 with (obj_enemy_parent) {
 	if (hp > 0 && point_distance(x, y, _x, _y) < _range

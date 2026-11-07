@@ -2094,7 +2094,7 @@ function maps_init(){
 					"level_sprite":spr_aloe_dune_daytime,
 					"pre_music":mus_delicious_island_crown_pre,
 					"elite_music":mus_delicious_island_crown_elite,
-					"boss_music":mus_delicious_island_daytime_boss,
+					"boss_music":mus_volcanic_island_daytime_boss,
 					"player_level_require":20,
 					"pre_level_require":[]
 				},
@@ -2110,7 +2110,7 @@ function maps_init(){
 					"level_sprite":spr_aloe_dune_night,
 					"pre_music":mus_delicious_island_crown_pre,
 					"elite_music":mus_delicious_island_crown_elite,
-					"boss_music":mus_delicious_island_night_boss,
+					"boss_music":mus_volcanic_island_night_boss,
 					"player_level_require":30,
 					"pre_level_require":["aloe_dune_daytime"]
 				},
@@ -2126,7 +2126,7 @@ function maps_init(){
 					"level_sprite":spr_hippophae_oasis,
 					"pre_music":mus_delicious_island_crown_pre,
 					"elite_music":mus_delicious_island_crown_elite,
-					"boss_music":mus_delicious_island_daytime_boss,
+					"boss_music":mus_volcanic_island_daytime_boss,
 					"player_level_require":35,
 					"pre_level_require":["aloe_dune_night"]
 				},

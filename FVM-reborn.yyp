@@ -763,8 +763,6 @@
   },
   "name":"FVM-reborn",
   "resources":[
-    {"id":{"name":"level_hashes","path":"scripts/level_hashes/level_hashes.yy",},},
-    {"id":{"name":"level_integrity","path":"scripts/level_integrity/level_integrity.yy",},},
     {"id":{"name":"WindowsNative","path":"extensions/WindowsNative/WindowsNative.yy",},},
     {"id":{"name":"font_hei","path":"fonts/font_hei/font_hei.yy",},},
     {"id":{"name":"font_number","path":"fonts/font_number/font_number.yy",},},
@@ -1467,6 +1465,8 @@
     {"id":{"name":"LaboratoryManager","path":"scripts/LaboratoryManager/LaboratoryManager.yy",},},
     {"id":{"name":"LaboratoryTest","path":"scripts/LaboratoryTest/LaboratoryTest.yy",},},
     {"id":{"name":"LaboratoryTypedef","path":"scripts/LaboratoryTypedef/LaboratoryTypedef.yy",},},
+    {"id":{"name":"level_hashes","path":"scripts/level_hashes/level_hashes.yy",},},
+    {"id":{"name":"level_integrity","path":"scripts/level_integrity/level_integrity.yy",},},
     {"id":{"name":"level_registry","path":"scripts/level_registry/level_registry.yy",},},
     {"id":{"name":"levels_init","path":"scripts/levels_init/levels_init.yy",},},
     {"id":{"name":"load_custom_deck","path":"scripts/load_custom_deck/load_custom_deck.yy",},},

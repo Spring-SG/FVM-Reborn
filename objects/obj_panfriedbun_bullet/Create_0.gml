@@ -15,7 +15,8 @@ target_type  = "throw";
 splash_ratio = 1;
 image_angle  = -45;
 
-bullet_uses_atk_bonus = true;
+// 生煎包不受水果塔加成
+bullet_uses_atk_bonus = false;
 
 bullet_update = function() {
 	x += move_speed;
@@ -44,9 +45,4 @@ bullet_on_hit_enemy = function(_enemy) {
 	var _gp = get_grid_position_from_world(_enemy.x, _enemy.y);
 	bullet_pan_splash(_gp.x, _gp.y, _gp.row);
 	instance_destroy();
-};
-
-// 果挞卡加成按半衰折算（与原实现一致），范围判定沿用父对象
-bullet_atk_bonus_multiplier = function(_atk) {
-	return ((_atk - 1) * 0.5);
 };
