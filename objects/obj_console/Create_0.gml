@@ -16,6 +16,7 @@ console_hist      = [];       // 历史命令
 console_hist_pos  = -1;       // 历史定位（-1 = 不在浏览历史）
 console_caret     = 0;        // 光标闪烁计时
 console_just_opened = false;  // 打开后跳过一帧输入（吞掉触发键本身）
+console_last_tab_sig = "";  // 上一次 Tab 列出的候选签名（避免同一个列表重复刷屏）
 
 /// @function console_fit(_line)
 // 把超宽的一行截断到面板宽度内（只在入栈时算一次，绘制时零开销）
@@ -48,6 +49,7 @@ function console_open_now() {
 	console_input        = "";
 	console_scroll       = 0;
 	console_hist_pos     = -1;
+	console_last_tab_sig = "";
 	keyboard_string      = "";
 	console_push("FVM:Reborn 控制台 — 输入 help 查看指令，~ / Esc 关闭");
 }
@@ -68,6 +70,7 @@ function console_submit() {
 	console_input    = "";
 	console_scroll   = 0;
 	console_hist_pos = -1;
+	console_last_tab_sig = "";
 	if (_line == "") return;
 
 	console_push("> " + _line);

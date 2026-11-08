@@ -40,12 +40,43 @@ if (string_length(_typed) > 0) {
 	console_input += _typed;
 	keyboard_string = "";
 	console_hist_pos = -1;
+	console_last_tab_sig = "";
 }
 
 // ── 退格 ──
 if (keyboard_check_pressed(vk_backspace)) {
 	var _len = string_length(console_input);
 	if (_len > 0) console_input = string_delete(console_input, _len, 1);
+	console_last_tab_sig = "";
+}
+
+// ── Tab 自动补全 ──
+// 唯一候选 → 直接补全并补一个空格；多个候选 → 补到公共前缀 + 列出候选。
+// 同一份候选列表连续按 Tab 只列一次（按键位 / 首尾元素做签名，输入一变就重置）。
+if (keyboard_check_pressed(vk_tab)) {
+	var _r = console_complete(console_input);
+	console_input = _r.text;
+	console_caret = 0;
+	var _n = array_length(_r.list);
+	if (_n == 0) {
+		console_last_tab_sig = "";
+	} else {
+		var _sig = string(_n) + "|" + _r.list[0] + "|" + _r.list[_n - 1];
+		if (_sig != console_last_tab_sig) {
+			console_last_tab_sig = _sig;
+			var _shown = min(_n, 48);   // 最多列 48 个，免得刷屏
+			for (var _ci = 0; _ci < _shown; _ci += 6) {
+				var _line = "";
+				for (var _cj = _ci; _cj < min(_ci + 6, _shown); _cj++) {
+					_line += string(_r.list[_cj]) + "  ";
+				}
+				console_push(_line);
+			}
+			if (_n > _shown) {
+				console_push("…共 " + string(_n) + " 个候选，继续输入可缩小范围");
+			}
+		}
+	}
 }
 
 // ── 回车执行 ──
@@ -82,7 +113,10 @@ if (keyboard_check_pressed(vk_pagedown)) console_scroll -= 10;
 console_scroll = clamp(console_scroll, 0, max(0, array_length(console_log) - 1));
 
 // ── ESC 关闭（不落到下层菜单）──
+// 注意：console_close() 会把 global.console_open 立刻置 false，而其它对象的 Step 在本帧
+// 之后才跑，光靠守卫挡不住这一次 ESC —— 必须同时 keyboard_clear 清掉按键状态。
 if (keyboard_check_pressed(vk_escape)) {
+	keyboard_clear(vk_escape);
 	console_close();
 	exit;
 }
