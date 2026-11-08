@@ -143,7 +143,7 @@ function console_usage() {
 		"complete_level <level_id>              标记关卡已通关",
 		"edit card <card_id> [level|shape|skill|max_level|max_shape <值>] ...   编辑卡片，不带参数显示当前数据",
 		"debug                                  切换 global.debug",
-		"unlock_all                             执行 obj_game_init 的 unlock_all()",
+		"unlock_all                             重置为测试版初始存档（unlock_all）",
 		"clear                                  清空控制台输出",
 		"任意 id 位置写 ? 可列出全部可用 ID；Tab 自动补全指令与 ID"
 	];
@@ -536,18 +536,12 @@ function console_cmd_debug(_out) {
 
 // ── unlock_all ─────────────────────────────────────────────────────────────
 /// @function console_cmd_unlock_all(_out)
-/// @desc 执行 obj_game_init 的 unlock_all()。
-///       该函数是 obj_game_init 的实例方法（不是全局函数），所以必须从那个实例上调；
-///       obj_game_init 已设为 persistent，跨房间存活，因此这里能一直取到它。
+/// @desc 执行 scripts/test_save 里的 unlock_all()。
+///       该函数现在是脚本里的全局函数，obj_game_init 只是曾经在启动流程里调过它，
+///       所以这里直接调即可，不需要实例、也不依赖任何对象存活。
 function console_cmd_unlock_all(_out) {
-	if (!instance_exists(obj_game_init)) {
-		array_push(_out, "[错误] obj_game_init 实例不存在，无法执行 unlock_all()");
-		return;
-	}
-	with (obj_game_init) {
-		unlock_all();
-	}
-	array_push(_out, "已执行 unlock_all()（测试版初始存档）");
+	unlock_all();
+	array_push(_out, "已执行 unlock_all()（测试版初始存档，会覆盖卡牌养成进度）");
 }
 
 // ── 入口 ───────────────────────────────────────────────────────────────────

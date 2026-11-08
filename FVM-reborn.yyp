@@ -763,6 +763,7 @@
   },
   "name":"FVM-reborn",
   "resources":[
+    {"id":{"name":"test_save","path":"scripts/test_save/test_save.yy",},},
     {"id":{"name":"WindowsNative","path":"extensions/WindowsNative/WindowsNative.yy",},},
     {"id":{"name":"font_hei","path":"fonts/font_hei/font_hei.yy",},},
     {"id":{"name":"font_number","path":"fonts/font_number/font_number.yy",},},
