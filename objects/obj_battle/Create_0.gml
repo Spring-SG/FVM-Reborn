@@ -97,7 +97,9 @@ for (var col = 0; col < global.grid_cols; col++) {
 }
 
 var plant_list = global.level_file.map
-global.grid_terrains = global.level_file.map
+// 深拷贝一份给本局用：本局对地形的改动（移动板块、障碍物、潮汐等）不能写回关卡数据，
+// 否则重开 / 输了再开时不会重新读关卡文件，上一局的地形会带进下一局
+global.grid_terrains = variable_clone(global.level_file.map)
 global.row_feature = []
 for(var i = 0 ; i < global.grid_rows;i++){
 	if global.grid_terrains[i][0].type == "water"{
