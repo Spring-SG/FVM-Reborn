@@ -144,15 +144,20 @@ bullet_atk_bonus_multiplier = function(_atk) {
 };
 
 /// @function bullet_apply_atk_bonus()
-/// @description 果挞卡（fruit_tart）伤害加成；作用范围只在这里判定
+/// @description 果挞卡（fruit_tart）伤害加成；作用范围只在这里判定。
+///              多张果挞卡同时覆盖同一颗子弹时只取最高的一张，不累乘
 bullet_apply_atk_bonus = function() {
+	var _bonus = -1;
 	with (obj_card_parent) {
 		if (plant_id == "fruit_tart") {
 			if ((grid_row == other.row && ((shape <= 0 && x >= other.x) || shape == 1)) || (abs(grid_row - other.row) <= 1 && shape >= 2)) {
-				other.damage *= other.bullet_atk_bonus_multiplier(atk);
-				other.atk_modified = true;
+				if (atk > _bonus) _bonus = atk;
 			}
 		}
+	}
+	if (_bonus > 0) {
+		damage *= bullet_atk_bonus_multiplier(_bonus);
+		atk_modified = true;
 	}
 };
 
