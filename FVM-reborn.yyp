@@ -763,7 +763,6 @@
   },
   "name":"FVM-reborn",
   "resources":[
-    {"id":{"name":"test_save","path":"scripts/test_save/test_save.yy",},},
     {"id":{"name":"WindowsNative","path":"extensions/WindowsNative/WindowsNative.yy",},},
     {"id":{"name":"font_hei","path":"fonts/font_hei/font_hei.yy",},},
     {"id":{"name":"font_number","path":"fonts/font_number/font_number.yy",},},
@@ -1577,6 +1576,7 @@
     {"id":{"name":"string_width_scribble","path":"scripts/string_width_scribble/string_width_scribble.yy",},},
     {"id":{"name":"task_edit","path":"scripts/task_edit/task_edit.yy",},},
     {"id":{"name":"task_init","path":"scripts/task_init/task_init.yy",},},
+    {"id":{"name":"test_save","path":"scripts/test_save/test_save.yy",},},
     {"id":{"name":"tooltip","path":"scripts/tooltip/tooltip.yy",},},
     {"id":{"name":"update_card_depths","path":"scripts/update_card_depths/update_card_depths.yy",},},
     {"id":{"name":"version_greater","path":"scripts/version_greater/version_greater.yy",},},

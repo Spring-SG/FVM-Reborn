@@ -45,7 +45,7 @@ self.texture_to_load = [
 	//"player",
 	//"maps",
 	"enemy_tower",
-	//"enemy_floating",
+	"enemy_floating",
 	//"pack_undersea_vortex",
 	//"pack_explore_camp",
 	"pack_desert_trip"

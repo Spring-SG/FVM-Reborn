@@ -60,7 +60,7 @@ global.tower_cake_page = 1
 //   正式版 = true，读取关卡时会拿内存中的内容与 scripts/level_hashes 的离线哈希比对，
 //            不一致就退回地图并提示「关卡文件读取失败」。
 //   测试版 = false，改关卡 JSON 时不必每次重跑 tools/gen_level_hashes.py。
-global.level_hash_verify = true
+global.level_hash_verify = false
 // 本次运行中「存档写入校验失败」的累计次数：第 3 次弹窗时无论点确定还是取消都退出游戏
 global.save_fail_count = 0
 
