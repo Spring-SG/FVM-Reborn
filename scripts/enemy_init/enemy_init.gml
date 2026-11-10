@@ -160,4 +160,5 @@ function enemy_init(){
 	register_enemy("javelin_giant_mouse",{"name":"标枪巨人鼠","_obj":obj_javelin_giant_mouse,"hp":1800,"shield":0,"description":"标枪巨人鼠：投掷标枪摧毁本行卡片","speed":0.27,"atk":900,"cycle":108,"range":120,"ash_proof":true,"spr":spr_javelin_giant_mouse,"feature":"land"})
 	register_enemy("tribal_chief_mouse",{"name":"部落酋长鼠","_obj":obj_tribal_chief_mouse,"hp":50000,"shield":0,"description":"部落酋长鼠：沙漠之旅BOSS，会冲锋碾压整行卡片、以图腾砸击 3*3 区域并冰封前方 3*3 的卡片","speed":0.3,"atk":10,"cycle":36,"range":90,"ash_proof":true,"spr":spr_tribal_chief_mouse_idle,"feature":"land"})
 	register_enemy("ufo_mouse",{"name":"飞碟鼠","_obj":obj_ufo_mouse,"hp":60000,"shield":0,"description":"飞碟鼠：沙漠之旅BOSS，悬停空中。会连续跃迁砸毁 3*3 区域卡片、用长喷火管点燃两列地面（30 秒），并让全场老鼠获得 90% 伤害减免 8 秒","speed":0.3,"atk":10,"cycle":36,"range":90,"ash_proof":true,"spr":spr_ufo_mouse_idle,"feature":"land"})
+	register_enemy("anubis_mouse",{"name":"阿努比斯鼠","_obj":obj_anubis_mouse,"hp":60000,"shield":0,"description":"阿努比斯鼠：沙漠之旅BOSS，会瞬移。会铺设三个 3*3 睡眠领域（30 秒）、摧毁随机 6 个格子上的卡片、并召唤一列原始巨人鼠。技能按 1-2-3 循环","speed":0.3,"atk":10,"cycle":36,"range":90,"ash_proof":true,"spr":spr_anubis_mouse_idle,"feature":"land"})
 }

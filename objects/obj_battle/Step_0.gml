@@ -21,7 +21,7 @@ if global.debug && !global.console_open{
 	if keyboard_check_pressed(ord("N")){
 		var enemy_row = irandom_range(0,global.grid_rows-1)
 		var enemy_pos = get_world_position_from_grid(10,enemy_row)
-		instance_create_depth(enemy_pos.x-80,enemy_pos.y+33,-200,obj_ufo_mouse)
+		instance_create_depth(enemy_pos.x-80,enemy_pos.y+33,-200,obj_anubis_mouse)
 		boss_count++
 		//var grid_pos = get_grid_position_from_world(mouse_x,mouse_y)
 		//var inst = instance_create_depth(grid_pos.x,grid_pos.y+38,0,obj_mario_mouse)

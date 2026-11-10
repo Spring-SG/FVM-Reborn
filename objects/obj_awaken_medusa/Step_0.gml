@@ -90,7 +90,7 @@ switch state{
 			for(var _r = _center_row - skill1_rows ; _r <= _center_row + skill1_rows ; _r++){
 				if _r >= 0 && _r < global.grid_rows{
 					var _row_y = get_world_position_from_grid(0,_r).y
-					var _bullet = instance_create_depth(x-70,_row_y+30,depth-1,obj_awaken_medusa_bullet)
+					var _bullet = instance_create_depth(x-70,_row_y-15,depth-1,obj_awaken_medusa_bullet)
 					_bullet.row = _r
 					_bullet.damage = skill1_damage
 					_bullet.move_speed = skill1_bullet_speed

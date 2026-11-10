@@ -33,4 +33,5 @@ ignore_list = ["mario_mouse","mario_pipeline","arno","pharaoh_coffin","temple_ph
 				"captain_rainbow","iron_man_mouse","mouse_train_2","iron_man","machine_bomb_mouse","spider_man_mouse","hulk_mouse","mouse_train_3",
 				"mermaid_mary","mermaid_wave","machine_shark_1","undersea_submarine","lobster_knight","electric_jellyfish","jellyfish_bullet","war_god",
 				"war_god_duck","war_god_wood","hercules","thor","travel_record","beverage_machine","beverage_bullet","travel_record_moon","face_cookie",
+				"witch_shaman_mouse","hermit_crab_mouse","medusa","tribal_chief_mouse","awaken_medusa","ufo_mouse","anubis_mouse"
 ]

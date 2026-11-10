@@ -22,5 +22,8 @@ with obj_card_parent{
 
 // 到达第 0 列（最左列）后消失
 if x <= global.grid_offset_x{
-	instance_destroy()
+	image_alpha -= 0.1
+	if image_alpha <= 0{
+		instance_destroy()
+	}
 }
