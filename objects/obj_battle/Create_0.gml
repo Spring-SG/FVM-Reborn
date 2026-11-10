@@ -32,6 +32,9 @@ global.grid_offset_y = 228
 global.grid_cols = global.level_file.map_cols
 global.grid_rows = global.level_file.map_rows
 
+// 飞碟鼠技能3的全场减伤比例（0 = 无减免）；每场战斗开始一律清零，避免跨局残留
+global.enemy_damage_reduction = 0
+
 
 //啃食音效
 chomp_sound_list = ds_list_create()
