@@ -7,7 +7,7 @@ if flash_value > 0 {
 }
 
 if !appear{
-	var enemy_pos = get_world_position_from_grid(10,3)
+	var enemy_pos = get_world_position_from_grid(10,irandom_range(0,global.grid_rows-1))
 	x = enemy_pos.x - 90
 	y = enemy_pos.y + 30
 	image_alpha = 1

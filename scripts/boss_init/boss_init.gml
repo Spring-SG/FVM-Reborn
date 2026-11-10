@@ -36,4 +36,6 @@ function boss_init(){
 	register_boss("witch_shaman_mouse",{"name":"萨满巫师鼠","hp":30000,"icon":spr_witch_shaman_mouse_icon})
 	register_boss("hermit_crab_mouse",{"name":"寄居蟹鼠","hp":50000,"icon":spr_hermit_crab_mouse_icon})
 	register_boss("medusa",{"name":"美杜莎","hp":50000,"icon":spr_medusa_icon})
+	register_boss("awaken_medusa",{"name":"觉醒美杜莎","hp":80000,"icon":spr_awaken_medusa_icon})
+	register_boss("tribal_chief_mouse",{"name":"部落酋长鼠","hp":50000,"icon":spr_tribal_chief_mouse_icon})
 }
