@@ -55,7 +55,7 @@ function level_hashes_get(){
 			"level_data/desert/hippophae_oasis.json": "2ef573e2c8c6ef9d",
 			"level_data/desert/hippophae_oasis_hard.json": "46fbef4dc5ae93a8",
 			"level_data/desert/lizard_gobi.json": "9f279b4d1ad30f45",
-			"level_data/desert/lizard_gobi_hard.json": "10f8e975dcb24166",
+			"level_data/desert/lizard_gobi_hard.json": "aa4e9fa91a19b156",
 			"level_data/floating/bayleaf_airport_daytime.json": "f216751953577ee7",
 			"level_data/floating/bayleaf_airport_daytime_hard.json": "e51df9c1f775332e",
 			"level_data/floating/bayleaf_airport_night.json": "7de4473e6c312b6e",
