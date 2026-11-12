@@ -18,6 +18,8 @@ plant_type = "normal"
 grow_timer = 0
 flash_offset = 0
 grow_time = 90 * 60
+// 成长段动画由本对象接管
+card_anim_override = true
 if is_cookbook_equipped("grape_wine"){
 	grow_time = 60 * 60
 }
