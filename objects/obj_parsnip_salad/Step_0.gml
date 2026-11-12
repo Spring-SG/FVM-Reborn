@@ -58,11 +58,14 @@ with obj_card_parent{
 }
 
 // 上一帧还被保护、这一帧已离开 5x5 范围的卡片，取消保护
+// 注意：防风草自身自带防风（Create 里直接置 true，不依赖任何沙拉），不能被别人清掉
 for(var _i = 0 ; _i < array_length(_prev_protect_list) ; _i ++){
 	var _pid = _prev_protect_list[_i]
 	if _pid != noone && instance_exists(_pid) && array_get_index(desert_wind_card_list, _pid) == -1{
 		with _pid{
-			desert_wind_protect = false
+			if plant_id != "parsnip_salad"{
+				desert_wind_protect = false
+			}
 		}
 	}
 }
