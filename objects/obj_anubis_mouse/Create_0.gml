@@ -4,8 +4,8 @@ event_inherited();
 mouse_id = "anubis_mouse"
 jump_times = 0
 state = BOSS_STATE.APPEAR
-hp = 60000
-maxhp = 60000
+hp = 200000
+maxhp = 200000
 immune_to_ash = true
 wait_time = 240
 sprite_index = spr_anubis_mouse_idle

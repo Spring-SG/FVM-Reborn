@@ -4,10 +4,10 @@ event_inherited();
 mouse_id = "tribal_chief_mouse"
 jump_times = 0
 state = BOSS_STATE.APPEAR
-hp = 50000
-maxhp = 50000
+hp = 90000
+maxhp = 90000
 immune_to_ash = true
-wait_time = 300
+wait_time = 360
 sprite_index = spr_tribal_chief_mouse_idle
 is_boss = true
 
@@ -23,7 +23,7 @@ appear = false
 skill1_phase = 0			// 0左冲准备 1左冲 2左冲收势 3翻面待机 4纵向换行 5右冲准备 6右冲 7右冲收势 8收尾待机
 skill1_row = 3				// 技能1 当前所在行（0 基）
 dash_target_x = 0			// 本次冲刺的终点 x
-skill1_card_damage_rate = 0.0025	// 每摧毁一张卡片扣除自身最大生命的比例
+skill1_card_damage_rate = 0.005	// 每摧毁一张卡片扣除自身最大生命的比例
 
 // ===== 技能2：图腾砸击 =====
 skill2_row = 2				// 站位行（0 基）：2 = 1 基第 3 行，4 = 1 基第 5 行

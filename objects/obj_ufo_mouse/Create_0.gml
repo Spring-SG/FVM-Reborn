@@ -3,8 +3,8 @@ event_inherited();
 
 mouse_id = "ufo_mouse"
 state = BOSS_STATE.IDLE
-hp = 60000
-maxhp = 60000
+hp = 120000
+maxhp = 120000
 wait_time = 240
 immune_to_ash = true
 sprite_index = spr_ufo_mouse_idle

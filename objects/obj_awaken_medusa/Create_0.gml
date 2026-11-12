@@ -4,8 +4,8 @@ event_inherited();
 mouse_id = "awaken_medusa"
 jump_times = 0
 state = BOSS_STATE.APPEAR
-hp = 80000
-maxhp = 80000
+hp = 150000
+maxhp = 150000
 immune_to_ash = true
 wait_time = 300
 cave = noone
