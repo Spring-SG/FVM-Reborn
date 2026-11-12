@@ -8,6 +8,14 @@ for(var i = 0 ; i < array_length(maxhp_increase_card_list) ; i ++){
 			if hp > max_hp{
 				hp = max_hp
 			}
+		}
+	}
+}
+
+// 解除本沙拉提供的沙漠风保护（范围固定 5x5，可能大于加血/加血上限的范围）
+for(var i = 0 ; i < array_length(desert_wind_card_list) ; i ++){
+	if desert_wind_card_list[i] != noone && instance_exists(desert_wind_card_list[i]){
+		with desert_wind_card_list[i]{
 			desert_wind_protect = false
 		}
 	}

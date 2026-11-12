@@ -19,22 +19,49 @@ else{
 }
 
 hp_increase_card_list = []
+// 本帧重新统计「被本沙拉庇护」的卡片，同时保留上一帧的名单用于解除保护
+var _prev_protect_list = desert_wind_card_list
+desert_wind_card_list = []
+
 with obj_card_parent{
-	if((other.shape < 1 && abs(grid_row - other.grid_row) <= 1 && abs(grid_col - other.grid_col) <= 1)||(other.shape >= 1 && abs(grid_row - other.grid_row) <= 2 && abs(grid_col - other.grid_col) <= 2)) && id != other.id{
-		array_push(other.hp_increase_card_list,id)
-		if array_get_index(other.maxhp_increase_card_list,id) == -1{
-			array_push(other.maxhp_increase_card_list,id)
-			max_hp += other.atk
+	if id != other.id{
+		var _dr = abs(grid_row - other.grid_row)
+		var _dc = abs(grid_col - other.grid_col)
+		// 抵御沙漠风：固定以自身为中心的 5x5 格，与 shape 无关
+		var _in_wind_range = (_dr <= 2 && _dc <= 2)
+		// 回血 / 提升最大生命值：范围仍然与 shape 关联（shape < 1 -> 3x3，否则 5x5）
+		var _in_boost_range = (other.shape < 1) ? (_dr <= 1 && _dc <= 1) : _in_wind_range
+
+		if _in_boost_range{
+			array_push(other.hp_increase_card_list, id)
+			if array_get_index(other.maxhp_increase_card_list, id) == -1{
+				array_push(other.maxhp_increase_card_list, id)
+				max_hp += other.atk
+			}
+		}
+		else{
+			var _idx = array_get_index(other.maxhp_increase_card_list, id)
+			if _idx != -1{
+				array_delete(other.maxhp_increase_card_list, _idx, 1)
+				max_hp -= other.atk
+				if hp > max_hp{
+					hp = max_hp
+				}
+			}
+		}
+
+		if _in_wind_range{
+			array_push(other.desert_wind_card_list, id)
 			desert_wind_protect = true
 		}
 	}
-	else{
-		if array_get_index(other.maxhp_increase_card_list,id) != -1{
-			array_delete(other.maxhp_increase_card_list,array_get_index(other.maxhp_increase_card_list,id),1)
-			max_hp -= other.atk
-			if hp > max_hp{
-				hp = max_hp
-			}
+}
+
+// 上一帧还被保护、这一帧已离开 5x5 范围的卡片，取消保护
+for(var _i = 0 ; _i < array_length(_prev_protect_list) ; _i ++){
+	var _pid = _prev_protect_list[_i]
+	if _pid != noone && instance_exists(_pid) && array_get_index(desert_wind_card_list, _pid) == -1{
+		with _pid{
 			desert_wind_protect = false
 		}
 	}

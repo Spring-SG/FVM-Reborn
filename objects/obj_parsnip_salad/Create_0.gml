@@ -24,3 +24,5 @@ hp_increase_card_list = []
 maxhp_increase_card_list = []
 
 desert_wind_protect = true
+// 当前被本沙拉的 5x5 范围庇护、从而免疫沙漠风的卡片 id 列表
+desert_wind_card_list = []
