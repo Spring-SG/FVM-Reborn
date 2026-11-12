@@ -324,8 +324,8 @@ function cookbook_init(){
 		{
 			"rank":2,
 			"title":"狗不理包子",
-			"tiny_desc":"减少机枪小笼包冷却",
-			"desc":"机枪小笼包冷却时间减少5秒",
+			"tiny_desc":"加强机枪小笼包",
+			"desc":"机枪小笼包冷却时间减少5秒，攻击间隔减少0.1秒",
 			"icon":15,
 			"modif":[
 				{
@@ -333,6 +333,12 @@ function cookbook_init(){
 					"modif_type":"cooldown",
 					"modif_calc":"plus",
 					"amount":-5*60
+				},
+				{
+					"card_id":["gatlin_long_bao"],
+					"modif_type":"cycle",
+					"modif_calc":"plus",
+					"amount":-0.1*60
 				}
 			]
 		}

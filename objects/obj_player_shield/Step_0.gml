@@ -73,7 +73,10 @@ if guard_gem || strength_gem{
 					}
 				}
 			}
-			if other.strength_gem && (array_get_index(other.atk_modified_card_list,id)==-1){
+			// 蓄力宝石只增幅输出卡片：水果塔/火盆的 atk 本身就是加成倍率，
+			// 放大会滚雪球式放大它们影响的所有卡片，因此排除在外
+			var _atk_buff_immune = (plant_id == "fruit_tart" || plant_id == "brazier")
+			if other.strength_gem && !_atk_buff_immune && (array_get_index(other.atk_modified_card_list,id)==-1){
 				atk = atk*(other.atk_ratio+1)
 				array_push(other.atk_modified_card_list,id)
 			}
