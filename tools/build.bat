@@ -51,8 +51,8 @@ for %%I in ("%ROOT%\..") do set "PARENT=%%~fI"
 
 set "PROJNAME=FVM-reborn"
 set "YYP=%ROOT%\%PROJNAME%.yyp"
-set "OUTDIR=%ROOT%\build_out"
-set "LOG_FILE=%OUTDIR%\igor_build.log"
+set "BUILD_DIR=%ROOT%\build_out"
+set "LOG_FILE=%BUILD_DIR%\igor_build.log"
 set "GM_CACHE=%PARENT%\cache\%PROJNAME%"
 set "GM_OUT=%PARENT%\output\%PROJNAME%"
 
@@ -153,13 +153,16 @@ echo [2/3] 清理上一次的构建产物
 if "%OPT_CLEAN%"=="0" goto :clean_skipped
 
 call :rmdir "%GM_OUT%"
-if exist "%OUTDIR%" (
-    if exist "%OUTDIR%\*.zip" (
-        echo   - 删除 %OUTDIR%\*.zip
-        del /q "%OUTDIR%\*.zip" 2>nul
+if exist "%BUILD_DIR%" (
+    if exist "%BUILD_DIR%\*.zip" (
+        echo   - 删除 %BUILD_DIR%\*.zip
+        del /q "%BUILD_DIR%\*.zip" 2>nul
     )
     if exist "%LOG_FILE%" del /q "%LOG_FILE%" 2>nul
-    if exist "%OUTDIR%\*.manifest" del /q "%OUTDIR%\*.manifest" 2>nul
+    if exist "%BUILD_DIR%\*.manifest" del /q "%BUILD_DIR%\*.manifest" 2>nul
+    rem YYC 的 exe 落在 cache\...\Sln\x64\Release\，build_out 里这份可能是上次的残留
+    if exist "%BUILD_DIR%\*.exe" del /q "%BUILD_DIR%\*.exe" 2>nul
+    if exist "%BUILD_DIR%\*.pdb" del /q "%BUILD_DIR%\*.pdb" 2>nul
 )
 if not "%OPT_CLEAN%"=="2" goto :clean_done
 echo   - 深清理：连资源缓存一起删（文件数万级，要几分钟）
@@ -169,7 +172,7 @@ goto :clean_done
 :clean_skipped
 echo   - 跳过（-noclean，走增量构建）
 :clean_done
-if not exist "%OUTDIR%" mkdir "%OUTDIR%" 2>nul
+if not exist "%BUILD_DIR%" mkdir "%BUILD_DIR%" 2>nul
 
 if "%OPT_BUILD%"=="0" (
     echo.
@@ -219,7 +222,7 @@ rem 路径转正斜杠（见文件头「坑 1」）
 set "F_YYP=%YYP:\=/%"
 set "F_RP=%RT:\=/%"
 set "F_UF=%UF:\=/%"
-set "F_TF=%OUTDIR%\%PROJNAME%_yyc.zip"
+set "F_TF=%BUILD_DIR%\%PROJNAME%_yyc.zip"
 
 echo   Igor    : %IGOR%
 echo   运行时  : %RT%
@@ -230,6 +233,14 @@ rem 注意：不要传 --of、也不要传 --ic（见文件头「坑 2」「坑 5」）
 set IGOR_ARGS=--project="%F_YYP%" --config=Default --runtime=%OPT_RUNTIME% --target=Windows --rp="%F_RP%" --uf="%F_UF%"
 set IGOR_ARGS=%IGOR_ARGS% --tf="%F_TF%" windows PackageZip
 
+rem YYC 的 C++ 阶段有一个 Igor 侧的坑：它默认把环境变量 OUTDIR 指到 build_out（--tf 所在目录），
+rem 而收尾的 Deploy 固定去 cache\<项目>\Default\Scripts\llvm-win\Sln\x64\Release\ 取 exe，
+rem 于是 C++ 编译成功（exe 落在 build_out）、打包阶段抛 FileNotFoundException。
+rem 显式把 OUTDIR 指到 Deploy 要看的那个目录，两边就对齐了（2026-11-13 实测有效）。
+if /i "%OPT_RUNTIME%"=="YYC" (
+    set "OUTDIR=%GM_CACHE%\Default\Scripts\llvm-win\Sln\x64\Release\"
+    if not exist "%GM_CACHE%\Default\Scripts\llvm-win\Sln\x64\Release" mkdir "%GM_CACHE%\Default\Scripts\llvm-win\Sln\x64\Release" 2>nul
+)
 echo ---------------------------------------------------------------------------
 echo   构建中，冷缓存全量 YYC 大约十几分钟，请勿关闭本窗口。
 if "%OPT_LOG%"=="1" echo   输出已重定向到日志，期间控制台不会有进度：%LOG_FILE%
@@ -269,7 +280,7 @@ echo ---------------------------------------------------------------------------
 echo   产物：%F_TF%
 echo   大小：!ZMB! MB（!ZSIZE! 字节）
 echo   结束：%DATE% %TIME%
-if exist "%OUTDIR%\FVM_reborn.exe" echo   编译产物：%OUTDIR%\FVM_reborn.exe
+echo   压缩包内可执行文件：FVM_Reborn.exe
 echo.
 echo   试跑提示：解压 zip 后直接运行里面的 FVM_Reborn.exe。
 echo             存档目录是 %%LOCALAPPDATA%%\FVM_Reborn\，不要在压缩包里跑。
@@ -289,6 +300,8 @@ if /i "%OPT_RUNTIME%"=="YYC" (
     echo   编译出错，看上面的输出。
 )
 if "%OPT_LOG%"=="0" echo   加 -log 参数重跑可以把完整 Igor 输出存成 %LOG_FILE%
+echo   若日志尾部是 FileNotFoundException ... Sln\x64\Release\FVM_reborn.exe：
+echo     那是 C++ 输出目录和打包目录不一致（不是 VS 没装），删掉 cache\%PROJNAME% 后重跑。
 echo ===========================================================================
 goto :fail
 
