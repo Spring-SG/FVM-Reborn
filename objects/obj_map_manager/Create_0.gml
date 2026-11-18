@@ -50,3 +50,9 @@ if global.save_data.player.level >= 20{
 		unlock_task("camp_level_0")
 	}
 }
+//如果玩家达到20级，且未解锁也未完成沙漠之旅任务，则解锁该任务
+if global.save_data.player.level >= 20{
+	if !is_task_unlocked("desert_level_0") && !is_task_complete("desert_level_0"){
+		unlock_task("desert_level_0")
+	}
+}
