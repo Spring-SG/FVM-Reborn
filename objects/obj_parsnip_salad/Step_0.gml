@@ -2,6 +2,17 @@ if global.is_paused{
 	exit
 }
 event_inherited(); 
+
+// 父对象在 hp <= 0 时会立刻 instance_destroy()，而且 Destroy 事件是同步执行的
+// （那里已经解除了本沙拉给 5x5 范围内卡片加的防风与最大生命值加成）。
+// 但同一次 Step 事件在被销毁后仍会继续往下跑，如果在这里不返回，
+// 下面的代码就会把刚解除的 desert_wind_protect / max_hp 又加回去 ——
+// 表现为「被老鼠啃死时防风效果不消失，被铲除时却正常」（铲除是在别的对象里
+// 直接 instance_destroy()，不经过本事件）。
+if hp <= 0{
+	exit
+}
+
 var current_flash_speed = flash_speed
 if is_slowdown{
 	current_flash_speed *= 2

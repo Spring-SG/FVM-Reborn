@@ -20,7 +20,7 @@ if state == ENEMY_STATE.ATTACK{
 	timer = 0
 }
 
-if grid_row <= 6 && hp > 0 && state != ENEMY_STATE.DEAD && state != ENEMY_STATE.ACTING && state != ENEMY_STATE.DIG && !throwed{
+if grid_col <= 6 && hp > 0 && state != ENEMY_STATE.DEAD && state != ENEMY_STATE.ACTING && state != ENEMY_STATE.DIG && !throwed{
 	state = ENEMY_STATE.DIG
 	timer = 0
 	sprite_index = spr_javelin_giant_mouse_act

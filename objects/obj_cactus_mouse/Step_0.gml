@@ -24,7 +24,7 @@ if (throw_timer <= 0 || state == ENEMY_STATE.ATTACK) && !throwed && grid_col <= 
 
 if state == ENEMY_STATE.APPEAR{
 	
-	if timer <= (10*flash_speed * 3 - 1){
+	if timer <= (10*flash_speed * 2 - 1){
 		sprite_index = spr_cactus_mouse_ready
 		if hp > maxhp * hurt_rate{
 			image_index = floor(timer/flash_speed) mod 10
@@ -36,18 +36,18 @@ if state == ENEMY_STATE.APPEAR{
 	else{
 		sprite_index = spr_cactus_mouse_act
 		if hp > maxhp * hurt_rate{
-			image_index = floor((timer-10*flash_speed * 3)/flash_speed) mod 13
+			image_index = floor((timer-10*flash_speed * 2)/flash_speed) mod 13
 		}
 		else{
-			image_index = floor((timer-10*flash_speed * 3)/flash_speed) mod 13 + 13
+			image_index = floor((timer-10*flash_speed * 2)/flash_speed) mod 13 + 13
 		}
 	}
-	if timer >= (flash_speed * 43 - 1) or hp <= 0{
+	if timer >= (flash_speed * 33 - 1) or hp <= 0{
 		state = ENEMY_STATE.NORMAL
 		sprite_index = spr_cactus_mouse_drop
 		move_speed = 0.3
 	}
-	if timer ==( 6 * flash_speed - 1 + 10 * flash_speed * 3){
+	if timer ==( 6 * flash_speed - 1 + 10 * flash_speed * 2){
 		var bullet = instance_create_depth(x-10,y-23,-800,obj_cactus_mouse_bullet)
 		bullet.row = grid_row
 		bullet.target_col = grid_col

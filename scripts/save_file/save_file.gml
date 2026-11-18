@@ -74,7 +74,7 @@ function save_file_report_failure(_path, _reason, _allow_prompt) {
 	}
 
 	var _message = "存档无法保存！\n\n"
-		+ "游戏没能把内存中的存档写入文件（" + _reason + "），\n"
+		+ "无法写入存档文件（" + _reason + "），\n"
 		+ "本次游戏进度可能会丢失。";
 
 	// 第 3 次：确定或取消都退出，并给出四种排查方式
