@@ -18,6 +18,12 @@ if menu_type == 2{
 		instance_create_depth(room_width/2,room_height/2,-5,obj_config_menu)
 	}
 }
+if menu_type == 9{
+	// 致谢页面（纯绘制，动效走 GuiStack 的 panel_anim_*）
+	if not instance_exists(obj_credits_menu){
+		instance_create_depth(room_width/2,room_height/2,-5,obj_credits_menu)
+	}
+}
 if menu_type == 1{
 	if not instance_exists(obj_edit_menu){
 		instance_create_depth(room_width/2,room_height/2,-5,obj_edit_menu)

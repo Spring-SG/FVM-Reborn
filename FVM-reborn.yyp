@@ -927,6 +927,8 @@
     {"id":{"name":"obj_craft_bg","path":"objects/obj_craft_bg/obj_craft_bg.yy",},},
     {"id":{"name":"obj_craft_confirm_btn","path":"objects/obj_craft_confirm_btn/obj_craft_confirm_btn.yy",},},
     {"id":{"name":"obj_craft_select_btn","path":"objects/obj_craft_select_btn/obj_craft_select_btn.yy",},},
+    {"id":{"name":"obj_credits_btn","path":"objects/obj_credits_btn/obj_credits_btn.yy",},},
+    {"id":{"name":"obj_credits_menu","path":"objects/obj_credits_menu/obj_credits_menu.yy",},},
     {"id":{"name":"obj_cucumber_normal_mouse","path":"objects/obj_cucumber_normal_mouse/obj_cucumber_normal_mouse.yy",},},
     {"id":{"name":"obj_cucumber_paper_boat_mouse","path":"objects/obj_cucumber_paper_boat_mouse/obj_cucumber_paper_boat_mouse.yy",},},
     {"id":{"name":"obj_curry_lobster_cannon","path":"objects/obj_curry_lobster_cannon/obj_curry_lobster_cannon.yy",},},
