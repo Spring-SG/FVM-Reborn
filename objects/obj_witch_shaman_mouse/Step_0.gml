@@ -122,7 +122,7 @@ switch state{
 			var t_row = irandom_range(1,global.grid_rows-2)
 			var t_col = irandom_range(3,6)
 			with obj_card_parent{
-				if abs(grid_col - t_col) <= 1 && abs(grid_row - t_row) <= 1 &&
+				if abs(grid_col - t_col) + abs(grid_row - t_row) <= 1 &&
 				plant_id != "player" && plant_type != "coffee" && plant_type != "lilypad" && !invincible && plant_id != "cotton_candy"{
 					if hp >= max_hp{
 						obj_task_manager.card_loss++
