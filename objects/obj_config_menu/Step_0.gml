@@ -73,7 +73,7 @@ function draw_settings_page(){
 	    var btn6 = instance_create_depth(x + 200, y - 170, depth-2, obj_setting_toggle);
 	    btn6.config_key = "pause_filter";
 	    btn6.state = global.pause_filter;
-		btn6.tooltip_text = "开启后，空格暂停时不再叠加黑色半透明遮罩\n（ESC 菜单与结算界面的遮罩不受影响）"
+		btn6.tooltip_text = "空格暂停时不再绘制滤镜\nESC菜单与结算界面不受影响"
 	    array_push(setting_buttons, btn6);
     
 		// 动效分级滑块：重新进入本页时旋钮直接对齐当前档位（不播回弹）

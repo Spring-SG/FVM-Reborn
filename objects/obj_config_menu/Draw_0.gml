@@ -53,7 +53,7 @@ switch (button_select) {
 		// ── 「暂停滤镜」行标签：第一行右侧（开关在 Step_0 里创建于 x+200）──
 		// 这行没有对应的美术标签贴图（spr_option_menu_text 的行位是烘死的），
 		// 用字体 + 八向描边模拟同款样式：深蓝粗描边 + 浅蓝白字。
-		var _pf_lx = x + 360;
+		var _pf_lx = x + 40;
 		var _pf_ly = y - 170;
 		draw_set_font(font_yuan);
 		draw_set_halign(fa_center);
