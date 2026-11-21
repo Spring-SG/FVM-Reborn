@@ -36,7 +36,7 @@ skill2_anim_frames = 18			// 技能2 动画半段帧数
 
 // ===== 技能3：治疗与提速 =====
 skill3_heal = 600				// 全场老鼠回复的生命值
-skill3_speed_add = 0			// 全场老鼠 move_speed 增量
+skill3_speed_add = 0.15			// 全场老鼠 move_speed 增量
 skill3_ready_time = 10 * 5		// 准备动画（spr_awaken_medusa_skill_3_ready 10 帧）
 skill3_cast_time = 69 * 5		// 施法动画（spr_awaken_medusa_skill_3 23 帧）
 skill3_return_time = 5 * 5		// 返回动画（spr_awaken_medusa_skill_3_return 5 帧）

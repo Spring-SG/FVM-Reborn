@@ -2130,13 +2130,13 @@ function task_init(){
 					},
 					{
 						"type":"flame_left",
-						"desc":"关卡结算时，剩余12000以上的火苗",
-						"require":12000,
+						"desc":"关卡结算时，剩余8000以上的火苗",
+						"require":8000,
 					},
 					{
-						"type":"card_loss",
-						"desc":"不得损失超过100张卡片",
-						"require":100,
+						"type":"time_limit",
+						"desc":"通关时间不超过660秒",
+						"require":660,
 					},
 					{
 						"type":"card_progress_limit",
@@ -2232,12 +2232,18 @@ function task_init(){
 					},
 					{
 						"type":"card_progress_limit",
-						"desc":"使用不超过13星和2转的卡片",
+						"desc":"使用不超过13星的卡片",
 						"card_level_limit":13,
 						"card_shape_limit":2,
 						"card_skill_limit":8,
 						"require":1,
-					}
+					},
+					{
+						"type":"card_type_limit",
+						"desc":"不能携带任何一次性的伤害类卡片",
+						"limit_card_type":"bomb",
+						"require":1,
+					},
 				],
 				"rewards":[
 					{
