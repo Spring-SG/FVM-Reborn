@@ -50,7 +50,7 @@ global.debug = 0
 // console_enabled：控制台是否可用。false 时 ~ 键不响应、指令也拒绝执行；
 //                  对应 config.ini → [settings] console_enabled，默认开启。
 // console_open   ：控制台当前是否展开，供其它对象判断「是否该跳过按键」。
-global.console_enabled = true
+global.console_enabled = false
 global.console_open = false
 global.laboretory_room = false
 global.game_version = "3.0.1"
@@ -60,7 +60,7 @@ global.tower_cake_page = 1
 //   正式版 = true，读取关卡时会拿内存中的内容与 scripts/level_hashes 的离线哈希比对，
 //            不一致就退回地图并提示「关卡文件读取失败」。
 //   测试版 = false，改关卡 JSON 时不必每次重跑 tools/gen_level_hashes.py。
-global.level_hash_verify = false
+global.level_hash_verify = true
 // 本次运行中「存档写入校验失败」的累计次数：第 3 次弹窗时无论点确定还是取消都退出游戏
 global.save_fail_count = 0
 
@@ -219,9 +219,9 @@ for (var i = 0; i < array_length(global.keybind_config); i++) {
 // 控制台开关：config.ini → [settings] console_enabled
 //   true（默认）= 可用；false = 完全禁用（~ 键不响应，指令也不执行）
 // 旧配置补写，玩家可手改 %LOCALAPPDATA%\FVM_Reborn\config.ini
-global.console_enabled = ini_read_bool("settings", "console_enabled", true);
+global.console_enabled = ini_read_bool("settings", "console_enabled", false);
 if (ini_read_string("settings", "console_enabled", "") == "") {
-    ini_write_bool("settings", "console_enabled", true);
+    ini_write_bool("settings", "console_enabled", false);
 }
 
 
