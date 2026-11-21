@@ -133,8 +133,8 @@
   "swatchColours":null,
   "swfPrecision":0.5,
   "textureGroupId":{
-    "name":"cards",
-    "path":"texturegroups/cards",
+    "name":"pack_desert_trip",
+    "path":"texturegroups/pack_desert_trip",
   },
   "type":0,
   "VTile":false,
