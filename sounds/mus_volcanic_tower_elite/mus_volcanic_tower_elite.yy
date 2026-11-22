@@ -10,7 +10,7 @@
   "compression":0,
   "compressionQuality":4,
   "conversionMode":0,
-  "duration":68.75429,
+  "duration":68.70204,
   "exportDir":"",
   "name":"mus_volcanic_tower_elite",
   "parent":{

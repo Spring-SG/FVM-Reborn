@@ -44,3 +44,7 @@ else if (config_key == "borderless_window"){
 else if (config_key == "lose_focus_pause"){
 	global.lose_focus_pause = state
 }
+else if (config_key == "pause_filter"){
+	// 开启 = 暂停时不绘制黑色半透明遮罩
+	global.pause_filter = state
+}

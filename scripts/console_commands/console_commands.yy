@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"console_commands",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"console_commands",
+  "parent":{
+    "name":"脚本",
+    "path":"folders/脚本.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

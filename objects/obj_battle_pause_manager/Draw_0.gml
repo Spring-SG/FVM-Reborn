@@ -24,9 +24,13 @@ if (global.is_paused)
     }
     else
     {
-		draw_set_alpha(0.5);
-		draw_rectangle_color(0, 0, room_width, room_height, c_black, c_black, c_black, c_black, false);
-		draw_set_alpha(1);
+		// 暂停滤镜（设置→画面设置）：开启后空格暂停不再叠黑色半透明遮罩，能直接看清战场。
+		// 结算界面（global.game_over）仍保留遮罩，否则战利品/统计文字会糊在亮背景上。
+		if (!global.pause_filter || global.game_over){
+			draw_set_alpha(0.5);
+			draw_rectangle_color(0, 0, room_width, room_height, c_black, c_black, c_black, c_black, false);
+			draw_set_alpha(1);
+		}
         // 只显示"暂停中"文字
 		draw_set_font(font_yuan)
         draw_set_halign(fa_center);

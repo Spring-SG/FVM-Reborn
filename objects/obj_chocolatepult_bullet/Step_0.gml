@@ -1,62 +1,32 @@
-if global.is_paused{
-	exit
-}
-if shape >= 1{
-		splash_ratio = 0.5
-}
-x += move_speed
-y -= cvspeed
-cvspeed -= cgravity
-image_angle -= 2
-if x > 2200 or y > 1200 or x < -200 or y < -200{
-	instance_destroy()
-}
-// 检查是否命中目标敌人
-if target_enemy != noone && instance_exists(target_enemy) && target_enemy.hp > 0{
-    if hit_enemy {
-        // 命中主要目标
-        
-        // 弹射到敌人身后一格位置
-        var splash_x = target_enemy.x + global.grid_cell_size_x
-        var splash_y = target_enemy.y
-        
-        // 计算弹射轨迹（简单的直线运动）
-        var dist = point_distance(x, y, splash_x, splash_y)
-        
-        if dist <= 10 or y >= thrower_y {
-            // 到达溅射点，造成溅射伤害
-            instance_create_depth(x,y,depth,obj_saladpult_bullet_effect)
-            instance_destroy()
-        }
-    }
-} else if target_enemy != noone && (!instance_exists(target_enemy) or target_enemy.hp <= 0){
-    // 目标敌人在飞行过程中死亡，检查是否落地
-    if y >= thrower_y {
-        // 击中地面，造成溅射伤害
-        
-		if sprite_index == spr_stinkytofupult_bullet_poison{
-			var grid_pos = get_grid_position_from_world(x,y)
-			var inst = instance_create_depth(grid_pos.x,grid_pos.y,depth,obj_stinkytofupult_bullet_effect)
-			inst.damage = round(damage*splash_ratio)
-			inst.grid_row = grid_pos.row
-		}
-		else{
-			var inst = instance_create_depth(x,y,depth,obj_coffeecup_bullet_effect)
-			inst.sprite_index = spr_chocolatepult_bullet_effect
-			inst.image_xscale = 1.2
-			inst.image_yscale = 1.2
-		}
-        instance_destroy()
-    }
-}
+/// 巧克力投手子弹 Step：通用帧循环 + 溅射点判定
+event_inherited();
+if (global.is_paused) exit;
 
-if !atk_modified{
-	with obj_card_parent{
-		if plant_id == "fruit_tart"{
-			if grid_row == other.row && ((shape <= 1 && x >= other.x) || shape >= 2){
-				other.damage *= atk
-				other.atk_modified = true
-			}
+if (shape >= 1) splash_ratio = 0.5;
+
+if (target_enemy != noone && instance_exists(target_enemy) && target_enemy.hp > 0) {
+	// 已命中主目标：飞到它身后一格再炸
+	if (hit_enemy) {
+		var _splash_x = target_enemy.x + global.grid_cell_size_x;
+		var _splash_y = target_enemy.y;
+		if (point_distance(x, y, _splash_x, _splash_y) <= 10 || y >= thrower_y) {
+			instance_create_depth(x, y, depth, obj_saladpult_bullet_effect);
+			instance_destroy();
 		}
+	}
+} else if (target_enemy != noone && (!instance_exists(target_enemy) || target_enemy.hp <= 0)) {
+	// 目标飞行途中死亡：落地炸开
+	if (y >= thrower_y) {
+		if (sprite_index == spr_stinkytofupult_bullet_poison) {
+			var _gp = get_grid_position_from_world(x, y);
+			var _poison = instance_create_depth(_gp.x, _gp.y, depth, obj_stinkytofupult_bullet_effect);
+			_poison.damage   = round(damage * splash_ratio);
+			_poison.grid_row = _gp.row;
+		} else {
+			var _fx = bullet_create_effect(obj_coffeecup_bullet_effect, spr_chocolatepult_bullet_effect);
+			_fx.image_xscale = 1.2;
+			_fx.image_yscale = 1.2;
+		}
+		instance_destroy();
 	}
 }

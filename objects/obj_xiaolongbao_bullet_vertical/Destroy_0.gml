@@ -1,1 +1,0 @@
-ds_list_destroy(brazier_list)

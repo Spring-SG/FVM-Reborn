@@ -6,7 +6,10 @@ not_use_designated_card = false
 
 card_group = {
 	"bomb":["coke_bomb","kettle_bomb","flour_sack","steel_wool","mouse_clip","wine_bottle_bomb","skewer_bomb","whisky_bomb","aquarius_elve","chili_powder","rabbit_lantern","delicacy_firework"],
-	"fishbone":["fishbone","iron_fishbone","sugar_roxburghii"]
+	"fishbone":["fishbone","iron_fishbone","sugar_roxburghii"],
+	"pult":["salad_pult","stinky_tofu_pult","egg_boiler_pult","ice_egg_boiler_pult","chocolate_pult","pan_fried_bun","sugar_ball_pult","roast_lizard_pult"],
+	"tang_hu_lu":["tang_hu_lu"],
+	"base_flame":["small_fire","goblet_lamp"]
 }
 
 function reset_task_state(){

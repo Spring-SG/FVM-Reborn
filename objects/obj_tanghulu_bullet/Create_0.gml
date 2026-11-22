@@ -1,11 +1,6 @@
-damage = 0
-move_speed = 0
-damage_type = "normal"
-target_type = "air_only"
-timer = 0
-target_enemy = noone
-banding_card_obj = noone
-row = 0
-image_xscale = 1.8
-image_yscale = 1.8
-image_speed = 0
+/// 糖葫芦子弹：只追空中目标的追踪弹
+event_inherited();
+
+target_type = "air_only";
+target_enemy = noone;
+banding_card_obj = noone;

@@ -60,4 +60,13 @@ function level_info_island_init(){
 	register_level_info_island("ice_beer_bar_night",{"name":"冰啤酒吧（夜）","icon":spr_levelselect_button_camp,"spr":spr_ice_beer_bar_night,"description":"需要快速处理饮料贩卖机扔出的酒瓶，否则对阵型破坏性大。","spr_index":3})
 	register_level_info_island("nut_platform_daytime",{"name":"坚果高台（日）","icon":spr_levelselect_button_camp,"spr":spr_nut_platform_daytime,"description":"当人面曲奇开始吸收火苗时，铲除将要产出火苗的产火卡可以有效避免繁殖。","spr_index":4})
 	register_level_info_island("nut_platform_night",{"name":"坚果高台（夜）","icon":spr_levelselect_button_camp,"spr":spr_nut_platform_night,"description":"本关障碍较多，会连续出现两个BOSS，需要灵活组织阵型。","spr_index":5})
+	register_level_info_island("aloe_dune_daytime",{"name":"芦荟沙丘（日）","icon":spr_levelselect_button_desert,"spr":spr_aloe_dune_daytime,"description":"本关会掉落防风草沙拉。","spr_index":0})
+	register_level_info_island("aloe_dune_night",{"name":"芦荟沙丘（夜）","icon":spr_levelselect_button_desert,"spr":spr_aloe_dune_night,"description":"沙漠之旅关卡。","spr_index":1})
+	register_level_info_island("hippophae_oasis",{"name":"沙棘绿洲","icon":spr_levelselect_button_desert,"spr":spr_hippophae_oasis,"description":"本关会掉落美味水果塔。","spr_index":2})
+	register_level_info_island("cactus_basin_daytime",{"name":"仙人掌盆地（日）","icon":spr_levelselect_button_desert,"spr":spr_cactus_basin_daytime,"description":"沙漠之旅关卡。","spr_index":3})
+	register_level_info_island("cactus_basin_night",{"name":"仙人掌盆地（夜）","icon":spr_levelselect_button_desert,"spr":spr_cactus_basin_night,"description":"本关会掉落仙人掌刺身。","spr_index":4})
+	register_level_info_island("lizard_gobi",{"name":"蜥蜴戈壁","icon":spr_levelselect_button_desert,"spr":spr_lizard_gobi,"description":"沙漠之旅关卡。","spr_index":5})
+	register_level_info_island("fishbone_desert_daytime",{"name":"鱼骨沙漠（日）","icon":spr_levelselect_button_desert,"spr":spr_fishbone_desert_daytime,"description":"本关会掉落烤蜥蜴投手。","spr_index":6})
+	register_level_info_island("fishbone_desert_night",{"name":"鱼骨沙漠（夜）","icon":spr_levelselect_button_desert,"spr":spr_fishbone_desert_night,"description":"沙漠之旅关卡。","spr_index":7})
+	register_level_info_island("cucur_pyramid",{"name":"库库尔金字塔","icon":spr_levelselect_button_desert,"spr":spr_cucur_pyramid,"description":"沙漠之旅关卡。","spr_index":8})
 }

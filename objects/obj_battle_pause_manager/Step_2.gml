@@ -1,5 +1,5 @@
 // obj_battle_pause_manager - Step Event
-if (keyboard_check_pressed(vk_space) || (mouse_check_button_pressed(mb_left) && global.game_over)) {	
+if (!global.console_open && (keyboard_check_pressed(vk_space) || (mouse_check_button_pressed(mb_left) && global.game_over))) {	
     //if global.selected_slot == noone {
         if (!global.is_paused) {
             // 空格暂停：只暂停不显示菜单
@@ -112,7 +112,7 @@ if (keyboard_check_pressed(vk_space) || (mouse_check_button_pressed(mb_left) && 
     //}
 }
 
-if (keyboard_check_pressed(vk_escape)) {
+if (!global.console_open && keyboard_check_pressed(vk_escape)) {
     if (!global.is_paused) {
         // ESC暂停：暂停并显示菜单
         global.is_paused = true;
@@ -133,7 +133,7 @@ if (keyboard_check_pressed(vk_escape)) {
     }
 }
 
-if (keyboard_check_pressed(ord("R"))) {
+if (!global.console_open && keyboard_check_pressed(ord("R"))) {
 	if global.game_over{
 		if obj_game_over.sprite_index == spr_lose{
 			room_transition_start(room)   // 重开本局也走淡出淡入

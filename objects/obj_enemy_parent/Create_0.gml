@@ -39,6 +39,12 @@ target_type = "normal"
 is_boss = false
 can_dropped = false
 
+// 飞碟鼠技能3的全场减伤比例（0 = 无减免）。正常由 obj_battle 每场战斗重置，
+// 这里兜底一次，避免在非战斗房间生成敌人时读到未定义的全局变量
+if (!variable_global_exists("enemy_damage_reduction")) {
+	global.enemy_damage_reduction = 0;
+}
+
 // =======猫驱赶相关=======
 is_scare = false
 scare_timer = 0

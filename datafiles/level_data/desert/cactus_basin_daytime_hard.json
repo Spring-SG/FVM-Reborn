@@ -1,0 +1,3409 @@
+{
+    "version": 1.5,
+    "level_name": "cactus_basin_daytime_hard",
+    "level_time_feature": "daytime",
+    "map_sprite": "spr_salad_island_land",
+    "display_name": "新关卡",
+    "author": "you",
+    "pre_music": "mus_delicious_island_daytime_pre",
+    "elite_music": "mus_delicious_island_daytime_elite",
+    "boss_music": "mus_delicious_island_daytime_boss",
+    "time_limit": 0.0,
+    "map_cols": 9.0,
+    "map_rows": 7.0,
+    "starting_flame": 50.0,
+    "first_wave_delay": 15.0,
+    "total_waves": 5.0,
+    "elite_wave": 2.0,
+    "boss_wave": 5.0,
+    "hp_modify": 1.5,
+    "min_wave_time": 240.0,
+    "max_wave_time": 1500.0,
+    "map": [
+        [
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [
+                    "obstacle"
+                ],
+                "type": "obstacle"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [
+                    "obstacle"
+                ],
+                "type": "obstacle"
+            }
+        ],
+        [
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [
+                    "obstacle"
+                ],
+                "type": "obstacle"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            }
+        ],
+        [
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            }
+        ],
+        [
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            }
+        ],
+        [
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            }
+        ],
+        [
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [
+                    "obstacle"
+                ],
+                "type": "obstacle"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            }
+        ],
+        [
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [
+                    "obstacle"
+                ],
+                "type": "obstacle"
+            },
+            {
+                "plant": [],
+                "object": [],
+                "type": "normal"
+            },
+            {
+                "plant": [],
+                "object": [
+                    "obstacle"
+                ],
+                "type": "obstacle"
+            }
+        ]
+    ],
+    "desc": "这是一个什么都没有的新关卡",
+    "waves": [
+        {
+            "wave_index": 1.0,
+            "boss_wave": false,
+            "boss": "",
+            "boss_1_hp_modify": 1.0,
+            "boss2": "",
+            "subwaves": [
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "waste_flying_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "waste_flying_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "waste_flying_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "waste_flying_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "caribbean_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                }
+            ],
+            "boss_2_hp_modify": 1.0
+        },
+        {
+            "wave_index": 2.0,
+            "boss_wave": false,
+            "boss": "",
+            "boss_1_hp_modify": 1.0,
+            "boss2": "",
+            "subwaves": [
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "sandboarding_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "sandboarding_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "waste_flying_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "waste_flying_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "waste_flying_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "waste_flying_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "waste_flying_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "waste_flying_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "caribbean_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": 1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": 2.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": 3.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": 4.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": 5.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": 6.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": 7.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": 1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": 2.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": 3.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": 4.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": 5.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": 6.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": 7.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                }
+            ],
+            "boss_2_hp_modify": 1.0
+        },
+        {
+            "wave_index": 3.0,
+            "boss_wave": false,
+            "boss": "",
+            "boss_1_hp_modify": 1.0,
+            "boss2": "",
+            "subwaves": [
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "sandboarding_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "sandboarding_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "sandboarding_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "waste_flying_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "waste_flying_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "waste_flying_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "waste_flying_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "waste_flying_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "waste_flying_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "waste_flying_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "waste_flying_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "caribbean_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": 1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": 2.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": 3.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": 4.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": 5.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": 6.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": 7.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": 1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": 2.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": 3.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": 4.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": 5.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": 6.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": 7.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": 1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": 2.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": 3.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": 4.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": 5.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": 6.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": 7.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                }
+            ],
+            "boss_2_hp_modify": 1.0
+        },
+        {
+            "wave_index": 4.0,
+            "boss_wave": false,
+            "boss": "",
+            "boss_1_hp_modify": 1.0,
+            "boss2": "",
+            "subwaves": [
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "waste_flying_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "waste_flying_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "waste_flying_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "waste_flying_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "waste_flying_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "waste_flying_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "waste_flying_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "waste_flying_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "caribbean_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": 1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": 2.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": 3.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": 4.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": 5.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": 6.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": 7.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": 1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": 2.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": 3.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": 4.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": 5.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": 6.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": 7.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                }
+            ],
+            "boss_2_hp_modify": 1.0
+        },
+        {
+            "wave_index": 5.0,
+            "boss_wave": true,
+            "boss": "tribal_chief_mouse",
+            "boss_1_hp_modify": 0.80000000000000004,
+            "boss2": "",
+            "subwaves": [
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_witch_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "little_monster_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "cactus_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "waste_flying_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "waste_flying_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "totem_shield_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                },
+                {
+                    "subwave_index": 0.0,
+                    "local_max_wave_time": -1.0,
+                    "local_min_wave_time": -1.0,
+                    "enemy_list": [
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "primordial_giant_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "desert_mole",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "skeleton_normal_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        },
+                        {
+                            "type": "tribal_shaman_mouse",
+                            "row": -1.0,
+                            "prosperity": 0.0
+                        }
+                    ]
+                }
+            ],
+            "boss_2_hp_modify": 1.0
+        }
+    ],
+    "rewards": [
+        {
+            "gold": 7000.0,
+            "items": [
+                {
+                    "id": "secret_spices",
+                    "amount": 400.0
+                },
+                {
+                    "id": "middle_crystal",
+                    "amount": 300.0
+                },
+                {
+                    "id": "clover_2",
+                    "amount": 1.0
+                }
+            ]
+        },
+        {
+            "gold": 7000.0,
+            "items": [
+                {
+                    "id": "secret_spices",
+                    "amount": 400.0
+                },
+                {
+                    "id": "middle_crystal",
+                    "amount": 300.0
+                },
+                {
+                    "id": "less_camp_coin",
+                    "amount": 1.0
+                }
+            ],
+            "card_unlock": [],
+            "weapon_unlock": [],
+            "gem_unlock": [],
+            "player_level": 0.0,
+            "skill_level": 0.0
+        }
+    ],
+    "events": [
+        {
+            "id": "desert_sandstorm",
+            "init_delay": 20.0,
+            "init_cols": 2.0,
+            "advance_interval": 15.0,
+            "respawn_delay": 30.0
+        }
+    ]
+} 

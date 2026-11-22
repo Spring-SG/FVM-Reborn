@@ -23,6 +23,13 @@ if effect_timer == 4 * current_flash_speed{
 		is_blow_away = true
 		blow_time = other.cycle
 	}
+	// 沙尘暴：立即吹散，并通知控制器暂停推进、等 cycle 帧后按初始列数重生
+	with obj_desert_sandstorm{
+		start_vanish()
+	}
+	with obj_desert_sandstorm_controller{
+		on_blown()
+	}
 	with obj_enemy_parent{
 		if target_type == "air" && array_get_index(other.ignore_list,mouse_id) == -1{
 			if !immune_to_ash{

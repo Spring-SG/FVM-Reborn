@@ -1,5 +1,8 @@
 //step事件
-if global.is_paused{
+// 暂停时仍然允许拿起/放置卡片（空格暂停），只有下面两种情况才完全停手：
+//   ① ESC 菜单打开（global.show_menu）——鼠标要留给菜单按钮
+//   ② 关卡已结束（global.game_over）——结算界面不该再操作卡槽
+if (global.is_paused && (global.show_menu || global.game_over)){
 	exit
 }
 
@@ -18,8 +21,10 @@ if global.debug{
 	cooldown_timer = cooldown
 }
 if cooldown_timer < cooldown{
-	cooldown_timer ++
-
+	// 暂停时不推进冷却倒计时：暂停期间放的卡会停在"刚进入冷却"的进度上，解除暂停后继续走
+	if (!global.is_paused){
+		cooldown_timer ++
+	}
 
     // 冷却中状态
     is_ready = false;
@@ -72,7 +77,7 @@ if (is_ready && mouse_check_button_pressed(mb_left)) {
 
 var slot_key = global.keybind_map[? "卡槽" + string(slot_index)];
 
-if keyboard_check_pressed(slot_key) && is_ready{
+if !global.console_open && keyboard_check_pressed(slot_key) && is_ready{
         // 选中当前卡槽
 		if !is_selected{
 			select_slot()
@@ -112,7 +117,7 @@ if (is_selected) {
     }
     
     // 右键取消选择
-    if (mouse_check_button_pressed(mb_right)) or (keyboard_check_pressed(vk_escape)) {
+    if (mouse_check_button_pressed(mb_right)) or (!global.console_open && keyboard_check_pressed(vk_escape)) {
         is_selected = false;
         if (selected_preview != noone && instance_exists(selected_preview)) {
             instance_destroy(selected_preview);

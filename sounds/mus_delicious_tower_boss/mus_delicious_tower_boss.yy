@@ -10,7 +10,7 @@
   "compression":0,
   "compressionQuality":4,
   "conversionMode":0,
-  "duration":126.14531,
+  "duration":63.048004,
   "exportDir":"",
   "name":"mus_delicious_tower_boss",
   "parent":{
@@ -21,6 +21,6 @@
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":44100,
-  "soundFile":"mus_delicious_tower_boss.MP3",
+  "soundFile":"mus_delicious_tower_boss.mp3",
   "volume":1.0,
 }

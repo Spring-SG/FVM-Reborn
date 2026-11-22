@@ -30,7 +30,9 @@ plant_type = "normal"
 target_type = "pierce"
 is_slowdown = false
 
-awake_anim = 5
+if shape < 1{
+	awake_anim = 5
+}
 anim_timer = 0
 wake_timer = 0
 

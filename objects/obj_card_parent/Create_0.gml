@@ -48,6 +48,12 @@ idle_anim = 0
 ice_timer = 0
 frozen_timer = 0
 is_frozen = false
+// 置 true 后父对象不再驱动逐帧动画，由子对象自己接管（见 obj_card_parent 的 Step）
+card_anim_override = false
+// ===== 美杜莎石化冰冻：被美杜莎冰冻时改用石像外观 =====
+is_medusa_statue = false
+medusa_statue_timer = 0
+medusa_statue_anim = 0
 awake_anim = 0
 
 // ========== 注册信息 ==========
@@ -56,4 +62,6 @@ current_level = 0  // 当前等级
 
 // ========= 是否有梯子 ========
 have_loder = false
+desert_wind_protect = false
+desert_wind_protect_timer = 0
 

@@ -10,7 +10,7 @@
   "compression":0,
   "compressionQuality":4,
   "conversionMode":0,
-  "duration":79.307755,
+  "duration":79.25551,
   "exportDir":"",
   "name":"mus_volcanic_tower_pre",
   "parent":{

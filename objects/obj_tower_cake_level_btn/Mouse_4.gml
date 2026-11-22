@@ -10,26 +10,15 @@ if not obj_tower_cake_bg.is_submenu_opened{
 		_file_path = "level_data/" + global.level_data.hard_level_file
 	}
 
-
-	 //使用 load_buffer 和 buffer_read 加载文件内容
-	var _buffer = buffer_load(_file_path);
-	if (!buffer_exists(_buffer)) {
-	    show_debug_message("错误：无法加载关卡文件到缓冲区: " + _file_path);
-	} else {
-	    var _json_string = buffer_read(_buffer, buffer_string);
-	    buffer_delete(_buffer); // 释放缓冲区内存
-
-	    // 解析JSON字符串
-	    global.level_file = json_parse(_json_string);
-    
-	    // 检查解析是否成功
-	    if (global.level_file == -1) {
-	        show_debug_message("错误：JSON 解析失败！");
-	    } else {
-	        show_debug_message("关卡文件加载并解析成功！");
-	        //show_debug_message(global.level_file);
-	    }
+	// 读取关卡文件并校验内存中的内容（GameMaker 会静默读坏文件，见 scripts/level_integrity）
+	var _load_result = level_load_json_verified(_file_path);
+	if (_load_result.is_failed()) {
+		// 先退回地图，再提示读取失败；不要留在食神谱里
+		level_load_failed_back_to_map(_file_path, _load_result.message);
+		exit;
 	}
+	global.level_file = _load_result.data;
+
 	if obj_tower_cake_bg.level_select != btn_index{
 		obj_tower_cake_bg.level_select = btn_index
 		obj_tower_cake_bg.real_level_index = level_index

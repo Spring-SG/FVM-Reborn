@@ -1,10 +1,14 @@
-if keyboard_check_pressed(vk_escape){
+if !global.console_open && keyboard_check_pressed(vk_escape){
 	if instance_exists(obj_config_menu){
 		panel_anim_close(obj_config_menu)
 		obj_player_info_ui.menu_type = 0
 	}
 	else if instance_exists(obj_edit_menu){
 		panel_anim_close(obj_edit_menu)
+		obj_player_info_ui.menu_type = 0
+	}
+	else if instance_exists(obj_credits_menu){
+		panel_anim_close(obj_credits_menu)
 		obj_player_info_ui.menu_type = 0
 	}
 	else if instance_exists(obj_world_map_menu){
@@ -46,6 +50,16 @@ if keyboard_check_pressed(vk_escape){
 		obj_player_info_ui.menu_type = 0
 		obj_world_map_button.world_map = 0
 		global.gui_stack.pop()
+	}
+	else if instance_exists(obj_camp_shop_bg){
+		panel_anim_close(obj_camp_shop_bg)
+		obj_player_info_ui.menu_type = 0
+		obj_world_map_button.world_map = 0
+	}
+	else if instance_exists(obj_camp_port_menu){
+		panel_anim_close(obj_camp_port_menu)
+		obj_player_info_ui.menu_type = 0
+		obj_world_map_button.world_map = 0
 	}
 	else{
 		global.gui_stack.to(room_menu)

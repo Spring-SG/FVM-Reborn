@@ -31,7 +31,7 @@ for (var i = 0; i < array_length(buttons); i++) {
 					with banding_buy_btn{
 						if btn_type == "camp"{
 							add_material_amount(coin_type,-cost)
-							unlock_card(target_item,get_card_info_simple(target_item).level,target_shape,global.save_data.unlocked_items.max_skill_level)
+							unlock_card(target_item,get_card_info_simple(target_item).max_level,target_shape,global.save_data.unlocked_items.max_skill_level)
 						}
 					}
 						with obj_camp_shop_bg{

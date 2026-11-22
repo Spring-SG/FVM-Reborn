@@ -16,6 +16,16 @@ if frozen_timer > 0{
 else{
 	is_frozen = false
 }
+// 美杜莎石化：计时结束后恢复原样
+if medusa_statue_timer > 0{
+	medusa_statue_timer--
+	if medusa_statue_timer <= 0{
+		is_medusa_statue = false
+	}
+}
+if is_medusa_statue{
+	medusa_statue_anim ++
+}
 if hp <= 0{
 	instance_destroy()
 }
@@ -83,32 +93,35 @@ if instance_exists(banding_water_obj) && global.grid_terrains[water_define_pos_x
 if is_frozen{
 	exit
 }
-// 动画计时器
-var current_flash_speed = flash_speed
-if is_slowdown{
-	current_flash_speed *= 2
-}
+// 冷却时间：减速时攻击间隔翻倍
 if is_slowdown {
-    cycle = origin_cycle * 2;    
+    cycle = origin_cycle * 2;
 }
 else{
 	cycle = origin_cycle
 }
-if timer < current_flash_speed - 1 {
-    timer++;
-} else {
-    switch (state) {
-        case CARD_STATE.IDLE:
-            if image_index < idle_anim image_index++;
-            else image_index = 0;
-            break;
-            
-        case CARD_STATE.ATTACK:
-            if (image_index >= (idle_anim+1) && image_index <= (idle_anim) + attack_anim) image_index++;
-            else image_index = (idle_anim+1);
-            break;
-		
-    }
-    timer = 0;
-}
+// 动画控制：子对象把 card_anim_override 置 true 后可自行接管动画
+// （酒杯灯：成长段动画；土司面包：按血量切换受损外形）
+if !card_anim_override {
+	// 动画计时器
+	var current_flash_speed = flash_speed
+	if is_slowdown{
+		current_flash_speed *= 2
+	}
+	if timer < current_flash_speed - 1 {
+		timer++;
+	} else {
+		switch (state) {
+			case CARD_STATE.IDLE:
+				if image_index < idle_anim image_index++;
+				else image_index = 0;
+				break;
 
+			case CARD_STATE.ATTACK:
+				if (image_index >= (idle_anim+1) && image_index <= (idle_anim) + attack_anim) image_index++;
+				else image_index = (idle_anim+1);
+				break;
+		}
+		timer = 0;
+	}
+}

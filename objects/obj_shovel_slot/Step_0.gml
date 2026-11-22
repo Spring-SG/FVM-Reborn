@@ -1,5 +1,6 @@
 // 控制悬停提示透明度
-if global.is_paused{
+// 暂停时仍然允许拿起铲子/铲卡（空格暂停）；ESC 菜单打开或关卡结束时停手
+if (global.is_paused && (global.show_menu || global.game_over)){
 	exit
 }
 var slot_key = global.keybind_map[? "铲子"];
@@ -13,7 +14,7 @@ if (mouse_check_button_pressed(mb_left)) {
 		global.audio.play(snd_shovel,0,0)
     }
 }
-if keyboard_check_pressed(slot_key){
+if !global.console_open && keyboard_check_pressed(slot_key){
 	if !is_selected{
 		select_shovel();
 		hotkey_pressed = true
@@ -23,7 +24,7 @@ if keyboard_check_pressed(slot_key){
 		deselect_shovel();
 	}
 }
-if ((mouse_check_button_pressed(mb_right) or keyboard_check_pressed(vk_escape)) && is_selected) {
+if ((mouse_check_button_pressed(mb_right) or (!global.console_open && keyboard_check_pressed(vk_escape))) && is_selected) {
     deselect_shovel();
 }
 // 在铲子槽对象 (obj_shovel_slot) 的鼠标点击处理中添加:
