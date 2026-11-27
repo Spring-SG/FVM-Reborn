@@ -1091,6 +1091,7 @@
     {"id":{"name":"obj_laser_gem","path":"objects/obj_laser_gem/obj_laser_gem.yy",},},
     {"id":{"name":"obj_lava_burn_effect","path":"objects/obj_lava_burn_effect/obj_lava_burn_effect.yy",},},
     {"id":{"name":"obj_lava","path":"objects/obj_lava/obj_lava.yy",},},
+    {"id":{"name":"obj_level_guide_confirm","path":"objects/obj_level_guide_confirm/obj_level_guide_confirm.yy",},},
     {"id":{"name":"obj_level_preview","path":"objects/obj_level_preview/obj_level_preview.yy",},},
     {"id":{"name":"obj_level_progress_bar","path":"objects/obj_level_progress_bar/obj_level_progress_bar.yy",},},
     {"id":{"name":"obj_levelselect_button","path":"objects/obj_levelselect_button/obj_levelselect_button.yy",},},

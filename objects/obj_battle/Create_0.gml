@@ -8,6 +8,15 @@ if (surface_exists(application_surface)){
 
 depth = 50
 
+// 关卡引导提示：沙漠两关没带关键卡片时，备战房间的确认窗点「确定」会写入 global.level_guide_tip
+// （见 obj_battlestart_button 的 Click 事件）。这里延后 1 秒再弹，避开换房黑场
+guide_tip_text = ""
+if (variable_global_exists("level_guide_tip") && is_string(global.level_guide_tip) && global.level_guide_tip != ""){
+	guide_tip_text = global.level_guide_tip
+	global.level_guide_tip = ""
+	alarm[0] = 60
+}
+
 instance_create_depth(0,0,-900,obj_flame_manager)
 instance_create_depth(0,0,0,obj_event_manager)
 //instance_create_depth(450,1040,-900,obj_boss_hpbar)

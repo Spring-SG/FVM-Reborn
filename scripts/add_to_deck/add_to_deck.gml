@@ -123,3 +123,17 @@ function clear_deck() {
         ds_list_add(global.selected_deck, global.deck_empty_slot);
     }
 }
+
+/// @function deck_has_card(card_id)
+/// @desc 当前出战卡组里是否带了这张卡（任意形态；只看 card_id，不看 shape）
+function deck_has_card(card_id) {
+    if (card_id == "") return false;
+    deck_ensure_size();
+    var _max = ds_list_size(global.selected_deck);
+    for (var i = 0; i < _max; i++) {
+        if (deck_slot_is_empty(i)) continue;
+        var e = global.selected_deck[| i];
+        if (e[? "card_id"] == card_id) return true;
+    }
+    return false;
+}
