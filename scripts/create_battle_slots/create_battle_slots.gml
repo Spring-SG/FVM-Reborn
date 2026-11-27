@@ -38,6 +38,8 @@ function create_battle_slots() {
         inst.description = card_data[? "description"];
         inst.slot_index = n + 1;
 		inst.card_id = deck_entry[? "card_id"];
+		// 卡槽背景：幻幻鸡=黑色，商店出售的卡片=紫色，其余常规卡片=蓝色
+		inst.sprite_index = card_slot_sprite(inst.card_id);
         inst.shape = deck_entry[? "shape"]; // 存储形态信息
 		inst.depth = -2000
 		//show_debug_message("植物卡槽已生成，id：" + inst.card_id)

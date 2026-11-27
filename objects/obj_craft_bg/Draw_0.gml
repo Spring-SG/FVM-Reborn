@@ -75,7 +75,7 @@ if button_select == 0{
 		var card_y = 48+96 * card_row - y_offset
 
 		if (card_slot_data != noone) {
-			draw_sprite_ext(spr_slot,0,card_x,card_y-3,0.25,0.25,0,c_white,1)
+			draw_sprite_ext(card_slot_sprite(card_id),0,card_x,card_y-3,0.25,0.25,0,c_white,1)
 			draw_sprite_ext(card_slot_data[? "sprite"],0,card_x,card_y+15,0.7,0.7,0,c_white,1)
 			draw_set_color(c_black);
 			draw_set_halign(fa_center);
@@ -123,7 +123,7 @@ if button_select == 0{
 		var card_x = x - 307
 		var card_y = y + 103
 		
-		draw_sprite_ext(spr_slot,0,card_x,card_y-3,0.25,0.25,0,c_white,1)
+		draw_sprite_ext(card_slot_sprite(current_uprade_target_id),0,card_x,card_y-3,0.25,0.25,0,c_white,1)
 		draw_sprite_ext(card_slot_data[? "sprite"],0,card_x,card_y+15,0.7,0.7,0,c_white,1)
 		draw_set_color(c_black);
 		draw_set_halign(fa_center);
