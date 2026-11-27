@@ -2,8 +2,8 @@ instance_destroy(obj_closepackage_btn)
 instance_destroy(obj_packageselect_btn)
 instance_destroy(obj_card_edit_menu)
 instance_destroy(obj_gem_edit_menu)
-obj_player_info_ui.menu_type = 0
-obj_world_map_button.world_map = 0
+// 菜单状态统一走 scripts/menu_ui：备战房间没有 obj_player_info_ui / obj_world_map_button
+menu_ui_reset()
 if surface_exists(package_surface){
 	surface_free(package_surface)
 }

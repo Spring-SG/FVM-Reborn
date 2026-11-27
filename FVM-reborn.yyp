@@ -1511,6 +1511,7 @@
     {"id":{"name":"maps_init","path":"scripts/maps_init/maps_init.yy",},},
     {"id":{"name":"material_init","path":"scripts/material_init/material_init.yy",},},
     {"id":{"name":"material_registry","path":"scripts/material_registry/material_registry.yy",},},
+    {"id":{"name":"menu_ui","path":"scripts/menu_ui/menu_ui.yy",},},
     {"id":{"name":"Music_Init","path":"scripts/Music_Init/Music_Init.yy",},},
     {"id":{"name":"NativeUtil","path":"scripts/NativeUtil/NativeUtil.yy",},},
     {"id":{"name":"plus_card_init","path":"scripts/plus_card_init/plus_card_init.yy",},},

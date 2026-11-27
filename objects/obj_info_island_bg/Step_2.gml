@@ -1,5 +1,5 @@
-obj_player_info_ui.menu_type = 4
-obj_world_map_button.world_map = 2
+menu_ui_set_type(4)
+menu_ui_set_world_map(2)
 
 // ---- 二级菜单过渡推进 ----
 // 动效等级 < 1：不滑不淡，直接终态（子对象回基准位置、alpha 1）；正在关闭就立刻销毁
@@ -40,4 +40,3 @@ for (var _i = 0; _i < array_length(anim_kids); _i++){
 with (obj_info_island_edit_menu) { pnl_po = other.pnl_o; image_alpha = other.pnl_o }
 with (obj_info_island_edit_menu_btn) { pnl_po = other.pnl_o; image_alpha = other.pnl_o }
 with (obj_info_island_card_edit_select_btn) { pnl_po = other.pnl_o; image_alpha = other.pnl_o }
-
