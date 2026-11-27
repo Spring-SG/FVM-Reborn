@@ -325,7 +325,7 @@ function cookbook_init(){
 			"rank":2,
 			"title":"狗不理包子",
 			"tiny_desc":"加强机枪小笼包",
-			"desc":"机枪小笼包冷却时间减少5秒，攻击间隔减少0.1秒",
+			"desc":"机枪小笼包冷却时间减少5秒，攻击间隔减少\n0.1秒",
 			"icon":15,
 			"modif":[
 				{
@@ -594,6 +594,24 @@ function cookbook_init(){
 			"modif":[
 				{
 					"card_id":["pizza_oven","sugar_ball_pult"],
+					"modif_type":"cooldown",
+					"modif_calc":"plus",
+					"amount":-1*60
+				}
+			]
+		}
+	)
+	register_cookbook(
+		"sandpit_lamb_chop",
+		{
+			"rank":2,
+			"title":"沙坑羊排",
+			"tiny_desc":"减少沙漠之旅卡片冷却",
+			"desc":"仙人掌刺身冷却时间减少1秒\n烤蜥蜴投手冷却时间减少1秒",
+			"icon":28,
+			"modif":[
+				{
+					"card_id":["cactus_sashimi","roast_lizard_pult"],
 					"modif_type":"cooldown",
 					"modif_calc":"plus",
 					"amount":-1*60

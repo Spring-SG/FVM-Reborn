@@ -53,7 +53,7 @@ global.debug = 0
 global.console_enabled = false
 global.console_open = false
 global.laboretory_room = false
-global.game_version = "3.1.0"
+global.game_version = "3.1.1"
 global.tower_level_click = false
 global.tower_cake_page = 1
 // 关卡文件哈希校验开关（见 scripts/level_integrity）：

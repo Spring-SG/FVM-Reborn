@@ -35,8 +35,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_slot",
-    "path":"sprites/spr_slot/spr_slot.yy",
+    "name":"spr_slot_blue",
+    "path":"sprites/spr_slot_blue/spr_slot_blue.yy",
   },
   "spriteMaskId":null,
   "visible":true,

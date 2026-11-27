@@ -15,6 +15,6 @@ instance_destroy(obj_info_island_edit_btn)
 if instance_exists(obj_package_bg){
 	obj_package_bg.is_submenu_opened = false
 }
-obj_player_info_ui.menu_type = 0
-obj_world_map_button.world_map = 0
+// 菜单状态统一走 scripts/menu_ui：备战房间没有 obj_player_info_ui / obj_world_map_button
+menu_ui_reset()
 surface_free(info_surface)

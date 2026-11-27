@@ -5,14 +5,22 @@
         // 从头开始播放新实例
         global.audio.play(readyroom_music, 0, 0);
     }
-if (!global.console_open && keyboard_check_pressed(vk_escape)) || mouse_check_button_pressed(mb_right){
+var _esc = (!global.console_open && keyboard_check_pressed(vk_escape))
+if (_esc || mouse_check_button_pressed(mb_right)){
 	if instance_exists(obj_quit_confirm){
 		instance_destroy(obj_quit_confirm)
 	}
-	else{
-		if !is_submenu_open{
+	// ESC：先关菜单页面（和地图房 ESC 的优先级一致），没有页面再弹退出确认框
+	else if _esc{
+		if (!menu_ui_close_page() && !is_submenu_open){
 			instance_create_depth(room_width / 2,room_height / 2,-100,obj_quit_confirm)
 		}
+	}
+	// 右键：菜单页面开着时整个让给页面 —— 背包里的右键是「卡片看情报 / 宝石编辑」
+	//（obj_package_bg 的全局右键事件），抢过来会把页面直接关掉。
+	// 没开页面时右键才是「退出本关」的快捷键；关卡预览自己处理右键，这里也不插手
+	else if (!menu_ui_page_exists() && !is_submenu_open){
+		instance_create_depth(room_width / 2,room_height / 2,-100,obj_quit_confirm)
 	}
 }
 
@@ -22,7 +30,9 @@ if fly_active{
 	if fly_t >= fly_dur fly_active = false
 }
 
-if instance_exists(obj_quit_confirm) || instance_exists(obj_level_preview){
+// 菜单页面开着时也算「子菜单开着」：卡池、卡槽、开始战斗、卡组按钮都不响应
+// 关卡引导确认窗（obj_level_guide_confirm）同样是模态的，ESC / 右键要让它自己处理
+if instance_exists(obj_quit_confirm) || instance_exists(obj_level_guide_confirm) || instance_exists(obj_level_preview) || menu_ui_page_exists(){
 	is_submenu_open = true
 }
 else{
@@ -59,6 +69,7 @@ if (hover_card_index != -1 && !is_submenu_open && !instance_exists(obj_package_b
 				array_push(fly_batch, {
 					add: false,   // 飞回卡池
 					spr: _old_spr,
+					card_id: _old_id,
 					sx: x + 805 + (_hot_slot - deck_first_slot_index) * 86,
 					sy: y + 132,
 					tx: (x + 42 + (_old_pool_i mod slot_rows) * 84) + (x - 25 + 803 - 42),
@@ -73,6 +84,7 @@ if (hover_card_index != -1 && !is_submenu_open && !instance_exists(obj_package_b
 			// 飞入卡槽：起点 = 绘制时记下的悬停卡片屏幕位置
 			fly_add = true
 			fly_spr = hover_card_spr
+			fly_card_id = _hot_card
 			fly_sx = hover_card_x
 			fly_sy = hover_card_y
 			fly_tx = x + 805 + (_hot_slot - deck_first_slot_index) * 86

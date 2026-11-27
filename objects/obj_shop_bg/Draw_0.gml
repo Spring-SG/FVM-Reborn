@@ -88,8 +88,9 @@ for(var i = 0 ; i< 4; i++){
 		if shop_button_select == 1{
 			if ds_list_find_value(goods_list,i*4+j+(current_page-1)*16) != undefined{
 				//根据商品id获取卡片信息
-				var card_data = deck_get_card_data(global.goods_map[? ds_list_find_value(goods_list,i*4+j+(current_page-1)*16)].unlock_item_id,0)
-				draw_sprite_ext(spr_slot, 0, x-618+411*j-122,y-190+165*i, 0.33, 0.33, 0, c_white, 1);
+				var _slot_card_id = global.goods_map[? ds_list_find_value(goods_list,i*4+j+(current_page-1)*16)].unlock_item_id
+				var card_data = deck_get_card_data(_slot_card_id,0)
+				draw_sprite_ext(card_slot_sprite(_slot_card_id), 0, x-618+411*j-122,y-190+165*i, 0.33, 0.33, 0, c_white, 1);
 				draw_sprite_ext(card_data[? "sprite"],0,x-618+411*j-122,y-190+165*i+25,1,1,0,c_white,1)
 				draw_set_halign(fa_left);
 				draw_set_valign(fa_middle);
@@ -183,7 +184,7 @@ for(var i = 0 ; i< 4; i++){
 				//根据商品id获取卡片信息
 				var card_data = global.goods_map[? ds_list_find_value(goods_list,i*4+j+(current_page-1)*16)]
 				var attire_data = get_attire_info(card_data.unlock_item_id)
-				draw_sprite_ext(spr_slot, 0, x-618+411*j-122,y-190+165*i, 0.33, 0.33, 0, c_white, 1);
+				draw_sprite_ext(card_slot_sprite(attire_data.target_card), 0, x-618+411*j-122,y-190+165*i, 0.33, 0.33, 0, c_white, 1);
 				draw_sprite_ext(attire_data.icon,0,x-618+411*j-122,y-190+165*i+25,1,1,0,c_white,1)
 				draw_set_halign(fa_left);
 				draw_set_valign(fa_middle);

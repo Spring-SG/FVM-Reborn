@@ -88,8 +88,9 @@ for(var i = 0 ; i< 3; i++){
 		if shop_button_select == 1{
 			if ds_list_find_value(goods_list,i*4+j+(current_page-1)*12) != undefined{
 				//根据商品id获取卡片信息
-				var card_data = deck_get_card_data(global.goods_map[? ds_list_find_value(goods_list,i*4+j+(current_page-1)*12)].unlock_item_id,global.goods_map[? ds_list_find_value(goods_list,i*4+j+(current_page-1)*12)].target_shape)
-				draw_sprite_ext(spr_slot, 0, x-590+380*j-105,y-130+190*i, 0.33, 0.33, 0, c_white, 1);
+				var _slot_card_id = global.goods_map[? ds_list_find_value(goods_list,i*4+j+(current_page-1)*12)].unlock_item_id
+				var card_data = deck_get_card_data(_slot_card_id,global.goods_map[? ds_list_find_value(goods_list,i*4+j+(current_page-1)*12)].target_shape)
+				draw_sprite_ext(card_slot_sprite(_slot_card_id), 0, x-590+380*j-105,y-130+190*i, 0.33, 0.33, 0, c_white, 1);
 				draw_sprite_ext(card_data[? "sprite"],0,x-590+380*j-105,y-130+190*i+25,1,1,0,c_white,1)
 				draw_set_halign(fa_left);
 				draw_set_valign(fa_middle);

@@ -104,7 +104,7 @@ if info_button_select == 1 {
             var _ca = cell_reveal_alpha(row, col);
             
             // 绘制卡片
-				draw_sprite_ext(spr_slot, 0, card_x, card_y-3, 0.30, 0.30, 0, c_white, _ca);
+				draw_sprite_ext(card_slot_sprite(card_id), 0, card_x, card_y-3, 0.30, 0.30, 0, c_white, _ca);
                 draw_sprite_ext(card_data[? "sprite"], 0, card_x, card_y+15, 0.8, 0.8, 0, c_white, _ca);
 				draw_set_color(c_white);
 				draw_set_halign(fa_center);

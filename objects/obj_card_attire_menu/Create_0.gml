@@ -33,7 +33,7 @@ function card_attire_content_draw(_index, _dx, _dy){
 	if _index != -1{
 		var _id = card_attire_id_list[_index]
 		var _d  = get_attire_info(_id)
-		draw_sprite_ext(spr_slot, 0, x + _dx * pop_s, y - 10 * pop_s + _dy, 0.32 * pop_s, 0.32 * pop_s, 0, c_white, 1)
+		draw_sprite_ext(card_slot_sprite(_d.target_card), 0, x + _dx * pop_s, y - 10 * pop_s + _dy, 0.32 * pop_s, 0.32 * pop_s, 0, c_white, 1)
 		draw_sprite_ext(_d.icon, 0, x + _dx * pop_s, y + 10 * pop_s + _dy, pop_s, pop_s, 0, c_white, 1)
 		draw_set_halign(fa_center)
 		draw_set_valign(fa_middle)

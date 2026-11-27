@@ -21,9 +21,10 @@ if obj_readyroom_manager.selected_custom_deck != deck_index && !obj_readyroom_ma
 					add: true,   // 飞入卡槽（卡池 → 卡槽）
 					slot: _i,    // 这一条属于哪个槽位：飞行期间该槽位不画静态卡
 					spr: _spr,
-					sx: (_rm.x + 42 + (_pool_i mod _rm.slot_rows) * 84) + (_rm.x - 25 + 803 - 42),
-					sy: (_rm.y + 48 + (_pool_i div _rm.slot_rows) * 96 - _rm.y_offset) + (_rm.y + 375 - 48),
-					tx: _rm.x + 805 + (_i - _first) * 86,
+					card_id: _cid,
+					sx: (_rm.x + 42 + (_pool_i mod _rm.slot_rows) * 84) + (_rm.x - 25 + 803 - 12),
+					sy: (_rm.y + 48 + (_pool_i div _rm.slot_rows) * 96 - _rm.y_offset) + (_rm.y + 375 - 78),
+					tx: _rm.x + 835 + (_i - _first) * 82,
 					ty: _rm.y + 132,
 					t: (ui_anim_level() >= 2) ? -_n * 2 : 0,   // 2 级保留逐张错开 2 帧；0/1 级整批同时起飞
 					dur: 18,

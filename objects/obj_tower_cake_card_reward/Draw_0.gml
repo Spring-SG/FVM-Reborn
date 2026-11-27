@@ -1,3 +1,4 @@
+sprite_index = card_slot_sprite(target_card_id)
 draw_self()
 
 var card_data = deck_get_card_data(target_card_id,target_shape)
