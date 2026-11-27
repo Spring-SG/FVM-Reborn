@@ -10,7 +10,7 @@ if fly_active && sprite_exists(fly_spr){
 	var _fx = lerp(fly_sx, fly_tx, _e)
 	var _fy = lerp(fly_sy, fly_ty, _e)
 	if _fy - _card_half < _pool_top{
-		draw_sprite_ext(spr_slot, 0, _fx, _fy - 3, 0.25, 0.25, 0, c_white, 1)
+		draw_sprite_ext(card_slot_sprite(fly_card_id), 0, _fx, _fy - 3, 0.25, 0.25, 0, c_white, 1)
 		draw_sprite_ext(fly_spr, 0, _fx, _fy + 15, 0.7, 0.7, 0, c_white, 1)
 	}
 }
@@ -22,7 +22,9 @@ for (var _bi = 0; _bi < array_length(fly_batch); _bi++){
 	var _bx = lerp(_b.sx, _b.tx, _be)
 	var _by = lerp(_b.sy, _b.ty, _be)
 	if _by - _card_half < _pool_top{
-		draw_sprite_ext(spr_slot, 0, _bx, _by - 3, 0.25, 0.25, 0, c_white, 1)
+		draw_sprite_ext(card_slot_sprite(_b.card_id), 0, _bx, _by - 3, 0.25, 0.25, 0, c_white, 1)
 		draw_sprite_ext(_b.spr, 0, _bx, _by + 15, 0.7, 0.7, 0, c_white, 1)
 	}
 }
+
+

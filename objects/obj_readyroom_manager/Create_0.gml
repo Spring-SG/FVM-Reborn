@@ -7,8 +7,13 @@ if (surface_exists(application_surface)){
 }
 
 global.menu_screen = false
-instance_create_depth(1700,883,-2,obj_battlestart_button)
+instance_create_depth(1680,820,-2,obj_battlestart_button)
 readyroom_music = mus_readyroom
+
+// 主界面菜单栏（背包 / 商店 / 合成屋 / 任务 / 食神谱 / 情报 / 退出）
+// 与菜单房、地图房同一套按钮、同一个锚点；备战房间没有 obj_player_info_ui，
+// 菜单状态的读写统一走 scripts/menu_ui（见 obj_player_menu_btn 的点击事件）
+instance_create_depth(room_width-205,room_height-5,-1,obj_player_menu_bg)
 
 ds_list_clear(global.selected_deck);
 deck_ensure_size();
@@ -33,6 +38,7 @@ fly_sy = 0
 fly_tx = 0
 fly_ty = 0
 fly_spr = -1
+fly_card_id = ""
 fly_slot = -1
 fly_pool_i = -1
 // 点「清空」时整批飞回卡池的动画（每条 = 一张卡；与上面单张的 fly_* 互不干扰）
@@ -57,11 +63,15 @@ deck_first_slot_index = 0
 
 selected_custom_deck = 0
 
+var select_btn_spr_list = [spr_deck_select_btn_1,spr_deck_select_btn_2,spr_deck_select_btn_3,spr_deck_select_btn_4,spr_deck_select_btn_5,spr_deck_select_btn_6]
 for(var i = 1; i < 7;i++){
-	var inst = instance_create_depth(x+680+150*i,y+218,depth-5,obj_deck_select_btn)
+	var inst = instance_create_depth(x+1023+79*i,y+227,depth-5,obj_deck_select_btn)
 	inst.deck_index = i
+	inst.sprite_index = select_btn_spr_list[i-1]
 }
-instance_create_depth(x+1735,y+215,depth-5,obj_deck_clear_btn)
+instance_create_depth(x+1730,y+225,depth-5,obj_deck_clear_btn)
+instance_create_depth(x+1625,y+225,depth-5,obj_deck_save_btn)
+instance_create_depth(x+703,y+455,depth-5,obj_ready_room_preview_btn)
 
 var prev_btn = instance_create_depth(x+1745,y+105,depth-5,obj_readyroom_slot_btn)
 prev_btn.type = "prev"

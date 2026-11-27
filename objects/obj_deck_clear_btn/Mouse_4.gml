@@ -19,10 +19,11 @@ if !obj_readyroom_manager.is_submenu_open{
 				array_push(_rm.fly_batch, {
 					add: false,   // 飞回卡池
 					spr: _spr,
+					card_id: _cid,
 					sx: _rm.x + 805 + (_i - _first) * 86,
 					sy: _rm.y + 132,
-					tx: (_rm.x + 42 + (_pool_i mod _rm.slot_rows) * 84) + (_rm.x - 25 + 803 - 42),
-					ty: (_rm.y + 48 + (_pool_i div _rm.slot_rows) * 96 - _rm.y_offset) + (_rm.y + 375 - 48),
+					tx: (_rm.x + 42 + (_pool_i mod _rm.slot_rows) * 84) + (_rm.x - 25 + 803 - 12),
+					ty: (_rm.y + 48 + (_pool_i div _rm.slot_rows) * 96 - _rm.y_offset) + (_rm.y + 375 - 78),
 					t: (ui_anim_level() >= 2) ? -_n * 2 : 0,   // 2 级逐张错开 2 帧；0/1 级整批同时出发（负值=还在原地等）
 					dur: 18,
 					pool_i: _pool_i

@@ -13,9 +13,10 @@ if hover_card_index != -1 && !is_submenu_open{
 			if _vis >= 0 && _vis < 11{
 				fly_add = true
 				fly_spr = hover_card_spr
+				fly_card_id = card_id
 				fly_sx = hover_card_x
 				fly_sy = hover_card_y
-				fly_tx = x + 805 + _vis * 86
+				fly_tx = x + 835 + _vis * 82
 				fly_ty = y + 132
 				fly_slot = _slot
 				fly_dur = 18          // 固定 18 帧（60fps ≈ 0.3s）；曲线在 Draw_76 里（非线性缓出）
@@ -29,7 +30,7 @@ if hover_slot_index != -1 && !is_submenu_open{
 	if !deck_slot_is_empty(hover_slot_index){
 		global.audio.play(snd_button,0,0)
 		// 移除前先记下起点位置与精灵（移除后槽位数据就没了）
-		var _src_x = x + 805 + (hover_slot_index - deck_first_slot_index) * 86
+		var _src_x = x + 835 + (hover_slot_index - deck_first_slot_index) * 82
 		var _src_y = y + 132
 		var _entry = global.selected_deck[| hover_slot_index]
 		var _card_id = _entry[? "card_id"]
@@ -51,10 +52,11 @@ if hover_slot_index != -1 && !is_submenu_open{
 		if _pool_i >= 0 && sprite_exists(_spr){
 			fly_add = false
 			fly_spr = _spr
+			fly_card_id = _card_id
 			fly_sx = _src_x
 			fly_sy = _src_y
-			fly_tx = (x + 42 + (_pool_i mod slot_rows) * 84) + (x - 25 + 803 - 42)
-			fly_ty = (y + 48 + (_pool_i div slot_rows) * 96 - y_offset) + (y + 375 - 48)
+			fly_tx = (x + 42 + (_pool_i mod slot_rows) * 84) + (x - 25 + 803 - 12)
+			fly_ty = (y + 48 + (_pool_i div slot_rows) * 96 - y_offset) + (y + 375 - 78)
 			fly_slot = -1
 			fly_pool_i = _pool_i   // 落地前这张卡在卡池里继续按"已选"灰显
 			fly_dur = 18
@@ -63,9 +65,9 @@ if hover_slot_index != -1 && !is_submenu_open{
 		}
 	}
 }
-if(mouse_x > 785 && mouse_x < 1546 && mouse_y > 762 && mouse_y < 980) && !is_submenu_open{
-	global.audio.play(snd_button,0,0)
-	var inst = instance_create_depth(0,0,-500,obj_level_preview)
-	inst.enemy_type_list = enemy_type_list
-	inst.boss_type_list = boss_type_list
-}
+//if(mouse_x > 785 && mouse_x < 1546 && mouse_y > 762 && mouse_y < 980) && !is_submenu_open{
+//	global.audio.play(snd_button,0,0)
+//	var inst = instance_create_depth(0,0,-500,obj_level_preview)
+//	inst.enemy_type_list = enemy_type_list
+//	inst.boss_type_list = boss_type_list
+//}
