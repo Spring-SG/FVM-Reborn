@@ -2078,6 +2078,7 @@
     {"id":{"name":"spr_craft_slot_bg","path":"sprites/spr_craft_slot_bg/spr_craft_slot_bg.yy",},},
     {"id":{"name":"spr_craft_slot_text","path":"sprites/spr_craft_slot_text/spr_craft_slot_text.yy",},},
     {"id":{"name":"spr_create_room","path":"sprites/spr_create_room/spr_create_room.yy",},},
+    {"id":{"name":"spr_credits_btn","path":"sprites/spr_credits_btn/spr_credits_btn.yy",},},
     {"id":{"name":"spr_cucumber_normal_mouse","path":"sprites/spr_cucumber_normal_mouse/spr_cucumber_normal_mouse.yy",},},
     {"id":{"name":"spr_cucumber_paper_boat_mouse_enter","path":"sprites/spr_cucumber_paper_boat_mouse_enter/spr_cucumber_paper_boat_mouse_enter.yy",},},
     {"id":{"name":"spr_cucumber_paper_boat_mouse_land","path":"sprites/spr_cucumber_paper_boat_mouse_land/spr_cucumber_paper_boat_mouse_land.yy",},},
